@@ -32,10 +32,10 @@ const Index = () => {
   return (
     <>
       {/* Dark Header Navigation Bar */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 mix-blend-multiply ${
         scrolled 
-          ? 'bg-neutral-900/80 backdrop-blur-sm border-b border-neutral-800'
-          : 'bg-neutral-900/60 backdrop-blur-sm'
+          ? 'bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-900'
+          : 'bg-neutral-950/80 backdrop-blur-sm'
       }`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <img 

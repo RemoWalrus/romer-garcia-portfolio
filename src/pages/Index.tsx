@@ -6,6 +6,11 @@ import { MoveRight, Github, Linkedin, Mail } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
+  // Get public URLs for the images
+  const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
+  const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
+  const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
+
   return (
     <ParallaxContainer className="bg-neutral-900 text-white">
       {/* Background Image Layer */}
@@ -13,7 +18,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
           style={{
-            backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl})`,
+            backgroundImage: `url(${backgroundImageUrl})`,
             transform: 'scale(1.1)'
           }}
         />
@@ -24,7 +29,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-multiply opacity-60"
           style={{
-            backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl})`,
+            backgroundImage: `url(${depthMapUrl})`,
             transform: 'scale(1.1)'
           }}
         />
@@ -34,7 +39,7 @@ const Index = () => {
       <ParallaxLayer depth={1.5} className="pointer-events-none">
         <div className="absolute top-8 left-8">
           <img
-            src={supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl}
+            src={logoUrl}
             alt="Romer Garcia Logo"
             className="w-32 h-auto"
           />

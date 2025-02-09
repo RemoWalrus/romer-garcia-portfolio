@@ -1,3 +1,4 @@
+
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -18,6 +19,8 @@ const Index = () => {
     "Video Editor",
     "Five Tool Player",
     "Art Director",
+    "Web Master",
+    "Social Media Manager",
     "Romer Garcia"
   ];
   
@@ -44,6 +47,27 @@ const Index = () => {
       return () => clearTimeout(timer);
     }
   }, [titleIndex]);
+
+  const glitchVariants = {
+    initial: {
+      skew: 0,
+      opacity: 0,
+      scale: 0.95,
+      filter: "blur(0px)",
+    },
+    animate: {
+      skew: [0, -2, 2, 0],
+      opacity: 1,
+      scale: 1,
+      filter: ["blur(0px)", "blur(2px)", "blur(0px)"],
+    },
+    exit: {
+      skew: [0, 2, -2, 0],
+      opacity: 0,
+      scale: 0.95,
+      filter: ["blur(0px)", "blur(2px)", "blur(0px)"],
+    }
+  };
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -120,11 +144,16 @@ const Index = () => {
             <AnimatePresence mode="wait">
               <motion.h1
                 key={titles[titleIndex]}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={glitchVariants}
+                transition={{
+                  duration: 0.4,
+                  times: [0, 0.2, 0.8, 1],
+                  ease: "easeInOut"
+                }}
+                className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8 relative"
               >
                 {titles[titleIndex]}
               </motion.h1>

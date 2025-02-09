@@ -1,3 +1,4 @@
+
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -43,25 +44,25 @@ const Index = () => {
             src={logoUrl} 
             alt="Romer Garcia Logo" 
             className={`transition-all duration-300 ${
-              scrolled ? 'w-24 h-auto' : 'w-40 h-auto'
+              scrolled ? 'w-20 md:w-24 h-auto' : 'w-32 md:w-40 h-auto'
             }`}
           />
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
+              className="text-sm md:text-base text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
             >
               Portfolio
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
+              className="text-sm md:text-base text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
+              className="text-sm md:text-base text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
             >
               Contact
             </button>
@@ -86,22 +87,22 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 mb-6 text-sm font-medium text-neutral-200 bg-neutral-800/50 rounded-full">
+            <span className="inline-block px-4 py-1.5 mb-6 text-xs md:text-sm font-medium text-neutral-200 bg-neutral-800/50 rounded-full">
               Creative Director & Developer
             </span>
             
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-8">
               Romer Garcia
             </h1>
             
-            <p className="text-xl text-neutral-300 max-w-2xl mx-auto mb-12">
+            <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12">
               I create immersive digital experiences that blend storytelling with cutting-edge technology
             </p>
 
             <Button 
               onClick={() => scrollToSection('portfolio')}
               variant="outline" 
-              className="group bg-white/20 border-white/20 hover:bg-white/30 text-white"
+              className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-sm md:text-base"
             >
               View My Work
               <ArrowDown className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />
@@ -113,16 +114,16 @@ const Index = () => {
       {/* Portfolio Section */}
       <section id="portfolio" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-16 text-center">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-16 text-center">
             Featured Work
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Digital Experience Design</h3>
-                <p className="text-neutral-400 mb-6">Creating immersive digital experiences that engage and inspire.</p>
-                <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors">
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Digital Experience Design</h3>
+                <p className="text-sm md:text-base text-neutral-400 mb-6">Creating immersive digital experiences that engage and inspire.</p>
+                <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
                 </div>
               </div>
@@ -130,9 +131,9 @@ const Index = () => {
 
             <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Creative Direction</h3>
-                <p className="text-neutral-400 mb-6">Leading creative teams to deliver innovative solutions.</p>
-                <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors">
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Creative Direction</h3>
+                <p className="text-sm md:text-base text-neutral-400 mb-6">Leading creative teams to deliver innovative solutions.</p>
+                <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
                 </div>
               </div>
@@ -144,10 +145,10 @@ const Index = () => {
       {/* About Section */}
       <section id="about" className="relative bg-neutral-900 py-32">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-8 text-center">
             About Me
           </h2>
-          <p className="text-neutral-300 max-w-2xl mx-auto text-center">
+          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto text-center">
             With over a decade of experience in digital design and development, I specialize in creating 
             meaningful digital experiences that bridge the gap between functionality and aesthetics.
           </p>
@@ -157,10 +158,10 @@ const Index = () => {
       {/* Contact Section */}
       <section id="contact" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-8">
             Get in Touch
           </h2>
-          <p className="text-neutral-300 max-w-2xl mx-auto mb-8">
+          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8">
             Interested in collaborating? Let's discuss your next project.
           </p>
           <div className="flex justify-center gap-6">

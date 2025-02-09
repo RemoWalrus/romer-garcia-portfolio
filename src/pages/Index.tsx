@@ -4,8 +4,11 @@ import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
 import { MoveRight, Github, Linkedin, Mail } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from 'react';
 
 const Index = () => {
+  const [scrolled, setScrolled] = useState(false);
+  
   // Get public URLs for the images
   const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
   const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
@@ -16,12 +19,32 @@ const Index = () => {
   console.log('Depth Map URL:', depthMapUrl);
   console.log('Logo URL:', logoUrl);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 20;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       {/* Dark Header Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800">
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-neutral-900/80 backdrop-blur-sm border-b border-neutral-800'
+          : 'bg-neutral-900/60 backdrop-blur-sm'
+      }`}>
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <img src={logoUrl} alt="Romer Garcia Logo" className="w-24 h-auto" />
+          <img 
+            src={logoUrl} 
+            alt="Romer Garcia Logo" 
+            className={`transition-all duration-300 ${
+              scrolled ? 'w-20 h-auto' : 'w-32 h-auto'
+            }`}
+          />
           <div className="flex gap-6">
             <a href="https://github.com/RemoWalrus" target="_blank" rel="noopener noreferrer"
                className="text-neutral-400 hover:text-white transition-colors">

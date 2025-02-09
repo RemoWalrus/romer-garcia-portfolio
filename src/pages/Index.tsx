@@ -11,6 +11,11 @@ const Index = () => {
   const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
   const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
 
+  // Debug logs
+  console.log('Background Image URL:', backgroundImageUrl);
+  console.log('Depth Map URL:', depthMapUrl);
+  console.log('Logo URL:', logoUrl);
+
   return (
     <ParallaxContainer className="bg-neutral-900 text-white">
       {/* Background Image Layer */}

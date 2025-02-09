@@ -1,4 +1,3 @@
-
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -117,9 +116,6 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block px-4 py-1.5 mb-6 text-xs md:text-sm font-medium text-neutral-200 bg-neutral-800/50 rounded-full">
-              CREATIVE DIRECTOR & DEVELOPER
-            </span>
             
             <AnimatePresence mode="wait">
               <motion.h1

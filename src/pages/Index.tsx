@@ -10,7 +10,7 @@ const Index = () => {
       {/* Background Image Layer */}
       <ParallaxLayer depth={3} className="pointer-events-none">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
           style={{
             backgroundImage: 'url("/dualshadow.jpg")',
             transform: 'scale(1.1)'
@@ -21,7 +21,7 @@ const Index = () => {
       {/* Depth Map Layer */}
       <ParallaxLayer depth={2.5} className="pointer-events-none">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-multiply opacity-40"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-multiply opacity-60"
           style={{
             backgroundImage: 'url("/dualshadow_depth.jpg")',
             transform: 'scale(1.1)'

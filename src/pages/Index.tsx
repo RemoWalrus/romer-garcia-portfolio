@@ -1,4 +1,3 @@
-
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -31,6 +30,10 @@ const Index = () => {
     section?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="bg-neutral-950 min-h-screen">
       {/* Navigation */}
@@ -40,29 +43,35 @@ const Index = () => {
           : 'bg-transparent'
       }`}>
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <img 
-            src={logoUrl} 
-            alt="Romer Garcia Logo" 
-            className={`transition-all duration-300 ${
-              scrolled ? 'w-20 md:w-24 h-auto' : 'w-32 md:w-40 h-auto'
-            }`}
-          />
+          <button 
+            onClick={scrollToTop}
+            className="cursor-pointer"
+            aria-label="Scroll to top"
+          >
+            <img 
+              src={logoUrl} 
+              alt="Romer Garcia Logo" 
+              className={`transition-all duration-300 ${
+                scrolled ? 'w-20 md:w-24 h-auto' : 'w-32 md:w-40 h-auto'
+              }`}
+            />
+          </button>
           <div className="flex items-center gap-4 md:gap-8">
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="text-sm md:text-base text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
+              className="text-xs md:text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
             >
               Portfolio
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-sm md:text-base text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
+              className="text-xs md:text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-sm md:text-base text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
+              className="text-xs md:text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
             >
               Contact
             </button>

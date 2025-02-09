@@ -96,7 +96,7 @@ const Index = () => {
             <Button 
               onClick={scrollToWork}
               variant="outline" 
-              className="group bg-white/5 border-white/10 hover:bg-white/10"
+              className="group bg-white/20 border-white/20 hover:bg-white/30 text-white"
             >
               View My Work
               <ArrowDown className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />

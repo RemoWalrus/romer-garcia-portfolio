@@ -100,7 +100,7 @@ const Index = () => {
               Creative Director & Developer
             </span>
             
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-8">
+            <h1 className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8">
               Romer Garcia
             </h1>
             
@@ -123,14 +123,14 @@ const Index = () => {
       {/* Portfolio Section */}
       <section id="portfolio" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-16 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-16 text-center">
             Featured Work
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
               <div className="p-6">
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Digital Experience Design</h3>
+                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">Digital Experience Design</h3>
                 <p className="text-sm md:text-base text-neutral-400 mb-6">Creating immersive digital experiences that engage and inspire.</p>
                 <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
@@ -140,7 +140,7 @@ const Index = () => {
 
             <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
               <div className="p-6">
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-4">Creative Direction</h3>
+                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">Creative Direction</h3>
                 <p className="text-sm md:text-base text-neutral-400 mb-6">Leading creative teams to deliver innovative solutions.</p>
                 <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
@@ -154,7 +154,7 @@ const Index = () => {
       {/* About Section */}
       <section id="about" className="relative bg-neutral-900 py-32">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-8 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8 text-center">
             About Me
           </h2>
           <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto text-center">
@@ -167,7 +167,7 @@ const Index = () => {
       {/* Contact Section */}
       <section id="contact" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8">
             Get in Touch
           </h2>
           <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8">

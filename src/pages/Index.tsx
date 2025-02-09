@@ -18,6 +18,17 @@ const Index = () => {
         />
       </ParallaxLayer>
 
+      {/* Depth Map Layer */}
+      <ParallaxLayer depth={2.5} className="pointer-events-none">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-multiply opacity-40"
+          style={{
+            backgroundImage: 'url("/dualshadow_depth.jpg")',
+            transform: 'scale(1.1)'
+          }}
+        />
+      </ParallaxLayer>
+
       {/* Hero Section */}
       <ParallaxLayer depth={0} className="flex items-center justify-center">
         <div className="text-center px-4 max-w-4xl mx-auto">

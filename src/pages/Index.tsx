@@ -1,8 +1,7 @@
-
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
-import { MoveRight, Folder, User, Mail, ArrowDown, Github, Linkedin } from 'lucide-react';
+import { MoveRight, ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
@@ -50,24 +49,21 @@ const Index = () => {
           <div className="flex items-center gap-8">
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+              className="text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
             >
-              <Folder className="w-4 h-4 hidden md:block" />
-              <span>Portfolio</span>
+              Portfolio
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+              className="text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
             >
-              <User className="w-4 h-4 hidden md:block" />
-              <span>About</span>
+              About
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+              className="text-neutral-300 hover:text-white transition-colors uppercase tracking-wide font-light"
             >
-              <Mail className="w-4 h-4 hidden md:block" />
-              <span>Contact</span>
+              Contact
             </button>
           </div>
         </div>
@@ -103,7 +99,7 @@ const Index = () => {
             </p>
 
             <Button 
-              onClick={scrollToSection}
+              onClick={() => scrollToSection('portfolio')}
               variant="outline" 
               className="group bg-white/20 border-white/20 hover:bg-white/30 text-white"
             >

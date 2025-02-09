@@ -30,6 +30,17 @@ const Index = () => {
         />
       </ParallaxLayer>
 
+      {/* Logo Layer */}
+      <ParallaxLayer depth={1.5} className="pointer-events-none">
+        <div className="absolute top-8 left-8">
+          <img
+            src={supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl}
+            alt="Romer Garcia Logo"
+            className="w-32 h-auto"
+          />
+        </div>
+      </ParallaxLayer>
+
       {/* Hero Section */}
       <ParallaxLayer depth={0} className="flex items-center justify-center">
         <div className="text-center px-4 max-w-4xl mx-auto">

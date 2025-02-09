@@ -1,3 +1,4 @@
+
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -5,10 +6,21 @@ import { MoveRight, ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [titleIndex, setTitleIndex] = useState(0);
+  
+  const titles = [
+    "Multimedia Artist",
+    "Illustrator",
+    "Photographer",
+    "Video Editor",
+    "Five Tool Player",
+    "Art Director",
+    "Romer Garcia"
+  ];
   
   // Get public URLs for the images
   const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
@@ -24,6 +36,15 @@ const Index = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (titleIndex < titles.length - 1) {
+      const timer = setTimeout(() => {
+        setTitleIndex(prev => prev + 1);
+      }, 800); // Change every 800ms
+      return () => clearTimeout(timer);
+    }
+  }, [titleIndex]);
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -97,12 +118,21 @@ const Index = () => {
             transition={{ duration: 0.6 }}
           >
             <span className="inline-block px-4 py-1.5 mb-6 text-xs md:text-sm font-medium text-neutral-200 bg-neutral-800/50 rounded-full">
-              Creative Director & Developer
+              CREATIVE DIRECTOR & DEVELOPER
             </span>
             
-            <h1 className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8">
-              Romer Garcia
-            </h1>
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={titles[titleIndex]}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8"
+              >
+                {titles[titleIndex]}
+              </motion.h1>
+            </AnimatePresence>
             
             <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12">
               I create immersive digital experiences that blend storytelling with cutting-edge technology
@@ -124,13 +154,13 @@ const Index = () => {
       <section id="portfolio" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-16 text-center">
-            Featured Work
+            FEATURED WORK
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
               <div className="p-6">
-                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">Digital Experience Design</h3>
+                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">DIGITAL EXPERIENCE DESIGN</h3>
                 <p className="text-sm md:text-base text-neutral-400 mb-6">Creating immersive digital experiences that engage and inspire.</p>
                 <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
@@ -140,7 +170,7 @@ const Index = () => {
 
             <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
               <div className="p-6">
-                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">Creative Direction</h3>
+                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">CREATIVE DIRECTION</h3>
                 <p className="text-sm md:text-base text-neutral-400 mb-6">Leading creative teams to deliver innovative solutions.</p>
                 <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
@@ -155,7 +185,7 @@ const Index = () => {
       <section id="about" className="relative bg-neutral-900 py-32">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8 text-center">
-            About Me
+            ABOUT ME
           </h2>
           <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto text-center">
             With over a decade of experience in digital design and development, I specialize in creating 
@@ -168,7 +198,7 @@ const Index = () => {
       <section id="contact" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8">
-            Get in Touch
+            GET IN TOUCH
           </h2>
           <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8">
             Interested in collaborating? Let's discuss your next project.

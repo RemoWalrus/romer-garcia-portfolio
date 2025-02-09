@@ -1,3 +1,4 @@
+
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -51,21 +52,21 @@ const Index = () => {
               onClick={() => scrollToSection('portfolio')}
               className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
             >
-              <Folder className="w-4 h-4" />
+              <Folder className="w-4 h-4 hidden md:block" />
               <span>Portfolio</span>
             </button>
             <button
               onClick={() => scrollToSection('about')}
               className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
             >
-              <User className="w-4 h-4" />
+              <User className="w-4 h-4 hidden md:block" />
               <span>About</span>
             </button>
             <button
               onClick={() => scrollToSection('contact')}
               className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
             >
-              <Mail className="w-4 h-4" />
+              <Mail className="w-4 h-4 hidden md:block" />
               <span>Contact</span>
             </button>
           </div>

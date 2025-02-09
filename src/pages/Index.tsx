@@ -11,7 +11,7 @@ const Index = () => {
   
   // Get public URLs for the images
   const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
-  const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
+  const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth2.jpg').data.publicUrl;
   const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
 
   // Debug logs
@@ -84,8 +84,6 @@ const Index = () => {
             }}
           />
         </ParallaxLayer>
-
-        {/* Remove the logo layer since it's now in the header */}
 
         {/* Hero Section */}
         <ParallaxLayer depth={0} className="flex items-center justify-center pt-20">

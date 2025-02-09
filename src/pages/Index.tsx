@@ -37,12 +37,12 @@ const Index = () => {
           ? 'bg-neutral-900/80 backdrop-blur-sm border-b border-neutral-800'
           : 'bg-neutral-900/60 backdrop-blur-sm'
       }`}>
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <img 
             src={logoUrl} 
             alt="Romer Garcia Logo" 
             className={`transition-all duration-300 ${
-              scrolled ? 'w-20 h-auto' : 'w-32 h-auto'
+              scrolled ? 'w-24 h-auto' : 'w-40 h-auto'
             }`}
           />
           <div className="flex gap-6">

@@ -43,7 +43,7 @@ const Index = () => {
     if (titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
         setTitleIndex(prev => prev + 1);
-      }, 800); // Change every 800ms
+      }, 600); // Faster animation timing (changed from 800ms)
       return () => clearTimeout(timer);
     }
   }, [titleIndex]);
@@ -54,18 +54,31 @@ const Index = () => {
       opacity: 0,
       scale: 0.95,
       filter: "blur(0px)",
+      x: 0,
     },
     animate: {
-      skew: [0, -2, 2, 0],
+      skew: [0, -2, 2, -1, 1, 0],
       opacity: 1,
-      scale: 1,
-      filter: ["blur(0px)", "blur(2px)", "blur(0px)"],
+      scale: [0.95, 1.02, 0.98, 1],
+      filter: [
+        "blur(0px) brightness(100%) contrast(100%)",
+        "blur(1px) brightness(120%) contrast(90%)",
+        "blur(0px) brightness(100%) contrast(100%)",
+        "blur(2px) brightness(90%) contrast(110%)",
+        "blur(0px) brightness(100%) contrast(100%)"
+      ],
+      x: [0, -3, 3, -1, 1, 0],
     },
     exit: {
-      skew: [0, 2, -2, 0],
+      skew: [0, 2, -2, 1, -1, 0],
       opacity: 0,
       scale: 0.95,
-      filter: ["blur(0px)", "blur(2px)", "blur(0px)"],
+      filter: [
+        "blur(0px) brightness(100%) contrast(100%)",
+        "blur(2px) brightness(150%) contrast(80%)",
+        "blur(0px) brightness(100%) contrast(100%)"
+      ],
+      x: [0, 3, -3, 1, -1, 0],
     }
   };
 
@@ -149,11 +162,17 @@ const Index = () => {
                 exit="exit"
                 variants={glitchVariants}
                 transition={{
-                  duration: 0.4,
-                  times: [0, 0.2, 0.8, 1],
+                  duration: 0.3, // Faster duration (changed from 0.4)
+                  times: [0, 0.2, 0.4, 0.6, 0.8, 1],
                   ease: "easeInOut"
                 }}
                 className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8 relative"
+                style={{
+                  textShadow: `
+                    2px 0 0 rgba(255,0,0,0.3),
+                    -2px 0 0 rgba(0,255,255,0.3)
+                  `
+                }}
               >
                 {titles[titleIndex]}
               </motion.h1>

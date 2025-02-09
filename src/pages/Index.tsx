@@ -7,6 +7,17 @@ import { MoveRight, Github, Linkedin, Mail } from 'lucide-react';
 const Index = () => {
   return (
     <ParallaxContainer className="bg-neutral-900 text-white">
+      {/* Background Image Layer */}
+      <ParallaxLayer depth={3} className="pointer-events-none">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
+          style={{
+            backgroundImage: 'url("/dualshadow.jpg")',
+            transform: 'scale(1.1)'
+          }}
+        />
+      </ParallaxLayer>
+
       {/* Hero Section */}
       <ParallaxLayer depth={0} className="flex items-center justify-center">
         <div className="text-center px-4 max-w-4xl mx-auto">
@@ -36,11 +47,12 @@ const Index = () => {
         </div>
       </ParallaxLayer>
 
-      {/* Background Elements */}
+      {/* Gradient Overlay */}
       <ParallaxLayer depth={1} className="pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-900/0 via-neutral-900/50 to-neutral-900" />
       </ParallaxLayer>
 
+      {/* Floating Elements */}
       <ParallaxLayer depth={2}>
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse [animation-delay:2000ms]" />

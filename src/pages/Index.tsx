@@ -3,6 +3,7 @@ import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
 import { MoveRight, Github, Linkedin, Mail } from 'lucide-react';
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   return (
@@ -12,7 +13,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
           style={{
-            backgroundImage: 'url("/dualshadow.jpg")',
+            backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl})`,
             transform: 'scale(1.1)'
           }}
         />
@@ -23,7 +24,7 @@ const Index = () => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat mix-blend-multiply opacity-60"
           style={{
-            backgroundImage: 'url("/dualshadow_depth.jpg")',
+            backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl})`,
             transform: 'scale(1.1)'
           }}
         />

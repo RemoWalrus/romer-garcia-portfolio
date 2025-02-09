@@ -1,8 +1,7 @@
-
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
-import { MoveRight, Github, Linkedin, Mail, ArrowDown } from 'lucide-react';
+import { MoveRight, Folder, User, Mail, ArrowDown, Github, Linkedin } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
@@ -26,9 +25,9 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToWork = () => {
-    const workSection = document.getElementById('work');
-    workSection?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    section?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -47,19 +46,28 @@ const Index = () => {
               scrolled ? 'w-24 h-auto' : 'w-40 h-auto'
             }`}
           />
-          <div className="flex gap-6">
-            <a href="https://github.com/RemoWalrus" target="_blank" rel="noopener noreferrer"
-               className="text-neutral-400 hover:text-white transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
-            <a href="https://www.linkedin.com/in/romergarcia/" target="_blank" rel="noopener noreferrer"
-               className="text-neutral-400 hover:text-white transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a href="mailto:romergarcia@gmail.com"
-               className="text-neutral-400 hover:text-white transition-colors">
-              <Mail className="w-5 h-5" />
-            </a>
+          <div className="flex items-center gap-8">
+            <button
+              onClick={() => scrollToSection('portfolio')}
+              className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+            >
+              <Folder className="w-4 h-4" />
+              <span>Portfolio</span>
+            </button>
+            <button
+              onClick={() => scrollToSection('about')}
+              className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+            >
+              <User className="w-4 h-4" />
+              <span>About</span>
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="text-neutral-400 hover:text-white transition-colors flex items-center gap-2"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Contact</span>
+            </button>
           </div>
         </div>
       </nav>
@@ -94,7 +102,7 @@ const Index = () => {
             </p>
 
             <Button 
-              onClick={scrollToWork}
+              onClick={scrollToSection}
               variant="outline" 
               className="group bg-white/20 border-white/20 hover:bg-white/30 text-white"
             >
@@ -105,8 +113,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Work Section */}
-      <section id="work" className="relative bg-neutral-950 py-32">
+      {/* Portfolio Section */}
+      <section id="portfolio" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-16 text-center">
             Featured Work
@@ -132,6 +140,45 @@ const Index = () => {
                 </div>
               </div>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="relative bg-neutral-900 py-32">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 text-center">
+            About Me
+          </h2>
+          <p className="text-neutral-300 max-w-2xl mx-auto text-center">
+            With over a decade of experience in digital design and development, I specialize in creating 
+            meaningful digital experiences that bridge the gap between functionality and aesthetics.
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="relative bg-neutral-950 py-32">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
+            Get in Touch
+          </h2>
+          <p className="text-neutral-300 max-w-2xl mx-auto mb-8">
+            Interested in collaborating? Let's discuss your next project.
+          </p>
+          <div className="flex justify-center gap-6">
+            <a href="https://github.com/RemoWalrus" target="_blank" rel="noopener noreferrer"
+               className="text-neutral-400 hover:text-white transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="https://www.linkedin.com/in/romergarcia/" target="_blank" rel="noopener noreferrer"
+               className="text-neutral-400 hover:text-white transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a href="mailto:romergarcia@gmail.com"
+               className="text-neutral-400 hover:text-white transition-colors">
+              <Mail className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
-import { MoveRight, ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
+import { MoveRight, ArrowDown, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [titleIndex, setTitleIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const titles = [
     "Multimedia Artist",
@@ -23,7 +24,6 @@ const Index = () => {
     "Romer Garcia"
   ];
   
-  // Get public URLs for the images
   const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
   const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
   const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
@@ -114,14 +114,23 @@ const Index = () => {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setMobileMenuOpen(false);
   };
 
   return (
     <div className="bg-neutral-950 min-h-screen">
+      <div className="fixed inset-0 pointer-events-none z-[1] mix-blend-overlay opacity-10">
+        <div className="absolute inset-0" style={{
+          background: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 2px)',
+          backgroundSize: '100% 4px',
+        }} />
+      </div>
+
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800'
@@ -137,29 +146,63 @@ const Index = () => {
               src={logoUrl} 
               alt="Romer Garcia Logo" 
               className={`transition-all duration-300 ${
-                scrolled ? 'w-20 md:w-24 h-auto' : 'w-32 md:w-40 h-auto'
+                scrolled ? 'w-28 md:w-32 h-auto' : 'w-40 md:w-48 h-auto'
               }`}
             />
           </button>
-          <div className="flex items-center gap-4 md:gap-8">
+
+          <button
+            className="md:hidden text-white hover:text-neutral-300 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+
+          <div className="hidden md:flex items-center gap-8">
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="text-xs md:text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
             >
               Portfolio
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-xs md:text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-xs md:text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
             >
               Contact
             </button>
+          </div>
+
+          <div className={`md:hidden fixed inset-0 bg-neutral-950/95 z-50 transition-transform duration-300 ${
+            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}>
+            <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">
+              <button
+                onClick={() => scrollToSection('portfolio')}
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              >
+                Portfolio
+              </button>
+              <button
+                onClick={() => scrollToSection('about')}
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              >
+                About
+              </button>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              >
+                Contact
+              </button>
+            </div>
           </div>
         </div>
       </nav>

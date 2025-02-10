@@ -104,14 +104,16 @@ export const About = () => {
           </motion.div>
           
           <div className="flex-1">
-            <motion.p 
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm md:text-base text-neutral-300 font-['Arial'] leading-relaxed text-center md:text-left mb-8"
+              className="text-sm md:text-base text-neutral-300 font-['Arial'] leading-relaxed text-center md:text-left mb-8 space-y-4"
             >
-              {aboutData.description}
-            </motion.p>
+              {aboutData.description.split('\n').map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </motion.div>
 
             {aboutData.portfolio_url && (
               <motion.div 

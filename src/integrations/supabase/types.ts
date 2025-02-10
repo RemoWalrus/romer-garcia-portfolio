@@ -41,6 +41,7 @@ export type Database = {
           category: string
           created_at: string
           description: string
+          hero_image_url: string
           id: number
           image_url: string
           sort_order: number | null
@@ -50,6 +51,7 @@ export type Database = {
           category: string
           created_at?: string
           description: string
+          hero_image_url?: string
           id?: number
           image_url: string
           sort_order?: number | null
@@ -59,6 +61,7 @@ export type Database = {
           category?: string
           created_at?: string
           description?: string
+          hero_image_url?: string
           id?: number
           image_url?: string
           sort_order?: number | null

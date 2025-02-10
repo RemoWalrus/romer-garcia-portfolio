@@ -1,4 +1,3 @@
-
 # Welcome to your Lovable project
 
 ## Project info
@@ -23,15 +22,41 @@ The titles that appear in the hero section animation are managed through the Sup
 
 Each title can have custom font weights applied to different words. The weights are stored as an array of Tailwind classes (e.g., `['font-thin', 'font-medium']`).
 
+### Portfolio Projects
+The portfolio section is managed through the Supabase database. To update projects:
+
+1. Access your Supabase dashboard
+2. Navigate to the Table Editor
+3. Select the `projects` table
+4. Here you can:
+   - Add new projects
+   - Update existing project details
+   - Change the order of projects using the `sort_order` column
+   - Update project images by providing new URLs
+
+Each project requires:
+- A title
+- A category
+- A description
+- A hero image URL
+- Additional images (optional)
+
 ### Other Sections
-The remaining website content is managed through the `src/config/sections.yml` file. You can easily update the following sections:
+The remaining website content is managed through the `sections` table in Supabase:
 
-- Hero section: Update the subtitle and CTA text
-- Portfolio section: Modify the title and description
-- About section: Change the title and description text
-- Contact section: Edit the title and description
+1. Access your Supabase dashboard
+2. Navigate to the Table Editor
+3. Select the `sections` table
+4. Here you can update:
+   - About section: title, description, and portfolio URL
+   - Contact section: title, description, and "get in touch" text
+   - Other custom sections
 
-Simply edit the corresponding values in the YAML file and the changes will be reflected automatically.
+Each section in the database includes:
+- A unique section name
+- A title
+- A description
+- Additional fields specific to that section (e.g., portfolio_url for the About section)
 
 ## How can I edit this code?
 

@@ -11,10 +11,9 @@ interface NavigationProps {
 
 export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: NavigationProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const hour = new Date().getHours();
-  const isLightMode = hour >= 6 && hour < 18;
+  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const logoUrl = supabase.storage.from('graphics').getPublicUrl(
-    scrolled && isLightMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg'
+    scrolled && !prefersDarkMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg'
   ).data.publicUrl;
 
   return (
@@ -52,19 +51,19 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
         <div className="hidden md:flex items-center gap-8">
           <button
             onClick={() => scrollToSection('portfolio')}
-            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white' : 'text-white'} hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc`}
+            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
           >
             Portfolio
           </button>
           <button
             onClick={() => scrollToSection('about')}
-            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white' : 'text-white'} hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc`}
+            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
           >
             About
           </button>
           <button
             onClick={() => scrollToSection('contact')}
-            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white' : 'text-white'} hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc`}
+            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
           >
             Contact
           </button>

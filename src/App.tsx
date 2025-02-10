@@ -12,20 +12,19 @@ const queryClient = new QueryClient();
 
 const App = () => {
   useEffect(() => {
-    const updateTheme = () => {
-      const hour = new Date().getHours();
-      // Light mode between 6 AM and 6 PM
-      const isLightMode = hour >= 6 && hour < 18;
-      document.documentElement.classList.toggle('dark', !isLightMode);
+    // Set theme based on browser preference
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const updateTheme = (e: MediaQueryListEvent | MediaQueryList) => {
+      document.documentElement.classList.toggle('dark', e.matches);
     };
 
     // Initial theme setting
-    updateTheme();
+    updateTheme(mediaQuery);
 
-    // Update theme every hour
-    const interval = setInterval(updateTheme, 3600000); // 1 hour in milliseconds
+    // Listen for changes in system theme
+    mediaQuery.addEventListener('change', updateTheme);
 
-    return () => clearInterval(interval);
+    return () => mediaQuery.removeEventListener('change', updateTheme);
   }, []);
 
   return (

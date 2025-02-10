@@ -16,10 +16,10 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-[#1a0033]/90 backdrop-blur-sm border-b border-purple-900/50 mix-blend-multiply'
+        ? 'bg-[#1a0033]/90 backdrop-blur-sm border-b border-purple-900/50'
         : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50">
         <button 
           onClick={scrollToTop}
           className="cursor-pointer"
@@ -65,7 +65,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
 
         {/* Mobile menu overlay */}
         <div 
-          className={`md:hidden fixed inset-0 backdrop-blur-md z-50 transition-transform duration-300 ${
+          className={`md:hidden fixed inset-0 backdrop-blur-md z-40 transition-transform duration-300 ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -75,7 +75,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 scrollToSection('portfolio');
                 setMobileMenuOpen(false);
               }}
-              className="text-xl text-neutral-900 hover:text-neutral-600 transition-colors uppercase tracking-wider font-roc"
+              className="text-xl text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
             >
               Portfolio
             </button>
@@ -84,7 +84,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 scrollToSection('about');
                 setMobileMenuOpen(false);
               }}
-              className="text-xl text-neutral-900 hover:text-neutral-600 transition-colors uppercase tracking-wider font-roc"
+              className="text-xl text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
             >
               About
             </button>
@@ -93,7 +93,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 scrollToSection('contact');
                 setMobileMenuOpen(false);
               }}
-              className="text-xl text-neutral-900 hover:text-neutral-600 transition-colors uppercase tracking-wider font-roc"
+              className="text-xl text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
             >
               Contact
             </button>
@@ -103,3 +103,4 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     </nav>
   );
 };
+

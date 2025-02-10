@@ -96,7 +96,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             playsInline
             className="w-full h-full object-cover opacity-30"
           >
-            <source src="/placeholder-video.mp4" type="video/mp4" />
+            <source src="/staticglitchy.mp4" type="video/mp4" />
           </video>
         ) : (
           heroImages.length > 0 && (
@@ -150,3 +150,4 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
+

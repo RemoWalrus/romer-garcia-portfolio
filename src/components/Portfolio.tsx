@@ -94,7 +94,7 @@ export const Portfolio = () => {
             <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
               {selectedProject?.title}
             </DialogTitle>
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base whitespace-pre-line">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base whitespace-pre-line leading-relaxed">
               {selectedProject?.description}
             </DialogDescription>
             <div className="grid grid-cols-4 gap-4">
@@ -102,7 +102,7 @@ export const Portfolio = () => {
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className="col-span-4 h-[50vh] mb-12 relative group"
+                    className="col-span-4 h-[50vh] mb-8 relative group"
                   >
                     <img
                       src={selectedProject?.image_url}
@@ -123,17 +123,17 @@ export const Portfolio = () => {
                       </div>
                     )}
                   </motion.div>
-                  <div className="col-span-4 grid grid-cols-3 gap-4">
+                  <div className="col-span-4 grid grid-cols-3 gap-0">
                     {selectedProject.additional_images.map((image: string, index: number) => (
                       <div 
                         key={index}
                         onClick={() => handleImageClick(index)}
-                        className="cursor-pointer h-32"
+                        className="cursor-pointer aspect-video"
                       >
                         <img
                           src={image}
                           alt={`${selectedProject.title} preview ${index + 1}`}
-                          className="w-full h-full object-cover rounded-lg transition-opacity hover:opacity-80"
+                          className="w-full h-full object-cover transition-opacity hover:opacity-80"
                         />
                       </div>
                     ))}

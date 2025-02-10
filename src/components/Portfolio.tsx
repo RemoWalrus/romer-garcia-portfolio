@@ -1,3 +1,4 @@
+
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -109,13 +110,13 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-1/2 bg-neutral-950 overflow-y-auto">
-              <div className="p-6 md:p-12">
+            <div className="md:w-1/2 bg-neutral-950 h-full">
+              <div className="h-full p-6 md:p-12">
                 {selectedProject?.additional_images?.length > 0 ? (
-                  <>
+                  <div className="h-full flex flex-col">
                     <motion.div 
                       key={heroImageIndex}
-                      className="w-full aspect-video mb-2"
+                      className="w-full h-[60%] mb-0"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
@@ -126,12 +127,12 @@ export const Portfolio = () => {
                         className="w-full h-full object-cover rounded-lg"
                       />
                     </motion.div>
-                    <div className="grid grid-cols-3 gap-0">
+                    <div className="grid grid-cols-3 gap-0 h-[40%]">
                       {selectedProject.additional_images.map((image: string, index: number) => (
                         <div 
                           key={index}
                           onClick={() => handleImageClick(index)}
-                          className={`cursor-pointer aspect-video transition-all duration-300 ${
+                          className={`cursor-pointer h-full transition-all duration-300 ${
                             index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
                           }`}
                         >
@@ -143,9 +144,9 @@ export const Portfolio = () => {
                         </div>
                       ))}
                     </div>
-                  </>
+                  </div>
                 ) : (
-                  <div className="w-full aspect-video">
+                  <div className="w-full h-full">
                     <img
                       src={selectedProject?.image_url}
                       alt={selectedProject?.title}

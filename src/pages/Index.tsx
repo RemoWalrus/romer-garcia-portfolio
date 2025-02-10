@@ -240,16 +240,17 @@ const Index = () => {
                     textShadow: `
                       2px 0 0 rgba(255,0,0,0.3),
                       -2px 0 0 rgba(0,255,255,0.3)
-                    `
+                    `,
+                    fontFeatureSettings: '"ss01"'
                   }}
                 >
                   {titles[titleIndex] === "romergarcia" ? (
                     <span>
-                      <span className="font-bold">romer</span>
-                      <span className="font-light">garcia</span>
+                      <span className="font-medium">romer</span>
+                      <span className="font-extralight">garcia</span>
                     </span>
                   ) : (
-                    titles[titleIndex]
+                    <span className="font-roc">{titles[titleIndex]}</span>
                   )}
                 </motion.h1>
                 <motion.div
@@ -276,18 +277,18 @@ const Index = () => {
                   <h1 className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8">
                     {titles[titleIndex] === "romergarcia" ? (
                       <span>
-                        <span className="font-bold">romer</span>
-                        <span className="font-light">garcia</span>
+                        <span className="font-medium">romer</span>
+                        <span className="font-extralight">garcia</span>
                       </span>
                     ) : (
-                      titles[titleIndex]
+                      <span className="font-roc">{titles[titleIndex]}</span>
                     )}
                   </h1>
                 </motion.div>
               </motion.div>
             </AnimatePresence>
             
-            <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12">
+            <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12 font-roc">
               I create immersive digital experiences that blend storytelling with cutting-edge technology
             </p>
 
@@ -305,7 +306,7 @@ const Index = () => {
 
       <section id="portfolio" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-16 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-16 text-center">
             FEATURED WORK
           </h2>
           
@@ -335,10 +336,10 @@ const Index = () => {
 
       <section id="about" className="relative bg-neutral-900 py-32">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8 text-center">
             ABOUT ME
           </h2>
-          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto text-center">
+          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto text-center font-roc">
             With over a decade of experience in digital design and development, I specialize in creating 
             meaningful digital experiences that bridge the gap between functionality and aesthetics.
           </p>
@@ -347,7 +348,7 @@ const Index = () => {
 
       <section id="contact" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8">
             GET IN TOUCH
           </h2>
           <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8">

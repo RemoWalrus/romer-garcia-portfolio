@@ -11,50 +11,32 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
   const videoUrl = supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl;
 
   useEffect(() => {
-    const fetchRandomImage = async () => {
+    const fetchBackground = async () => {
       try {
-        console.log('Fetching hero images...');
-        const { data: imageList, error } = await supabase
-          .storage
-          .from('images')
-          .list('hero', {
-            sortBy: { column: 'name', order: 'asc' }
-          });
-
-        if (error) {
-          console.error('Error fetching hero images:', error);
-          return;
-        }
-
-        if (imageList && imageList.length > 0) {
-          // Get a random image from the list
-          const randomIndex = Math.floor(Math.random() * imageList.length);
-          const randomImage = imageList[randomIndex];
-          const imageUrl = supabase.storage.from('images').getPublicUrl(`hero/${randomImage.name}`).data.publicUrl;
-          console.log('Selected random image:', imageUrl);
-          setBackgroundImage(imageUrl);
-        } else {
-          console.log('No images found, using fallback');
-          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-          setBackgroundImage(fallbackUrl);
-        }
+        // Get the specific background image
+        const imageUrl = supabase.storage.from('images').getPublicUrl('romergarciacover.jpg').data.publicUrl;
+        setBackgroundImage(imageUrl);
       } catch (error) {
-        console.error('Error in fetchRandomImage:', error);
+        console.error('Error fetching background image:', error);
+        // Fallback image if the specified one isn't available
+        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        setBackgroundImage(fallbackUrl);
       }
     };
 
-    fetchRandomImage();
+    fetchBackground();
   }, []);
 
   return (
     <div className="absolute inset-0">
-      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/20 z-10" />
+      {/* Updated gradient to be more transparent at bottom */}
+      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/10 z-10" />
       
-      {/* Scanline effect overlay - increased opacity and adjusted line thickness */}
-      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-30">
+      {/* Thicker scanline effect with increased opacity */}
+      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-40">
         <div className="absolute inset-0 animate-scanline" style={{
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.15) 3px, rgba(255,255,255,0.15) 3px)',
-          backgroundSize: '100% 6px',
+          background: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 4px)',
+          backgroundSize: '100% 8px',
         }} />
       </div>
 

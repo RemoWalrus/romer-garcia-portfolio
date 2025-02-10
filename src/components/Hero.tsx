@@ -19,24 +19,36 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   useEffect(() => {
     const fetchHeroImages = async () => {
-      const { data: imageList, error } = await supabase
-        .storage
-        .from('images')
-        .list('hero');
+      try {
+        console.log('Fetching hero images...');
+        const { data: imageList, error } = await supabase
+          .storage
+          .from('images')
+          .list('hero', {
+            sortBy: { column: 'name', order: 'asc' }
+          });
 
-      if (error) {
-        console.error('Error fetching hero images:', error);
-        return;
-      }
+        if (error) {
+          console.error('Error fetching hero images:', error);
+          return;
+        }
 
-      if (imageList && imageList.length > 0) {
-        const imageUrls = imageList.map(file => 
-          supabase.storage.from('images').getPublicUrl(`hero/${file.name}`).data.publicUrl
-        );
-        setHeroImages(imageUrls);
-      } else {
-        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-        setHeroImages([fallbackUrl]);
+        console.log('Found images:', imageList);
+
+        if (imageList && imageList.length > 0) {
+          const imageUrls = imageList.map(file => {
+            const url = supabase.storage.from('images').getPublicUrl(`hero/${file.name}`).data.publicUrl;
+            console.log('Generated URL:', url);
+            return url;
+          });
+          setHeroImages(imageUrls);
+        } else {
+          console.log('No images found, using fallback');
+          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+          setHeroImages([fallbackUrl]);
+        }
+      } catch (error) {
+        console.error('Error in fetchHeroImages:', error);
       }
     };
 
@@ -64,20 +76,26 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   useEffect(() => {
     const updateFavicon = async () => {
-      const { data: faviconData } = supabase.storage
-        .from('images')
-        .getPublicUrl('favicon.ico');
-      
-      if (faviconData?.publicUrl) {
-        const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
-        if (favicon) {
-          favicon.href = faviconData.publicUrl;
-        } else {
-          const newFavicon = document.createElement('link');
-          newFavicon.rel = 'icon';
-          newFavicon.href = faviconData.publicUrl;
-          document.head.appendChild(newFavicon);
+      try {
+        console.log('Updating favicon...');
+        const { data: faviconData } = supabase.storage
+          .from('graphics')
+          .getPublicUrl('favicon.ico');
+        
+        if (faviconData?.publicUrl) {
+          console.log('Favicon URL:', faviconData.publicUrl);
+          const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
+          if (favicon) {
+            favicon.href = faviconData.publicUrl;
+          } else {
+            const newFavicon = document.createElement('link');
+            newFavicon.rel = 'icon';
+            newFavicon.href = faviconData.publicUrl;
+            document.head.appendChild(newFavicon);
+          }
         }
+      } catch (error) {
+        console.error('Error updating favicon:', error);
       }
     };
 
@@ -138,3 +156,4 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
+

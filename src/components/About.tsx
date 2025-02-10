@@ -68,28 +68,25 @@ export const About = () => {
 
   const handleEyeClick = async () => {
     if (!showTrivia) {
-      // Fixed the random ordering syntax
-      const { data, error } = await supabase
+      // Get count first
+      const { count } = await supabase
         .from('trivia_facts')
-        .select('fact')
-        .limit(1)
-        .order('id', { ascending: false }) // Change to a deterministic order first
-        .then(result => {
-          if (result.data && result.data.length > 0) {
-            // Get total count first
-            return supabase
-              .from('trivia_facts')
-              .select('fact')
-              .eq('id', Math.floor(Math.random() * result.data.length) + 1)
-              .single();
-          }
-          return result;
-        });
+        .select('*', { count: 'exact', head: true });
 
-      if (data && !error) {
-        setTriviaFact(data.fact);
-        setShowTrivia(true);
-        setTimeout(() => setShowTrivia(false), 5000); // Hide after 5 seconds
+      if (count) {
+        // Get random fact using the count
+        const randomId = Math.floor(Math.random() * count) + 1;
+        const { data, error } = await supabase
+          .from('trivia_facts')
+          .select('fact')
+          .eq('id', randomId)
+          .maybeSingle();
+
+        if (data && !error) {
+          setTriviaFact(data.fact);
+          setShowTrivia(true);
+          setTimeout(() => setShowTrivia(false), 5000); // Hide after 5 seconds
+        }
       }
     }
   };
@@ -195,4 +192,3 @@ export const About = () => {
     </section>
   );
 };
-

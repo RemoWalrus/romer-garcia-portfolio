@@ -45,6 +45,7 @@ export type Database = {
           cta_section: string | null
           cta_text: string | null
           description: string | null
+          get_in_touch_text: string | null
           id: number
           portfolio_url: string | null
           section_name: string
@@ -57,6 +58,7 @@ export type Database = {
           cta_section?: string | null
           cta_text?: string | null
           description?: string | null
+          get_in_touch_text?: string | null
           id?: number
           portfolio_url?: string | null
           section_name: string
@@ -69,12 +71,31 @@ export type Database = {
           cta_section?: string | null
           cta_text?: string | null
           description?: string | null
+          get_in_touch_text?: string | null
           id?: number
           portfolio_url?: string | null
           section_name?: string
           title?: string
           updated_at?: string
           video_url?: string | null
+        }
+        Relationships: []
+      }
+      trivia_facts: {
+        Row: {
+          created_at: string
+          fact: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          fact: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          fact?: string
+          id?: number
         }
         Relationships: []
       }

@@ -1,17 +1,34 @@
 
 import { Github, Linkedin, Mail } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [getInTouchText, setGetInTouchText] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
+
+  useEffect(() => {
+    const fetchContactSection = async () => {
+      const { data, error } = await supabase
+        .from('sections')
+        .select('get_in_touch_text')
+        .eq('section_name', 'contact')
+        .single();
+      
+      if (data && !error) {
+        setGetInTouchText(data.get_in_touch_text || 'Interested in collaborating? Let\'s discuss your next project.');
+      }
+    };
+
+    fetchContactSection();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,7 +73,7 @@ export const Contact = () => {
           GET IN TOUCH
         </h2>
         <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-12 font-sans text-center">
-          Interested in collaborating? Let's discuss your next project.
+          {getInTouchText}
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-12 space-y-6">

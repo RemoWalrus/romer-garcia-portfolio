@@ -63,7 +63,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           </button>
         </div>
 
-        <div className={`md:hidden fixed inset-0 bg-neutral-950/98 z-50 transition-transform duration-300 ${
+        <div className={`md:hidden fixed inset-0 bg-white z-50 transition-transform duration-300 ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
           <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">
@@ -72,7 +72,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 scrollToSection('portfolio');
                 setMobileMenuOpen(false);
               }}
-              className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
+              className="text-xl text-neutral-900 hover:text-neutral-600 transition-colors uppercase tracking-wider font-roc"
             >
               Portfolio
             </button>
@@ -81,7 +81,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 scrollToSection('about');
                 setMobileMenuOpen(false);
               }}
-              className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
+              className="text-xl text-neutral-900 hover:text-neutral-600 transition-colors uppercase tracking-wider font-roc"
             >
               About
             </button>
@@ -90,7 +90,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 scrollToSection('contact');
                 setMobileMenuOpen(false);
               }}
-              className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
+              className="text-xl text-neutral-900 hover:text-neutral-600 transition-colors uppercase tracking-wider font-roc"
             >
               Contact
             </button>

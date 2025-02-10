@@ -23,7 +23,7 @@ export const About = () => {
         </h2>
         
         <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
-          <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-neutral-700 flex-shrink-0 bg-neutral-800">
+          <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-neutral-600/50 flex-shrink-0 bg-neutral-800">
             {portraitUrl && (
               <img 
                 src={portraitUrl} 

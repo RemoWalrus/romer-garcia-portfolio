@@ -16,6 +16,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [titleIndex, setTitleIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroImages, setHeroImages] = useState<string[]>([]);
+  const [showVideo, setShowVideo] = useState(true);
 
   useEffect(() => {
     const fetchHeroImages = async () => {
@@ -56,6 +57,15 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   }, []);
 
   useEffect(() => {
+    if (titleIndex === titles.length - 1) {
+      const timer = setTimeout(() => {
+        setShowVideo(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [titleIndex]);
+
+  useEffect(() => {
     if (titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
         setTitleIndex(prev => prev + 1);
@@ -65,58 +75,42 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   }, [titleIndex]);
 
   useEffect(() => {
-    if (heroImages.length > 1) {
+    if (heroImages.length > 1 && !showVideo) {
       const imageTimer = setInterval(() => {
         setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
       }, 5000);
 
       return () => clearInterval(imageTimer);
     }
-  }, [heroImages]);
-
-  useEffect(() => {
-    const updateFavicon = async () => {
-      try {
-        console.log('Updating favicon...');
-        const { data: faviconData } = supabase.storage
-          .from('graphics')
-          .getPublicUrl('favicon.ico');
-        
-        if (faviconData?.publicUrl) {
-          console.log('Favicon URL:', faviconData.publicUrl);
-          const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
-          if (favicon) {
-            favicon.href = faviconData.publicUrl;
-          } else {
-            const newFavicon = document.createElement('link');
-            newFavicon.rel = 'icon';
-            newFavicon.href = faviconData.publicUrl;
-            document.head.appendChild(newFavicon);
-          }
-        }
-      } catch (error) {
-        console.error('Error updating favicon:', error);
-      }
-    };
-
-    updateFavicon();
-  }, []);
+  }, [heroImages, showVideo]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/20 z-10" />
-        {heroImages.length > 0 && (
-          <motion.img 
-            key={heroImages[currentImageIndex]}
-            src={heroImages[currentImageIndex]} 
-            alt="Background" 
-            className="w-full h-full object-cover opacity-40"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-          />
+        {showVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover opacity-30"
+          >
+            <source src="/placeholder-video.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          heroImages.length > 0 && (
+            <motion.img 
+              key={heroImages[currentImageIndex]}
+              src={heroImages[currentImageIndex]} 
+              alt="Background" 
+              className="w-full h-full object-cover opacity-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            />
+          )
         )}
       </div>
       
@@ -156,4 +150,3 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
-

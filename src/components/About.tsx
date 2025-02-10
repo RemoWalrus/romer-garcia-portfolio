@@ -30,8 +30,8 @@ export const About = () => {
 
     // Get portfolio PDF URL
     const portfolioData = supabase.storage
-      .from('graphics')
-      .getPublicUrl('portfolio.pdf');
+      .from('portfolio')
+      .getPublicUrl('RomerGarcia_Portfolio_2024.pdf');
     
     if (portfolioData.data) {
       setAboutData(prev => ({

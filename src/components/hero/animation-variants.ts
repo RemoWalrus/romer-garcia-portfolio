@@ -10,15 +10,15 @@ export const glitchVariants: Variants = {
   },
   animate: {
     opacity: 1,
-    scale: [0.99, 1.005, 0.995, 1],
+    scale: [0.99, 1.002, 0.998, 1],
     filter: [
       "blur(0px) brightness(100%) contrast(100%)",
-      "blur(1px) brightness(120%) contrast(95%) hue-rotate(1deg)",
+      "blur(0.5px) brightness(110%) contrast(98%) hue-rotate(0.5deg)",
       "blur(0px) brightness(100%) contrast(100%)",
-      "blur(0.5px) brightness(110%) contrast(97%) hue-rotate(-1deg)",
+      "blur(0.25px) brightness(105%) contrast(99%) hue-rotate(-0.5deg)",
       "blur(0px) brightness(100%) contrast(100%)"
     ],
-    x: [0, -1, 1, -0.5, 0.5, 0],
+    x: [0, -0.5, 0.5, -0.25, 0.25, 0],
     transition: {
       duration: 0.8,
       times: [0, 0.2, 0.4, 0.6, 0.8, 1],
@@ -31,10 +31,10 @@ export const glitchVariants: Variants = {
     scale: 0.99,
     filter: [
       "blur(0px) brightness(100%) contrast(100%)",
-      "blur(1.5px) brightness(150%) contrast(90%) hue-rotate(2deg)",
+      "blur(0.75px) brightness(120%) contrast(95%) hue-rotate(1deg)",
       "blur(0px) brightness(100%) contrast(100%)"
     ],
-    x: [0, 1, -1, 0.5, -0.5, 0],
+    x: [0, 0.5, -0.5, 0.25, -0.25, 0],
     transition: {
       duration: 0.5,
       ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
@@ -49,10 +49,10 @@ export const pixelGlitch: Variants = {
   animate: {
     clipPath: [
       "inset(0 0 0 0)",
-      "inset(5% 7% 12% 2%)",
-      "inset(12% 2% 7% 5%)",
-      "inset(7% 12% 2% 10%)",
-      "inset(2% 5% 10% 7%)",
+      "inset(2% 3% 4% 1%)",
+      "inset(4% 1% 3% 2%)",
+      "inset(3% 4% 1% 3%)",
+      "inset(1% 2% 3% 2%)",
       "inset(0 0 0 0)"
     ],
     transition: {

@@ -82,7 +82,7 @@ export const Portfolio = () => {
         setSelectedProject(null);
         setHeroImageIndex(0);
       }}>
-        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:p-10">
           <DialogHeader>
             <div className="mb-2">
               <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
@@ -92,7 +92,7 @@ export const Portfolio = () => {
             <DialogTitle className="text-2xl font-roc font-extralight mb-4">
               {selectedProject?.title}
             </DialogTitle>
-            <DialogDescription className="text-neutral-700 dark:text-neutral-200 font-arial mb-12">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base">
               {selectedProject?.description}
             </DialogDescription>
             <div className="grid grid-cols-4 gap-4">
@@ -102,7 +102,7 @@ export const Portfolio = () => {
                   initial="initial"
                   animate="animate"
                   variants={pixelGlitch}
-                  className="col-span-4 h-96 mb-8 relative group"
+                  className="col-span-4 h-96 mb-12 relative group"
                 >
                   <img
                     src={selectedProject?.image_url}
@@ -148,4 +148,3 @@ export const Portfolio = () => {
     </section>
   );
 };
-

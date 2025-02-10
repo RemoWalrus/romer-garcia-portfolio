@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -121,5 +122,5 @@ nav button {
 
 /* Dialog close button adjustment */
 [data-dialog-close] {
-  @apply border-0 scale-125 opacity-75 hover:opacity-100 transition-opacity;
+  @apply border-0 scale-150 opacity-75 hover:opacity-100 transition-opacity;
 }

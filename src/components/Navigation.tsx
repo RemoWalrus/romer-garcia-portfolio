@@ -14,11 +14,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
   const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'mix-blend-multiply'
-        : ''
-    }`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
       {/* Background overlay */}
       <div className={`absolute inset-0 transition-all duration-300 ${
         scrolled 
@@ -26,10 +22,10 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           : 'bg-transparent'
       }`} />
 
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50 mix-blend-normal">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50">
         <button 
           onClick={scrollToTop}
-          className="cursor-pointer mix-blend-normal"
+          className="cursor-pointer"
           aria-label="Scroll to top"
         >
           <img 
@@ -49,7 +45,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
-        <div className="hidden md:flex items-center gap-8 mix-blend-normal">
+        <div className="hidden md:flex items-center gap-8">
           <button
             onClick={() => scrollToSection('portfolio')}
             className="text-sm text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
@@ -113,3 +109,4 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     </nav>
   );
 };
+

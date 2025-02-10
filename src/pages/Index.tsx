@@ -1,4 +1,3 @@
-
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
@@ -6,7 +5,7 @@ import { MoveRight, ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,7 +47,7 @@ const Index = () => {
     }
   }, [titleIndex]);
 
-  const glitchVariants = {
+  const glitchVariants: Variants = {
     initial: {
       opacity: 0,
       scale: 0.98,
@@ -89,9 +88,10 @@ const Index = () => {
     }
   };
 
-  // Add pixel glitch effect
-  const pixelGlitch = {
-    initial: { clipPath: "inset(0 0 0 0)" },
+  const pixelGlitch: Variants = {
+    initial: { 
+      clipPath: "inset(0 0 0 0)" 
+    },
     animate: {
       clipPath: [
         "inset(0 0 0 0)",
@@ -105,7 +105,7 @@ const Index = () => {
         duration: 0.4,
         ease: "easeInOut",
         repeat: 1,
-        repeatType: "reverse",
+        repeatType: "reverse" as const,
         times: [0, 0.2, 0.4, 0.6, 0.8, 1]
       }
     }
@@ -122,7 +122,6 @@ const Index = () => {
 
   return (
     <div className="bg-neutral-950 min-h-screen">
-      {/* Navigation */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
           ? 'bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800'
@@ -165,7 +164,6 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/20 z-10" />
@@ -215,14 +213,14 @@ const Index = () => {
                       "inset(50% 0 50% 0)",
                       "inset(0% 0 0% 0)",
                       "inset(50% 0 50% 0)"
-                    ]
-                  }}
-                  transition={{
-                    duration: 0.4,
-                    ease: "easeInOut",
-                    times: [0, 0.5, 1],
-                    repeat: 1,
-                    repeatType: "reverse"
+                    ],
+                    transition: {
+                      duration: 0.4,
+                      ease: "easeInOut",
+                      times: [0, 0.5, 1],
+                      repeat: 1,
+                      repeatType: "reverse" as const
+                    }
                   }}
                 >
                   <h1 className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8">
@@ -248,7 +246,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Portfolio Section */}
       <section id="portfolio" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-16 text-center">
@@ -279,7 +276,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* About Section */}
       <section id="about" className="relative bg-neutral-900 py-32">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8 text-center">
@@ -292,7 +288,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="relative bg-neutral-950 py-32">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extralight text-white mb-8">

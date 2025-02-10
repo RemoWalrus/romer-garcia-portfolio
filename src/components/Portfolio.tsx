@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
 import { ProfileModal } from './ProfileModal';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [heroImageIndex, setHeroImageIndex] = useState(0);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     fetchProjects();
@@ -89,9 +91,9 @@ export const Portfolio = () => {
               setSelectedProject(null);
               setHeroImageIndex(0);
             }}
-            className="absolute right-4 top-4 z-50 bg-neutral-900 dark:bg-white rounded-full p-2 opacity-90 hover:opacity-100 transition-opacity"
+            className="absolute right-4 top-4 z-50 p-2 rounded-full bg-black/80 hover:bg-black/90 transition-colors"
           >
-            <X className="h-5 w-5 text-white dark:text-neutral-900" />
+            <X className="h-5 w-5 text-white" />
           </button>
           
           <div className="h-full flex flex-col md:flex-row">
@@ -120,12 +122,12 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-1/2 bg-neutral-900 dark:bg-neutral-950 min-h-[50vh] md:h-full flex flex-col">
+            <div className="md:w-1/2 bg-neutral-900 dark:bg-neutral-950 min-h-[50vh] md:min-h-0 md:h-full flex flex-col">
               {selectedProject?.additional_images?.length > 0 ? (
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className="w-full h-[70vh] md:h-[75%]"
+                    className={`w-full ${isMobile ? 'h-[50vh]' : 'h-[75vh] md:h-[75%]'}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}

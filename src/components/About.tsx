@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
@@ -59,7 +60,7 @@ export const About = () => {
   }, []);
 
   return (
-    <section id="about" className="relative bg-neutral-900 py-32 overflow-hidden">
+    <section id="about" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden">
       {/* Background Pattern */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -75,7 +76,7 @@ export const About = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-12 text-center"
+          className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-12 text-center"
         >
           {aboutData.title}
         </motion.h2>
@@ -85,7 +86,7 @@ export const About = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-neutral-600/50 flex-shrink-0 bg-neutral-800"
+            className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-neutral-200 dark:border-neutral-600/50 flex-shrink-0 bg-neutral-100 dark:bg-neutral-800"
           >
             {portraitUrl && (
               <img 
@@ -101,7 +102,7 @@ export const About = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm md:text-base text-neutral-300 font-['Arial'] leading-relaxed text-center md:text-left mb-8"
+              className="text-sm md:text-base text-neutral-600 dark:text-neutral-300 font-['Arial'] leading-relaxed text-center md:text-left mb-8"
             >
               {aboutData.description.split('\n').map((paragraph, index) => (
                 <p key={index} className="mb-4">{paragraph}</p>
@@ -117,7 +118,7 @@ export const About = () => {
               >
                 <Button 
                   variant="outline"
-                  className="group bg-white/10 hover:bg-white/20 text-white border-0 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
+                  className="group bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-0 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                   onClick={() => window.open(aboutData.portfolio_url || '', '_blank')}
                 >
                   Download Portfolio

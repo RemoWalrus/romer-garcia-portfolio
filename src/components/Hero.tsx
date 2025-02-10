@@ -76,14 +76,16 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   }, [titleIndex]);
 
   useEffect(() => {
-    if (heroImages.length > 1 && !showVideo) {
+    const startCarousel = !showVideo && heroImages.length > 1;
+    
+    if (startCarousel) {
       const imageTimer = setInterval(() => {
-        setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
+        setCurrentImageIndex(prevIndex => (prevIndex + 1) % heroImages.length);
       }, 5000);
 
       return () => clearInterval(imageTimer);
     }
-  }, [heroImages, showVideo]);
+  }, [showVideo, heroImages]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -150,3 +152,4 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
+

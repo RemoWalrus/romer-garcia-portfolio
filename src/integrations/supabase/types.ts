@@ -81,24 +81,6 @@ export type Database = {
         }
         Relationships: []
       }
-      trivia_facts: {
-        Row: {
-          created_at: string
-          fact: string
-          id: number
-        }
-        Insert: {
-          created_at?: string
-          fact: string
-          id?: number
-        }
-        Update: {
-          created_at?: string
-          fact?: string
-          id?: number
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never

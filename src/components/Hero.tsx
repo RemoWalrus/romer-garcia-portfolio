@@ -1,4 +1,3 @@
-
 import { ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -15,15 +14,15 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [heroImages, setHeroImages] = useState<string[]>([]);
   
   const titles = [
-    { text: "Multimedia Artist", weight: "font-light" },
-    { text: "Illustrator", weight: "font-medium" },
-    { text: "Photographer", weight: "font-bold" },
-    { text: "Video Editor", weight: "font-thin" },
-    { text: "Five Tool Player", weight: "font-normal" },
-    { text: "Art Director", weight: "font-semibold" },
-    { text: "Web Master", weight: "font-extrabold" },
-    { text: "Social Media Manager", weight: "font-light" },
-    { text: "romergarcia", weight: "" } // Special case handled separately
+    { text: "Multimedia Artist", weights: ["font-thin", "font-bold"] },
+    { text: "Illustrator", weights: ["font-thin"] },
+    { text: "Photographer", weights: ["font-thin"] },
+    { text: "Video Editor", weights: ["font-thin", "font-bold"] },
+    { text: "Five Tool Player", weights: ["font-thin", "font-medium", "font-bold"] },
+    { text: "Art Director", weights: ["font-thin", "font-bold"] },
+    { text: "Web Master", weights: ["font-thin", "font-bold"] },
+    { text: "Social Media Manager", weights: ["font-thin", "font-medium", "font-bold"] },
+    { text: "romergarcia", weights: ["font-medium", "font-thin"] } // Special case
   ];
 
   useEffect(() => {
@@ -53,7 +52,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     fetchHeroImages();
   }, []);
 
-  // Title rotation effect
   useEffect(() => {
     if (titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
@@ -63,7 +61,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     }
   }, [titleIndex]);
 
-  // Image rotation effect
   useEffect(() => {
     if (heroImages.length > 1) {
       const imageTimer = setInterval(() => {
@@ -74,7 +71,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     }
   }, [heroImages]);
 
-  // Update favicon
   useEffect(() => {
     const updateFavicon = async () => {
       const { data: faviconData } = supabase.storage
@@ -161,6 +157,35 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     }
   };
 
+  const renderTitle = (text: string, weights: string[]) => {
+    if (text === "romergarcia") {
+      return (
+        <span>
+          <span className="font-medium">romer</span>
+          <span className="font-thin text-neutral-200">garcia</span>
+        </span>
+      );
+    }
+
+    const words = text.split(" ");
+    if (words.length === 1) {
+      return <span className="font-thin">{text}</span>;
+    }
+
+    return (
+      <span>
+        {words.map((word, index) => (
+          <span
+            key={index}
+            className={`${weights[index % weights.length]} ${index > 0 ? "ml-4" : ""}`}
+          >
+            {word}
+          </span>
+        ))}
+      </span>
+    );
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
@@ -196,7 +221,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             >
               <motion.h1
                 variants={pixelGlitch}
-                className={`text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 ${titles[titleIndex].weight}`}
+                className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8"
                 style={{
                   textShadow: `
                     2px 0 0 rgba(255,0,0,0.3),
@@ -205,14 +230,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
                   fontFeatureSettings: '"ss01"'
                 }}
               >
-                {titles[titleIndex].text === "romergarcia" ? (
-                  <span>
-                    <span className="font-medium">romer</span>
-                    <span className="font-thin text-neutral-200">garcia</span>
-                  </span>
-                ) : (
-                  <span className="font-roc">{titles[titleIndex].text}</span>
-                )}
+                {renderTitle(titles[titleIndex].text, titles[titleIndex].weights)}
               </motion.h1>
               <motion.div
                 className="absolute inset-0 pointer-events-none"
@@ -235,15 +253,8 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
                   }
                 }}
               >
-                <h1 className={`text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 ${titles[titleIndex].weight}`}>
-                  {titles[titleIndex].text === "romergarcia" ? (
-                    <span>
-                      <span className="font-medium">romer</span>
-                      <span className="font-thin text-neutral-200">garcia</span>
-                    </span>
-                  ) : (
-                    <span className="font-roc">{titles[titleIndex].text}</span>
-                  )}
+                <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8">
+                  {renderTitle(titles[titleIndex].text, titles[titleIndex].weights)}
                 </h1>
               </motion.div>
             </motion.div>

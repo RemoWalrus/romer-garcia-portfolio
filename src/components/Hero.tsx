@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { TitleConfig } from './hero/title-config';
@@ -68,11 +67,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
-      {/* Updated gradient overlay - more subtle, fading to transparent */}
-      <div 
-        className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent pointer-events-none z-10"
-        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 70%, rgba(0,0,0,0) 100%)' }}
-      />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/[0.03] to-transparent via-transparent h-1/2 mix-blend-multiply pointer-events-none z-10" />
       <HeroContent
         titles={titles}
         titleIndex={titleIndex}
@@ -81,4 +76,3 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
-

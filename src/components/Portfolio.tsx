@@ -1,3 +1,4 @@
+
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -84,14 +85,14 @@ export const Portfolio = () => {
         <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="mb-2">
-              <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
+              <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                 {selectedProject?.category}
               </span>
             </div>
             <DialogTitle className="text-2xl font-roc font-extralight mb-4">
               {selectedProject?.title}
             </DialogTitle>
-            <DialogDescription className="text-neutral-300 font-arial mb-8">
+            <DialogDescription className="text-neutral-700 dark:text-neutral-200 font-arial mb-12">
               {selectedProject?.description}
             </DialogDescription>
             <div className="grid grid-cols-4 gap-4">
@@ -101,12 +102,12 @@ export const Portfolio = () => {
                   initial="initial"
                   animate="animate"
                   variants={pixelGlitch}
-                  className="col-span-4 h-96 mb-4 relative group"
+                  className="col-span-4 h-96 mb-8 relative group"
                 >
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-lg transition-all duration-500 hover:scale-[1.01]"
                   />
                   {selectedProject?.ext_url && (
                     <div 
@@ -147,3 +148,4 @@ export const Portfolio = () => {
     </section>
   );
 };
+

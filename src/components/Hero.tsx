@@ -127,7 +127,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             >
               <motion.h1
                 variants={pixelGlitch}
-                className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8"
+                className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8"
                 style={{
                   textShadow: `
                     2px 0 0 rgba(255,0,0,0.3),
@@ -139,7 +139,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
                 {titles[titleIndex] === "romergarcia" ? (
                   <span>
                     <span className="font-medium">romer</span>
-                    <span className="font-thin">garcia</span>
+                    <span className="font-thin text-neutral-200">garcia</span>
                   </span>
                 ) : (
                   <span className="font-roc">{titles[titleIndex]}</span>
@@ -166,11 +166,11 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
                   }
                 }}
               >
-                <h1 className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8">
+                <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8">
                   {titles[titleIndex] === "romergarcia" ? (
                     <span>
                       <span className="font-medium">romer</span>
-                      <span className="font-thin">garcia</span>
+                      <span className="font-thin text-neutral-200">garcia</span>
                     </span>
                   ) : (
                     <span className="font-roc">{titles[titleIndex]}</span>

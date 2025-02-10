@@ -25,7 +25,8 @@ export const Footer = () => {
       const { data, error } = await supabase
         .from('sections')
         .select('facebook_url, twitter_url, linkedin_url, instagram_url, youtube_url')
-        .single();
+        .eq('section_name', 'social')
+        .maybeSingle();
       
       if (data && !error) {
         setSocialLinks(data);
@@ -70,3 +71,4 @@ export const Footer = () => {
     </footer>
   );
 };
+

@@ -46,6 +46,7 @@ export type Database = {
           cta_text: string | null
           description: string | null
           id: number
+          portfolio_url: string | null
           section_name: string
           title: string
           updated_at: string
@@ -57,6 +58,7 @@ export type Database = {
           cta_text?: string | null
           description?: string | null
           id?: number
+          portfolio_url?: string | null
           section_name: string
           title: string
           updated_at?: string
@@ -68,6 +70,7 @@ export type Database = {
           cta_text?: string | null
           description?: string | null
           id?: number
+          portfolio_url?: string | null
           section_name?: string
           title?: string
           updated_at?: string

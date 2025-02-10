@@ -35,7 +35,7 @@ export const Portfolio = () => {
       <div 
         className="absolute inset-0 bg-fixed opacity-10"
         style={{
-          backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('RomerGarcia-cover.svg').data.publicUrl})`,
+          backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('RomerGarcia-cover.png').data.publicUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

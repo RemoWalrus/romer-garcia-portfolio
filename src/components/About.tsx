@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
@@ -61,32 +60,16 @@ export const About = () => {
 
   return (
     <section id="about" className="relative bg-neutral-900 py-32 overflow-hidden">
-      {/* Background Image */}
+      {/* Background Pattern */}
       <div 
-        className="absolute inset-0 opacity-25 bg-fixed"
-        style={{
-          backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('RomerGarcia-cover.png').data.publicUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
-
-      {/* Pixelated Noise Effect */}
-      <div 
-        className="absolute inset-0 opacity-25 pointer-events-none mix-blend-overlay"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          filter: 'contrast(170%) brightness(170%)',
+          backgroundSize: '200px 200px',
         }}
       />
 
-      {/* Chromatic Aberration */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 mix-blend-multiply opacity-20" style={{ backgroundColor: '#ff0000', transform: 'translate(-2px, 0)' }} />
-        <div className="absolute inset-0 mix-blend-multiply opacity-20" style={{ backgroundColor: '#00ff00', transform: 'translate(2px, 0)' }} />
-        <div className="absolute inset-0 mix-blend-multiply opacity-20" style={{ backgroundColor: '#0000ff', transform: 'translate(0, 2px)' }} />
-      </div>
-
+      {/* Main Content */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}

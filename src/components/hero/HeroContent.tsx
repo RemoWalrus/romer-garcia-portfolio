@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { HeroTitle } from './HeroTitle';
 import { TitleConfig } from './title-config';
 import { glitchVariants } from './animation-variants';
+import { useEffect, useState } from 'react';
+import { supabase } from "@/integrations/supabase/client";
 
 interface HeroContentProps {
   titles: TitleConfig[];
@@ -13,6 +15,26 @@ interface HeroContentProps {
 }
 
 export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContentProps) => {
+  const [subtitle, setSubtitle] = useState("I create immersive digital experiences that blend storytelling with cutting-edge technology");
+
+  useEffect(() => {
+    const fetchHeroSection = async () => {
+      const { data, error } = await supabase
+        .from('sections')
+        .select('description')
+        .eq('section_name', 'hero')
+        .single();
+      
+      if (data && !error) {
+        setSubtitle(data.description || subtitle);
+      } else {
+        console.error('Error fetching hero section:', error);
+      }
+    };
+
+    fetchHeroSection();
+  }, []);
+
   return (
     <div className="container relative z-20 px-4 py-32 mx-auto text-center">
       <motion.div
@@ -34,7 +56,7 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
         </AnimatePresence>
         
         <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12 font-roc">
-          I create immersive digital experiences that blend storytelling with cutting-edge technology
+          {subtitle}
         </p>
 
         <Button 
@@ -49,3 +71,4 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
     </div>
   );
 };
+

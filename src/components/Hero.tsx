@@ -1,8 +1,12 @@
+
 import { ArrowDown } from 'lucide-react';
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
+import { glitchVariants } from './hero/animation-variants';
+import { titles } from './hero/title-config';
+import { HeroTitle } from './hero/HeroTitle';
 
 interface HeroProps {
   scrollToSection: (sectionId: string) => void;
@@ -12,18 +16,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [titleIndex, setTitleIndex] = useState(0);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroImages, setHeroImages] = useState<string[]>([]);
-  
-  const titles = [
-    { text: "Multimedia Artist", weights: ["font-thin", "font-bold"] },
-    { text: "Illustrator", weights: ["font-thin"] },
-    { text: "Photographer", weights: ["font-thin"] },
-    { text: "Video Editor", weights: ["font-thin", "font-bold"] },
-    { text: "Five Tool Player", weights: ["font-thin", "font-medium", "font-bold"] },
-    { text: "Art Director", weights: ["font-thin", "font-bold"] },
-    { text: "Web Master", weights: ["font-thin", "font-bold"] },
-    { text: "Social Media Manager", weights: ["font-thin", "font-medium", "font-bold"] },
-    { text: "romergarcia", weights: ["font-medium", "font-thin"] } // Special case
-  ];
 
   useEffect(() => {
     const fetchHeroImages = async () => {
@@ -43,7 +35,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
         );
         setHeroImages(imageUrls);
       } else {
-        // Fallback to the original image if no images in the hero folder
         const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
         setHeroImages([fallbackUrl]);
       }
@@ -65,7 +56,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     if (heroImages.length > 1) {
       const imageTimer = setInterval(() => {
         setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
-      }, 5000); // Change image every 5 seconds
+      }, 5000);
 
       return () => clearInterval(imageTimer);
     }
@@ -92,99 +83,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
     updateFavicon();
   }, []);
-
-  const glitchVariants: Variants = {
-    initial: {
-      opacity: 0,
-      scale: 0.98,
-      filter: "blur(0px)",
-      x: 0,
-    },
-    animate: {
-      opacity: 1,
-      scale: [0.98, 1.01, 0.99, 1],
-      filter: [
-        "blur(0px) brightness(100%) contrast(100%)",
-        "blur(2px) brightness(150%) contrast(90%) hue-rotate(2deg)",
-        "blur(0px) brightness(100%) contrast(100%)",
-        "blur(1px) brightness(120%) contrast(95%) hue-rotate(-2deg)",
-        "blur(0px) brightness(100%) contrast(100%)"
-      ],
-      x: [0, -2, 2, -1, 1, 0],
-      transition: {
-        duration: 0.4,
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-      }
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.98,
-      filter: [
-        "blur(0px) brightness(100%) contrast(100%)",
-        "blur(3px) brightness(200%) contrast(80%) hue-rotate(5deg)",
-        "blur(0px) brightness(100%) contrast(100%)"
-      ],
-      x: [0, 2, -2, 1, -1, 0],
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      }
-    }
-  };
-
-  const pixelGlitch: Variants = {
-    initial: { 
-      clipPath: "inset(0 0 0 0)" 
-    },
-    animate: {
-      clipPath: [
-        "inset(0 0 0 0)",
-        "inset(10% 15% 25% 5%)",
-        "inset(25% 5% 15% 10%)",
-        "inset(15% 25% 5% 20%)",
-        "inset(5% 10% 20% 15%)",
-        "inset(0 0 0 0)"
-      ],
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
-        repeat: 1,
-        repeatType: "reverse",
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-      }
-    }
-  };
-
-  const renderTitle = (text: string, weights: string[]) => {
-    if (text === "romergarcia") {
-      return (
-        <span>
-          <span className="font-medium">romer</span>
-          <span className="font-thin text-neutral-200">garcia</span>
-        </span>
-      );
-    }
-
-    const words = text.split(" ");
-    if (words.length === 1) {
-      return <span className="font-thin">{text}</span>;
-    }
-
-    return (
-      <span>
-        {words.map((word, index) => (
-          <span
-            key={index}
-            className={`${weights[index % weights.length]} ${index > 0 ? "ml-4" : ""}`}
-          >
-            {word}
-          </span>
-        ))}
-      </span>
-    );
-  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -219,44 +117,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
               variants={glitchVariants}
               className="relative"
             >
-              <motion.h1
-                variants={pixelGlitch}
-                className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8"
-                style={{
-                  textShadow: `
-                    2px 0 0 rgba(255,0,0,0.3),
-                    -2px 0 0 rgba(0,255,255,0.3)
-                  `,
-                  fontFeatureSettings: '"ss01"'
-                }}
-              >
-                {renderTitle(titles[titleIndex].text, titles[titleIndex].weights)}
-              </motion.h1>
-              <motion.div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  mixBlendMode: "difference",
-                  textShadow: "none"
-                }}
-                animate={{
-                  clipPath: [
-                    "inset(50% 0 50% 0)",
-                    "inset(0% 0 0% 0)",
-                    "inset(50% 0 50% 0)"
-                  ],
-                  transition: {
-                    duration: 0.4,
-                    ease: "easeInOut",
-                    times: [0, 0.5, 1],
-                    repeat: 1,
-                    repeatType: "reverse"
-                  }
-                }}
-              >
-                <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8">
-                  {renderTitle(titles[titleIndex].text, titles[titleIndex].weights)}
-                </h1>
-              </motion.div>
+              <HeroTitle title={titles[titleIndex]} />
             </motion.div>
           </AnimatePresence>
           

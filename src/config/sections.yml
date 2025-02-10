@@ -1,0 +1,19 @@
+
+hero:
+  title: romergarcia
+  subtitle: I create immersive digital experiences that blend storytelling with cutting-edge technology
+  cta_text: View My Work
+  cta_section: portfolio
+  video_url: staticglitchy.mp4
+
+portfolio:
+  title: Portfolio
+  description: A showcase of my creative work and projects
+
+about:
+  title: About Me
+  description: Learn more about my journey and expertise
+
+contact:
+  title: Contact
+  description: Get in touch with me

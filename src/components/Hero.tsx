@@ -17,6 +17,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroImages, setHeroImages] = useState<string[]>([]);
   const [showVideo, setShowVideo] = useState(true);
+  const videoUrl = supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl;
 
   useEffect(() => {
     const fetchHeroImages = async () => {
@@ -95,9 +96,8 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             loop
             playsInline
             className="w-full h-full object-cover opacity-30"
-          >
-            <source src="staticglitchy.mp4" type="video/mp4" />
-          </video>
+            src={videoUrl}
+          />
         ) : (
           heroImages.length > 0 && (
             <motion.img 

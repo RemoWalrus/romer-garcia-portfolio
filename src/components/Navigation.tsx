@@ -18,7 +18,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
       {/* Background overlay */}
       <div className={`absolute inset-0 transition-all duration-300 ${
         scrolled 
-          ? 'bg-[#0A0D14]/95 backdrop-blur-sm border-b border-purple-900/50'
+          ? 'bg-[#070a0f]/95 backdrop-blur-sm border-b border-white/10'
           : 'bg-transparent'
       }`} />
 
@@ -68,7 +68,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
 
         {/* Mobile menu overlay */}
         <div 
-          className={`md:hidden fixed inset-0 bg-[#0A0D14]/95 backdrop-blur-md z-40 transition-transform duration-300 ${
+          className={`md:hidden fixed inset-0 bg-[#070a0f]/95 backdrop-blur-md z-40 transition-transform duration-300 ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

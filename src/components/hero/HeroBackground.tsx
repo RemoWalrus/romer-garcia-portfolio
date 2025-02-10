@@ -72,3 +72,4 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
     </div>
   );
 };
+

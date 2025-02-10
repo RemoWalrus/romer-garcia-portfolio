@@ -84,26 +84,71 @@ export const Portfolio = () => {
         setSelectedProject(null);
         setHeroImageIndex(0);
       }}>
-        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:p-12 lg:p-16">
-          <DialogHeader>
-            <div className="mb-2">
-              <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-                {selectedProject?.category}
-              </span>
+        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-hidden md:p-0">
+          <div className="h-full flex flex-col md:flex-row">
+            {/* Text Content */}
+            <div className="md:w-1/2 p-6 md:p-12 overflow-y-auto">
+              <DialogHeader>
+                <div className="mb-2">
+                  <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                    {selectedProject?.category}
+                  </span>
+                </div>
+                <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
+                  {selectedProject?.title}
+                </DialogTitle>
+                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed">
+                  {selectedProject?.description}
+                </DialogDescription>
+              </DialogHeader>
             </div>
-            <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
-              {selectedProject?.title}
-            </DialogTitle>
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base whitespace-pre-line leading-relaxed">
-              {selectedProject?.description}
-            </DialogDescription>
-            <div className="grid grid-cols-4 gap-4">
-              {selectedProject?.additional_images?.length > 0 ? (
-                <>
-                  <motion.div 
-                    key={heroImageIndex}
-                    className="col-span-4 h-[50vh] mb-8 relative group"
-                  >
+
+            {/* Image Gallery */}
+            <div className="md:w-1/2 bg-neutral-950 overflow-y-auto">
+              <div className="p-6 md:p-12">
+                {selectedProject?.additional_images?.length > 0 ? (
+                  <>
+                    <motion.div 
+                      key={heroImageIndex}
+                      className="w-full aspect-video mb-8 relative group"
+                    >
+                      <img
+                        src={selectedProject?.image_url}
+                        alt={selectedProject?.title}
+                        className="w-full h-full object-cover rounded-lg transition-all duration-500 hover:scale-[1.01]"
+                      />
+                      {selectedProject?.ext_url && (
+                        <div 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleExternalLink(selectedProject.ext_url);
+                          }}
+                          className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                        >
+                          <div className="text-white flex items-center uppercase">
+                            View Project <MoveRight className="ml-2 w-4 h-4" />
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                    <div className="grid grid-cols-3 gap-0">
+                      {selectedProject.additional_images.map((image: string, index: number) => (
+                        <div 
+                          key={index}
+                          onClick={() => handleImageClick(index)}
+                          className="cursor-pointer aspect-video"
+                        >
+                          <img
+                            src={image}
+                            alt={`${selectedProject.title} preview ${index + 1}`}
+                            className="w-full h-full object-cover transition-opacity hover:opacity-80"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full aspect-video relative group">
                     <img
                       src={selectedProject?.image_url}
                       alt={selectedProject?.title}
@@ -122,47 +167,11 @@ export const Portfolio = () => {
                         </div>
                       </div>
                     )}
-                  </motion.div>
-                  <div className="col-span-4 grid grid-cols-3 gap-0">
-                    {selectedProject.additional_images.map((image: string, index: number) => (
-                      <div 
-                        key={index}
-                        onClick={() => handleImageClick(index)}
-                        className="cursor-pointer aspect-video"
-                      >
-                        <img
-                          src={image}
-                          alt={`${selectedProject.title} preview ${index + 1}`}
-                          className="w-full h-full object-cover transition-opacity hover:opacity-80"
-                        />
-                      </div>
-                    ))}
                   </div>
-                </>
-              ) : (
-                <div className="col-span-4 h-[50vh] relative group">
-                  <img
-                    src={selectedProject?.image_url}
-                    alt={selectedProject?.title}
-                    className="w-full h-full object-cover rounded-lg transition-all duration-500 hover:scale-[1.01]"
-                  />
-                  {selectedProject?.ext_url && (
-                    <div 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleExternalLink(selectedProject.ext_url);
-                      }}
-                      className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                    >
-                      <div className="text-white flex items-center uppercase">
-                        View Project <MoveRight className="ml-2 w-4 h-4" />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </DialogHeader>
+          </div>
         </DialogContent>
       </Dialog>
 

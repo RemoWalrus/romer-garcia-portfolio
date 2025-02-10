@@ -1,3 +1,4 @@
+
 import { ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [heroImages, setHeroImages] = useState<string[]>([]);
   const [showVideo, setShowVideo] = useState(true);
+  const [isGlitching, setIsGlitching] = useState(false);
   const videoUrl = supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl;
 
   useEffect(() => {
@@ -77,17 +79,49 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   useEffect(() => {
     if (!showVideo && heroImages.length > 1) {
       console.log('Starting carousel with images:', heroImages);
-      const timer = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => {
-          const nextIndex = (prevIndex + 1) % heroImages.length;
-          console.log('Updating image index from', prevIndex, 'to', nextIndex);
-          return nextIndex;
-        });
+      const glitchTimer = setInterval(() => {
+        setIsGlitching(true);
+        setTimeout(() => {
+          setCurrentImageIndex((prevIndex) => {
+            const nextIndex = (prevIndex + 1) % heroImages.length;
+            console.log('Updating image index from', prevIndex, 'to', nextIndex);
+            return nextIndex;
+          });
+          setTimeout(() => {
+            setIsGlitching(false);
+          }, 150);
+        }, 150);
       }, 5000);
 
-      return () => clearInterval(timer);
+      return () => clearInterval(glitchTimer);
     }
   }, [showVideo, heroImages.length]);
+
+  const glitchTransitionVariants = {
+    initial: { opacity: 1 },
+    glitch: {
+      opacity: 1,
+      filter: [
+        'none',
+        'url(#glitch)',
+        'none',
+        'url(#glitch)',
+        'none'
+      ],
+      x: [0, -10, 5, -5, 0],
+      y: [0, 5, -10, 5, 0],
+      transition: {
+        duration: 0.3,
+        times: [0, 0.25, 0.5, 0.75, 1]
+      }
+    },
+    exit: { 
+      opacity: 0,
+      filter: 'url(#glitch)',
+      scale: 1.05,
+      transition: { duration: 0.2 }
+    }
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -103,18 +137,54 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             src={videoUrl}
           />
         ) : (
-          <AnimatePresence mode="wait">
-            <motion.img 
-              key={heroImages[currentImageIndex]}
-              src={heroImages[currentImageIndex]} 
-              alt="Background" 
-              className="w-full h-full object-cover opacity-40"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.5 }}
-            />
-          </AnimatePresence>
+          <>
+            <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+              <defs>
+                <filter id="glitch">
+                  <feColorMatrix
+                    type="matrix"
+                    values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                    result="r"
+                  />
+                  <feOffset in="r" result="r" dx="-2" dy="3">
+                    <animate attributeName="dx" values="-2;2;-2" dur="0.1s" repeatCount="indefinite"/>
+                  </feOffset>
+                  <feColorMatrix
+                    type="matrix"
+                    in="SourceGraphic"
+                    values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                    result="g"
+                  />
+                  <feOffset in="g" result="g" dx="2" dy="-3">
+                    <animate attributeName="dx" values="2;-2;2" dur="0.1s" repeatCount="indefinite"/>
+                  </feOffset>
+                  <feColorMatrix
+                    type="matrix"
+                    in="SourceGraphic"
+                    values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+                    result="b"
+                  />
+                  <feOffset in="b" result="b" dx="2" dy="3">
+                    <animate attributeName="dy" values="3;-3;3" dur="0.1s" repeatCount="indefinite"/>
+                  </feOffset>
+                  <feBlend in="r" in2="g" mode="screen" result="rg"/>
+                  <feBlend in="rg" in2="b" mode="screen" result="rgb"/>
+                </filter>
+              </defs>
+            </svg>
+            <AnimatePresence mode="wait">
+              <motion.img 
+                key={heroImages[currentImageIndex]}
+                src={heroImages[currentImageIndex]} 
+                alt="Background" 
+                className="w-full h-full object-cover opacity-40"
+                initial="initial"
+                animate={isGlitching ? "glitch" : "initial"}
+                exit="exit"
+                variants={glitchTransitionVariants}
+              />
+            </AnimatePresence>
+          </>
         )}
       </div>
       

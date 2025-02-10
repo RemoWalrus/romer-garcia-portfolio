@@ -98,28 +98,35 @@ export const Portfolio = () => {
             <DialogTitle className="text-2xl font-roc font-extralight mb-4">
               {selectedProject?.title}
             </DialogTitle>
-            <div className="grid grid-cols-4 gap-4 mb-6">
-              {projectImages.map((image, index) => (
-                <div 
-                  key={index}
-                  onClick={() => handleImageClick(index)}
-                  className={`cursor-pointer transition-all duration-300 ${
-                    index === heroImageIndex 
-                      ? 'col-span-4 h-96' 
-                      : 'col-span-2 md:col-span-1 h-32'
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`Project preview ${index + 1}`}
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-            <DialogDescription className="text-neutral-300 font-arial">
+            <DialogDescription className="text-neutral-300 font-arial mb-8">
               {selectedProject?.description}
             </DialogDescription>
+            <div className="grid grid-cols-4 gap-4">
+              <div className="col-span-4 h-96 mb-4">
+                <img
+                  src={projectImages[heroImageIndex]}
+                  alt={`Project preview ${heroImageIndex + 1}`}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              </div>
+              <div className="col-span-4 grid grid-cols-3 gap-4">
+                {projectImages.map((image, index) => (
+                  index !== heroImageIndex && (
+                    <div 
+                      key={index}
+                      onClick={() => handleImageClick(index)}
+                      className="cursor-pointer h-32"
+                    >
+                      <img
+                        src={image}
+                        alt={`Project preview ${index + 1}`}
+                        className="w-full h-full object-cover rounded-lg transition-opacity hover:opacity-80"
+                      />
+                    </div>
+                  )
+                ))}
+              </div>
+            </div>
           </DialogHeader>
         </DialogContent>
       </Dialog>

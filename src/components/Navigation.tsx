@@ -1,3 +1,4 @@
+
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
@@ -62,7 +63,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           </button>
         </div>
 
-        <div className={`md:hidden fixed inset-0 bg-neutral-950/98 backdrop-blur-md z-50 transition-transform duration-300 ${
+        <div className={`md:hidden fixed inset-0 bg-neutral-950/98 z-50 transition-transform duration-300 ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
           <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">

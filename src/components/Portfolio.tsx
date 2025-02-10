@@ -4,11 +4,13 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
+import { ProfileModal } from './ProfileModal';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [heroImageIndex, setHeroImageIndex] = useState(0);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   useEffect(() => {
     fetchProjects();
@@ -38,16 +40,17 @@ export const Portfolio = () => {
   return (
     <section id="portfolio" className="relative bg-white dark:bg-neutral-950 py-32">
       <div 
-        className="absolute inset-0 bg-fixed opacity-10"
+        className="absolute inset-0 bg-fixed opacity-10 cursor-pointer"
         style={{
           backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('RomerGarcia-cover.png').data.publicUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
+        onClick={() => setIsProfileModalOpen(true)}
       />
       
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
           Featured Work
         </h2>
         
@@ -66,9 +69,9 @@ export const Portfolio = () => {
               
               <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                 <p className="text-xs font-bold text-neutral-400 mb-2 uppercase tracking-wider">{project.category}</p>
-                <h3 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4">{project.title}</h3>
+                <h3 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4 uppercase">{project.title}</h3>
                 <p className="text-sm text-neutral-300 mb-6">{project.description.split('.')[0]}.</p>
-                <div className="flex items-center text-neutral-400 group-hover:text-white transition-colors text-sm font-roc">
+                <div className="flex items-center text-neutral-400 group-hover:text-white transition-colors text-sm font-roc uppercase">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
                 </div>
               </div>
@@ -88,10 +91,10 @@ export const Portfolio = () => {
                 {selectedProject?.category}
               </span>
             </div>
-            <DialogTitle className="text-2xl font-roc font-extralight mb-4">
+            <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
               {selectedProject?.title}
             </DialogTitle>
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base whitespace-pre-line">
               {selectedProject?.description}
             </DialogDescription>
             <div className="grid grid-cols-4 gap-4">
@@ -114,7 +117,7 @@ export const Portfolio = () => {
                         }}
                         className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                       >
-                        <div className="text-white flex items-center">
+                        <div className="text-white flex items-center uppercase">
                           View Project <MoveRight className="ml-2 w-4 h-4" />
                         </div>
                       </div>
@@ -151,7 +154,7 @@ export const Portfolio = () => {
                       }}
                       className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                     >
-                      <div className="text-white flex items-center">
+                      <div className="text-white flex items-center uppercase">
                         View Project <MoveRight className="ml-2 w-4 h-4" />
                       </div>
                     </div>
@@ -162,7 +165,11 @@ export const Portfolio = () => {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+
+      <ProfileModal 
+        isOpen={isProfileModalOpen} 
+        onClose={() => setIsProfileModalOpen(false)} 
+      />
     </section>
   );
 };
-

@@ -44,7 +44,9 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             console.log('Generated URL:', url);
             return url;
           });
-          setHeroImages(imageUrls);
+          // Randomly shuffle the array of images
+          const shuffledImages = [...imageUrls].sort(() => Math.random() - 0.5);
+          setHeroImages(shuffledImages);
         } else {
           console.log('No images found, using fallback');
           const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
@@ -214,7 +216,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
           <Button 
             onClick={() => scrollToSection('portfolio')}
             variant="outline" 
-            className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-lg md:text-xl font-roc px-8 py-6"
+            className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-lg md:text-xl font-roc px-8 py-6 uppercase tracking-wider"
           >
             View My Work
             <ArrowDown className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" />
@@ -224,3 +226,4 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
+

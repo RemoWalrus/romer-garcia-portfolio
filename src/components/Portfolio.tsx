@@ -4,6 +4,8 @@ import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
+import { motion, AnimatePresence } from "framer-motion";
+import { pixelGlitch } from './hero/animation-variants';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -107,13 +109,21 @@ export const Portfolio = () => {
               {selectedProject?.description}
             </DialogDescription>
             <div className="grid grid-cols-4 gap-4">
-              <div className="col-span-4 h-96 mb-4">
-                <img
-                  src={projectImages[heroImageIndex]}
-                  alt={`Project preview ${heroImageIndex + 1}`}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={heroImageIndex}
+                  initial="initial"
+                  animate="animate"
+                  variants={pixelGlitch}
+                  className="col-span-4 h-96 mb-4"
+                >
+                  <img
+                    src={projectImages[heroImageIndex]}
+                    alt={`Project preview ${heroImageIndex + 1}`}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </motion.div>
+              </AnimatePresence>
               <div className="col-span-4 grid grid-cols-3 gap-4">
                 {projectImages.map((image, index) => (
                   index !== heroImageIndex && (
@@ -138,3 +148,4 @@ export const Portfolio = () => {
     </section>
   );
 };
+

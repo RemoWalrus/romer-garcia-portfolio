@@ -1,49 +1,13 @@
-import { ParallaxContainer } from '@/components/ParallaxContainer';
-import { ParallaxLayer } from '@/components/ParallaxLayer';
-import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { MoveRight, ArrowDown, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
-import { supabase } from "@/integrations/supabase/client";
+
 import { useEffect, useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { Navigation } from '@/components/Navigation';
+import { Hero } from '@/components/Hero';
+import { Portfolio } from '@/components/Portfolio';
+import { About } from '@/components/About';
+import { Contact } from '@/components/Contact';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [titleIndex, setTitleIndex] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [projects, setProjects] = useState<any[]>([]);
-  
-  const titles = [
-    "Multimedia Artist",
-    "Illustrator",
-    "Photographer",
-    "Video Editor",
-    "Five Tool Player",
-    "Art Director",
-    "Web Master",
-    "Social Media Manager",
-    "romergarcia"
-  ];
-  
-  const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
-  const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
-  const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*');
-    
-    if (data) {
-      setProjects(data);
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,88 +19,13 @@ const Index = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (titleIndex < titles.length - 1) {
-      const timer = setTimeout(() => {
-        setTitleIndex(prev => prev + 1);
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [titleIndex]);
-
-  const glitchVariants: Variants = {
-    initial: {
-      opacity: 0,
-      scale: 0.98,
-      filter: "blur(0px)",
-      x: 0,
-    },
-    animate: {
-      opacity: 1,
-      scale: [0.98, 1.01, 0.99, 1],
-      filter: [
-        "blur(0px) brightness(100%) contrast(100%)",
-        "blur(2px) brightness(150%) contrast(90%) hue-rotate(2deg)",
-        "blur(0px) brightness(100%) contrast(100%)",
-        "blur(1px) brightness(120%) contrast(95%) hue-rotate(-2deg)",
-        "blur(0px) brightness(100%) contrast(100%)"
-      ],
-      x: [0, -2, 2, -1, 1, 0],
-      transition: {
-        duration: 0.4,
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-      }
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.98,
-      filter: [
-        "blur(0px) brightness(100%) contrast(100%)",
-        "blur(3px) brightness(200%) contrast(80%) hue-rotate(5deg)",
-        "blur(0px) brightness(100%) contrast(100%)"
-      ],
-      x: [0, 2, -2, 1, -1, 0],
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      }
-    }
-  };
-
-  const pixelGlitch: Variants = {
-    initial: { 
-      clipPath: "inset(0 0 0 0)" 
-    },
-    animate: {
-      clipPath: [
-        "inset(0 0 0 0)",
-        "inset(10% 15% 25% 5%)",
-        "inset(25% 5% 15% 10%)",
-        "inset(15% 25% 5% 20%)",
-        "inset(5% 10% 20% 15%)",
-        "inset(0 0 0 0)"
-      ],
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
-        repeat: 1,
-        repeatType: "reverse" as const,
-        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
-      }
-    }
-  };
-
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     section?.scrollIntoView({ behavior: 'smooth' });
-    setMobileMenuOpen(false);
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setMobileMenuOpen(false);
   };
 
   return (
@@ -148,261 +37,16 @@ const Index = () => {
         }} />
       </div>
 
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-neutral-950/90 backdrop-blur-sm border-b border-neutral-800'
-          : 'bg-transparent'
-      }`}>
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <button 
-            onClick={scrollToTop}
-            className="cursor-pointer"
-            aria-label="Scroll to top"
-          >
-            <img 
-              src={logoUrl} 
-              alt="Romer Garcia Logo" 
-              className={`transition-all duration-300 ${
-                scrolled ? 'w-28 md:w-32 h-auto' : 'w-40 md:w-48 h-auto'
-              }`}
-            />
-          </button>
-
-          <button
-            className="md:hidden text-white hover:text-neutral-300 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-
-          <div className="hidden md:flex items-center gap-8">
-            <button
-              onClick={() => scrollToSection('portfolio')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
-            >
-              Portfolio
-            </button>
-            <button
-              onClick={() => scrollToSection('about')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
-            >
-              Contact
-            </button>
-          </div>
-
-          <div className={`md:hidden fixed inset-0 bg-neutral-950/95 z-50 transition-transform duration-300 ${
-            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}>
-            <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">
-              <button
-                onClick={() => scrollToSection('portfolio')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
-              >
-                Portfolio
-              </button>
-              <button
-                onClick={() => scrollToSection('about')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
-              >
-                About
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
-              >
-                Contact
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/20 z-10" />
-          <img 
-            src={backgroundImageUrl} 
-            alt="Background" 
-            className="w-full h-full object-cover opacity-40"
-          />
-        </div>
-        
-        <div className="container relative z-20 px-4 py-32 mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={titles[titleIndex]}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={glitchVariants}
-                className="relative"
-              >
-                <motion.h1
-                  variants={pixelGlitch}
-                  className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8"
-                  style={{
-                    textShadow: `
-                      2px 0 0 rgba(255,0,0,0.3),
-                      -2px 0 0 rgba(0,255,255,0.3)
-                    `,
-                    fontFeatureSettings: '"ss01"'
-                  }}
-                >
-                  {titles[titleIndex] === "romergarcia" ? (
-                    <span>
-                      <span className="font-medium">romer</span>
-                      <span className="font-thin">garcia</span>
-                    </span>
-                  ) : (
-                    <span className="font-roc">{titles[titleIndex]}</span>
-                  )}
-                </motion.h1>
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    mixBlendMode: "difference",
-                    textShadow: "none"
-                  }}
-                  animate={{
-                    clipPath: [
-                      "inset(50% 0 50% 0)",
-                      "inset(0% 0 0% 0)",
-                      "inset(50% 0 50% 0)"
-                    ],
-                    transition: {
-                      duration: 0.4,
-                      ease: "easeInOut",
-                      times: [0, 0.5, 1],
-                      repeat: 1,
-                      repeatType: "reverse" as const
-                    }
-                  }}
-                >
-                  <h1 className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8">
-                    {titles[titleIndex] === "romergarcia" ? (
-                      <span>
-                        <span className="font-medium">romer</span>
-                        <span className="font-thin">garcia</span>
-                      </span>
-                    ) : (
-                      <span className="font-roc">{titles[titleIndex]}</span>
-                    )}
-                  </h1>
-                </motion.div>
-              </motion.div>
-            </AnimatePresence>
-            
-            <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12 font-roc">
-              I create immersive digital experiences that blend storytelling with cutting-edge technology
-            </p>
-
-            <Button 
-              onClick={() => scrollToSection('portfolio')}
-              variant="outline" 
-              className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-base md:text-lg font-roc"
-            >
-              View My Work
-              <ArrowDown className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" />
-            </Button>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="portfolio" className="relative bg-neutral-950 py-32">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-16 text-center">
-            FEATURED WORK
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <Card 
-                key={project.id}
-                className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300"
-              >
-                <div className="p-6">
-                  <h3 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4">{project.category}</h3>
-                  <p className="text-sm md:text-base text-neutral-400 mb-6">{project.description.split('.')[0]}.</p>
-                  <button 
-                    onClick={() => setSelectedProject(project)}
-                    className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base font-roc"
-                  >
-                    Explore More <MoveRight className="ml-2 w-4 h-4" />
-                  </button>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="relative bg-neutral-900 py-32">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8 text-center">
-            ABOUT ME
-          </h2>
-          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto text-center font-roc">
-            With over a decade of experience in digital design and development, I specialize in creating 
-            meaningful digital experiences that bridge the gap between functionality and aesthetics.
-          </p>
-        </div>
-      </section>
-
-      <section id="contact" className="relative bg-neutral-950 py-32">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8">
-            GET IN TOUCH
-          </h2>
-          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8 font-roc">
-            Interested in collaborating? Let's discuss your next project.
-          </p>
-          <div className="flex justify-center gap-6">
-            <a href="https://github.com/RemoWalrus" target="_blank" rel="noopener noreferrer"
-               className="text-neutral-400 hover:text-white transition-colors">
-              <Github className="w-5 h-5" />
-            </a>
-            <a href="https://www.linkedin.com/in/romergarcia/" target="_blank" rel="noopener noreferrer"
-               className="text-neutral-400 hover:text-white transition-colors">
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a href="mailto:romergarcia@gmail.com"
-               className="text-neutral-400 hover:text-white transition-colors">
-              <Mail className="w-5 h-5" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
-        <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-4xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-roc font-extralight mb-4">
-              {selectedProject?.title}
-            </DialogTitle>
-            <img
-              src={selectedProject?.image_url}
-              alt={selectedProject?.title}
-              className="w-full h-64 object-cover rounded-lg mb-4"
-            />
-            <DialogDescription className="text-neutral-300 font-roc">
-              {selectedProject?.description}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <Navigation 
+        scrolled={scrolled} 
+        scrollToSection={scrollToSection}
+        scrollToTop={scrollToTop}
+      />
+      
+      <Hero scrollToSection={scrollToSection} />
+      <Portfolio />
+      <About />
+      <Contact />
     </div>
   );
 };

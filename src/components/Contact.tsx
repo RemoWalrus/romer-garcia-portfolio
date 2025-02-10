@@ -8,7 +8,7 @@ export const Contact = () => {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8">
           GET IN TOUCH
         </h2>
-        <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8 font-roc">
+        <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8 font-sans">
           Interested in collaborating? Let's discuss your next project.
         </p>
         <div className="flex justify-center gap-6">

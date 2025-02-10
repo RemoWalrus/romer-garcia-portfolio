@@ -16,6 +16,7 @@ export type Database = {
           description: string
           id: number
           image_url: string
+          sort_order: number | null
           title: string
         }
         Insert: {
@@ -24,6 +25,7 @@ export type Database = {
           description: string
           id?: number
           image_url: string
+          sort_order?: number | null
           title: string
         }
         Update: {
@@ -32,6 +34,7 @@ export type Database = {
           description?: string
           id?: number
           image_url?: string
+          sort_order?: number | null
           title?: string
         }
         Relationships: []

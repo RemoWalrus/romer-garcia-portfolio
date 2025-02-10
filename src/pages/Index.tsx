@@ -1,6 +1,7 @@
 import { ParallaxContainer } from '@/components/ParallaxContainer';
 import { ParallaxLayer } from '@/components/ParallaxLayer';
 import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { MoveRight, ArrowDown, Github, Linkedin, Mail, Menu, X } from 'lucide-react';
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from 'react';
@@ -11,6 +12,8 @@ const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [titleIndex, setTitleIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [projects, setProjects] = useState<any[]>([]);
   
   const titles = [
     "Multimedia Artist",
@@ -27,6 +30,20 @@ const Index = () => {
   const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
   const depthMapUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow_depth.jpg').data.publicUrl;
   const logoUrl = supabase.storage.from('graphics').getPublicUrl('romergarcialogo.svg').data.publicUrl;
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    const { data, error } = await supabase
+      .from('projects')
+      .select('*');
+    
+    if (data) {
+      setProjects(data);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -162,19 +179,19 @@ const Index = () => {
           <div className="hidden md:flex items-center gap-8">
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
             >
               Portfolio
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
             >
               Contact
             </button>
@@ -186,19 +203,19 @@ const Index = () => {
             <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">
               <button
                 onClick={() => scrollToSection('portfolio')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
               >
                 Portfolio
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
               >
                 About
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
               >
                 Contact
               </button>
@@ -247,7 +264,7 @@ const Index = () => {
                   {titles[titleIndex] === "romergarcia" ? (
                     <span>
                       <span className="font-medium">romer</span>
-                      <span className="font-extralight">garcia</span>
+                      <span className="font-thin">garcia</span>
                     </span>
                   ) : (
                     <span className="font-roc">{titles[titleIndex]}</span>
@@ -278,7 +295,7 @@ const Index = () => {
                     {titles[titleIndex] === "romergarcia" ? (
                       <span>
                         <span className="font-medium">romer</span>
-                        <span className="font-extralight">garcia</span>
+                        <span className="font-thin">garcia</span>
                       </span>
                     ) : (
                       <span className="font-roc">{titles[titleIndex]}</span>
@@ -295,10 +312,10 @@ const Index = () => {
             <Button 
               onClick={() => scrollToSection('portfolio')}
               variant="outline" 
-              className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-sm md:text-base"
+              className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-base md:text-lg font-roc"
             >
               View My Work
-              <ArrowDown className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />
+              <ArrowDown className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" />
             </Button>
           </motion.div>
         </div>
@@ -311,25 +328,23 @@ const Index = () => {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
-              <div className="p-6">
-                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">DIGITAL EXPERIENCE DESIGN</h3>
-                <p className="text-sm md:text-base text-neutral-400 mb-6">Creating immersive digital experiences that engage and inspire.</p>
-                <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
-                  Explore More <MoveRight className="ml-2 w-4 h-4" />
+            {projects.map((project) => (
+              <Card 
+                key={project.id}
+                className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300"
+              >
+                <div className="p-6">
+                  <h3 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4">{project.category}</h3>
+                  <p className="text-sm md:text-base text-neutral-400 mb-6">{project.description.split('.')[0]}.</p>
+                  <button 
+                    onClick={() => setSelectedProject(project)}
+                    className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base font-roc"
+                  >
+                    Explore More <MoveRight className="ml-2 w-4 h-4" />
+                  </button>
                 </div>
-              </div>
-            </Card>
-
-            <Card className="group bg-neutral-900/50 border-neutral-800 hover:border-neutral-700 transition-all duration-300">
-              <div className="p-6">
-                <h3 className="text-xl md:text-2xl font-extralight text-white mb-4">CREATIVE DIRECTION</h3>
-                <p className="text-sm md:text-base text-neutral-400 mb-6">Leading creative teams to deliver innovative solutions.</p>
-                <div className="flex items-center text-neutral-500 group-hover:text-white transition-colors text-sm md:text-base">
-                  Explore More <MoveRight className="ml-2 w-4 h-4" />
-                </div>
-              </div>
-            </Card>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -351,7 +366,7 @@ const Index = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8">
             GET IN TOUCH
           </h2>
-          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8">
+          <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-8 font-roc">
             Interested in collaborating? Let's discuss your next project.
           </p>
           <div className="flex justify-center gap-6">
@@ -370,6 +385,24 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
+        <DialogContent className="bg-neutral-900 text-white border-neutral-800 max-w-4xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-roc font-extralight mb-4">
+              {selectedProject?.title}
+            </DialogTitle>
+            <img
+              src={selectedProject?.image_url}
+              alt={selectedProject?.title}
+              className="w-full h-64 object-cover rounded-lg mb-4"
+            />
+            <DialogDescription className="text-neutral-300 font-roc">
+              {selectedProject?.description}
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

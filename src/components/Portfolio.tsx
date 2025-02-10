@@ -1,4 +1,3 @@
-
 import { MoveRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -84,7 +83,7 @@ export const Portfolio = () => {
         setSelectedProject(null);
         setHeroImageIndex(0);
       }}>
-        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-hidden md:p-0">
+        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:overflow-hidden p-0">
           <button 
             onClick={() => {
               setSelectedProject(null);
@@ -93,7 +92,6 @@ export const Portfolio = () => {
             className="absolute right-4 top-4 z-50 bg-neutral-900 dark:bg-white rounded-full p-2 opacity-90 hover:opacity-100 transition-opacity"
           >
             <X className="h-5 w-5 text-white dark:text-neutral-900" />
-            <span className="sr-only">Close</span>
           </button>
           
           <div className="h-full flex flex-col md:flex-row">
@@ -122,51 +120,49 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-1/2 bg-neutral-900 dark:bg-neutral-950 h-full">
-              <div className="h-full flex flex-col">
-                {selectedProject?.additional_images?.length > 0 ? (
-                  <>
-                    <motion.div 
-                      key={heroImageIndex}
-                      className="w-full h-[75%]"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <img
-                        src={selectedProject.additional_images[heroImageIndex]}
-                        alt={`${selectedProject?.title} - Featured`}
-                        className="w-full h-full object-cover"
-                      />
-                    </motion.div>
-                    <div className="flex overflow-x-auto h-[25%] scrollbar-none">
-                      {selectedProject.additional_images.map((image: string, index: number) => (
-                        <div 
-                          key={index}
-                          onClick={() => handleImageClick(index)}
-                          className={`cursor-pointer h-full flex-shrink-0 w-1/4 transition-all duration-300 ${
-                            index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
-                          }`}
-                        >
-                          <img
-                            src={image}
-                            alt={`${selectedProject.title} preview ${index + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <div className="w-full h-full">
+            <div className="md:w-1/2 bg-neutral-900 dark:bg-neutral-950 min-h-[50vh] md:h-full flex flex-col">
+              {selectedProject?.additional_images?.length > 0 ? (
+                <>
+                  <motion.div 
+                    key={heroImageIndex}
+                    className="w-full h-[70vh] md:h-[75%]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <img
-                      src={selectedProject?.image_url}
-                      alt={selectedProject?.title}
-                      className="w-full h-full object-cover"
+                      src={selectedProject.additional_images[heroImageIndex]}
+                      alt={`${selectedProject?.title} - Featured`}
+                      className="w-full h-full object-contain bg-neutral-900 dark:bg-neutral-950"
                     />
+                  </motion.div>
+                  <div className="flex overflow-x-auto h-[15vh] md:h-[25%] bg-neutral-900 dark:bg-neutral-950">
+                    {selectedProject.additional_images.map((image: string, index: number) => (
+                      <div 
+                        key={index}
+                        onClick={() => handleImageClick(index)}
+                        className={`cursor-pointer h-full flex-shrink-0 w-1/4 ${
+                          index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
+                        }`}
+                      >
+                        <img
+                          src={image}
+                          alt={`${selectedProject.title} preview ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
                   </div>
-                )}
-              </div>
+                </>
+              ) : (
+                <div className="w-full h-full">
+                  <img
+                    src={selectedProject?.image_url}
+                    alt={selectedProject?.title}
+                    className="w-full h-full object-contain bg-neutral-900 dark:bg-neutral-950"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </DialogContent>
@@ -179,4 +175,3 @@ export const Portfolio = () => {
     </section>
   );
 };
-

@@ -51,10 +51,10 @@ export const About = () => {
     <section id="about" className="relative bg-neutral-900 py-32 overflow-hidden">
       {/* Pixelated Noise Effect */}
       <div 
-        className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay"
+        className="absolute inset-0 opacity-25 pointer-events-none mix-blend-overlay"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          filter: 'contrast(150%) brightness(150%)',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          filter: 'contrast(170%) brightness(170%)',
         }}
       />
 
@@ -110,7 +110,7 @@ export const About = () => {
               >
                 <Button 
                   variant="outline"
-                  className="group bg-white/10 hover:bg-white/20 text-white border-white/20"
+                  className="group bg-[#9b87f5] hover:bg-[#8a74f2] text-white border-0 font-roc uppercase tracking-wider text-lg"
                   onClick={() => window.open(aboutData.portfolio_url || '', '_blank')}
                 >
                   Download Portfolio

@@ -77,6 +77,7 @@ export type Database = {
       }
       sections: {
         Row: {
+          author: string | null
           created_at: string
           cta_section: string | null
           cta_text: string | null
@@ -84,12 +85,14 @@ export type Database = {
           get_in_touch_text: string | null
           id: number
           portfolio_url: string | null
+          quote: string | null
           section_name: string
           title: string
           updated_at: string
           video_url: string | null
         }
         Insert: {
+          author?: string | null
           created_at?: string
           cta_section?: string | null
           cta_text?: string | null
@@ -97,12 +100,14 @@ export type Database = {
           get_in_touch_text?: string | null
           id?: number
           portfolio_url?: string | null
+          quote?: string | null
           section_name: string
           title: string
           updated_at?: string
           video_url?: string | null
         }
         Update: {
+          author?: string | null
           created_at?: string
           cta_section?: string | null
           cta_text?: string | null
@@ -110,6 +115,7 @@ export type Database = {
           get_in_touch_text?: string | null
           id?: number
           portfolio_url?: string | null
+          quote?: string | null
           section_name?: string
           title?: string
           updated_at?: string

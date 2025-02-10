@@ -63,7 +63,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           </button>
         </div>
 
-        <div className={`md:hidden fixed inset-0 bg-white z-50 transition-transform duration-300 ${
+        <div className={`md:hidden fixed inset-0 bg-white/80 backdrop-blur-md z-50 transition-transform duration-300 ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
           <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">

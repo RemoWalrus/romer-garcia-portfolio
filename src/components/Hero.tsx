@@ -11,6 +11,8 @@ interface HeroProps {
 
 export const Hero = ({ scrollToSection }: HeroProps) => {
   const [titleIndex, setTitleIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [heroImages, setHeroImages] = useState<string[]>([]);
   
   const titles = [
     "Multimedia Artist",
@@ -24,8 +26,34 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     "romergarcia"
   ];
 
-  const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
+  useEffect(() => {
+    const fetchHeroImages = async () => {
+      const { data: imageList, error } = await supabase
+        .storage
+        .from('hero')
+        .list();
 
+      if (error) {
+        console.error('Error fetching hero images:', error);
+        return;
+      }
+
+      if (imageList && imageList.length > 0) {
+        const imageUrls = imageList.map(file => 
+          supabase.storage.from('hero').getPublicUrl(file.name).data.publicUrl
+        );
+        setHeroImages(imageUrls);
+      } else {
+        // Fallback to the original image if no images in the hero bucket
+        const fallbackUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        setHeroImages([fallbackUrl]);
+      }
+    };
+
+    fetchHeroImages();
+  }, []);
+
+  // Title rotation effect
   useEffect(() => {
     if (titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
@@ -34,6 +62,40 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
       return () => clearTimeout(timer);
     }
   }, [titleIndex]);
+
+  // Image rotation effect
+  useEffect(() => {
+    if (heroImages.length > 1) {
+      const imageTimer = setInterval(() => {
+        setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
+      }, 5000); // Change image every 5 seconds
+
+      return () => clearInterval(imageTimer);
+    }
+  }, [heroImages]);
+
+  // Update favicon
+  useEffect(() => {
+    const updateFavicon = async () => {
+      const { data: faviconData } = supabase.storage
+        .from('images')
+        .getPublicUrl('favicon.ico');
+      
+      if (faviconData?.publicUrl) {
+        const favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
+        if (favicon) {
+          favicon.href = faviconData.publicUrl;
+        } else {
+          const newFavicon = document.createElement('link');
+          newFavicon.rel = 'icon';
+          newFavicon.href = faviconData.publicUrl;
+          document.head.appendChild(newFavicon);
+        }
+      }
+    };
+
+    updateFavicon();
+  }, []);
 
   const glitchVariants: Variants = {
     initial: {
@@ -103,11 +165,18 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/20 z-10" />
-        <img 
-          src={backgroundImageUrl} 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-40"
-        />
+        {heroImages.length > 0 && (
+          <motion.img 
+            key={heroImages[currentImageIndex]}
+            src={heroImages[currentImageIndex]} 
+            alt="Background" 
+            className="w-full h-full object-cover opacity-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+          />
+        )}
       </div>
       
       <div className="container relative z-20 px-4 py-32 mx-auto text-center">
@@ -187,7 +256,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
           <Button 
             onClick={() => scrollToSection('portfolio')}
             variant="outline" 
-            className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-lg md:text-xl font-roc"
+            className="group bg-white/20 border-white/20 hover:bg-white/30 text-white text-lg md:text-xl font-roc px-8 py-6"
           >
             View My Work
             <ArrowDown className="ml-2 w-5 h-5 group-hover:translate-y-1 transition-transform" />

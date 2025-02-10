@@ -50,30 +50,32 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
     <div className="absolute inset-0">
       <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 to-neutral-950/20 z-10" />
       
-      {/* Scanline effect overlay */}
-      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-10">
+      {/* Scanline effect overlay - increased opacity and adjusted line thickness */}
+      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-30">
         <div className="absolute inset-0 animate-scanline" style={{
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 2px)',
-          backgroundSize: '100% 4px',
+          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.15) 3px, rgba(255,255,255,0.15) 3px)',
+          backgroundSize: '100% 6px',
         }} />
       </div>
 
-      {showVideo ? (
+      {/* Show both video and image with different opacities based on showVideo state */}
+      <div className="relative w-full h-full">
+        {backgroundImage && (
+          <img 
+            src={backgroundImage} 
+            alt="Hero Background" 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${showVideo ? 'opacity-0' : 'opacity-40'}`}
+          />
+        )}
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="w-full h-full object-cover opacity-20"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${showVideo ? 'opacity-20' : 'opacity-0'}`}
           src={videoUrl}
         />
-      ) : backgroundImage && (
-        <img 
-          src={backgroundImage} 
-          alt="Hero Background" 
-          className="w-full h-full object-cover opacity-40"
-        />
-      )}
+      </div>
     </div>
   );
 };

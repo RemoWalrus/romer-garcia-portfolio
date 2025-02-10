@@ -1,4 +1,3 @@
-
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
@@ -67,18 +66,18 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="relative bg-neutral-950 py-32">
+    <section id="contact" className="relative bg-white dark:bg-neutral-950 py-32">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-8 text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-8 text-center">
           GET IN TOUCH
         </h2>
-        <p className="text-sm md:text-base text-neutral-300 max-w-2xl mx-auto mb-12 font-sans text-center">
+        <p className="text-sm md:text-base text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto mb-12 font-sans text-center">
           {getInTouchText}
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-12 space-y-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-neutral-300 mb-2">
+            <label htmlFor="name" className="block text-sm font-medium text-neutral-600 dark:text-neutral-300 mb-2">
               Name
             </label>
             <input
@@ -88,12 +87,12 @@ export const Contact = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-700"
+              className="w-full px-4 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-300 dark:focus:ring-neutral-700"
             />
           </div>
           
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-neutral-300 mb-2">
+            <label htmlFor="email" className="block text-sm font-medium text-neutral-600 dark:text-neutral-300 mb-2">
               Email
             </label>
             <input
@@ -103,12 +102,12 @@ export const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-700"
+              className="w-full px-4 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-300 dark:focus:ring-neutral-700"
             />
           </div>
           
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-neutral-300 mb-2">
+            <label htmlFor="message" className="block text-sm font-medium text-neutral-600 dark:text-neutral-300 mb-2">
               Message
             </label>
             <textarea
@@ -118,14 +117,14 @@ export const Contact = () => {
               onChange={handleChange}
               required
               rows={5}
-              className="w-full px-4 py-2 bg-neutral-900 border border-neutral-800 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-neutral-700"
+              className="w-full px-4 py-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-md text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-300 dark:focus:ring-neutral-700"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-roc uppercase tracking-wider text-lg font-extralight rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 bg-neutral-100 dark:bg-white/10 hover:bg-neutral-200 dark:hover:bg-white/20 text-neutral-900 dark:text-white font-roc uppercase tracking-wider text-lg font-extralight rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>

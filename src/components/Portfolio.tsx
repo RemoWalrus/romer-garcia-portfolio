@@ -1,4 +1,3 @@
-
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -37,7 +36,7 @@ export const Portfolio = () => {
   };
 
   return (
-    <section id="portfolio" className="relative bg-neutral-950 py-32">
+    <section id="portfolio" className="relative bg-white dark:bg-neutral-950 py-32">
       <div 
         className="absolute inset-0 bg-fixed opacity-10"
         style={{
@@ -48,7 +47,7 @@ export const Portfolio = () => {
       />
       
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-white mb-16 text-center">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center">
           FEATURED WORK
         </h2>
         
@@ -82,7 +81,7 @@ export const Portfolio = () => {
         setSelectedProject(null);
         setHeroImageIndex(0);
       }}>
-        <DialogContent className="bg-neutral-900 text-white border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto">
           <DialogHeader>
             <div className="mb-2">
               <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">

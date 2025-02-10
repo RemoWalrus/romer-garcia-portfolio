@@ -4,6 +4,17 @@
 
 **URL**: https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be
 
+## How to edit sections
+
+The website content is managed through the `src/config/sections.yml` file. You can easily update the following sections:
+
+- Hero section: Update the main title, subtitle, and CTA text
+- Portfolio section: Modify the title and description
+- About section: Change the title and description text
+- Contact section: Edit the title and description
+
+Simply edit the corresponding values in the YAML file and the changes will be reflected automatically.
+
 ## How can I edit this code?
 
 There are several ways of editing your application.

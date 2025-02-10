@@ -95,11 +95,11 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover opacity-30"
+            className="w-full h-full object-cover opacity-20"
             src={videoUrl}
           />
         ) : (
-          heroImages.length > 0 && (
+          <AnimatePresence mode="wait">
             <motion.img 
               key={heroImages[currentImageIndex]}
               src={heroImages[currentImageIndex]} 
@@ -108,9 +108,9 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
+              transition={{ duration: 1.5 }}
             />
-          )
+          </AnimatePresence>
         )}
       </div>
       

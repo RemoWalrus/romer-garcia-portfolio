@@ -18,7 +18,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
       {/* Background overlay */}
       <div className={`absolute inset-0 transition-all duration-300 ${
         scrolled 
-          ? 'bg-[#070a0f]/95 backdrop-blur-sm border-b border-white/10'
+          ? 'bg-[#0A0D14]/95 backdrop-blur-sm border-b border-white/10'
           : 'bg-transparent'
       }`} />
 

@@ -95,7 +95,12 @@ export const Portfolio = () => {
       }}>
         <DialogContent className="bg-neutral-900 text-white border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-roc font-extralight mb-4">
+            <div className="mb-2">
+              <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
+                {selectedProject?.category}
+              </span>
+            </div>
+            <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
               {selectedProject?.title}
             </DialogTitle>
             <DialogDescription className="text-neutral-300 font-arial mb-8">

@@ -61,6 +61,16 @@ export const About = () => {
 
   return (
     <section id="about" className="relative bg-neutral-900 py-32 overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 opacity-25 bg-fixed"
+        style={{
+          backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('RomerGarcia-cover.png').data.publicUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+
       {/* Pixelated Noise Effect */}
       <div 
         className="absolute inset-0 opacity-25 pointer-events-none mix-blend-overlay"
@@ -108,10 +118,10 @@ export const About = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm md:text-base text-neutral-300 font-['Arial'] leading-relaxed text-center md:text-left mb-8 space-y-4"
+              className="text-sm md:text-base text-neutral-300 font-['Arial'] leading-relaxed text-center md:text-left mb-8"
             >
               {aboutData.description.split('\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
+                <p key={index} className="mb-4">{paragraph}</p>
               ))}
             </motion.div>
 

@@ -3,8 +3,7 @@ import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
-import { motion, AnimatePresence } from "framer-motion";
-import { pixelGlitch } from './hero/animation-variants';
+import { motion } from "framer-motion";
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -49,7 +48,7 @@ export const Portfolio = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center">
-          FEATURED WORK
+          Featured Work
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
@@ -100,7 +99,7 @@ export const Portfolio = () => {
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className="col-span-4 h-96 mb-12 relative group"
+                    className="col-span-4 h-[50vh] mb-12 relative group"
                   >
                     <img
                       src={selectedProject?.image_url}
@@ -138,7 +137,7 @@ export const Portfolio = () => {
                   </div>
                 </>
               ) : (
-                <div className="col-span-4 h-[60vh] relative group">
+                <div className="col-span-4 h-[50vh] relative group">
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
@@ -166,3 +165,4 @@ export const Portfolio = () => {
     </section>
   );
 };
+

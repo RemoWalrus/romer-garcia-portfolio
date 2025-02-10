@@ -38,9 +38,11 @@ export type Database = {
       }
       projects: {
         Row: {
+          additional_images: string[] | null
           category: string
           created_at: string
           description: string
+          ext_url: string | null
           hero_image_url: string
           id: number
           image_url: string
@@ -48,9 +50,11 @@ export type Database = {
           title: string
         }
         Insert: {
+          additional_images?: string[] | null
           category: string
           created_at?: string
           description: string
+          ext_url?: string | null
           hero_image_url?: string
           id?: number
           image_url: string
@@ -58,9 +62,11 @@ export type Database = {
           title: string
         }
         Update: {
+          additional_images?: string[] | null
           category?: string
           created_at?: string
           description?: string
+          ext_url?: string | null
           hero_image_url?: string
           id?: number
           image_url?: string

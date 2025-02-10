@@ -28,7 +28,6 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
         }
 
         if (imageList && imageList.length > 0) {
-          // Get a random image from the list
           const randomIndex = Math.floor(Math.random() * imageList.length);
           const randomImage = imageList[randomIndex];
           const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
@@ -45,17 +44,17 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
     };
 
     fetchRandomImage();
-  }, [triggerNewBackground]); // Re-fetch image when triggerNewBackground changes
+  }, [triggerNewBackground]);
 
   return (
     <div className="absolute inset-0">
-      {/* Updated gradient to be even more transparent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-neutral-950/30 to-transparent z-10" />
+      {/* Updated gradient to be more transparent */}
+      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/40 via-neutral-950/20 to-transparent z-10" />
       
-      {/* More transparent scanline effect that fades to almost invisible past halfway */}
-      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-15">
+      {/* More transparent scanline effect that fades out completely past the middle */}
+      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-10">
         <div className="absolute inset-0 animate-scanline" style={{
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 70%, transparent 100%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.15) 4px, rgba(255,255,255,0.15) 4px)',
+          background: 'linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.07) 30%, rgba(255,255,255,0.03) 50%, transparent 70%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.1) 4px, rgba(255,255,255,0.1) 4px)',
           backgroundSize: '100% 100%, 100% 8px',
         }} />
       </div>

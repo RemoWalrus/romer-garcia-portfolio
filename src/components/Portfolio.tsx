@@ -30,6 +30,12 @@ export const Portfolio = () => {
     setHeroImageIndex(index);
   };
 
+  const handleExternalLink = (url: string) => {
+    if (url) {
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <section id="portfolio" className="relative bg-neutral-950 py-32">
       <div 
@@ -54,7 +60,7 @@ export const Portfolio = () => {
               className="group relative aspect-square cursor-pointer overflow-hidden bg-neutral-900"
             >
               <img 
-                src={project.hero_image_url || project.image_url} 
+                src={project.hero_image_url} 
                 alt={project.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
@@ -96,16 +102,29 @@ export const Portfolio = () => {
                   initial="initial"
                   animate="animate"
                   variants={pixelGlitch}
-                  className="col-span-4 h-96 mb-4"
+                  className="col-span-4 h-96 mb-4 relative group"
                 >
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
                     className="w-full h-full object-cover rounded-lg"
                   />
+                  {selectedProject?.ext_url && (
+                    <div 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleExternalLink(selectedProject.ext_url);
+                      }}
+                      className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                    >
+                      <div className="text-white flex items-center">
+                        View Project <MoveRight className="ml-2 w-4 h-4" />
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
-              {selectedProject?.additional_images && (
+              {selectedProject?.additional_images && selectedProject.additional_images.length > 0 && (
                 <div className="col-span-4 grid grid-cols-3 gap-4">
                   {selectedProject.additional_images.map((image: string, index: number) => (
                     <div 

@@ -26,10 +26,10 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           : 'bg-transparent'
       }`} />
 
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50 mix-blend-normal">
         <button 
           onClick={scrollToTop}
-          className="cursor-pointer"
+          className="cursor-pointer mix-blend-normal"
           aria-label="Scroll to top"
         >
           <img 
@@ -49,22 +49,22 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-8 mix-blend-normal">
           <button
             onClick={() => scrollToSection('portfolio')}
-            className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
+            className="text-sm text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
           >
             Portfolio
           </button>
           <button
             onClick={() => scrollToSection('about')}
-            className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
+            className="text-sm text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
           >
             About
           </button>
           <button
             onClick={() => scrollToSection('contact')}
-            className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-roc"
+            className="text-sm text-white hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
           >
             Contact
           </button>
@@ -113,4 +113,3 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     </nav>
   );
 };
-

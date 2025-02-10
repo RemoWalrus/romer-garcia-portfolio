@@ -78,48 +78,66 @@ export type Database = {
       sections: {
         Row: {
           author: string | null
+          button_text: string | null
           created_at: string
           cta_section: string | null
           cta_text: string | null
           description: string | null
+          facebook_url: string | null
           get_in_touch_text: string | null
           id: number
+          instagram_url: string | null
+          linkedin_url: string | null
           portfolio_url: string | null
           quote: string | null
           section_name: string
           title: string
+          twitter_url: string | null
           updated_at: string
           video_url: string | null
+          youtube_url: string | null
         }
         Insert: {
           author?: string | null
+          button_text?: string | null
           created_at?: string
           cta_section?: string | null
           cta_text?: string | null
           description?: string | null
+          facebook_url?: string | null
           get_in_touch_text?: string | null
           id?: number
+          instagram_url?: string | null
+          linkedin_url?: string | null
           portfolio_url?: string | null
           quote?: string | null
           section_name: string
           title: string
+          twitter_url?: string | null
           updated_at?: string
           video_url?: string | null
+          youtube_url?: string | null
         }
         Update: {
           author?: string | null
+          button_text?: string | null
           created_at?: string
           cta_section?: string | null
           cta_text?: string | null
           description?: string | null
+          facebook_url?: string | null
           get_in_touch_text?: string | null
           id?: number
+          instagram_url?: string | null
+          linkedin_url?: string | null
           portfolio_url?: string | null
           quote?: string | null
           section_name?: string
           title?: string
+          twitter_url?: string | null
           updated_at?: string
           video_url?: string | null
+          youtube_url?: string | null
         }
         Relationships: []
       }

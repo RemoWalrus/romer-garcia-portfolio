@@ -82,7 +82,7 @@ export const Portfolio = () => {
         setSelectedProject(null);
         setHeroImageIndex(0);
       }}>
-        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:p-10">
+        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:p-12 lg:p-16">
           <DialogHeader>
             <div className="mb-2">
               <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
@@ -96,14 +96,49 @@ export const Portfolio = () => {
               {selectedProject?.description}
             </DialogDescription>
             <div className="grid grid-cols-4 gap-4">
-              <AnimatePresence mode="wait">
-                <motion.div 
-                  key={heroImageIndex}
-                  initial="initial"
-                  animate="animate"
-                  variants={pixelGlitch}
-                  className="col-span-4 h-96 mb-12 relative group"
-                >
+              {selectedProject?.additional_images?.length > 0 ? (
+                <>
+                  <motion.div 
+                    key={heroImageIndex}
+                    className="col-span-4 h-96 mb-12 relative group"
+                  >
+                    <img
+                      src={selectedProject?.image_url}
+                      alt={selectedProject?.title}
+                      className="w-full h-full object-cover rounded-lg transition-all duration-500 hover:scale-[1.01]"
+                    />
+                    {selectedProject?.ext_url && (
+                      <div 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleExternalLink(selectedProject.ext_url);
+                        }}
+                        className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                      >
+                        <div className="text-white flex items-center">
+                          View Project <MoveRight className="ml-2 w-4 h-4" />
+                        </div>
+                      </div>
+                    )}
+                  </motion.div>
+                  <div className="col-span-4 grid grid-cols-3 gap-4">
+                    {selectedProject.additional_images.map((image: string, index: number) => (
+                      <div 
+                        key={index}
+                        onClick={() => handleImageClick(index)}
+                        className="cursor-pointer h-32"
+                      >
+                        <img
+                          src={image}
+                          alt={`${selectedProject.title} preview ${index + 1}`}
+                          className="w-full h-full object-cover rounded-lg transition-opacity hover:opacity-80"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="col-span-4 h-[60vh] relative group">
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
@@ -122,23 +157,6 @@ export const Portfolio = () => {
                       </div>
                     </div>
                   )}
-                </motion.div>
-              </AnimatePresence>
-              {selectedProject?.additional_images && selectedProject.additional_images.length > 0 && (
-                <div className="col-span-4 grid grid-cols-3 gap-4">
-                  {selectedProject.additional_images.map((image: string, index: number) => (
-                    <div 
-                      key={index}
-                      onClick={() => handleImageClick(index)}
-                      className="cursor-pointer h-32"
-                    >
-                      <img
-                        src={image}
-                        alt={`${selectedProject.title} preview ${index + 1}`}
-                        className="w-full h-full object-cover rounded-lg transition-opacity hover:opacity-80"
-                      />
-                    </div>
-                  ))}
                 </div>
               )}
             </div>

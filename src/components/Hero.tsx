@@ -15,23 +15,23 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [heroImages, setHeroImages] = useState<string[]>([]);
   
   const titles = [
-    "Multimedia Artist",
-    "Illustrator",
-    "Photographer",
-    "Video Editor",
-    "Five Tool Player",
-    "Art Director",
-    "Web Master",
-    "Social Media Manager",
-    "romergarcia"
+    { text: "Multimedia Artist", weight: "font-light" },
+    { text: "Illustrator", weight: "font-medium" },
+    { text: "Photographer", weight: "font-bold" },
+    { text: "Video Editor", weight: "font-thin" },
+    { text: "Five Tool Player", weight: "font-normal" },
+    { text: "Art Director", weight: "font-semibold" },
+    { text: "Web Master", weight: "font-extrabold" },
+    { text: "Social Media Manager", weight: "font-light" },
+    { text: "romergarcia", weight: "" } // Special case handled separately
   ];
 
   useEffect(() => {
     const fetchHeroImages = async () => {
       const { data: imageList, error } = await supabase
         .storage
-        .from('hero')
-        .list();
+        .from('images')
+        .list('hero');
 
       if (error) {
         console.error('Error fetching hero images:', error);
@@ -40,12 +40,12 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
       if (imageList && imageList.length > 0) {
         const imageUrls = imageList.map(file => 
-          supabase.storage.from('hero').getPublicUrl(file.name).data.publicUrl
+          supabase.storage.from('images').getPublicUrl(`hero/${file.name}`).data.publicUrl
         );
         setHeroImages(imageUrls);
       } else {
-        // Fallback to the original image if no images in the hero bucket
-        const fallbackUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        // Fallback to the original image if no images in the hero folder
+        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
         setHeroImages([fallbackUrl]);
       }
     };
@@ -187,7 +187,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
         >
           <AnimatePresence mode="wait">
             <motion.div
-              key={titles[titleIndex]}
+              key={titles[titleIndex].text}
               initial="initial"
               animate="animate"
               exit="exit"
@@ -196,7 +196,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
             >
               <motion.h1
                 variants={pixelGlitch}
-                className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8"
+                className={`text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 ${titles[titleIndex].weight}`}
                 style={{
                   textShadow: `
                     2px 0 0 rgba(255,0,0,0.3),
@@ -205,13 +205,13 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
                   fontFeatureSettings: '"ss01"'
                 }}
               >
-                {titles[titleIndex] === "romergarcia" ? (
+                {titles[titleIndex].text === "romergarcia" ? (
                   <span>
                     <span className="font-medium">romer</span>
                     <span className="font-thin text-neutral-200">garcia</span>
                   </span>
                 ) : (
-                  <span className="font-roc">{titles[titleIndex]}</span>
+                  <span className="font-roc">{titles[titleIndex].text}</span>
                 )}
               </motion.h1>
               <motion.div
@@ -235,14 +235,14 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
                   }
                 }}
               >
-                <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8">
-                  {titles[titleIndex] === "romergarcia" ? (
+                <h1 className={`text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 ${titles[titleIndex].weight}`}>
+                  {titles[titleIndex].text === "romergarcia" ? (
                     <span>
                       <span className="font-medium">romer</span>
                       <span className="font-thin text-neutral-200">garcia</span>
                     </span>
                   ) : (
-                    <span className="font-roc">{titles[titleIndex]}</span>
+                    <span className="font-roc">{titles[titleIndex].text}</span>
                   )}
                 </h1>
               </motion.div>

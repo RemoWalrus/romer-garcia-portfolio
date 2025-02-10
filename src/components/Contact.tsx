@@ -1,3 +1,4 @@
+
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
@@ -6,7 +7,11 @@ import { supabase } from "@/integrations/supabase/client";
 export const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [getInTouchText, setGetInTouchText] = useState('');
+  const [contactData, setContactData] = useState({
+    title: 'GET IN TOUCH',
+    description: '',
+    get_in_touch_text: 'Interested in collaborating? Let\'s discuss your next project.'
+  });
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,12 +22,17 @@ export const Contact = () => {
     const fetchContactSection = async () => {
       const { data, error } = await supabase
         .from('sections')
-        .select('get_in_touch_text')
+        .select('title, description, get_in_touch_text')
         .eq('section_name', 'contact')
-        .single();
+        .maybeSingle();
       
       if (data && !error) {
-        setGetInTouchText(data.get_in_touch_text || 'Interested in collaborating? Let\'s discuss your next project.');
+        setContactData(prev => ({
+          ...prev,
+          ...data
+        }));
+      } else if (error) {
+        console.error('Error fetching contact section:', error);
       }
     };
 
@@ -69,10 +79,10 @@ export const Contact = () => {
     <section id="contact" className="relative bg-white dark:bg-neutral-950 py-32">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-8 text-center">
-          GET IN TOUCH
+          {contactData.title}
         </h2>
         <p className="text-sm md:text-base text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto mb-12 font-sans text-center">
-          {getInTouchText}
+          {contactData.get_in_touch_text}
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-xl mx-auto mb-12 space-y-6">
@@ -148,3 +158,4 @@ export const Contact = () => {
     </section>
   );
 };
+

@@ -78,13 +78,13 @@ export type Database = {
       sections: {
         Row: {
           author: string | null
-          button_text: string | null
+          button_text: string
           created_at: string
           cta_section: string | null
           cta_text: string | null
           description: string | null
           facebook_url: string | null
-          get_in_touch_text: string | null
+          get_in_touch_text: string
           id: number
           instagram_url: string | null
           linkedin_url: string | null
@@ -99,13 +99,13 @@ export type Database = {
         }
         Insert: {
           author?: string | null
-          button_text?: string | null
+          button_text?: string
           created_at?: string
           cta_section?: string | null
           cta_text?: string | null
           description?: string | null
           facebook_url?: string | null
-          get_in_touch_text?: string | null
+          get_in_touch_text?: string
           id?: number
           instagram_url?: string | null
           linkedin_url?: string | null
@@ -120,13 +120,13 @@ export type Database = {
         }
         Update: {
           author?: string | null
-          button_text?: string | null
+          button_text?: string
           created_at?: string
           cta_section?: string | null
           cta_text?: string | null
           description?: string | null
           facebook_url?: string | null
-          get_in_touch_text?: string | null
+          get_in_touch_text?: string
           id?: number
           instagram_url?: string | null
           linkedin_url?: string | null

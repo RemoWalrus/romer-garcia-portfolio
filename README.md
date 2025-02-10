@@ -7,7 +7,7 @@
 
 ## How to edit sections
 
-The website content is managed through both the Supabase database and the `src/config/sections.yml` file.
+The website content is managed through the Supabase database. Each section's content can be updated through the sections table.
 
 ### Hero Section Titles
 The titles that appear in the hero section animation are managed through the Supabase database. To update them:
@@ -41,6 +41,7 @@ Each project requires:
 - A description
 - A hero image URL
 - Additional images (optional)
+- External URL (optional)
 
 ### Other Sections
 The remaining website content is managed through the `sections` table in Supabase:
@@ -48,17 +49,28 @@ The remaining website content is managed through the `sections` table in Supabas
 1. Access your Supabase dashboard
 2. Navigate to the Table Editor
 3. Select the `sections` table
-4. Here you can update:
-   - About section: title, description, and portfolio URL
-   - Contact section: title, description, and "get in touch" text
-   - Quote section: inspirational quote and author
-   - Other custom sections
+4. Here you can update various sections:
+
+#### About Section
+- Title
+- Description
+- Portfolio URL
+- Button text for the portfolio download
+
+#### Contact Section
+- Title
+- Description
+- "Get in touch" text
+- Social media URLs
+
+#### Quote Section
+- Quote text
+- Author
 
 Each section in the database includes:
 - A unique section name
-- A title
-- A description
-- Additional fields specific to that section (e.g., portfolio_url for the About section, quote and author for the Quote section)
+- Required fields based on the section type
+- Default values for important fields to prevent null values
 
 ## How can I edit this code?
 
@@ -108,13 +120,14 @@ npm run dev
 
 ## What technologies are used for this project?
 
-This project is built with .
+This project is built with:
 
 - Vite
 - TypeScript
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase for backend services
 
 ## How can I deploy this project?
 

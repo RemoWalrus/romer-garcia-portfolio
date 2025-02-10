@@ -16,9 +16,16 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled 
-        ? 'bg-[#1a0033]/90 backdrop-blur-sm border-b border-purple-900/50'
-        : 'bg-transparent'
+        ? 'mix-blend-multiply'
+        : ''
     }`}>
+      {/* Background overlay */}
+      <div className={`absolute inset-0 transition-all duration-300 ${
+        scrolled 
+          ? 'bg-[#1A1F2C]/90 backdrop-blur-sm border-b border-purple-900/50'
+          : 'bg-transparent'
+      }`} />
+
       <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50">
         <button 
           onClick={scrollToTop}
@@ -65,7 +72,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
 
         {/* Mobile menu overlay */}
         <div 
-          className={`md:hidden fixed inset-0 backdrop-blur-md z-40 transition-transform duration-300 ${
+          className={`md:hidden fixed inset-0 bg-[#1A1F2C]/95 backdrop-blur-md z-40 transition-transform duration-300 ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -97,6 +104,9 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
             >
               Contact
             </button>
+            <div className="absolute bottom-8 left-0 right-0 text-center text-neutral-400 text-sm">
+              © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+            </div>
           </div>
         </div>
       </div>

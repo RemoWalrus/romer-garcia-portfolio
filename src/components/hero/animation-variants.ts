@@ -20,9 +20,9 @@ export const glitchVariants: Variants = {
     ],
     x: [0, -2, 2, -1, 1, 0],
     transition: {
-      duration: 0.4,
+      duration: 0.8,
       times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      ease: "easeInOut",
+      ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
       staggerChildren: 0.05,
     }
   },
@@ -36,8 +36,8 @@ export const glitchVariants: Variants = {
     ],
     x: [0, 2, -2, 1, -1, 0],
     transition: {
-      duration: 0.3,
-      ease: "easeOut",
+      duration: 0.5,
+      ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
     }
   }
 };
@@ -56,11 +56,12 @@ export const pixelGlitch: Variants = {
       "inset(0 0 0 0)"
     ],
     transition: {
-      duration: 0.4,
-      ease: "easeInOut",
+      duration: 0.8,
+      ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
       repeat: 1,
       repeatType: "reverse",
       times: [0, 0.2, 0.4, 0.6, 0.8, 1]
     }
   }
 };
+

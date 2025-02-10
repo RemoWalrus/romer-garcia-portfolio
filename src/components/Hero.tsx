@@ -45,7 +45,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     if (titles.length > 0 && titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
         setTitleIndex(prev => prev + 1);
-      }, 600);
+      }, 800); // Increased slightly to give more time for easeOutQuart animation
       return () => clearTimeout(timer);
     }
   }, [titleIndex, titles.length]);
@@ -68,6 +68,11 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
+      {/* Updated gradient overlay - more subtle, fading to transparent */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent pointer-events-none z-10"
+        style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 70%, rgba(0,0,0,0) 100%)' }}
+      />
       <HeroContent
         titles={titles}
         titleIndex={titleIndex}
@@ -76,3 +81,4 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
+

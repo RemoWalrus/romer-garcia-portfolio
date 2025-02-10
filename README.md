@@ -1,3 +1,4 @@
+
 # Welcome to your Lovable project
 
 ## Project info
@@ -6,9 +7,26 @@
 
 ## How to edit sections
 
-The website content is managed through the `src/config/sections.yml` file. You can easily update the following sections:
+The website content is managed through both the Supabase database and the `src/config/sections.yml` file.
 
-- Hero section: Update the main title, subtitle, and CTA text
+### Hero Section Titles
+The titles that appear in the hero section animation are managed through the Supabase database. To update them:
+
+1. Access your Supabase dashboard
+2. Navigate to the Table Editor
+3. Select the `hero_titles` table
+4. Here you can:
+   - Add new titles by inserting new rows
+   - Modify existing titles by updating their text or weights
+   - Change the order of titles by updating the `sort_order` column
+   - Delete titles you no longer want to display
+
+Each title can have custom font weights applied to different words. The weights are stored as an array of Tailwind classes (e.g., `['font-thin', 'font-medium']`).
+
+### Other Sections
+The remaining website content is managed through the `src/config/sections.yml` file. You can easily update the following sections:
+
+- Hero section: Update the subtitle and CTA text
 - Portfolio section: Modify the title and description
 - About section: Change the title and description text
 - Contact section: Edit the title and description

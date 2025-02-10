@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
@@ -59,15 +60,21 @@ export const About = () => {
   }, []);
 
   return (
-    <section id="about" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden">
-      {/* Grain Noise Effect */}
+    <section id="about" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden isolate">
+      {/* Enhanced Grain Noise Effect */}
       <div 
-        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply dark:mix-blend-soft-light"
+        className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-multiply dark:mix-blend-soft-light"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-          backgroundSize: '200px 200px',
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+          backgroundSize: '150px 150px',
         }}
       />
+
+      {/* Chromatic Aberration Effect */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 opacity-[0.015] bg-red-500 translate-x-[1px]" />
+        <div className="absolute inset-0 opacity-[0.015] bg-blue-500 -translate-x-[1px]" />
+      </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 relative z-10">

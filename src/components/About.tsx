@@ -9,6 +9,7 @@ interface AboutSection {
   title: string;
   description: string;
   portfolio_url: string | null;
+  button_text: string;
 }
 
 export const About = () => {
@@ -16,7 +17,8 @@ export const About = () => {
   const [aboutData, setAboutData] = useState<AboutSection>({
     title: 'ABOUT ME',
     description: '',
-    portfolio_url: null
+    portfolio_url: null,
+    button_text: 'Download Portfolio'
   });
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export const About = () => {
     const fetchAboutSection = async () => {
       const { data, error } = await supabase
         .from('sections')
-        .select('title, description, portfolio_url')
+        .select('title, description, portfolio_url, button_text')
         .eq('section_name', 'about')
         .single();
       
@@ -127,7 +129,7 @@ export const About = () => {
                   className="group bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-0 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                   onClick={() => window.open(aboutData.portfolio_url || '', '_blank')}
                 >
-                  Download Portfolio
+                  {aboutData.button_text}
                   <DownloadIcon className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />
                 </Button>
               </motion.div>

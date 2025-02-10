@@ -11,6 +11,7 @@ interface HeroProps {
 export const Hero = ({ scrollToSection }: HeroProps) => {
   const [titleIndex, setTitleIndex] = useState(0);
   const [showVideo, setShowVideo] = useState(true);
+  const [triggerNewBackground, setTriggerNewBackground] = useState(0);
 
   useEffect(() => {
     if (titleIndex === titles.length - 1) {
@@ -30,9 +31,21 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     }
   }, [titleIndex]);
 
+  // Listen for scroll to top
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY === 0) {
+        setTriggerNewBackground(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <HeroBackground showVideo={showVideo} />
+      <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
       <HeroContent
         titles={titles}
         titleIndex={titleIndex}

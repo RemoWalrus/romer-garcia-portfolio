@@ -110,7 +110,7 @@ export const About = () => {
               >
                 <Button 
                   variant="outline"
-                  className="group bg-[#9b87f5] hover:bg-[#8a74f2] text-white border-0 font-roc uppercase tracking-wider text-lg"
+                  className="group bg-black/90 hover:bg-black text-white border-0 font-roc uppercase tracking-wider text-lg font-extralight"
                   onClick={() => window.open(aboutData.portfolio_url || '', '_blank')}
                 >
                   Download Portfolio

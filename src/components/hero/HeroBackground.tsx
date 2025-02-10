@@ -4,9 +4,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface HeroBackgroundProps {
   showVideo: boolean;
+  triggerNewBackground: number;
 }
 
-export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
+export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const videoUrl = supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl;
 
@@ -44,7 +45,7 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
     };
 
     fetchRandomImage();
-  }, []);
+  }, [triggerNewBackground]); // Re-fetch image when triggerNewBackground changes
 
   return (
     <div className="absolute inset-0">
@@ -80,4 +81,3 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
     </div>
   );
 };
-

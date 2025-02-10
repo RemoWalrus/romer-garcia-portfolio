@@ -1,5 +1,5 @@
 
-import { MoveRight } from 'lucide-react';
+import { MoveRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
@@ -85,6 +85,17 @@ export const Portfolio = () => {
         setHeroImageIndex(0);
       }}>
         <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-hidden md:p-0">
+          <button 
+            onClick={() => {
+              setSelectedProject(null);
+              setHeroImageIndex(0);
+            }}
+            className="absolute right-4 top-4 z-50 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+          >
+            <X className="h-6 w-6 text-neutral-900 dark:text-white" />
+            <span className="sr-only">Close</span>
+          </button>
+          
           <div className="h-full flex flex-col md:flex-row">
             <div className="md:w-1/2 p-6 md:p-12 overflow-y-auto">
               <DialogHeader>
@@ -100,6 +111,7 @@ export const Portfolio = () => {
                   {selectedProject?.description}
                 </DialogDescription>
               </DialogHeader>
+              
               {selectedProject?.ext_url && (
                 <div 
                   onClick={() => handleExternalLink(selectedProject.ext_url)}
@@ -110,13 +122,13 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-1/2 bg-neutral-950 h-full">
-              <div className="h-full p-6 md:p-12">
+            <div className="md:w-1/2 bg-neutral-900 dark:bg-neutral-950 h-full">
+              <div className="h-full flex flex-col">
                 {selectedProject?.additional_images?.length > 0 ? (
-                  <div className="h-full flex flex-col">
+                  <>
                     <motion.div 
                       key={heroImageIndex}
-                      className="w-full h-[60%] mb-0"
+                      className="w-full h-[75%]"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
@@ -124,15 +136,15 @@ export const Portfolio = () => {
                       <img
                         src={selectedProject.additional_images[heroImageIndex]}
                         alt={`${selectedProject?.title} - Featured`}
-                        className="w-full h-full object-cover rounded-lg"
+                        className="w-full h-full object-cover"
                       />
                     </motion.div>
-                    <div className="grid grid-cols-3 gap-0 h-[40%]">
+                    <div className="flex overflow-x-auto h-[25%] scrollbar-none">
                       {selectedProject.additional_images.map((image: string, index: number) => (
                         <div 
                           key={index}
                           onClick={() => handleImageClick(index)}
-                          className={`cursor-pointer h-full transition-all duration-300 ${
+                          className={`cursor-pointer h-full flex-shrink-0 w-1/4 transition-all duration-300 ${
                             index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
                           }`}
                         >
@@ -144,13 +156,13 @@ export const Portfolio = () => {
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </>
                 ) : (
                   <div className="w-full h-full">
                     <img
                       src={selectedProject?.image_url}
                       alt={selectedProject?.title}
-                      className="w-full h-full object-cover rounded-lg"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 )}

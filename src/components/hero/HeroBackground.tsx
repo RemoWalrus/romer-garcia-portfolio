@@ -48,14 +48,14 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
 
   return (
     <div className="absolute inset-0">
-      {/* Updated gradient to be more transparent, especially at bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/70 via-neutral-950/40 to-neutral-950/5 z-10" />
+      {/* Updated gradient to be even more transparent */}
+      <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-neutral-950/30 to-transparent z-10" />
       
-      {/* Thicker scanline effect with adjusted opacity */}
-      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-30">
+      {/* More transparent scanline effect that fades out completely at bottom */}
+      <div className="absolute inset-0 pointer-events-none z-20 mix-blend-overlay opacity-20">
         <div className="absolute inset-0 animate-scanline" style={{
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 4px)',
-          backgroundSize: '100% 8px',
+          background: 'linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 50%, transparent 100%), repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.2) 4px, rgba(255,255,255,0.2) 4px)',
+          backgroundSize: '100% 100%, 100% 8px',
         }} />
       </div>
 
@@ -80,3 +80,4 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
     </div>
   );
 };
+

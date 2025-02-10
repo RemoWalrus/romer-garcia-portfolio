@@ -39,6 +39,42 @@ export type Database = {
         }
         Relationships: []
       }
+      sections: {
+        Row: {
+          created_at: string
+          cta_section: string | null
+          cta_text: string | null
+          description: string | null
+          id: number
+          section_name: string
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          cta_section?: string | null
+          cta_text?: string | null
+          description?: string | null
+          id?: number
+          section_name: string
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          cta_section?: string | null
+          cta_text?: string | null
+          description?: string | null
+          id?: number
+          section_name?: string
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

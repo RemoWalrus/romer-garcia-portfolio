@@ -21,7 +21,7 @@ const Index = () => {
     "Art Director",
     "Web Master",
     "Social Media Manager",
-    "Romer Garcia"
+    "romergarcia"
   ];
   
   const backgroundImageUrl = supabase.storage.from('graphics').getPublicUrl('dualshadow.jpg').data.publicUrl;
@@ -162,19 +162,19 @@ const Index = () => {
           <div className="hidden md:flex items-center gap-8">
             <button
               onClick={() => scrollToSection('portfolio')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
             >
               Portfolio
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
             >
               About
             </button>
             <button
               onClick={() => scrollToSection('contact')}
-              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+              className="text-sm text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
             >
               Contact
             </button>
@@ -186,19 +186,19 @@ const Index = () => {
             <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">
               <button
                 onClick={() => scrollToSection('portfolio')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
               >
                 Portfolio
               </button>
               <button
                 onClick={() => scrollToSection('about')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
               >
                 About
               </button>
               <button
                 onClick={() => scrollToSection('contact')}
-                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light"
+                className="text-xl text-neutral-400 hover:text-white transition-colors uppercase tracking-wider font-light font-roc"
               >
                 Contact
               </button>
@@ -235,7 +235,7 @@ const Index = () => {
               >
                 <motion.h1
                   variants={pixelGlitch}
-                  className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8"
+                  className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8"
                   style={{
                     textShadow: `
                       2px 0 0 rgba(255,0,0,0.3),
@@ -243,7 +243,14 @@ const Index = () => {
                     `
                   }}
                 >
-                  {titles[titleIndex]}
+                  {titles[titleIndex] === "romergarcia" ? (
+                    <span>
+                      <span className="font-bold">romer</span>
+                      <span className="font-light">garcia</span>
+                    </span>
+                  ) : (
+                    titles[titleIndex]
+                  )}
                 </motion.h1>
                 <motion.div
                   className="absolute inset-0 pointer-events-none"
@@ -266,8 +273,15 @@ const Index = () => {
                     }
                   }}
                 >
-                  <h1 className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8">
-                    {titles[titleIndex]}
+                  <h1 className="text-5xl md:text-6xl lg:text-8xl font-roc text-white mb-8">
+                    {titles[titleIndex] === "romergarcia" ? (
+                      <span>
+                        <span className="font-bold">romer</span>
+                        <span className="font-light">garcia</span>
+                      </span>
+                    ) : (
+                      titles[titleIndex]
+                    )}
                   </h1>
                 </motion.div>
               </motion.div>

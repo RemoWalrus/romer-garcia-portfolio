@@ -42,14 +42,13 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     <>
       <motion.h1
         variants={pixelGlitch}
-        initial={{ scale: 0.5, opacity: 0 }}
+        initial={{ scale: 0.5 }}
         animate={{ 
-          scale: title.scale,
-          opacity: 1
-        }}
-        transition={{
-          duration: 0.4,
-          ease: "easeOut"
+          scale: 1,
+          transition: {
+            duration: 0.6,
+            ease: "easeOut"
+          }
         }}
         className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8"
         style={{

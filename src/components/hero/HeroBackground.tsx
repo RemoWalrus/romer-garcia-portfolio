@@ -11,20 +11,39 @@ export const HeroBackground = ({ showVideo }: HeroBackgroundProps) => {
   const videoUrl = supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl;
 
   useEffect(() => {
-    const fetchBackground = async () => {
+    const fetchRandomImage = async () => {
       try {
-        // Get the specific background image
-        const imageUrl = supabase.storage.from('images').getPublicUrl('romergarciacover.jpg').data.publicUrl;
-        setBackgroundImage(imageUrl);
+        console.log('Fetching hero images...');
+        const { data: imageList, error } = await supabase
+          .storage
+          .from('images')
+          .list('', {
+            sortBy: { column: 'name', order: 'asc' }
+          });
+
+        if (error) {
+          console.error('Error fetching hero images:', error);
+          return;
+        }
+
+        if (imageList && imageList.length > 0) {
+          // Get a random image from the list
+          const randomIndex = Math.floor(Math.random() * imageList.length);
+          const randomImage = imageList[randomIndex];
+          const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
+          console.log('Selected random image:', imageUrl);
+          setBackgroundImage(imageUrl);
+        } else {
+          console.log('No images found, using fallback');
+          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+          setBackgroundImage(fallbackUrl);
+        }
       } catch (error) {
-        console.error('Error fetching background image:', error);
-        // Fallback image if the specified one isn't available
-        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-        setBackgroundImage(fallbackUrl);
+        console.error('Error in fetchRandomImage:', error);
       }
     };
 
-    fetchBackground();
+    fetchRandomImage();
   }, []);
 
   return (

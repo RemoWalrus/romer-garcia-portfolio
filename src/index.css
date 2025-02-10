@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +24,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-    --radius: 0.5rem;
+    --radius: 0;
   }
  
   .dark {
@@ -97,6 +98,13 @@
   @apply backdrop-blur-lg bg-white/5 border border-white/10;
 }
 
+/* Make CTAs bolder */
+button, 
+a[role="button"],
+.cta {
+  @apply font-bold;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -107,7 +115,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-700 rounded-full;
+  @apply bg-neutral-700;
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -51,13 +51,14 @@ The remaining website content is managed through the `sections` table in Supabas
 4. Here you can update:
    - About section: title, description, and portfolio URL
    - Contact section: title, description, and "get in touch" text
+   - Quote section: inspirational quote and author
    - Other custom sections
 
 Each section in the database includes:
 - A unique section name
 - A title
 - A description
-- Additional fields specific to that section (e.g., portfolio_url for the About section)
+- Additional fields specific to that section (e.g., portfolio_url for the About section, quote and author for the Quote section)
 
 ## How can I edit this code?
 

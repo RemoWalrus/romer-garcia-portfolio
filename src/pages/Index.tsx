@@ -6,6 +6,7 @@ import { Portfolio } from '@/components/Portfolio';
 import { About } from '@/components/About';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
+import { Quote } from '@/components/Quote';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,6 +49,7 @@ const Index = () => {
       <Portfolio />
       <About />
       <Contact />
+      <Quote />
       <Footer />
     </div>
   );

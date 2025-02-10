@@ -21,7 +21,7 @@ const Index = () => {
     "Art Director",
     "Web Master",
     "Social Media Manager",
-    "Romer Garcia"
+    "RomerGarcia.com"
   ];
   
   // Get public URLs for the images

@@ -1,4 +1,3 @@
-
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
@@ -32,7 +31,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
             src={logoUrl} 
             alt="Romer Garcia Logo" 
             className={`transition-all duration-300 ${
-              scrolled ? 'w-28 md:w-32 h-auto' : 'w-40 md:w-48 h-auto'
+              scrolled ? 'w-32 md:w-40 h-auto' : 'w-44 md:w-56 h-auto'
             }`}
           />
         </button>
@@ -66,7 +65,6 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           </button>
         </div>
 
-        {/* Mobile menu overlay */}
         <div 
           className={`md:hidden fixed inset-0 bg-[#070a0f]/95 backdrop-blur-md z-40 transition-transform duration-300 ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
@@ -109,4 +107,3 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     </nav>
   );
 };
-

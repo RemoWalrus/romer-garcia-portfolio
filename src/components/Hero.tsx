@@ -1,4 +1,3 @@
-
 import { ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -76,16 +75,19 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   }, [titleIndex]);
 
   useEffect(() => {
-    const startCarousel = !showVideo && heroImages.length > 1;
-    
-    if (startCarousel) {
-      const imageTimer = setInterval(() => {
-        setCurrentImageIndex(prevIndex => (prevIndex + 1) % heroImages.length);
+    if (!showVideo && heroImages.length > 1) {
+      console.log('Starting carousel with images:', heroImages);
+      const timer = setInterval(() => {
+        setCurrentImageIndex((prevIndex) => {
+          const nextIndex = (prevIndex + 1) % heroImages.length;
+          console.log('Updating image index from', prevIndex, 'to', nextIndex);
+          return nextIndex;
+        });
       }, 5000);
 
-      return () => clearInterval(imageTimer);
+      return () => clearInterval(timer);
     }
-  }, [showVideo, heroImages]);
+  }, [showVideo, heroImages.length]);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -152,4 +154,3 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     </section>
   );
 };
-

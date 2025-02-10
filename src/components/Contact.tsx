@@ -2,9 +2,11 @@
 import { Github, Linkedin, Mail } from 'lucide-react';
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Contact = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,13 +15,31 @@ export const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the form submission
-    // For now, we'll just show a success message
-    toast({
-      title: "Message sent!",
-      description: "Thanks for reaching out. I'll get back to you soon.",
-    });
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
+      
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again later or contact me directly via email.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -87,9 +107,10 @@ export const Contact = () => {
 
           <button
             type="submit"
-            className="w-full py-3 bg-white text-black font-medium rounded-md hover:bg-neutral-200 transition-colors"
+            disabled={isSubmitting}
+            className="w-full py-3 bg-white text-black font-medium rounded-md hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Send Message
+            {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </form>
 

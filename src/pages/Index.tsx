@@ -43,42 +43,71 @@ const Index = () => {
     if (titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
         setTitleIndex(prev => prev + 1);
-      }, 600); // Faster animation timing (changed from 800ms)
+      }, 600);
       return () => clearTimeout(timer);
     }
   }, [titleIndex]);
 
   const glitchVariants = {
     initial: {
-      skew: 0,
       opacity: 0,
-      scale: 0.95,
+      scale: 0.98,
       filter: "blur(0px)",
       x: 0,
     },
     animate: {
-      skew: [0, -2, 2, -1, 1, 0],
       opacity: 1,
-      scale: [0.95, 1.02, 0.98, 1],
+      scale: [0.98, 1.01, 0.99, 1],
       filter: [
         "blur(0px) brightness(100%) contrast(100%)",
-        "blur(1px) brightness(120%) contrast(90%)",
+        "blur(2px) brightness(150%) contrast(90%) hue-rotate(2deg)",
         "blur(0px) brightness(100%) contrast(100%)",
-        "blur(2px) brightness(90%) contrast(110%)",
+        "blur(1px) brightness(120%) contrast(95%) hue-rotate(-2deg)",
         "blur(0px) brightness(100%) contrast(100%)"
       ],
-      x: [0, -3, 3, -1, 1, 0],
+      x: [0, -2, 2, -1, 1, 0],
+      transition: {
+        duration: 0.4,
+        times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+        ease: "easeInOut",
+        staggerChildren: 0.05,
+      }
     },
     exit: {
-      skew: [0, 2, -2, 1, -1, 0],
       opacity: 0,
-      scale: 0.95,
+      scale: 0.98,
       filter: [
         "blur(0px) brightness(100%) contrast(100%)",
-        "blur(2px) brightness(150%) contrast(80%)",
+        "blur(3px) brightness(200%) contrast(80%) hue-rotate(5deg)",
         "blur(0px) brightness(100%) contrast(100%)"
       ],
-      x: [0, 3, -3, 1, -1, 0],
+      x: [0, 2, -2, 1, -1, 0],
+      transition: {
+        duration: 0.3,
+        ease: "easeOut",
+      }
+    }
+  };
+
+  // Add pixel glitch effect
+  const pixelGlitch = {
+    initial: { clipPath: "inset(0 0 0 0)" },
+    animate: {
+      clipPath: [
+        "inset(0 0 0 0)",
+        "inset(10% 15% 25% 5%)",
+        "inset(25% 5% 15% 10%)",
+        "inset(15% 25% 5% 20%)",
+        "inset(5% 10% 20% 15%)",
+        "inset(0 0 0 0)"
+      ],
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut",
+        repeat: 1,
+        repeatType: "reverse",
+        times: [0, 0.2, 0.4, 0.6, 0.8, 1]
+      }
     }
   };
 
@@ -155,27 +184,52 @@ const Index = () => {
           >
             
             <AnimatePresence mode="wait">
-              <motion.h1
+              <motion.div
                 key={titles[titleIndex]}
                 initial="initial"
                 animate="animate"
                 exit="exit"
                 variants={glitchVariants}
-                transition={{
-                  duration: 0.3, // Faster duration (changed from 0.4)
-                  times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-                  ease: "easeInOut"
-                }}
-                className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8 relative"
-                style={{
-                  textShadow: `
-                    2px 0 0 rgba(255,0,0,0.3),
-                    -2px 0 0 rgba(0,255,255,0.3)
-                  `
-                }}
+                className="relative"
               >
-                {titles[titleIndex]}
-              </motion.h1>
+                <motion.h1
+                  variants={pixelGlitch}
+                  className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8"
+                  style={{
+                    textShadow: `
+                      2px 0 0 rgba(255,0,0,0.3),
+                      -2px 0 0 rgba(0,255,255,0.3)
+                    `
+                  }}
+                >
+                  {titles[titleIndex]}
+                </motion.h1>
+                <motion.div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    mixBlendMode: "difference",
+                    textShadow: "none"
+                  }}
+                  animate={{
+                    clipPath: [
+                      "inset(50% 0 50% 0)",
+                      "inset(0% 0 0% 0)",
+                      "inset(50% 0 50% 0)"
+                    ]
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    ease: "easeInOut",
+                    times: [0, 0.5, 1],
+                    repeat: 1,
+                    repeatType: "reverse"
+                  }}
+                >
+                  <h1 className="text-5xl md:text-6xl lg:text-8xl font-extralight text-white mb-8">
+                    {titles[titleIndex]}
+                  </h1>
+                </motion.div>
+              </motion.div>
             </AnimatePresence>
             
             <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12">

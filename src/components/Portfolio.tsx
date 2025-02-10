@@ -1,4 +1,3 @@
-
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -86,7 +85,6 @@ export const Portfolio = () => {
       }}>
         <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-800 w-[95vw] max-w-7xl h-[90vh] overflow-hidden md:p-0">
           <div className="h-full flex flex-col md:flex-row">
-            {/* Text Content */}
             <div className="md:w-1/2 p-6 md:p-12 overflow-y-auto">
               <DialogHeader>
                 <div className="mb-2">
@@ -101,72 +99,58 @@ export const Portfolio = () => {
                   {selectedProject?.description}
                 </DialogDescription>
               </DialogHeader>
+              {selectedProject?.ext_url && (
+                <div 
+                  onClick={() => handleExternalLink(selectedProject.ext_url)}
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc uppercase mt-4"
+                >
+                  View Project <MoveRight className="ml-2 w-4 h-4" />
+                </div>
+              )}
             </div>
 
-            {/* Image Gallery */}
             <div className="md:w-1/2 bg-neutral-950 overflow-y-auto">
               <div className="p-6 md:p-12">
                 {selectedProject?.additional_images?.length > 0 ? (
                   <>
                     <motion.div 
                       key={heroImageIndex}
-                      className="w-full aspect-video mb-8 relative group"
+                      className="w-full aspect-video mb-2"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
                     >
                       <img
-                        src={selectedProject?.image_url}
-                        alt={selectedProject?.title}
-                        className="w-full h-full object-cover rounded-lg transition-all duration-500 hover:scale-[1.01]"
+                        src={selectedProject.additional_images[heroImageIndex]}
+                        alt={`${selectedProject?.title} - Featured`}
+                        className="w-full h-full object-cover rounded-lg"
                       />
-                      {selectedProject?.ext_url && (
-                        <div 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleExternalLink(selectedProject.ext_url);
-                          }}
-                          className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                        >
-                          <div className="text-white flex items-center uppercase">
-                            View Project <MoveRight className="ml-2 w-4 h-4" />
-                          </div>
-                        </div>
-                      )}
                     </motion.div>
                     <div className="grid grid-cols-3 gap-0">
                       {selectedProject.additional_images.map((image: string, index: number) => (
                         <div 
                           key={index}
                           onClick={() => handleImageClick(index)}
-                          className="cursor-pointer aspect-video"
+                          className={`cursor-pointer aspect-video transition-all duration-300 ${
+                            index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
+                          }`}
                         >
                           <img
                             src={image}
                             alt={`${selectedProject.title} preview ${index + 1}`}
-                            className="w-full h-full object-cover transition-opacity hover:opacity-80"
+                            className="w-full h-full object-cover"
                           />
                         </div>
                       ))}
                     </div>
                   </>
                 ) : (
-                  <div className="w-full aspect-video relative group">
+                  <div className="w-full aspect-video">
                     <img
                       src={selectedProject?.image_url}
                       alt={selectedProject?.title}
-                      className="w-full h-full object-cover rounded-lg transition-all duration-500 hover:scale-[1.01]"
+                      className="w-full h-full object-cover rounded-lg"
                     />
-                    {selectedProject?.ext_url && (
-                      <div 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleExternalLink(selectedProject.ext_url);
-                        }}
-                        className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                      >
-                        <div className="text-white flex items-center uppercase">
-                          View Project <MoveRight className="ml-2 w-4 h-4" />
-                        </div>
-                      </div>
-                    )}
                   </div>
                 )}
               </div>

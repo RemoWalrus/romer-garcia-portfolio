@@ -105,6 +105,17 @@ a[role="button"],
   @apply font-bold;
 }
 
+/* Portfolio specific styles */
+#portfolio button,
+#portfolio a[role="button"] {
+  @apply uppercase;
+}
+
+/* Navigation specific styles */
+nav button {
+  @apply font-extralight;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -121,3 +132,4 @@ a[role="button"],
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-neutral-600;
 }
+

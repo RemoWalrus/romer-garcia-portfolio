@@ -13,7 +13,9 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const hour = new Date().getHours();
   const isLightMode = hour >= 6 && hour < 18;
-  const logoUrl = supabase.storage.from('graphics').getPublicUrl(isLightMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg').data.publicUrl;
+  const logoUrl = supabase.storage.from('graphics').getPublicUrl(
+    scrolled && isLightMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg'
+  ).data.publicUrl;
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>

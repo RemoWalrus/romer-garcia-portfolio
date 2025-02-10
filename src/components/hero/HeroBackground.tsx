@@ -49,7 +49,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
   return (
     <div className="absolute inset-0">
       {/* Black gradient overlay with multiply blend - even more transparent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 to-transparent mix-blend-multiply z-10" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/5 via-black/3 to-transparent mix-blend-multiply z-10" />
       
       {/* Show both video and image with different opacities based on showVideo state */}
       <div className="relative w-full h-full">

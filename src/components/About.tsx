@@ -24,7 +24,7 @@ export const About = () => {
   useEffect(() => {
     const { data } = supabase.storage
       .from('profile')
-      .getPublicUrl('portrait.jpg');
+      .getPublicUrl('RomerSelfPortrait.jpg');
     
     if (data) {
       setPortraitUrl(data.publicUrl);

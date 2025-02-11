@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { ParallaxContainer } from '@/components/ParallaxContainer';
+import { ParallaxLayer } from '@/components/ParallaxLayer';
 
 interface AboutSection {
   title: string;
@@ -90,20 +92,17 @@ export const About = () => {
         </motion.h2>
         
         <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-neutral-200 dark:border-neutral-600/50 flex-shrink-0 bg-neutral-100 dark:bg-neutral-800"
-          >
+          <ParallaxContainer className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-neutral-200 dark:border-neutral-600/50 flex-shrink-0 bg-neutral-100 dark:bg-neutral-800">
             {portraitUrl && (
-              <img 
-                src={portraitUrl} 
-                alt="Profile" 
-                className="w-full h-full object-cover"
-              />
+              <ParallaxLayer depth={0.5} className="w-full h-full">
+                <img 
+                  src={portraitUrl} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover scale-110"
+                />
+              </ParallaxLayer>
             )}
-          </motion.div>
+          </ParallaxContainer>
           
           <div className="flex-1">
             <motion.div

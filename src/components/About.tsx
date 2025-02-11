@@ -23,17 +23,17 @@ export const About = () => {
 
   useEffect(() => {
     const { data } = supabase.storage
-      .from('graphics')
-      .getPublicUrl('RomerSelfPortrait.jpg');
+      .from('profile')
+      .getPublicUrl('portrait.jpg');
     
     if (data) {
       setPortraitUrl(data.publicUrl);
     }
 
-    // Get portfolio PDF URL
+    // Get portfolio PDF URL if it exists
     const portfolioData = supabase.storage
-      .from('portfolio')
-      .getPublicUrl('RomerGarcia_Portfolio_2024.pdf');
+      .from('profile')
+      .getPublicUrl('portfolio.pdf');
     
     if (portfolioData.data) {
       setAboutData(prev => ({
@@ -99,7 +99,7 @@ export const About = () => {
             {portraitUrl && (
               <img 
                 src={portraitUrl} 
-                alt="Romer Garcia" 
+                alt="Profile" 
                 className="w-full h-full object-cover"
               />
             )}

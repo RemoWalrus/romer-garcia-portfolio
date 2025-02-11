@@ -1,3 +1,4 @@
+
 import { MoveRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -127,7 +128,7 @@ export const Portfolio = () => {
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className={`w-full ${isMobile ? 'h-[50vh]' : 'h-[75vh] md:h-[75%]'}`}
+                    className={`w-full ${isMobile ? 'h-[50vh]' : 'h-[75vh]'}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}

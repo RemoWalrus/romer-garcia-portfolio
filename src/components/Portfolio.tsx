@@ -49,7 +49,8 @@ export const Portfolio = () => {
             <div 
               key={project.id}
               onClick={() => setSelectedProject(project)}
-              className="group relative aspect-square cursor-pointer overflow-hidden bg-neutral-900"
+              className="group relative cursor-pointer overflow-hidden bg-neutral-900"
+              style={{ aspectRatio: '4/3' }} // Changed from aspect-square to a 4:3 ratio
             >
               <img 
                 src={project.hero_image_url} 

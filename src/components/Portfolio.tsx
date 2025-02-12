@@ -126,15 +126,18 @@ export const Portfolio = () => {
 
             <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col">
               {selectedProject?.youtube_url ? (
-                <div className="w-full h-full flex items-center justify-center bg-white dark:bg-neutral-950">
-                  <div className="w-full h-full aspect-video">
-                    <iframe
-                      src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
-                      title={`${selectedProject.title} video`}
-                      className="w-full h-full"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+                <div className="relative w-full h-full bg-white dark:bg-neutral-950">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-full h-0 pb-[56.25%] relative">
+                      <iframe
+                        src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
+                        title={`${selectedProject.title} video`}
+                        className="absolute top-0 left-0 w-full h-full"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
                   </div>
                 </div>
               ) : selectedProject?.additional_images?.length > 0 ? (

@@ -1,4 +1,3 @@
-
 import { MoveRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -75,10 +74,10 @@ export const Portfolio = () => {
         setSelectedProject(null);
         setHeroImageIndex(0);
       }}>
-        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:overflow-hidden p-0">
-          <div className="h-full flex flex-col md:flex-row">
-            <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto text-left">
-              <DialogHeader>
+        <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white w-[95vw] max-w-7xl h-[90vh] md:h-[90vh] overflow-y-auto md:overflow-hidden p-0">
+          <div className="flex flex-col md:flex-row h-full">
+            <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto">
+              <DialogHeader className="text-left">
                 <div className="mb-2">
                   <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                     {selectedProject?.category}
@@ -87,7 +86,7 @@ export const Portfolio = () => {
                 <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
                   {selectedProject?.title}
                 </DialogTitle>
-                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-12 text-base whitespace-pre-line leading-relaxed">
+                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base whitespace-pre-line leading-relaxed text-left">
                   {selectedProject?.description}
                 </DialogDescription>
               </DialogHeader>
@@ -102,12 +101,12 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-3/5 bg-neutral-900 dark:bg-neutral-950 h-auto md:h-full flex flex-col">
+            <div className="md:w-3/5 bg-neutral-900 dark:bg-neutral-950 flex-1 md:h-full flex flex-col">
               {selectedProject?.additional_images?.length > 0 ? (
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className="w-full h-[50vh] md:h-[75vh]"
+                    className="w-full h-[50vh] md:h-[75vh] flex items-center justify-center"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -137,7 +136,7 @@ export const Portfolio = () => {
                   </div>
                 </>
               ) : (
-                <div className="w-full h-[50vh] md:h-full">
+                <div className="w-full h-full flex items-center justify-center">
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
@@ -162,4 +161,3 @@ export const Portfolio = () => {
     </section>
   );
 };
-

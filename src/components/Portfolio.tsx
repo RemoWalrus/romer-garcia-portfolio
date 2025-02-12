@@ -76,18 +76,8 @@ export const Portfolio = () => {
         setHeroImageIndex(0);
       }}>
         <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white w-[95vw] max-w-7xl h-[90vh] overflow-y-auto md:overflow-hidden p-0">
-          <button 
-            onClick={() => {
-              setSelectedProject(null);
-              setHeroImageIndex(0);
-            }}
-            className="absolute right-4 top-4 z-50 p-2 rounded-full bg-black/80 hover:bg-black/90 transition-colors"
-          >
-            <X className="h-5 w-5 text-white" />
-          </button>
-          
           <div className="h-full flex flex-col md:flex-row">
-            <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto">
+            <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto text-left">
               <DialogHeader>
                 <div className="mb-2">
                   <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
@@ -97,7 +87,7 @@ export const Portfolio = () => {
                 <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
                   {selectedProject?.title}
                 </DialogTitle>
-                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed">
+                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-12 text-base whitespace-pre-line leading-relaxed">
                   {selectedProject?.description}
                 </DialogDescription>
               </DialogHeader>
@@ -157,6 +147,16 @@ export const Portfolio = () => {
               )}
             </div>
           </div>
+
+          <button 
+            onClick={() => {
+              setSelectedProject(null);
+              setHeroImageIndex(0);
+            }}
+            className="absolute right-4 top-4 z-50 p-2 rounded-full bg-black/80 hover:bg-black/90 transition-colors"
+          >
+            <X className="h-5 w-5 text-white" />
+          </button>
         </DialogContent>
       </Dialog>
     </section>

@@ -43,7 +43,7 @@ export const Portfolio = () => {
     // Handle YouTube Shorts URLs
     if (url.includes('/shorts/')) {
       const videoId = url.split('/shorts/')[1].split('?')[0];
-      return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1&controls=0&loop=1`;
+      return `https://www.youtube.com/embed/${videoId}`;
     }
     
     // Handle regular YouTube URLs
@@ -63,10 +63,6 @@ export const Portfolio = () => {
     }
     
     return null;
-  };
-
-  const isYouTubeShorts = (url: string) => {
-    return url?.includes('/shorts/');
   };
 
   return (
@@ -138,17 +134,15 @@ export const Portfolio = () => {
               {selectedProject?.youtube_url ? (
                 <div className="relative w-full h-full bg-white dark:bg-neutral-950">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={`w-full ${isYouTubeShorts(selectedProject.youtube_url) ? 'max-w-[400px]' : 'max-w-full'} h-full`}>
-                      <div className={`relative ${isYouTubeShorts(selectedProject.youtube_url) ? 'pb-[177.77%]' : 'pb-[56.25%]'}`}>
-                        <iframe
-                          src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
-                          title={`${selectedProject.title} video`}
-                          className="absolute top-0 left-0 w-full h-full"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      </div>
+                    <div className="w-full h-0 pb-[56.25%] relative">
+                      <iframe
+                        src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
+                        title={`${selectedProject.title} video`}
+                        className="absolute top-0 left-0 w-full h-full"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
                     </div>
                   </div>
                 </div>

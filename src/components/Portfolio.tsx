@@ -4,14 +4,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { ProfileModal } from './ProfileModal';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [projects, setProjects] = useState<any[]>([]);
   const [heroImageIndex, setHeroImageIndex] = useState(0);
-  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -41,16 +39,6 @@ export const Portfolio = () => {
 
   return (
     <section id="portfolio" className="relative bg-white dark:bg-neutral-950 py-32">
-      <div 
-        className="absolute inset-0 bg-fixed opacity-10 cursor-pointer"
-        style={{
-          backgroundImage: `url(${supabase.storage.from('graphics').getPublicUrl('RomerGarcia-cover.png').data.publicUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-        onClick={() => setIsProfileModalOpen(true)}
-      />
-      
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
           Featured Work
@@ -170,11 +158,7 @@ export const Portfolio = () => {
           </div>
         </DialogContent>
       </Dialog>
-
-      <ProfileModal 
-        isOpen={isProfileModalOpen} 
-        onClose={() => setIsProfileModalOpen(false)} 
-      />
     </section>
   );
 };
+

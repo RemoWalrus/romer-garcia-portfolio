@@ -1,4 +1,3 @@
-
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -150,56 +149,58 @@ export const Portfolio = () => {
                 </div>
               ) : selectedProject?.additional_images?.length > 0 ? (
                 <div className="flex flex-col h-full">
-                  <motion.div 
-                    key={heroImageIndex}
-                    className="flex-1 min-h-0 flex items-center justify-center bg-white dark:bg-neutral-950 p-4"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <img
-                      src={selectedProject.additional_images[heroImageIndex]}
-                      alt={`${selectedProject?.title} - Featured`}
-                      className="max-w-full max-h-full object-contain"
-                    />
-                  </motion.div>
-                  
-                  {/* Mobile view */}
-                  <div className="flex md:hidden overflow-x-auto h-24 bg-white dark:bg-neutral-950">
-                    {selectedProject.additional_images.map((image: string, index: number) => (
-                      <div 
-                        key={index}
-                        onClick={() => handleImageClick(index)}
-                        className={`cursor-pointer h-full flex-shrink-0 w-24 ${
-                          index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
-                        }`}
-                      >
-                        <img
-                          src={image}
-                          alt={`${selectedProject.title} preview ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  <div className="flex-1 min-h-0 flex flex-col md:justify-center bg-white dark:bg-neutral-950">
+                    <motion.div 
+                      key={heroImageIndex}
+                      className="flex items-center justify-center p-4"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <img
+                        src={selectedProject.additional_images[heroImageIndex]}
+                        alt={`${selectedProject?.title} - Featured`}
+                        className="max-w-full max-h-full object-contain"
+                      />
+                    </motion.div>
+                    
+                    {/* Mobile view */}
+                    <div className="flex md:hidden overflow-x-auto h-24 bg-white dark:bg-neutral-950">
+                      {selectedProject.additional_images.map((image: string, index: number) => (
+                        <div 
+                          key={index}
+                          onClick={() => handleImageClick(index)}
+                          className={`cursor-pointer h-full flex-shrink-0 w-24 ${
+                            index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
+                          }`}
+                        >
+                          <img
+                            src={image}
+                            alt={`${selectedProject.title} preview ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
 
-                  {/* Desktop view */}
-                  <div className="hidden md:grid grid-cols-6 gap-[5px] p-4 bg-white dark:bg-neutral-950">
-                    {selectedProject.additional_images.map((image: string, index: number) => (
-                      <div 
-                        key={index}
-                        onClick={() => handleImageClick(index)}
-                        className={`cursor-pointer aspect-square border border-neutral-200 dark:border-neutral-800 overflow-hidden ${
-                          index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
-                        }`}
-                      >
-                        <img
-                          src={image}
-                          alt={`${selectedProject.title} preview ${index + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
+                    {/* Desktop view */}
+                    <div className="hidden md:grid grid-cols-6 gap-[5px] p-4 bg-white dark:bg-neutral-950">
+                      {selectedProject.additional_images.map((image: string, index: number) => (
+                        <div 
+                          key={index}
+                          onClick={() => handleImageClick(index)}
+                          className={`cursor-pointer aspect-square border border-neutral-200 dark:border-neutral-800 overflow-hidden ${
+                            index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
+                          }`}
+                        >
+                          <img
+                            src={image}
+                            alt={`${selectedProject.title} preview ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : (

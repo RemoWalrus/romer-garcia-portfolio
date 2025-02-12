@@ -38,8 +38,8 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
   return (
     <div className="container relative z-20 px-4 py-32 mx-auto text-center">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
         <AnimatePresence mode="wait">
@@ -55,9 +55,14 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
           </motion.div>
         </AnimatePresence>
         
-        <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12 font-roc">
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12 font-roc"
+        >
           {subtitle}
-        </p>
+        </motion.p>
 
         <Button 
           onClick={() => scrollToSection('portfolio')}

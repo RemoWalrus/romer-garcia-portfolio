@@ -111,6 +111,7 @@ export type Database = {
           image_url: string
           sort_order: number | null
           title: string
+          youtube_url: string | null
         }
         Insert: {
           additional_images?: string[] | null
@@ -123,6 +124,7 @@ export type Database = {
           image_url: string
           sort_order?: number | null
           title: string
+          youtube_url?: string | null
         }
         Update: {
           additional_images?: string[] | null
@@ -135,6 +137,7 @@ export type Database = {
           image_url?: string
           sort_order?: number | null
           title?: string
+          youtube_url?: string | null
         }
         Relationships: []
       }

@@ -37,6 +37,28 @@ export const Portfolio = () => {
     }
   };
 
+  const getYouTubeEmbedUrl = (url: string) => {
+    if (!url) return null;
+    
+    // Handle regular YouTube URLs
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    
+    if (match && match[2].length === 11) {
+      return `https://www.youtube.com/embed/${match[2]}`;
+    }
+    
+    // Handle YouTube playlist URLs
+    const playlistRegExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|playlist\?list=)([^#&?]*).*/;
+    const playlistMatch = url.match(playlistRegExp);
+    
+    if (playlistMatch && playlistMatch[2]) {
+      return `https://www.youtube.com/embed/videoseries?list=${playlistMatch[2]}`;
+    }
+    
+    return null;
+  };
+
   return (
     <section id="portfolio" className="relative bg-white dark:bg-neutral-950 py-32">
       <div className="container mx-auto px-4 relative z-10">
@@ -103,7 +125,19 @@ export const Portfolio = () => {
             </div>
 
             <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col">
-              {selectedProject?.additional_images?.length > 0 ? (
+              {selectedProject?.youtube_url ? (
+                <div className="w-full h-full flex items-center justify-center bg-white dark:bg-neutral-950">
+                  <div className="w-full h-full aspect-video">
+                    <iframe
+                      src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
+                      title={`${selectedProject.title} video`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              ) : selectedProject?.additional_images?.length > 0 ? (
                 <>
                   <motion.div 
                     key={heroImageIndex}

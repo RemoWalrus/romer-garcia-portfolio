@@ -1,4 +1,5 @@
-import { MoveRight, X } from 'lucide-react';
+
+import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
@@ -86,7 +87,7 @@ export const Portfolio = () => {
                 <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
                   {selectedProject?.title}
                 </DialogTitle>
-                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-16 text-base whitespace-pre-line leading-relaxed text-left">
+                <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-24 text-base whitespace-pre-line leading-relaxed text-left">
                   {selectedProject?.description}
                 </DialogDescription>
               </DialogHeader>
@@ -101,7 +102,7 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-3/5 bg-neutral-900 dark:bg-neutral-950 flex-1 md:h-full flex flex-col">
+            <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col">
               {selectedProject?.additional_images?.length > 0 ? (
                 <>
                   <motion.div 
@@ -114,10 +115,10 @@ export const Portfolio = () => {
                     <img
                       src={selectedProject.additional_images[heroImageIndex]}
                       alt={`${selectedProject?.title} - Featured`}
-                      className="w-full h-full object-contain bg-neutral-900 dark:bg-neutral-950"
+                      className="w-full h-full object-contain bg-white dark:bg-neutral-950"
                     />
                   </motion.div>
-                  <div className="flex overflow-x-auto h-[15vh] md:h-[25%] bg-neutral-900 dark:bg-neutral-950">
+                  <div className="flex overflow-x-auto h-[15vh] md:h-[25%] bg-white dark:bg-neutral-950">
                     {selectedProject.additional_images.map((image: string, index: number) => (
                       <div 
                         key={index}
@@ -140,22 +141,12 @@ export const Portfolio = () => {
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
-                    className="w-full h-full object-contain bg-neutral-900 dark:bg-neutral-950"
+                    className="w-full h-full object-contain bg-white dark:bg-neutral-950"
                   />
                 </div>
               )}
             </div>
           </div>
-
-          <button 
-            onClick={() => {
-              setSelectedProject(null);
-              setHeroImageIndex(0);
-            }}
-            className="absolute right-4 top-4 z-50 p-2 rounded-full bg-black/80 hover:bg-black/90 transition-colors"
-          >
-            <X className="h-5 w-5 text-white" />
-          </button>
         </DialogContent>
       </Dialog>
     </section>

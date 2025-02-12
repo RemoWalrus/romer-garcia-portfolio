@@ -43,7 +43,7 @@ export const Portfolio = () => {
     // Handle YouTube Shorts URLs
     if (url.includes('/shorts/')) {
       const videoId = url.split('/shorts/')[1].split('?')[0];
-      return `https://www.youtube.com/embed/${videoId}`;
+      return `https://www.youtube.com/embed/${videoId}?rel=0&playsinline=1`;
     }
     
     // Handle regular YouTube URLs
@@ -51,7 +51,7 @@ export const Portfolio = () => {
     const match = url.match(regExp);
     
     if (match && match[2].length === 11) {
-      return `https://www.youtube.com/embed/${match[2]}`;
+      return `https://www.youtube.com/embed/${match[2]}?rel=0&playsinline=1`;
     }
     
     // Handle YouTube playlist URLs
@@ -59,7 +59,7 @@ export const Portfolio = () => {
     const playlistMatch = url.match(playlistRegExp);
     
     if (playlistMatch && playlistMatch[2]) {
-      return `https://www.youtube.com/embed/videoseries?list=${playlistMatch[2]}`;
+      return `https://www.youtube.com/embed/videoseries?list=${playlistMatch[2]}&rel=0&playsinline=1`;
     }
     
     return null;
@@ -134,15 +134,17 @@ export const Portfolio = () => {
               {selectedProject?.youtube_url ? (
                 <div className="relative w-full h-full bg-white dark:bg-neutral-950">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-0 pb-[56.25%] relative">
-                      <iframe
-                        src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
-                        title={`${selectedProject.title} video`}
-                        className="absolute top-0 left-0 w-full h-full"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
+                    <div className="w-full max-w-[400px] mx-auto">
+                      <div className="relative pb-[177.78%]">
+                        <iframe
+                          src={getYouTubeEmbedUrl(selectedProject.youtube_url)}
+                          title={`${selectedProject.title} video`}
+                          className="absolute top-0 left-0 w-full h-full"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -150,7 +152,7 @@ export const Portfolio = () => {
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className="w-full h-[50vh] md:h-[75vh] flex items-center justify-center"
+                    className="flex-1 min-h-0 flex items-center justify-center bg-white dark:bg-neutral-950"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -158,15 +160,15 @@ export const Portfolio = () => {
                     <img
                       src={selectedProject.additional_images[heroImageIndex]}
                       alt={`${selectedProject?.title} - Featured`}
-                      className="w-full h-full object-contain bg-white dark:bg-neutral-950"
+                      className="max-w-full max-h-full object-contain"
                     />
                   </motion.div>
-                  <div className="flex overflow-x-auto h-[15vh] md:h-[25%] bg-white dark:bg-neutral-950">
+                  <div className="flex overflow-x-auto h-24 bg-white dark:bg-neutral-950">
                     {selectedProject.additional_images.map((image: string, index: number) => (
                       <div 
                         key={index}
                         onClick={() => handleImageClick(index)}
-                        className={`cursor-pointer h-full flex-shrink-0 w-1/4 ${
+                        className={`cursor-pointer h-full flex-shrink-0 w-24 ${
                           index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
                         }`}
                       >
@@ -184,7 +186,7 @@ export const Portfolio = () => {
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
-                    className="w-full h-full object-contain bg-white dark:bg-neutral-950"
+                    className="max-w-full max-h-full object-contain bg-white dark:bg-neutral-950"
                   />
                 </div>
               )}

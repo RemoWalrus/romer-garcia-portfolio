@@ -1,3 +1,4 @@
+
 import { MoveRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -61,7 +62,7 @@ export const Portfolio = () => {
                 <p className="text-xs font-bold text-neutral-400 mb-2 uppercase tracking-wider">{project.category}</p>
                 <h3 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4 uppercase">{project.title}</h3>
                 <p className="text-sm text-neutral-300 mb-6">{project.description.split('.')[0]}.</p>
-                <div className="flex items-center text-neutral-400 group-hover:text-white transition-colors text-sm font-roc uppercase">
+                <div className="flex items-center text-neutral-400 group-hover:text-white transition-colors text-sm font-roc font-bold uppercase">
                   Explore More <MoveRight className="ml-2 w-4 h-4" />
                 </div>
               </div>
@@ -104,19 +105,19 @@ export const Portfolio = () => {
               {selectedProject?.ext_url && (
                 <div 
                   onClick={() => handleExternalLink(selectedProject.ext_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc uppercase mt-4"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
                 >
                   View Project <MoveRight className="ml-2 w-4 h-4" />
                 </div>
               )}
             </div>
 
-            <div className="md:w-3/5 bg-neutral-900 dark:bg-neutral-950 min-h-[50vh] md:min-h-0 md:h-full flex flex-col">
+            <div className="md:w-3/5 bg-neutral-900 dark:bg-neutral-950 h-auto md:h-full flex flex-col">
               {selectedProject?.additional_images?.length > 0 ? (
                 <>
                   <motion.div 
                     key={heroImageIndex}
-                    className={`w-full ${isMobile ? 'h-[50vh]' : 'h-[75vh]'}`}
+                    className="w-full h-[50vh] md:h-[75vh]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
@@ -146,7 +147,7 @@ export const Portfolio = () => {
                   </div>
                 </>
               ) : (
-                <div className="w-full h-full">
+                <div className="w-full h-[50vh] md:h-full">
                   <img
                     src={selectedProject?.image_url}
                     alt={selectedProject?.title}
@@ -161,3 +162,4 @@ export const Portfolio = () => {
     </section>
   );
 };
+

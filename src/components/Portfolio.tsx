@@ -40,6 +40,12 @@ export const Portfolio = () => {
   const getYouTubeEmbedUrl = (url: string) => {
     if (!url) return null;
     
+    // Handle YouTube Shorts URLs
+    if (url.includes('/shorts/')) {
+      const videoId = url.split('/shorts/')[1].split('?')[0];
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+    
     // Handle regular YouTube URLs
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);

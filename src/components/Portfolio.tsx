@@ -1,4 +1,3 @@
-
 import { MoveRight, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useState, useEffect } from 'react';
@@ -50,7 +49,7 @@ export const Portfolio = () => {
               key={project.id}
               onClick={() => setSelectedProject(project)}
               className="group relative cursor-pointer overflow-hidden bg-neutral-900"
-              style={{ aspectRatio: '4/3' }} // Changed from aspect-square to a 4:3 ratio
+              style={{ aspectRatio: '4/3' }}
             >
               <img 
                 src={project.hero_image_url} 
@@ -87,7 +86,7 @@ export const Portfolio = () => {
           </button>
           
           <div className="h-full flex flex-col md:flex-row">
-            <div className="md:w-1/2 p-6 md:p-12 overflow-y-auto">
+            <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto">
               <DialogHeader>
                 <div className="mb-2">
                   <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
@@ -112,7 +111,7 @@ export const Portfolio = () => {
               )}
             </div>
 
-            <div className="md:w-1/2 bg-neutral-900 dark:bg-neutral-950 min-h-[50vh] md:min-h-0 md:h-full flex flex-col">
+            <div className="md:w-3/5 bg-neutral-900 dark:bg-neutral-950 min-h-[50vh] md:min-h-0 md:h-full flex flex-col">
               {selectedProject?.additional_images?.length > 0 ? (
                 <>
                   <motion.div 
@@ -162,4 +161,3 @@ export const Portfolio = () => {
     </section>
   );
 };
-

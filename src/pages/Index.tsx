@@ -25,7 +25,7 @@ const Index = () => {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      const headerOffset = 120; // Increased from 100 to 120 to scroll slightly further down
+      const headerOffset = 160; // Increased from 120 to 160 to scroll further down
       const elementPosition = section.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 

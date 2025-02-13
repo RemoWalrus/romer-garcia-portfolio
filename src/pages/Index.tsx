@@ -25,7 +25,7 @@ const Index = () => {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      const headerOffset = 75; // Decreased to 75px to scroll to a higher position
+      const headerOffset = 50; // Decreased to 50px for higher scroll position
       const elementPosition = section.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 

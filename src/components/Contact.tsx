@@ -44,11 +44,18 @@ export const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: formData
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData,
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Function error:', error);
+        throw new Error('Failed to send message');
+      }
+
+      if (!data?.success) {
+        throw new Error('Failed to send message');
+      }
 
       toast({
         title: "Message sent!",
@@ -158,4 +165,3 @@ export const Contact = () => {
     </section>
   );
 };
-

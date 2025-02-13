@@ -17,9 +17,7 @@ export const Quote = () => {
   useEffect(() => {
     const fetchRandomQuote = async () => {
       const { data, error } = await supabase
-        .from('quotes')
-        .select('quote, author')
-        .limit(1)
+        .rpc('get_random_quote')
         .maybeSingle();
       
       if (data && !error) {

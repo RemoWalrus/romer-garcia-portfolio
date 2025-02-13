@@ -236,7 +236,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_random_quote: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          author: string
+          created_at: string
+          id: number
+          quote: string
+          updated_at: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

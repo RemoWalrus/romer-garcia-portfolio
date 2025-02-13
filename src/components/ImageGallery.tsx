@@ -74,16 +74,15 @@ export const ImageGallery = () => {
         </h2>
         
         <div className="relative">
-          <div className="flex overflow-hidden">
+          <div className="flex gap-0">
             {currentImages.map((image) => (
               <motion.div
                 key={image.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                onClick={() => handleImageClick(image)}
                 className="relative cursor-pointer group flex-shrink-0 w-72 aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-800"
+                onClick={() => handleImageClick(image)}
               >
                 <img
                   src={image.image_url}
@@ -159,4 +158,3 @@ export const ImageGallery = () => {
     </section>
   );
 };
-

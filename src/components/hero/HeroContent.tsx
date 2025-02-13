@@ -36,12 +36,11 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
     fetchHeroSection();
   }, []);
 
-  // Reset subtitle visibility when title changes
   useEffect(() => {
     setShowSubtitle(false);
     const timer = setTimeout(() => {
       setShowSubtitle(true);
-    }, 800); // Match this with the title animation duration
+    }, 800);
     return () => clearTimeout(timer);
   }, [titleIndex]);
 
@@ -51,6 +50,7 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
+        className="flex flex-col items-center"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -59,25 +59,27 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
             animate="animate"
             exit="exit"
             variants={glitchVariants}
-            className="relative"
+            className="relative mb-8"
           >
             <HeroTitle title={titles[titleIndex]} />
           </motion.div>
         </AnimatePresence>
         
-        <AnimatePresence mode="wait">
-          {showSubtitle && (
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-12 font-roc"
-            >
-              {subtitle}
-            </motion.p>
-          )}
-        </AnimatePresence>
+        <div className="h-24 mb-8"> {/* Fixed height container for subtitle */}
+          <AnimatePresence mode="wait">
+            {showSubtitle && (
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto font-roc"
+              >
+                {subtitle}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
 
         <Button 
           onClick={() => scrollToSection('portfolio')}

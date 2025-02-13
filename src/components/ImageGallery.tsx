@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -18,21 +18,21 @@ export const ImageGallery = () => {
   const imagesPerPage = 6;
 
   useEffect(() => {
+    const fetchGalleryImages = async () => {
+      const { data, error } = await supabase
+        .from('gallery')
+        .select('*')
+        .order('sort_order', { ascending: true });
+      
+      if (data) {
+        setImages(data);
+      } else if (error) {
+        console.error('Error fetching gallery images:', error);
+      }
+    };
+
     fetchGalleryImages();
   }, []);
-
-  const fetchGalleryImages = async () => {
-    const { data, error } = await supabase
-      .from('gallery')
-      .select('*')
-      .order('sort_order', { ascending: true });
-    
-    if (data) {
-      setImages(data);
-    } else if (error) {
-      console.error('Error fetching gallery images:', error);
-    }
-  };
 
   const totalPages = Math.ceil(images.length / imagesPerPage);
   const currentImages = images.slice(
@@ -40,74 +40,75 @@ export const ImageGallery = () => {
     (currentPage + 1) * imagesPerPage
   );
 
-  const handleNext = () => {
-    setCurrentPage((prev) => (prev + 1) % totalPages);
-  };
+  const navigateGallery = useCallback((direction: 'prev' | 'next') => {
+    setCurrentPage(prev => {
+      if (direction === 'next') {
+        return (prev + 1) % totalPages;
+      }
+      return (prev - 1 + totalPages) % totalPages;
+    });
+  }, [totalPages]);
 
-  const handlePrevious = () => {
-    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
-  };
-
-  const handleImageClick = (image: GalleryImage) => {
-    setSelectedImage(image);
-  };
-
-  const handleModalNext = () => {
+  const navigateModal = useCallback((direction: 'prev' | 'next') => {
     const currentIndex = images.findIndex(img => img.id === selectedImage?.id);
-    const nextIndex = (currentIndex + 1) % images.length;
-    setSelectedImage(images[nextIndex]);
-  };
-
-  const handleModalPrevious = () => {
-    const currentIndex = images.findIndex(img => img.id === selectedImage?.id);
-    const previousIndex = (currentIndex - 1 + images.length) % images.length;
-    setSelectedImage(images[previousIndex]);
-  };
+    const newIndex = direction === 'next'
+      ? (currentIndex + 1) % images.length
+      : (currentIndex - 1 + images.length) % images.length;
+    setSelectedImage(images[newIndex]);
+  }, [images, selectedImage?.id]);
 
   return (
-    <section id="gallery" className="relative py-16 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-900/90 before:backdrop-blur-sm" style={{
-      backgroundImage: "url('https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg')"
-    }}>
+    <section 
+      id="gallery" 
+      className="relative py-16 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-900/90 before:backdrop-blur-sm" 
+      style={{
+        backgroundImage: "url('https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg')"
+      }}
+    >
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
           Gallery
         </h2>
         
-        <div className="relative">
-          <div className="flex gap-0">
+        <div className="relative max-w-[90rem] mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {currentImages.map((image) => (
-              <motion.div
+              <motion.button
                 key={image.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="relative cursor-pointer group flex-shrink-0 w-72 aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-800"
-                onClick={() => handleImageClick(image)}
+                onClick={() => setSelectedImage(image)}
+                className="group aspect-square w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               >
-                <img
-                  src={image.image_url}
-                  alt={image.title || 'Gallery image'}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="text-white text-sm font-medium">{image.title || 'View Image'}</span>
+                <div className="relative w-full h-full">
+                  <img
+                    src={image.image_url}
+                    alt={image.title || 'Gallery image'}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <span className="text-white text-sm font-medium">
+                      {image.title || 'View Image'}
+                    </span>
+                  </div>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </div>
 
           {totalPages > 1 && (
-            <div className="flex justify-between items-center absolute inset-y-0 w-full">
+            <div className="flex justify-between items-center absolute -inset-x-12 top-1/2 -translate-y-1/2">
               <button
-                onClick={handlePrevious}
-                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors transform -translate-x-1/2"
+                onClick={() => navigateGallery('prev')}
+                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors"
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
               <button
-                onClick={handleNext}
-                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors transform translate-x-1/2"
+                onClick={() => navigateGallery('next')}
+                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors"
                 aria-label="Next page"
               >
                 <ChevronRight className="w-6 h-6" />
@@ -130,7 +131,7 @@ export const ImageGallery = () => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                handleModalPrevious();
+                navigateModal('prev');
               }}
               className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors"
               aria-label="Previous image"
@@ -140,7 +141,7 @@ export const ImageGallery = () => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                handleModalNext();
+                navigateModal('next');
               }}
               className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors"
               aria-label="Next image"

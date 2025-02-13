@@ -67,61 +67,67 @@ export const ImageGallery = () => {
   return (
     <section className="relative bg-white dark:bg-neutral-900 py-16 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {currentImages.map((image) => (
-            <motion.div
-              key={image.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              onClick={() => handleImageClick(image)}
-              className="relative cursor-pointer group aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-800"
-            >
-              <img
-                src={image.image_url}
-                alt={image.title || 'Gallery image'}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <span className="text-white text-sm font-medium">{image.title || 'View Image'}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-8">
-            <button
-              onClick={handlePrevious}
-              className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              aria-label="Previous page"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <div className="flex gap-2">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    currentPage === index
-                      ? 'bg-neutral-900 dark:bg-white w-4'
-                      : 'bg-neutral-300 dark:bg-neutral-700'
-                  }`}
-                  aria-label={`Go to page ${index + 1}`}
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
+          Gallery
+        </h2>
+        
+        <div className="relative">
+          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+            {currentImages.map((image) => (
+              <motion.div
+                key={image.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                onClick={() => handleImageClick(image)}
+                className="relative cursor-pointer group flex-shrink-0 w-72 aspect-square overflow-hidden bg-neutral-100 dark:bg-neutral-800"
+              >
+                <img
+                  src={image.image_url}
+                  alt={image.title || 'Gallery image'}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-              ))}
-            </div>
-            <button
-              onClick={handleNext}
-              className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              aria-label="Next page"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">{image.title || 'View Image'}</span>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        )}
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4 mt-8">
+              <button
+                onClick={handlePrevious}
+                className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                aria-label="Previous page"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <div className="flex gap-2">
+                {Array.from({ length: totalPages }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      currentPage === index
+                        ? 'bg-neutral-900 dark:bg-white w-4'
+                        : 'bg-neutral-300 dark:bg-neutral-700'
+                    }`}
+                    aria-label={`Go to page ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={handleNext}
+                className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                aria-label="Next page"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>

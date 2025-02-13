@@ -42,6 +42,21 @@ Each project requires:
 - A hero image URL
 - Additional images (optional)
 - External URL (optional)
+- YouTube URL (optional)
+
+### Gallery Section
+The gallery section displays images in a horizontal filmstrip layout. To manage the gallery:
+
+1. Access your Supabase dashboard
+2. Navigate to the Table Editor
+3. Select the `gallery` table
+4. Here you can:
+   - Add new images by inserting new rows
+   - Add optional titles to images
+   - Change the order of images using the `sort_order` column
+   - Update image URLs
+   
+The gallery displays 6 images at a time with pagination controls. Each image can be clicked to view it in a larger modal with navigation arrows.
 
 ### Other Sections
 The remaining website content is managed through the `sections` table in Supabase:

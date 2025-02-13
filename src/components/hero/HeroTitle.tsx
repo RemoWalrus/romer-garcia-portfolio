@@ -12,16 +12,16 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const renderTitle = (text: string, weights: string[]) => {
     if (text === "romergarcia") {
       return (
-        <span>
-          <span className="font-medium">romer</span>
-          <span className="font-thin text-neutral-200">garcia</span>
+        <span className="inline-flex items-center">
+          <span className="font-medium leading-none">romer</span>
+          <span className="font-thin text-neutral-200 leading-none">garcia</span>
         </span>
       );
     }
 
     const words = text.split(" ");
     if (words.length === 1) {
-      return <span className="font-thin">{text}</span>;
+      return <span className="font-thin leading-none">{text}</span>;
     }
 
     return (
@@ -29,7 +29,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         {words.map((word, index) => (
           <span
             key={index}
-            className={`${weights[index % weights.length]} ${index > 0 ? "ml-4" : ""}`}
+            className={`${weights[index % weights.length]} leading-none ${index > 0 ? "ml-4" : ""}`}
           >
             {word}
           </span>
@@ -50,7 +50,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             ease: "easeOut"
           }
         }}
-        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8"
+        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 leading-none py-2"
         style={{
           textShadow: `
             2px 0 0 rgba(255,0,0,0.3),
@@ -82,10 +82,11 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8">
+        <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 leading-none py-2">
           {renderTitle(title.text, title.weights)}
         </h1>
       </motion.div>
     </>
   );
 };
+

@@ -141,6 +141,30 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          author: string
+          created_at: string
+          id: number
+          quote: string
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          created_at?: string
+          id?: number
+          quote: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          created_at?: string
+          id?: number
+          quote?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sections: {
         Row: {
           author: string | null

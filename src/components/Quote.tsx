@@ -15,19 +15,22 @@ export const Quote = () => {
   });
 
   useEffect(() => {
-    const fetchQuoteSection = async () => {
+    const fetchRandomQuote = async () => {
       const { data, error } = await supabase
-        .from('sections')
+        .from('quotes')
         .select('quote, author')
-        .eq('section_name', 'quote')
+        .order('random()')
+        .limit(1)
         .single();
       
       if (data && !error) {
         setQuoteData(data);
+      } else {
+        console.error('Error fetching random quote:', error);
       }
     };
 
-    fetchQuoteSection();
+    fetchRandomQuote();
   }, []);
 
   return (

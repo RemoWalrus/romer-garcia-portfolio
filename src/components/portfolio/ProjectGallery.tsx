@@ -58,7 +58,7 @@ export const ProjectGallery = ({
             <div 
               key={index}
               onClick={() => onImageClick(index)}
-              className={`cursor-pointer aspect-square border border-neutral-200 dark:border-neutral-800 overflow-hidden ${
+              className={`cursor-pointer aspect-square overflow-hidden ${
                 index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
               }`}
             >

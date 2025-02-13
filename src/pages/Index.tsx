@@ -7,6 +7,7 @@ import { About } from '@/components/About';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { Quote } from '@/components/Quote';
+import { ImageGallery } from '@/components/ImageGallery';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,6 +49,7 @@ const Index = () => {
       <Hero scrollToSection={scrollToSection} />
       <Portfolio />
       <About />
+      <ImageGallery />
       <Contact />
       <Quote />
       <Footer />

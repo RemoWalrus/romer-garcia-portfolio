@@ -18,7 +18,6 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300`}>
-      {/* Background overlay with improved light mode visibility */}
       <div className={`absolute inset-0 transition-all duration-300 ${
         scrolled 
           ? 'bg-white/95 dark:bg-black/95 backdrop-blur-sm border-b border-neutral-200 dark:border-white/10 shadow-sm'
@@ -56,6 +55,12 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
             Portfolio
           </button>
           <button
+            onClick={() => scrollToSection('gallery')}
+            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
+          >
+            Gallery
+          </button>
+          <button
             onClick={() => scrollToSection('about')}
             className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
           >
@@ -83,6 +88,15 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
               className="text-xl text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
             >
               Portfolio
+            </button>
+            <button
+              onClick={() => {
+                scrollToSection('gallery');
+                setMobileMenuOpen(false);
+              }}
+              className="text-xl text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
+            >
+              Gallery
             </button>
             <button
               onClick={() => {

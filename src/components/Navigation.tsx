@@ -1,3 +1,4 @@
+
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
@@ -26,15 +27,16 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
       <div className="container mx-auto px-4 py-4 flex justify-between items-center relative z-50">
         <button 
           onClick={scrollToTop}
-          className="cursor-pointer"
+          className="cursor-pointer flex items-center"
           aria-label="Scroll to top"
         >
           <img 
             src={logoUrl} 
             alt="Romer Garcia Logo" 
             className={`transition-all duration-300 ${
-              scrolled ? 'w-36 md:w-48 h-auto' : 'w-44 md:w-60 h-auto'
-            } max-h-none`}
+              scrolled ? 'h-8 md:h-10' : 'h-10 md:h-12'
+            } w-auto object-contain`}
+            style={{ maxHeight: 'none' }}
           />
         </button>
 

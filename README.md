@@ -56,7 +56,7 @@ The gallery section displays images in a horizontal filmstrip layout. To manage 
    - Change the order of images using the `sort_order` column
    - Update image URLs
    
-The gallery displays 6 images at a time with pagination controls. Each image can be clicked to view it in a larger modal with navigation arrows.
+The gallery displays images in a horizontal filmstrip layout with navigation arrows. Each image can be clicked to view it in a larger modal.
 
 ### Other Sections
 The remaining website content is managed through the `sections` table in Supabase:
@@ -86,6 +86,25 @@ Each section in the database includes:
 - A unique section name
 - Required fields based on the section type
 - Default values for important fields to prevent null values
+
+## Deployment to GitHub Pages
+
+To deploy your site to GitHub Pages:
+
+1. Make sure your repository is pushed to GitHub.
+
+2. In your repository settings on GitHub:
+   - Go to the "Pages" section
+   - Under "Source", select "GitHub Actions"
+
+3. The repository already includes a GitHub Actions workflow file (`.github/workflows/static.yml`) that handles the deployment process.
+
+4. Each time you push changes to the main branch, GitHub Actions will automatically:
+   - Build your project
+   - Deploy it to GitHub Pages
+   - Make it available at your GitHub Pages URL (typically `https://[username].github.io/[repository-name]`)
+
+5. You can monitor the deployment status in the "Actions" tab of your repository.
 
 ## How can I edit this code?
 

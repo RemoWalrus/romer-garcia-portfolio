@@ -19,7 +19,6 @@ export const Quote = () => {
       const { data, error } = await supabase
         .from('quotes')
         .select('quote, author')
-        .order('random()')
         .limit(1)
         .maybeSingle();
       

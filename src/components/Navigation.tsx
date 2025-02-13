@@ -1,4 +1,3 @@
-
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
@@ -35,7 +34,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
             alt="Romer Garcia Logo" 
             className={`transition-all duration-300 ${
               scrolled ? 'w-36 md:w-48 h-auto' : 'w-44 md:w-60 h-auto'
-            }`}
+            } max-h-none`}
           />
         </button>
 
@@ -125,4 +124,3 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     </nav>
   );
 };
-

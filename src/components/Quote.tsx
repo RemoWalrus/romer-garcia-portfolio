@@ -21,7 +21,7 @@ export const Quote = () => {
         .select('quote, author')
         .order('random()')
         .limit(1)
-        .single();
+        .maybeSingle();
       
       if (data && !error) {
         setQuoteData(data);

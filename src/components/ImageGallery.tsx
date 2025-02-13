@@ -74,7 +74,7 @@ export const ImageGallery = () => {
         </h2>
         
         <div className="relative">
-          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+          <div className="flex overflow-hidden">
             {currentImages.map((image) => (
               <motion.div
                 key={image.id}
@@ -98,31 +98,17 @@ export const ImageGallery = () => {
           </div>
 
           {totalPages > 1 && (
-            <div className="flex justify-center items-center gap-4 mt-8">
+            <div className="flex justify-between items-center absolute inset-y-0 w-full">
               <button
                 onClick={handlePrevious}
-                className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors transform -translate-x-1/2"
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-6 h-6" />
               </button>
-              <div className="flex gap-2">
-                {Array.from({ length: totalPages }).map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentPage(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      currentPage === index
-                        ? 'bg-neutral-900 dark:bg-white w-4'
-                        : 'bg-neutral-300 dark:bg-neutral-700'
-                    }`}
-                    aria-label={`Go to page ${index + 1}`}
-                  />
-                ))}
-              </div>
               <button
                 onClick={handleNext}
-                className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 hover:bg-white dark:hover:bg-neutral-900 transition-colors transform translate-x-1/2"
                 aria-label="Next page"
               >
                 <ChevronRight className="w-6 h-6" />

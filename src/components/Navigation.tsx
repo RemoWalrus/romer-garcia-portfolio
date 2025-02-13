@@ -49,6 +49,12 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
 
         <div className="hidden md:flex items-center gap-8">
           <button
+            onClick={() => scrollToSection('about')}
+            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
+          >
+            About
+          </button>
+          <button
             onClick={() => scrollToSection('portfolio')}
             className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
           >
@@ -59,12 +65,6 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
             className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
           >
             Gallery
-          </button>
-          <button
-            onClick={() => scrollToSection('about')}
-            className={`text-sm md:text-lg ${scrolled ? 'text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300' : 'text-white hover:text-white/80'} transition-colors uppercase tracking-wider font-roc`}
-          >
-            About
           </button>
           <button
             onClick={() => scrollToSection('contact')}
@@ -82,6 +82,15 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           <div className="container mx-auto px-4 py-20 flex flex-col items-center gap-8">
             <button
               onClick={() => {
+                scrollToSection('about');
+                setMobileMenuOpen(false);
+              }}
+              className="text-xl text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
+            >
+              About
+            </button>
+            <button
+              onClick={() => {
                 scrollToSection('portfolio');
                 setMobileMenuOpen(false);
               }}
@@ -97,15 +106,6 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
               className="text-xl text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
             >
               Gallery
-            </button>
-            <button
-              onClick={() => {
-                scrollToSection('about');
-                setMobileMenuOpen(false);
-              }}
-              className="text-xl text-neutral-900 dark:text-white hover:text-neutral-600 dark:hover:text-neutral-300 transition-colors uppercase tracking-wider font-roc"
-            >
-              About
             </button>
             <button
               onClick={() => {

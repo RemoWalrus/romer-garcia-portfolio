@@ -106,10 +106,13 @@ export type Database = {
           created_at: string
           description: string
           ext_url: string | null
+          github_url: string | null
           hero_image_url: string
           id: number
           image_url: string
+          project_url: string | null
           sort_order: number | null
+          tech_stack: string[] | null
           title: string
           youtube_url: string | null
         }
@@ -119,10 +122,13 @@ export type Database = {
           created_at?: string
           description: string
           ext_url?: string | null
+          github_url?: string | null
           hero_image_url?: string
           id?: number
           image_url: string
+          project_url?: string | null
           sort_order?: number | null
+          tech_stack?: string[] | null
           title: string
           youtube_url?: string | null
         }
@@ -132,10 +138,13 @@ export type Database = {
           created_at?: string
           description?: string
           ext_url?: string | null
+          github_url?: string | null
           hero_image_url?: string
           id?: number
           image_url?: string
+          project_url?: string | null
           sort_order?: number | null
+          tech_stack?: string[] | null
           title?: string
           youtube_url?: string | null
         }

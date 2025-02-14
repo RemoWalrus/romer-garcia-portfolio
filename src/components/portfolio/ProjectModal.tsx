@@ -39,19 +39,57 @@ export const ProjectModal = ({
               <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
                 {project.title}
               </DialogTitle>
-              <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-24 text-base whitespace-pre-line leading-relaxed text-left">
+              <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left">
                 {project.description}
               </DialogDescription>
+
+              {project.tech_stack && project.tech_stack.length > 0 && (
+                <div className="mb-24">
+                  <h4 className="text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-3">
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech_stack.map((tech: string, index: number) => (
+                      <span 
+                        key={index}
+                        className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </DialogHeader>
             
-            {project.ext_url && (
-              <div 
-                onClick={() => onExternalLink(project.ext_url)}
-                className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
-              >
-                View Project <MoveRight className="ml-2 w-4 h-4" />
-              </div>
-            )}
+            <div className="flex flex-col gap-3">
+              {project.project_url && (
+                <div 
+                  onClick={() => onExternalLink(project.project_url)}
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
+                >
+                  View Live Project <MoveRight className="ml-2 w-4 h-4" />
+                </div>
+              )}
+              
+              {project.github_url && (
+                <div 
+                  onClick={() => onExternalLink(project.github_url)}
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
+                >
+                  View Source Code <MoveRight className="ml-2 w-4 h-4" />
+                </div>
+              )}
+
+              {project.ext_url && !project.project_url && (
+                <div 
+                  onClick={() => onExternalLink(project.ext_url)}
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
+                >
+                  View Project <MoveRight className="ml-2 w-4 h-4" />
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col">

@@ -35,14 +35,8 @@ export const ProjectGallery = ({
         
         {/* Mobile/Tablet view */}
         <div 
-          className="flex md:hidden overflow-x-auto h-20 bg-white dark:bg-neutral-950 pb-2 px-2 gap-1 snap-x snap-mandatory"
-          style={{ 
-            WebkitOverflowScrolling: 'touch',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            WebkitUserSelect: 'none',
-            touchAction: 'pan-x pinch-zoom'
-          }}
+          className="flex md:hidden overflow-x-auto h-20 bg-white dark:bg-neutral-950 pb-2 px-2 gap-1 touch-pan-x overscroll-x-contain snap-x snap-mandatory"
+          style={{ WebkitOverflowScrolling: 'touch' }}
         >
           {images.map((image, index) => (
             <div 
@@ -55,7 +49,7 @@ export const ProjectGallery = ({
               <img
                 src={image}
                 alt={`${title} preview ${index + 1}`}
-                className="w-full h-full object-cover select-none"
+                className="w-full h-full object-cover"
                 draggable={false}
               />
             </div>
@@ -75,7 +69,7 @@ export const ProjectGallery = ({
               <img
                 src={image}
                 alt={`${title} preview ${index + 1}`}
-                className="w-full h-full object-cover select-none"
+                className="w-full h-full object-cover"
                 draggable={false}
               />
             </div>
@@ -85,4 +79,3 @@ export const ProjectGallery = ({
     </div>
   );
 };
-

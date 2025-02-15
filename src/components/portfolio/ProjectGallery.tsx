@@ -33,13 +33,16 @@ export const ProjectGallery = ({
           />
         </motion.div>
         
-        {/* Mobile view */}
-        <div className="flex md:hidden overflow-x-auto h-24 bg-white dark:bg-neutral-950">
+        {/* Mobile/Tablet view */}
+        <div 
+          className="flex md:hidden overflow-x-auto h-20 bg-white dark:bg-neutral-950 pb-2 px-2 gap-1 touch-pan-x overscroll-x-contain snap-x snap-mandatory"
+          style={{ WebkitOverflowScrolling: 'touch' }}
+        >
           {images.map((image, index) => (
             <div 
               key={index}
               onClick={() => onImageClick(index)}
-              className={`cursor-pointer h-full flex-shrink-0 w-24 ${
+              className={`cursor-pointer h-full flex-shrink-0 w-20 snap-start ${
                 index === heroImageIndex ? 'opacity-50' : 'opacity-100 hover:opacity-80'
               }`}
             >
@@ -47,13 +50,14 @@ export const ProjectGallery = ({
                 src={image}
                 alt={`${title} preview ${index + 1}`}
                 className="w-full h-full object-cover"
+                draggable={false}
               />
             </div>
           ))}
         </div>
 
         {/* Desktop view */}
-        <div className="hidden md:grid grid-cols-6 gap-[5px] p-4 bg-white dark:bg-neutral-950">
+        <div className="hidden md:grid grid-cols-6 gap-1 p-2 bg-white dark:bg-neutral-950">
           {images.map((image, index) => (
             <div 
               key={index}
@@ -66,6 +70,7 @@ export const ProjectGallery = ({
                 src={image}
                 alt={`${title} preview ${index + 1}`}
                 className="w-full h-full object-cover"
+                draggable={false}
               />
             </div>
           ))}

@@ -27,7 +27,7 @@ export const ProjectModal = ({
 
   return (
     <Dialog open={!!project} onOpenChange={onClose}>
-      <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white w-[95vw] max-w-7xl h-[90vh] md:h-[90vh] overflow-y-auto md:overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
+      <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white w-[95vw] max-w-7xl h-[90vh] md:h-[90vh] overflow-y-auto md:overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent [&>button]:focus:!ring-0">
         <div className="flex flex-col md:flex-row h-full">
           <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto">
             <DialogHeader className="text-left">
@@ -118,3 +118,4 @@ export const ProjectModal = ({
     </Dialog>
   );
 };
+

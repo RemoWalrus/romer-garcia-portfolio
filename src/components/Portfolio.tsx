@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { ProjectCard } from './portfolio/ProjectCard';
 import { ProjectModal } from './portfolio/ProjectModal';
+import { trackEvent } from './GoogleAnalytics';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -30,8 +31,14 @@ export const Portfolio = () => {
 
   const handleExternalLink = (url: string) => {
     if (url) {
+      trackEvent('Portfolio', 'External Link Click', url);
       window.open(url, '_blank');
     }
+  };
+
+  const handleProjectSelect = (project: any) => {
+    trackEvent('Portfolio', 'Project View', project.title);
+    setSelectedProject(project);
   };
 
   const handleCloseModal = () => {
@@ -53,7 +60,7 @@ export const Portfolio = () => {
             <ProjectCard
               key={project.id}
               project={project}
-              onSelect={setSelectedProject}
+              onSelect={handleProjectSelect}
             />
           ))}
         </div>

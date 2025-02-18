@@ -16,12 +16,18 @@ export const Footer = () => {
     const fetchSocialLinks = async () => {
       const { data, error } = await supabase
         .from('sections')
-        .select('social_links')
+        .select('facebook_url, twitter_url, instagram_url, linkedin_url, youtube_url')
         .eq('section_name', 'footer')
         .maybeSingle();
       
-      if (data?.social_links && !error) {
-        setSocialLinks(data.social_links);
+      if (data && !error) {
+        setSocialLinks({
+          facebook: data.facebook_url || '',
+          twitter: data.twitter_url || '',
+          instagram: data.instagram_url || '',
+          linkedin: data.linkedin_url || '',
+          youtube: data.youtube_url || ''
+        });
       } else if (error) {
         console.error('Error fetching social links:', error);
       }

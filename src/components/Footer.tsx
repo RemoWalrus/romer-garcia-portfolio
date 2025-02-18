@@ -45,22 +45,24 @@ export const Footer = () => {
   ].filter(social => social.link);
 
   return (
-    <footer className="bg-neutral-950 py-8 mt-auto md:block">
+    <footer className="bg-neutral-950 py-8 mt-auto">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-4">
-          <div className="flex gap-6">
-            {socialIcons.map(({ icon: Icon, link }) => (
-              <a
-                key={link}
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-500 hover:text-white transition-colors"
-              >
-                <Icon size={20} />
-              </a>
-            ))}
-          </div>
+          {socialIcons.length > 0 && (
+            <div className="flex gap-6">
+              {socialIcons.map(({ icon: Icon, link }) => (
+                <a
+                  key={link}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-neutral-500 hover:text-white transition-colors"
+                >
+                  <Icon size={20} />
+                </a>
+              ))}
+            </div>
+          )}
           <div className="text-center text-neutral-500 text-sm">
             © {new Date().getFullYear()} Romer Garcia. All rights reserved.
           </div>

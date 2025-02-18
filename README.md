@@ -1,4 +1,3 @@
-
 # Welcome to your Lovable project
 
 ## Project info
@@ -58,6 +57,27 @@ The gallery section displays images in a horizontal filmstrip layout. To manage 
    
 The gallery displays images in a horizontal filmstrip layout with navigation arrows. Each image can be clicked to view it in a larger modal.
 
+### Contact Section
+- Title
+- Description
+- "Get in touch" text
+
+### Social Media Links
+Social media links are managed through the Supabase database and are displayed in the footer on both desktop and mobile devices. To update the social media links:
+
+1. Access your Supabase dashboard
+2. Navigate to the Table Editor
+3. Select the `sections` table
+4. Find the row with `section_name = 'social'`
+5. Update the following fields as needed:
+   - facebook_url
+   - twitter_url
+   - linkedin_url
+   - instagram_url
+   - youtube_url
+
+The social media links will be displayed in the footer across all device sizes.
+
 ### Other Sections
 The remaining website content is managed through the `sections` table in Supabase:
 
@@ -76,7 +96,6 @@ The remaining website content is managed through the `sections` table in Supabas
 - Title
 - Description
 - "Get in touch" text
-- Social media URLs
 
 #### Quote Section
 - Quote text
@@ -170,4 +189,3 @@ Simply open [Lovable](https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f34
 ## I want to use a custom domain - is that possible?
 
 We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
-

@@ -10,7 +10,7 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const videoUrl = supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl;
+  const [videoUrl] = useState<string>(supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -24,36 +24,49 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
     const fetchRandomImage = async () => {
       try {
         console.log('Fetching hero images...');
-        const { data: imageList, error } = await supabase
+        
+        // First try to get all images from the 'images' bucket
+        const { data: imageList, error: listError } = await supabase
           .storage
           .from('images')
-          .list('', {
-            sortBy: { column: 'name', order: 'asc' }
-          });
+          .list('');
 
-        if (error) {
-          console.error('Error fetching hero images:', error);
+        if (listError) {
+          console.error('Error listing images:', listError);
+          // Fallback to default image
+          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+          setBackgroundImage(fallbackUrl);
           return;
         }
 
-        if (imageList && imageList.length > 0) {
-          const randomIndex = Math.floor(Math.random() * imageList.length);
-          const randomImage = imageList[randomIndex];
-          const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
-          console.log('Selected random image:', imageUrl);
-          setBackgroundImage(imageUrl);
-        } else {
+        if (!imageList || imageList.length === 0) {
           console.log('No images found, using fallback');
           const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
           setBackgroundImage(fallbackUrl);
+          return;
         }
+
+        // Select a random image from the list
+        const randomIndex = Math.floor(Math.random() * imageList.length);
+        const randomImage = imageList[randomIndex];
+        const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
+        console.log('Selected random image:', imageUrl);
+        setBackgroundImage(imageUrl);
+
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
+        // Fallback to default image in case of any error
+        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        setBackgroundImage(fallbackUrl);
       }
     };
 
     fetchRandomImage();
   }, [triggerNewBackground]);
+
+  if (!backgroundImage && !videoUrl) {
+    return null;
+  }
 
   return (
     <div className="absolute inset-0">
@@ -75,15 +88,17 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
               ${showVideo ? 'opacity-0' : isDarkMode ? 'opacity-40' : 'opacity-60'}`}
           />
         )}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
-            ${showVideo ? (isDarkMode ? 'opacity-20' : 'opacity-30') : 'opacity-0'}`}
-          src={videoUrl}
-        />
+        {videoUrl && (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
+              ${showVideo ? (isDarkMode ? 'opacity-20' : 'opacity-30') : 'opacity-0'}`}
+            src={videoUrl}
+          />
+        )}
       </div>
     </div>
   );

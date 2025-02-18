@@ -53,7 +53,7 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-neutral-950 py-8 mt-auto">
+    <footer className="bg-neutral-950 py-8 mt-auto hidden md:block">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-4">
           <div className="flex gap-6">
@@ -71,3 +71,4 @@ export const Footer = () => {
     </footer>
   );
 };
+

@@ -25,7 +25,11 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
       try {
         console.log('Fetching hero images...');
         const response = await fetch('/api/images/list');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const imageList = await response.json();
+        console.log('Received image list:', imageList);
 
         if (imageList && imageList.length > 0) {
           const randomIndex = Math.floor(Math.random() * imageList.length);
@@ -40,11 +44,17 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
         }
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
+        // Use fallback image on error
+        const fallbackUrl = getSecureMediaUrl('images/dualshadow.jpg');
+        setBackgroundImage(fallbackUrl);
       }
     };
 
     fetchRandomImage();
   }, [triggerNewBackground]);
+
+  const decodedImageUrl = backgroundImage ? getDecodedUrl(backgroundImage) : '';
+  const decodedVideoUrl = getDecodedUrl(videoUrl);
 
   return (
     <div className="absolute inset-0">
@@ -58,7 +68,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
       <div className="relative w-full h-full">
         {backgroundImage && (
           <img 
-            src={getDecodedUrl(backgroundImage)}
+            src={decodedImageUrl}
             alt="Hero Background" 
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
               ${showVideo ? 'opacity-0' : isDarkMode ? 'opacity-40' : 'opacity-60'}`}
@@ -71,7 +81,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
           playsInline
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
             ${showVideo ? (isDarkMode ? 'opacity-20' : 'opacity-30') : 'opacity-0'}`}
-          src={getDecodedUrl(videoUrl)}
+          src={decodedVideoUrl}
         />
       </div>
     </div>

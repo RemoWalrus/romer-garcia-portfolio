@@ -1,5 +1,4 @@
 
-import { Github, Linkedin, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -146,21 +145,6 @@ export const Contact = () => {
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </form>
-
-        <div className="flex justify-center gap-6">
-          <a href="https://github.com/RemoWalrus" target="_blank" rel="noopener noreferrer"
-             className="text-neutral-400 hover:text-white transition-colors">
-            <Github className="w-5 h-5" />
-          </a>
-          <a href="https://www.linkedin.com/in/romergarcia/" target="_blank" rel="noopener noreferrer"
-             className="text-neutral-400 hover:text-white transition-colors">
-            <Linkedin className="w-5 h-5" />
-          </a>
-          <a href="mailto:hireme@romergarcia.com"
-             className="text-neutral-400 hover:text-white transition-colors">
-            <Mail className="w-5 h-5" />
-          </a>
-        </div>
       </div>
     </section>
   );

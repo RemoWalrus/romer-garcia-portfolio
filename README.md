@@ -1,3 +1,4 @@
+
 # Welcome to your Lovable project
 
 ## Project info
@@ -52,10 +53,11 @@ The gallery section displays images in a horizontal filmstrip layout. To manage 
 4. Here you can:
    - Add new images by inserting new rows
    - Add optional titles to images
+   - Add optional descriptions that will appear in the modal view
    - Change the order of images using the `sort_order` column
    - Update image URLs
    
-The gallery displays images in a horizontal filmstrip layout with navigation arrows. Each image can be clicked to view it in a larger modal.
+The gallery displays images in a horizontal filmstrip layout with navigation arrows. Each image can be clicked to view it in a larger modal, which will display the title and description (if provided).
 
 ### Contact Section
 - Title

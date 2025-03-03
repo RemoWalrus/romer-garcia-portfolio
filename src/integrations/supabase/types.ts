@@ -33,6 +33,7 @@ export type Database = {
       gallery: {
         Row: {
           created_at: string
+          description: string | null
           id: number
           image_url: string
           sort_order: number | null
@@ -41,6 +42,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          description?: string | null
           id?: number
           image_url: string
           sort_order?: number | null
@@ -49,6 +51,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          description?: string | null
           id?: number
           image_url?: string
           sort_order?: number | null

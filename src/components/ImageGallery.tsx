@@ -9,6 +9,7 @@ interface GalleryImage {
   id: number;
   image_url: string;
   title: string | null;
+  description: string | null;
 }
 
 export const ImageGallery = () => {
@@ -149,9 +150,14 @@ export const ImageGallery = () => {
               <ChevronRight className="w-6 h-6" />
             </button>
           </div>
-          {selectedImage?.title && (
+          {(selectedImage?.title || selectedImage?.description) && (
             <div className="p-4 text-center">
-              <p className="text-lg font-medium">{selectedImage.title}</p>
+              {selectedImage?.title && (
+                <p className="text-lg font-medium mb-2">{selectedImage.title}</p>
+              )}
+              {selectedImage?.description && (
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">{selectedImage.description}</p>
+              )}
             </div>
           )}
         </DialogContent>

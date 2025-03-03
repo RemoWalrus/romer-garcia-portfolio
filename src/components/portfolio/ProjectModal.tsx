@@ -66,7 +66,7 @@ export const ProjectModal = ({
               {project.project_url && (
                 <div 
                   onClick={() => onExternalLink(project.project_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase border border-neutral-200 dark:border-neutral-700 px-3 py-2 rounded"
                 >
                   View Live Project <MoveRight className="ml-2 w-4 h-4" />
                 </div>
@@ -75,7 +75,7 @@ export const ProjectModal = ({
               {project.github_url && (
                 <div 
                   onClick={() => onExternalLink(project.github_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase border border-neutral-200 dark:border-neutral-700 px-3 py-2 rounded"
                 >
                   View Source Code <MoveRight className="ml-2 w-4 h-4" />
                 </div>
@@ -84,7 +84,7 @@ export const ProjectModal = ({
               {project.ext_url && !project.project_url && (
                 <div 
                   onClick={() => onExternalLink(project.ext_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase border border-neutral-200 dark:border-neutral-700 px-3 py-2 rounded"
                 >
                   View Project <MoveRight className="ml-2 w-4 h-4" />
                 </div>

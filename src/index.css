@@ -136,7 +136,7 @@ nav button {
 }
 
 /* Dialog close button adjustment */
-[data-dialog-close] {
-  @apply border-0 scale-150 opacity-75 hover:opacity-100 transition-opacity;
+[data-dialog-close],
+[data-radix-collection-item] {
+  @apply border-0 scale-150 opacity-75 hover:opacity-100 transition-opacity focus:outline-none focus:ring-0 focus:border-0;
 }
-

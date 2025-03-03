@@ -113,6 +113,17 @@ a[role="button"],
   @apply uppercase !important;
 }
 
+/* Modal CTA buttons - no border */
+[data-dialog-content] .flex-col .flex-col div {
+  @apply border-0;
+}
+
+/* Buttons in About and Contact sections - add border */
+#about button,
+#contact button {
+  @apply border border-neutral-200 dark:border-neutral-700;
+}
+
 /* Navigation specific styles */
 nav button {
   @apply font-extralight;

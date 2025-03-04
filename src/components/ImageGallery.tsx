@@ -4,7 +4,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { maskSupabaseUrl } from '@/utils/downloadHelper';
 
 interface GalleryImage {
   id: number;
@@ -27,13 +26,7 @@ export const ImageGallery = () => {
         .order('sort_order', { ascending: true });
       
       if (data) {
-        // Mask all Supabase URLs in gallery images
-        const maskedImages = data.map(image => ({
-          ...image,
-          image_url: maskSupabaseUrl(image.image_url)
-        }));
-        
-        setImages(maskedImages);
+        setImages(data);
       } else if (error) {
         console.error('Error fetching gallery images:', error);
       }

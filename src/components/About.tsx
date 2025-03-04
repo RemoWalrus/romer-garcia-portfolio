@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { handleDownload } from '@/utils/downloadHelper';
+import { handleDownload, maskSupabaseUrl } from '@/utils/downloadHelper';
 
 interface AboutSection {
   title: string;
@@ -27,7 +28,7 @@ export const About = () => {
       .getPublicUrl('RomerSelfPortrait.jpg');
     
     if (data) {
-      setPortraitUrl(data.publicUrl);
+      setPortraitUrl(maskSupabaseUrl(data.publicUrl));
     }
 
     const portfolioData = supabase.storage
@@ -37,7 +38,7 @@ export const About = () => {
     if (portfolioData.data) {
       setAboutData(prev => ({
         ...prev,
-        portfolio_url: portfolioData.data.publicUrl
+        portfolio_url: maskSupabaseUrl(portfolioData.data.publicUrl)
       }));
     }
   }, []);
@@ -51,7 +52,13 @@ export const About = () => {
         .single();
       
       if (data && !error) {
-        setAboutData(data);
+        // Mask the portfolio URL if it comes from the database
+        const maskedPortfolioUrl = data.portfolio_url ? maskSupabaseUrl(data.portfolio_url) : null;
+        
+        setAboutData({
+          ...data,
+          portfolio_url: maskedPortfolioUrl
+        });
       } else {
         console.error('Error fetching about section:', error);
       }

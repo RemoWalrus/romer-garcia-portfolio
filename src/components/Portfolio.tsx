@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { ProjectCard } from './portfolio/ProjectCard';
 import { ProjectModal } from './portfolio/ProjectModal';
 import { trackEvent } from './GoogleAnalytics';
+import { maskSupabaseUrl } from '@/utils/downloadHelper';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -21,7 +21,16 @@ export const Portfolio = () => {
       .order('sort_order', { ascending: true });
     
     if (data) {
-      setProjects(data);
+      const processedProjects = data.map(project => ({
+        ...project,
+        image_url: maskSupabaseUrl(project.image_url),
+        hero_image_url: maskSupabaseUrl(project.hero_image_url),
+        additional_images: project.additional_images 
+          ? project.additional_images.map((img: string) => maskSupabaseUrl(img))
+          : []
+      }));
+      
+      setProjects(processedProjects);
     }
   };
 

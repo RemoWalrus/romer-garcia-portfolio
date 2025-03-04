@@ -1,10 +1,10 @@
-
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ProjectGallery } from './ProjectGallery';
 import { ProjectVideo } from './ProjectVideo';
+import { handleDownload } from '@/utils/downloadHelper';
 
 interface ProjectModalProps {
   project: any;
@@ -24,6 +24,11 @@ export const ProjectModal = ({
   const isMobile = useIsMobile();
 
   if (!project) return null;
+
+  // Handle downloads for PDF files or other downloadable assets
+  const handleDocumentDownload = async (url: string) => {
+    await handleDownload(url);
+  };
 
   return (
     <Dialog open={!!project} onOpenChange={onClose}>

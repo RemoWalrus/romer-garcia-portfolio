@@ -1,9 +1,9 @@
-
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { handleDownload } from '@/utils/downloadHelper';
 
 interface AboutSection {
   title: string;
@@ -30,7 +30,6 @@ export const About = () => {
       setPortraitUrl(data.publicUrl);
     }
 
-    // Get portfolio PDF URL if it exists
     const portfolioData = supabase.storage
       .from('profile')
       .getPublicUrl('portfolio.pdf');
@@ -61,9 +60,14 @@ export const About = () => {
     fetchAboutSection();
   }, []);
 
+  const handlePortfolioDownload = async () => {
+    if (aboutData.portfolio_url) {
+      await handleDownload(aboutData.portfolio_url);
+    }
+  };
+
   return (
     <section id="about" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden isolate">
-      {/* Enhanced Grain Noise Effect */}
       <div 
         className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-multiply dark:mix-blend-soft-light"
         style={{
@@ -71,14 +75,10 @@ export const About = () => {
           backgroundSize: '150px 150px',
         }}
       />
-
-      {/* Chromatic Aberration Effect */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0 opacity-[0.015] bg-red-500 translate-x-[1px]" />
         <div className="absolute inset-0 opacity-[0.015] bg-blue-500 -translate-x-[1px]" />
       </div>
-
-      {/* Main Content */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
@@ -127,7 +127,7 @@ export const About = () => {
                 <Button 
                   variant="outline"
                   className="group bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
-                  onClick={() => window.open(aboutData.portfolio_url || '', '_blank')}
+                  onClick={handlePortfolioDownload}
                 >
                   {aboutData.button_text}
                   <DownloadIcon className="ml-2 w-4 h-4 group-hover:translate-y-1 transition-transform" />

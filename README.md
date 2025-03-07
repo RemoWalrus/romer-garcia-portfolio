@@ -5,6 +5,16 @@
 
 **URL**: https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be
 
+## SEO Optimization
+
+The website has been optimized for search engines with the following metadata:
+
+- **Title**: Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader
+- **Description**: STRATEGIC THINKER | DESIGN INNOVATOR | DIGITAL MEDIA LEADER. Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations. Known as a visionary problem solver, seamlessly blending strategy, creativity, and technology to craft compelling visual narratives.
+- **Keywords**: Design Lead, Multimedia Designer, Digital Media, Brand Transformation, Visual Narrative, Creative Strategy, Digital Campaigns
+- **Open Graph Tags**: Included for better social media sharing
+- **Twitter Card Tags**: Included for Twitter sharing
+
 ## How to edit sections
 
 The website content is managed through the Supabase database. Each section's content can be updated through the sections table.

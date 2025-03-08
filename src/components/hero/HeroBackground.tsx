@@ -22,13 +22,27 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
   }, []);
 
   useEffect(() => {
-    // Get the video URL without exposing Supabase
-    const videoFileKey = 'staticglitchy.mp4';
-    const videoBucket = 'graphics';
+    // Create a direct link to the video to ensure it works properly
+    const fetchVideoUrl = async () => {
+      try {
+        const { data, error } = await supabase.storage
+          .from('graphics')
+          .createSignedUrl('staticglitchy.mp4', 3600);
+          
+        if (data && !error) {
+          setVideoUrl(data.signedUrl);
+        } else {
+          console.error('Error fetching video URL:', error);
+          // Fallback to masked URL if direct access fails
+          setVideoUrl('/api/video?bucket=graphics&file=staticglitchy.mp4');
+        }
+      } catch (err) {
+        console.error('Error getting video URL:', err);
+        setVideoUrl('/api/video?bucket=graphics&file=staticglitchy.mp4');
+      }
+    };
     
-    // Create a masked URL 
-    const maskedVideoUrl = `/api/video?bucket=${videoBucket}&file=${videoFileKey}`;
-    setVideoUrl(maskedVideoUrl);
+    fetchVideoUrl();
   }, []);
 
   useEffect(() => {

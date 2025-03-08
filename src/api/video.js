@@ -1,6 +1,6 @@
 
-// API Route for file downloads
-// This proxies the download requests to Supabase while masking the URL
+// API Route for video files
+// This proxies the video requests to Supabase while masking the URL
 
 export async function onRequest(context) {
   const { request } = context;
@@ -21,28 +21,27 @@ export async function onRequest(context) {
     const response = await fetch(storageUrl);
     
     if (!response.ok) {
-      return new Response(`Failed to fetch file: ${response.statusText}`, { 
+      return new Response(`Failed to fetch video: ${response.statusText}`, { 
         status: response.status 
       });
     }
 
-    // Create a response with the file data and appropriate headers
-    const fileData = await response.arrayBuffer();
+    // Create a response with the video data and appropriate headers
+    const videoData = await response.arrayBuffer();
     const headers = new Headers();
     
     // Set content type
-    headers.set('Content-Type', response.headers.get('Content-Type') || 'application/octet-stream');
+    headers.set('Content-Type', response.headers.get('Content-Type') || 'video/mp4');
     
-    // Set content disposition header for downloads
-    const filename = file.split('/').pop();
-    headers.set('Content-Disposition', `attachment; filename="${filename}"`);
+    // Add caching headers
+    headers.set('Cache-Control', 'public, max-age=31536000'); // Cache for 1 year
     
-    return new Response(fileData, {
+    return new Response(videoData, {
       status: 200,
       headers
     });
   } catch (error) {
-    console.error('Error fetching file:', error);
-    return new Response(`Error fetching file: ${error.message}`, { status: 500 });
+    console.error('Error fetching video:', error);
+    return new Response(`Error fetching video: ${error.message}`, { status: 500 });
   }
 }

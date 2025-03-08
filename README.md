@@ -1,13 +1,22 @@
-
 # Welcome to your Lovable project
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be
 
+## URL Masking
+
+The website implements URL masking to hide Supabase references in the URL bar and when inspecting the code. All file URLs are proxied through the following endpoints:
+
+- `/api/download` - For downloadable files
+- `/api/image` - For image files 
+- `/api/video` - For video files
+
+This approach provides a cleaner user experience and hides the technical implementation details from users.
+
 ## SEO Optimization
 
-The website has been optimized for search engines with the following metadata:
+The website has been optimized for search engines with the following metadata (stored in the Supabase `metadata` table):
 
 - **Title**: Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader
 - **Description**: STRATEGIC THINKER | DESIGN INNOVATOR | DIGITAL MEDIA LEADER. Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations. Known as a visionary problem solver, seamlessly blending strategy, creativity, and technology to craft compelling visual narratives.
@@ -117,6 +126,22 @@ Each section in the database includes:
 - A unique section name
 - Required fields based on the section type
 - Default values for important fields to prevent null values
+
+## Metadata and SEO Settings
+
+The SEO metadata is managed through the Supabase database. To update the metadata:
+
+1. Access your Supabase dashboard
+2. Navigate to the Table Editor
+3. Select the `metadata` table
+4. Here you can update various metadata entries:
+   - `title` - The page title
+   - `description` - The page description
+   - `keywords` - The meta keywords
+   - `og_title`, `og_description`, and `og_image` - Open Graph metadata for social sharing
+   - `twitter_title`, `twitter_description`, and `twitter_image` - Twitter card metadata
+
+Changes to metadata will be reflected the next time the page loads.
 
 ## Deployment to GitHub Pages
 

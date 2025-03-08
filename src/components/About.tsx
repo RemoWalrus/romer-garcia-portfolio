@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { handleDownload } from '@/utils/downloadHelper';
+import { handleDownload, createMaskedUrl } from '@/utils/downloadHelper';
 
 interface AboutSection {
   title: string;
@@ -22,24 +23,16 @@ export const About = () => {
   });
 
   useEffect(() => {
-    const { data } = supabase.storage
-      .from('profile')
-      .getPublicUrl('RomerSelfPortrait.jpg');
+    // Use masked URL for portrait image
+    const maskedPortraitUrl = '/api/image?bucket=profile&file=RomerSelfPortrait.jpg';
+    setPortraitUrl(maskedPortraitUrl);
     
-    if (data) {
-      setPortraitUrl(data.publicUrl);
-    }
-
-    const portfolioData = supabase.storage
-      .from('profile')
-      .getPublicUrl('portfolio.pdf');
-    
-    if (portfolioData.data) {
-      setAboutData(prev => ({
-        ...prev,
-        portfolio_url: portfolioData.data.publicUrl
-      }));
-    }
+    // Create masked URL for portfolio PDF
+    const maskedPortfolioUrl = '/api/download?bucket=profile&file=portfolio.pdf';
+    setAboutData(prev => ({
+      ...prev,
+      portfolio_url: maskedPortfolioUrl
+    }));
   }, []);
 
   useEffect(() => {
@@ -51,7 +44,15 @@ export const About = () => {
         .single();
       
       if (data && !error) {
-        setAboutData(data);
+        // If there's a portfolio URL from the database, create a masked version
+        const maskedPortfolioUrl = data.portfolio_url 
+          ? createMaskedUrl('portfolio.pdf', 'profile')
+          : null;
+            
+        setAboutData({
+          ...data,
+          portfolio_url: maskedPortfolioUrl
+        });
       } else {
         console.error('Error fetching about section:', error);
       }
@@ -140,3 +141,4 @@ export const About = () => {
     </section>
   );
 };
+

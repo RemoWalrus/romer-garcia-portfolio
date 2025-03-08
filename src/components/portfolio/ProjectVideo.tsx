@@ -11,7 +11,7 @@ export const ProjectVideo = ({ url, title }: ProjectVideoProps) => {
     // Handle YouTube Shorts URLs
     if (url.includes('/shorts/')) {
       const videoId = url.split('/shorts/')[1].split('?')[0];
-      return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&playsinline=1`;
+      return `https://www.youtube.com/embed/${videoId}?rel=0&playsinline=1`;
     }
     
     // Handle regular YouTube URLs
@@ -19,7 +19,7 @@ export const ProjectVideo = ({ url, title }: ProjectVideoProps) => {
     const match = url.match(regExp);
     
     if (match && match[2].length === 11) {
-      return `https://www.youtube-nocookie.com/embed/${match[2]}?rel=0&playsinline=1`;
+      return `https://www.youtube.com/embed/${match[2]}?rel=0&playsinline=1`;
     }
     
     // Handle YouTube playlist URLs
@@ -27,7 +27,7 @@ export const ProjectVideo = ({ url, title }: ProjectVideoProps) => {
     const playlistMatch = url.match(playlistRegExp);
     
     if (playlistMatch && playlistMatch[2]) {
-      return `https://www.youtube-nocookie.com/embed/videoseries?list=${playlistMatch[2]}&rel=0&playsinline=1`;
+      return `https://www.youtube.com/embed/videoseries?list=${playlistMatch[2]}&rel=0&playsinline=1`;
     }
     
     return null;

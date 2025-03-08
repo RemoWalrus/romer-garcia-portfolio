@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
-import { getSafeImageUrl } from '@/utils/downloadHelper';
 
 interface HeroBackgroundProps {
   showVideo: boolean;
@@ -11,7 +10,7 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [videoUrl] = useState<string>(supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -19,16 +18,6 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
     
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  useEffect(() => {
-    // Get the video URL without exposing Supabase
-    const videoFileKey = 'staticglitchy.mp4';
-    const videoBucket = 'graphics';
-    
-    // Create a masked URL 
-    const maskedVideoUrl = `/api/video?bucket=${videoBucket}&file=${videoFileKey}`;
-    setVideoUrl(maskedVideoUrl);
   }, []);
 
   useEffect(() => {
@@ -44,30 +33,31 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
 
         if (listError) {
           console.error('Error listing images:', listError);
-          // Fallback to default image - but use masked URL
-          setBackgroundImage('/api/image?bucket=images&file=dualshadow.jpg');
+          // Fallback to default image
+          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+          setBackgroundImage(fallbackUrl);
           return;
         }
 
         if (!imageList || imageList.length === 0) {
           console.log('No images found, using fallback');
-          setBackgroundImage('/api/image?bucket=images&file=dualshadow.jpg');
+          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+          setBackgroundImage(fallbackUrl);
           return;
         }
 
         // Select a random image from the list
         const randomIndex = Math.floor(Math.random() * imageList.length);
         const randomImage = imageList[randomIndex];
-        
-        // Use masked URL instead of direct Supabase URL
-        const maskedImageUrl = `/api/image?bucket=images&file=${randomImage.name}`;
-        console.log('Selected random image:', maskedImageUrl);
-        setBackgroundImage(maskedImageUrl);
+        const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
+        console.log('Selected random image:', imageUrl);
+        setBackgroundImage(imageUrl);
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
-        // Fallback to default image in case of any error - but use masked URL
-        setBackgroundImage('/api/image?bucket=images&file=dualshadow.jpg');
+        // Fallback to default image in case of any error
+        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        setBackgroundImage(fallbackUrl);
       }
     };
 

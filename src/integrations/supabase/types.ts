@@ -87,30 +87,6 @@ export type Database = {
         }
         Relationships: []
       }
-      metadata: {
-        Row: {
-          created_at: string
-          id: number
-          meta_key: string
-          meta_value: string
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          id?: never
-          meta_key: string
-          meta_value: string
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          id?: never
-          meta_key?: string
-          meta_value?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       profile: {
         Row: {
           bio: string | null
@@ -224,8 +200,11 @@ export type Database = {
       }
       sections: {
         Row: {
+          author: string | null
           button_text: string
           created_at: string
+          cta_section: string | null
+          cta_text: string | null
           description: string | null
           facebook_url: string | null
           get_in_touch_text: string
@@ -233,15 +212,20 @@ export type Database = {
           instagram_url: string | null
           linkedin_url: string | null
           portfolio_url: string | null
+          quote: string | null
           section_name: string
           title: string
           twitter_url: string | null
           updated_at: string
+          video_url: string | null
           youtube_url: string | null
         }
         Insert: {
+          author?: string | null
           button_text?: string
           created_at?: string
+          cta_section?: string | null
+          cta_text?: string | null
           description?: string | null
           facebook_url?: string | null
           get_in_touch_text?: string
@@ -249,15 +233,20 @@ export type Database = {
           instagram_url?: string | null
           linkedin_url?: string | null
           portfolio_url?: string | null
+          quote?: string | null
           section_name: string
           title: string
           twitter_url?: string | null
           updated_at?: string
+          video_url?: string | null
           youtube_url?: string | null
         }
         Update: {
+          author?: string | null
           button_text?: string
           created_at?: string
+          cta_section?: string | null
+          cta_text?: string | null
           description?: string | null
           facebook_url?: string | null
           get_in_touch_text?: string
@@ -265,10 +254,12 @@ export type Database = {
           instagram_url?: string | null
           linkedin_url?: string | null
           portfolio_url?: string | null
+          quote?: string | null
           section_name?: string
           title?: string
           twitter_url?: string | null
           updated_at?: string
+          video_url?: string | null
           youtube_url?: string | null
         }
         Relationships: []

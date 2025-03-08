@@ -9,7 +9,7 @@ export const createMaskedUrl = (fileKey: string, bucket: string): string => {
 
 export const getDownloadUrl = async (fileKey: string, bucket: string): Promise<string> => {
   try {
-    // Get a direct signed URL from Supabase
+    // In development or client-side only environments, we'll get the URL directly
     const { data, error } = await supabase.storage
       .from(bucket)
       .createSignedUrl(fileKey, 3600); // URL valid for 1 hour
@@ -32,6 +32,7 @@ export const getDownloadUrl = async (fileKey: string, bucket: string): Promise<s
 
 export const getMaskedImageUrl = (bucket: string, fileKey: string): string => {
   // Return a domain-masked URL for images
+  // This will be used for display purposes
   return `/api/image?bucket=${encodeURIComponent(bucket)}&file=${encodeURIComponent(fileKey)}`;
 };
 
@@ -43,12 +44,6 @@ export const getPublicUrl = (bucket: string, fileKey: string): string => {
 export const handleDownload = async (maskedUrl: string) => {
   try {
     if (!maskedUrl) return;
-    
-    // If it's already a direct URL (like a signed URL), just open it
-    if (maskedUrl.startsWith('http')) {
-      window.open(maskedUrl, '_blank');
-      return;
-    }
     
     // If it's our domain-masked URL
     if (maskedUrl.startsWith('/api/download')) {

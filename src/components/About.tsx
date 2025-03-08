@@ -23,27 +23,16 @@ export const About = () => {
   });
 
   useEffect(() => {
-    // Fetch the portrait image directly from Supabase
-    const fetchPortraitUrl = async () => {
-      try {
-        const { data, error } = await supabase.storage
-          .from('profile')
-          .createSignedUrl('RomerSelfPortrait.jpg', 3600);
-          
-        if (data && !error) {
-          setPortraitUrl(data.signedUrl);
-        } else {
-          console.error('Error fetching portrait URL:', error);
-          // Fallback to masked URL if direct access fails
-          setPortraitUrl('/api/image?bucket=profile&file=RomerSelfPortrait.jpg');
-        }
-      } catch (err) {
-        console.error('Error getting portrait URL:', err);
-        setPortraitUrl('/api/image?bucket=profile&file=RomerSelfPortrait.jpg');
-      }
-    };
+    // Use masked URL for portrait image
+    const maskedPortraitUrl = '/api/image?bucket=profile&file=RomerSelfPortrait.jpg';
+    setPortraitUrl(maskedPortraitUrl);
     
-    fetchPortraitUrl();
+    // Create masked URL for portfolio PDF
+    const maskedPortfolioUrl = '/api/download?bucket=profile&file=portfolio.pdf';
+    setAboutData(prev => ({
+      ...prev,
+      portfolio_url: maskedPortfolioUrl
+    }));
   }, []);
 
   useEffect(() => {
@@ -55,31 +44,14 @@ export const About = () => {
         .single();
       
       if (data && !error) {
-        let portfolioUrl = null;
-        
-        // If there's a portfolio URL from the database, create a direct signed URL
-        if (data.portfolio_url) {
-          try {
-            const { data: fileData, error: fileError } = await supabase.storage
-              .from('profile')
-              .createSignedUrl('portfolio.pdf', 3600);
-              
-            if (fileData && !fileError) {
-              portfolioUrl = fileData.signedUrl;
-            } else {
-              console.error('Error creating signed URL for portfolio:', fileError);
-              // Fallback to masked URL
-              portfolioUrl = '/api/download?bucket=profile&file=portfolio.pdf';
-            }
-          } catch (err) {
-            console.error('Error getting portfolio URL:', err);
-            portfolioUrl = '/api/download?bucket=profile&file=portfolio.pdf';
-          }
-        }
+        // If there's a portfolio URL from the database, create a masked version
+        const maskedPortfolioUrl = data.portfolio_url 
+          ? createMaskedUrl('portfolio.pdf', 'profile')
+          : null;
             
         setAboutData({
           ...data,
-          portfolio_url: portfolioUrl
+          portfolio_url: maskedPortfolioUrl
         });
       } else {
         console.error('Error fetching about section:', error);
@@ -91,7 +63,7 @@ export const About = () => {
 
   const handlePortfolioDownload = async () => {
     if (aboutData.portfolio_url) {
-      window.open(aboutData.portfolio_url, '_blank');
+      await handleDownload(aboutData.portfolio_url);
     }
   };
 
@@ -169,3 +141,4 @@ export const About = () => {
     </section>
   );
 };
+

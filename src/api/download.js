@@ -1,48 +1,36 @@
 
-// API Route for file downloads
-// This proxies the download requests to Supabase while masking the URL
+// This file acts as a proxy for Supabase storage files
+// It runs on the server side when deployed to platforms that support API routes
 
-export async function onRequest(context) {
-  const { request } = context;
-  const url = new URL(request.url);
-  const bucket = url.searchParams.get('bucket');
-  const file = url.searchParams.get('file');
+import { supabase } from '../integrations/supabase/client';
 
-  if (!bucket || !file) {
-    return new Response('Missing bucket or file parameter', { status: 400 });
+export default async function handler(req, res) {
+  // Get the file and bucket parameters from the request
+  const { file, bucket } = req.query;
+  
+  if (!file || !bucket) {
+    return res.status(400).json({ error: 'Missing file or bucket parameter' });
   }
-
-  // Construct the Supabase storage URL
-  const supabaseUrl = "https://xxigtbxqgbdcfpmnrzvp.supabase.co";
-  const storageUrl = `${supabaseUrl}/storage/v1/object/public/${bucket}/${file}`;
-
+  
   try {
-    // Fetch the file from Supabase
-    const response = await fetch(storageUrl);
+    // Get the signed URL from Supabase
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .createSignedUrl(file, 60); // URL valid for 60 seconds
     
-    if (!response.ok) {
-      return new Response(`Failed to fetch file: ${response.statusText}`, { 
-        status: response.status 
-      });
+    if (error) {
+      console.error('Supabase error:', error);
+      return res.status(500).json({ error: 'Failed to get file' });
     }
-
-    // Create a response with the file data and appropriate headers
-    const fileData = await response.arrayBuffer();
-    const headers = new Headers();
     
-    // Set content type
-    headers.set('Content-Type', response.headers.get('Content-Type') || 'application/octet-stream');
+    if (!data || !data.signedUrl) {
+      return res.status(404).json({ error: 'File not found' });
+    }
     
-    // Set content disposition header for downloads
-    const filename = file.split('/').pop();
-    headers.set('Content-Disposition', `attachment; filename="${filename}"`);
-    
-    return new Response(fileData, {
-      status: 200,
-      headers
-    });
-  } catch (error) {
-    console.error('Error fetching file:', error);
-    return new Response(`Error fetching file: ${error.message}`, { status: 500 });
+    // Redirect to the signed URL
+    return res.redirect(data.signedUrl);
+  } catch (err) {
+    console.error('Error processing request:', err);
+    return res.status(500).json({ error: 'Server error' });
   }
 }

@@ -109,7 +109,9 @@ const NotFound = () => {
 
           {/* Error Message */}
           <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto font-roc mb-8">
-            Fatal error: Page.exe has stopped working.
+            Well, this is awkward. You've wandered into the Negative Zone.
+            <br /><br />
+            The page you're looking for either doesn't exist, got sucked into a black hole, or I haven't designed it yet (which honestly feels worse).
           </p>
 
           {/* Home Button */}

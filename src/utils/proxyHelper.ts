@@ -1,20 +1,20 @@
-// Helper functions to use proxied Supabase endpoints
-
-const DOMAIN = window.location.origin;
+// Temporarily reverting to direct Supabase client usage
+// The proxy functions had routing conflicts with existing edge functions
+import { supabase } from "@/integrations/supabase/client";
 
 export const getProxiedStorageUrl = (bucket: string, file: string): string => {
-  return `${DOMAIN}/api/proxy-storage?bucket=${bucket}&file=${file}&action=download`;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(file);
+  return data.publicUrl;
 };
 
 export const getProxiedStorageSignedUrl = async (bucket: string, file: string): Promise<string> => {
-  const response = await fetch(`${DOMAIN}/api/proxy-storage?bucket=${bucket}&file=${file}&action=url`);
-  const data = await response.json();
+  const { data, error } = await supabase.storage.from(bucket).createSignedUrl(file, 3600);
   
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to get storage URL');
+  if (error) {
+    throw new Error(error.message);
   }
   
-  return data.url;
+  return data.signedUrl;
 };
 
 export const getProxiedData = async (table: string, options: {
@@ -23,39 +23,39 @@ export const getProxiedData = async (table: string, options: {
   limit?: number;
   filter?: string;
 } = {}): Promise<any> => {
-  const params = new URLSearchParams({
-    table,
-    action: 'select',
-    ...(options.columns && { columns: options.columns }),
-    ...(options.order && { order: options.order }),
-    ...(options.limit && { limit: options.limit.toString() }),
-    ...(options.filter && { filter: options.filter })
-  });
-
-  const response = await fetch(`${DOMAIN}/api/proxy-data?${params}`);
-  const data = await response.json();
+  let query = supabase.from(table).select(options.columns || '*');
   
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to fetch data');
+  if (options.filter) {
+    const [column, operator, value] = options.filter.split(':');
+    if (operator === 'eq') {
+      query = query.eq(column, value);
+    }
   }
   
-  return data.data;
+  if (options.order) {
+    const [column, direction] = options.order.split(':');
+    query = query.order(column, { ascending: direction !== 'desc' });
+  }
+  
+  if (options.limit) {
+    query = query.limit(options.limit);
+  }
+  
+  const { data, error } = await query;
+  
+  if (error) {
+    throw new Error(error.message);
+  }
+  
+  return data;
 };
 
 export const callProxiedRpc = async (functionName: string, params: any = {}): Promise<any> => {
-  const searchParams = new URLSearchParams({
-    table: '', // Not used for RPC
-    action: 'rpc',
-    function: functionName,
-    params: JSON.stringify(params)
-  });
-
-  const response = await fetch(`${DOMAIN}/api/proxy-data?${searchParams}`);
-  const data = await response.json();
+  const { data, error } = await supabase.rpc(functionName, params);
   
-  if (!response.ok) {
-    throw new Error(data.error || 'Failed to call function');
+  if (error) {
+    throw new Error(error.message);
   }
   
-  return data.data;
+  return data;
 };

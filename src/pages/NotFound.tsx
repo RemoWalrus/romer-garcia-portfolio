@@ -109,7 +109,7 @@ const NotFound = () => {
 
           {/* Error Message */}
           <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto font-roc mb-8">
-            Segmentation fault: Page not found in memory space.
+            Fatal error: Page.exe has stopped working.
           </p>
 
           {/* Home Button */}

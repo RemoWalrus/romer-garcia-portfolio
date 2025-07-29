@@ -66,8 +66,18 @@ export const Footer = () => {
             <SocialIcon url={socialLinks.instagram_url} icon={Instagram} label="Instagram" />
             <SocialIcon url={socialLinks.youtube_url} icon={Youtube} label="YouTube" />
           </div>
-          <div className="text-center text-neutral-500 text-sm">
-            © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+          <div className="text-center text-neutral-500 text-sm space-y-2">
+            <div>
+              <a 
+                href="/meme" 
+                className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
+              >
+                Random Developer Meme
+              </a>
+            </div>
+            <div>
+              © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+            </div>
           </div>
         </div>
       </div>

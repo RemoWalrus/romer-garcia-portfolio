@@ -41,8 +41,17 @@ Deno.serve(async (req) => {
         const columns = url.searchParams.get('columns') || '*';
         const orderBy = url.searchParams.get('order');
         const limit = url.searchParams.get('limit');
+        const filter = url.searchParams.get('filter');
         
         let query = supabase.from(table).select(columns);
+        
+        if (filter) {
+          // Handle basic eq filters like "section_name:eq:contact"
+          const [column, operator, value] = filter.split(':');
+          if (operator === 'eq') {
+            query = query.eq(column, value);
+          }
+        }
         
         if (orderBy) {
           const [column, direction] = orderBy.split(':');

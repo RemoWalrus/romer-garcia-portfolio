@@ -1,20 +1,23 @@
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { getProxiedData } from '@/utils/proxyHelper';
 
 export const useAnalytics = () => {
   const [analyticsId, setAnalyticsId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAnalyticsId = async () => {
-      const { data, error } = await supabase
-        .from('config')
-        .select('value')
-        .eq('key', 'google_analytics_id')
-        .single();
-      
-      if (data && !error) {
-        setAnalyticsId(data.value);
+      try {
+        const data = await getProxiedData('config', {
+          columns: 'value',
+          filter: 'key:eq:google_analytics_id'
+        });
+        
+        if (data && data.length > 0) {
+          setAnalyticsId(data[0].value);
+        }
+      } catch (error) {
+        console.error('Error fetching analytics ID:', error);
       }
     };
 

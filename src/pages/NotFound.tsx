@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedStorageSignedUrl } from "@/utils/proxyHelper";
 import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
@@ -29,34 +29,26 @@ const NotFound = () => {
       try {
         console.log('Fetching random image for error page...');
         
-        const { data: imageList, error: listError } = await supabase
-          .storage
-          .from('images')
-          .list('');
+        // Use a predefined list of image names to randomly select from
+        const imageNames = [
+          'dualshadow.jpg',
+          'evenbrite-cover.jpg', 
+          'hautesummer.jpg',
+          'militarychild.jpg',
+          'remowalrusdiablo.jpg',
+          'romergarciacover.jpg',
+          'worldzoom.jpg'
+        ];
 
-        if (listError) {
-          console.error('Error listing images:', listError);
-          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-          setBackgroundImage(fallbackUrl);
-          return;
-        }
-
-        if (!imageList || imageList.length === 0) {
-          console.log('No images found, using fallback');
-          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-          setBackgroundImage(fallbackUrl);
-          return;
-        }
-
-        const randomIndex = Math.floor(Math.random() * imageList.length);
-        const randomImage = imageList[randomIndex];
-        const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
+        const randomIndex = Math.floor(Math.random() * imageNames.length);
+        const randomImageName = imageNames[randomIndex];
+        const imageUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=${randomImageName}`;
         console.log('Selected random image for error page:', imageUrl);
         setBackgroundImage(imageUrl);
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
-        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        const fallbackUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=dualshadow.jpg`;
         setBackgroundImage(fallbackUrl);
       }
     };

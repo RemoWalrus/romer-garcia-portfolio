@@ -6,7 +6,7 @@ import { HeroTitle } from './HeroTitle';
 import { TitleConfig } from './title-config';
 import { glitchVariants } from './animation-variants';
 import { useEffect, useState } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 
 interface HeroContentProps {
   titles: TitleConfig[];
@@ -20,15 +20,16 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
 
   useEffect(() => {
     const fetchHeroSection = async () => {
-      const { data, error } = await supabase
-        .from('sections')
-        .select('description')
-        .eq('section_name', 'hero')
-        .single();
-      
-      if (data && !error) {
-        setSubtitle(data.description || subtitle);
-      } else {
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'description',
+          filter: 'section_name:eq:hero'
+        });
+        
+        if (data && data.length > 0) {
+          setSubtitle(data[0].description || subtitle);
+        }
+      } catch (error) {
         console.error('Error fetching hero section:', error);
       }
     };

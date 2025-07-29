@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { getProxiedData } from "@/utils/proxyHelper";
 import type { TitleConfig } from './hero/title-config';
 import { HeroBackground } from './hero/HeroBackground';
 import { HeroContent } from './hero/HeroContent';
@@ -16,14 +16,15 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   useEffect(() => {
     const fetchTitles = async () => {
-      const { data, error } = await supabase
-        .from('hero_titles')
-        .select('*')
-        .order('sort_order', { ascending: true });
-      
-      if (data && !error) {
-        setTitles(data);
-      } else {
+      try {
+        const data = await getProxiedData('hero_titles', {
+          order: 'sort_order:asc'
+        });
+        
+        if (data) {
+          setTitles(data);
+        }
+      } catch (error) {
         console.error('Error fetching hero titles:', error);
       }
     };

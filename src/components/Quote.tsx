@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { callProxiedRpc } from "@/utils/proxyHelper";
 import { motion } from 'framer-motion';
 
 interface QuoteSection {
@@ -16,13 +16,13 @@ export const Quote = () => {
 
   useEffect(() => {
     const fetchRandomQuote = async () => {
-      const { data, error } = await supabase
-        .rpc('get_random_quote')
-        .maybeSingle();
-      
-      if (data && !error) {
-        setQuoteData(data);
-      } else {
+      try {
+        const data = await callProxiedRpc('get_random_quote');
+        
+        if (data && data.length > 0) {
+          setQuoteData(data[0]);
+        }
+      } catch (error) {
         console.error('Error fetching random quote:', error);
       }
     };

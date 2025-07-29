@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 import { ProjectCard } from './portfolio/ProjectCard';
 import { ProjectModal } from './portfolio/ProjectModal';
 import { trackEvent } from './GoogleAnalytics';
@@ -15,13 +15,16 @@ export const Portfolio = () => {
   }, []);
 
   const fetchProjects = async () => {
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .order('sort_order', { ascending: true });
-    
-    if (data) {
-      setProjects(data);
+    try {
+      const data = await getProxiedData('projects', {
+        order: 'sort_order:asc'
+      });
+      
+      if (data) {
+        setProjects(data);
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
     }
   };
 

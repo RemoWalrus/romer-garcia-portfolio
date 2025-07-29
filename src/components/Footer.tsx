@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 interface SocialLinks {
@@ -22,14 +22,17 @@ export const Footer = () => {
 
   useEffect(() => {
     const fetchSocialLinks = async () => {
-      const { data, error } = await supabase
-        .from('sections')
-        .select('facebook_url, twitter_url, linkedin_url, instagram_url, youtube_url')
-        .eq('section_name', 'social')
-        .maybeSingle();
-      
-      if (data && !error) {
-        setSocialLinks(data);
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
+          filter: 'section_name:eq:social'
+        });
+        
+        if (data && data.length > 0) {
+          setSocialLinks(data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching social links:', error);
       }
     };
 

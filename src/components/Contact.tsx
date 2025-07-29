@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 
 export const Contact = () => {
   const { toast } = useToast();
@@ -19,18 +19,19 @@ export const Contact = () => {
 
   useEffect(() => {
     const fetchContactSection = async () => {
-      const { data, error } = await supabase
-        .from('sections')
-        .select('title, description, get_in_touch_text')
-        .eq('section_name', 'contact')
-        .maybeSingle();
-      
-      if (data && !error) {
-        setContactData(prev => ({
-          ...prev,
-          ...data
-        }));
-      } else if (error) {
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'title,description,get_in_touch_text',
+          filter: 'section_name:eq:contact'
+        });
+        
+        if (data && data.length > 0) {
+          setContactData(prev => ({
+            ...prev,
+            ...data[0]
+          }));
+        }
+      } catch (error) {
         console.error('Error fetching contact section:', error);
       }
     };
@@ -43,16 +44,15 @@ export const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: formData,
+      const response = await fetch(`${window.location.origin}/api/send-contact-email`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
 
-      if (error) {
-        console.error('Function error:', error);
-        throw new Error('Failed to send message');
-      }
+      const data = await response.json();
 
-      if (!data?.success) {
+      if (!response.ok || !data?.success) {
         throw new Error('Failed to send message');
       }
 

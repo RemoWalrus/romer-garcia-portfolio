@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -22,37 +22,22 @@ export const About = () => {
   });
 
   useEffect(() => {
-    const { data } = supabase.storage
-      .from('profile')
-      .getPublicUrl('RomerSelfPortrait.jpg');
-    
-    if (data) {
-      setPortraitUrl(data.publicUrl);
-    }
-
-    const portfolioData = supabase.storage
-      .from('profile')
-      .getPublicUrl('portfolio.pdf');
-    
-    if (portfolioData.data) {
-      setAboutData(prev => ({
-        ...prev,
-        portfolio_url: portfolioData.data.publicUrl
-      }));
-    }
+    // Set proxied storage URLs
+    setPortraitUrl(`${window.location.origin}/api/proxy-storage?bucket=profile&file=RomerSelfPortrait.jpg`);
   }, []);
 
   useEffect(() => {
     const fetchAboutSection = async () => {
-      const { data, error } = await supabase
-        .from('sections')
-        .select('title, description, portfolio_url, button_text')
-        .eq('section_name', 'about')
-        .single();
-      
-      if (data && !error) {
-        setAboutData(data);
-      } else {
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'title,description,portfolio_url,button_text',
+          filter: 'section_name:eq:about'
+        });
+        
+        if (data && data.length > 0) {
+          setAboutData(data[0]);
+        }
+      } catch (error) {
         console.error('Error fetching about section:', error);
       }
     };

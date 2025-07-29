@@ -21,13 +21,15 @@ export const getProxiedData = async (table: string, options: {
   columns?: string;
   order?: string;
   limit?: number;
+  filter?: string;
 } = {}): Promise<any> => {
   const params = new URLSearchParams({
     table,
     action: 'select',
     ...(options.columns && { columns: options.columns }),
     ...(options.order && { order: options.order }),
-    ...(options.limit && { limit: options.limit.toString() })
+    ...(options.limit && { limit: options.limit.toString() }),
+    ...(options.filter && { filter: options.filter })
   });
 
   const response = await fetch(`${DOMAIN}/api/proxy-data?${params}`);

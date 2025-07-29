@@ -1,7 +1,7 @@
 
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 interface NavigationProps {
@@ -28,20 +28,22 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     youtube_url: ''
   });
   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const logoUrl = supabase.storage.from('graphics').getPublicUrl(
-    scrolled && !prefersDarkMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg'
-  ).data.publicUrl;
+  const logoFile = scrolled && !prefersDarkMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
+  const logoUrl = `${window.location.origin}/api/proxy-storage?bucket=graphics&file=${logoFile}`;
 
   useEffect(() => {
     const fetchSocialLinks = async () => {
-      const { data, error } = await supabase
-        .from('sections')
-        .select('facebook_url, twitter_url, linkedin_url, instagram_url, youtube_url')
-        .eq('section_name', 'social')
-        .maybeSingle();
-      
-      if (data && !error) {
-        setSocialLinks(data);
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
+          filter: 'section_name:eq:social'
+        });
+        
+        if (data && data.length > 0) {
+          setSocialLinks(data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching social links:', error);
       }
     };
 

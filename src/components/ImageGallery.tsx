@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedData } from "@/utils/proxyHelper";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -20,14 +20,15 @@ export const ImageGallery = () => {
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
-      const { data, error } = await supabase
-        .from('gallery')
-        .select('*')
-        .order('sort_order', { ascending: true });
-      
-      if (data) {
-        setImages(data);
-      } else if (error) {
+      try {
+        const data = await getProxiedData('gallery', {
+          order: 'sort_order:asc'
+        });
+        
+        if (data) {
+          setImages(data);
+        }
+      } catch (error) {
         console.error('Error fetching gallery images:', error);
       }
     };

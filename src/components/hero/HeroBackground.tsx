@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { supabase } from "@/integrations/supabase/client";
+import { getProxiedStorageSignedUrl } from "@/utils/proxyHelper";
 
 interface HeroBackgroundProps {
   showVideo: boolean;
@@ -10,7 +10,7 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [videoUrl] = useState<string>(supabase.storage.from('graphics').getPublicUrl('staticglitchy.mp4').data.publicUrl);
+  const [videoUrl] = useState<string>(`${window.location.origin}/api/proxy-storage?bucket=graphics&file=staticglitchy.mp4`);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -25,38 +25,28 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
       try {
         console.log('Fetching hero images...');
         
-        // First try to get all images from the 'images' bucket
-        const { data: imageList, error: listError } = await supabase
-          .storage
-          .from('images')
-          .list('');
-
-        if (listError) {
-          console.error('Error listing images:', listError);
-          // Fallback to default image
-          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-          setBackgroundImage(fallbackUrl);
-          return;
-        }
-
-        if (!imageList || imageList.length === 0) {
-          console.log('No images found, using fallback');
-          const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
-          setBackgroundImage(fallbackUrl);
-          return;
-        }
+        // For now, use a predefined list of image names to randomly select from
+        const imageNames = [
+          'dualshadow.jpg',
+          'evenbrite-cover.jpg', 
+          'hautesummer.jpg',
+          'militarychild.jpg',
+          'remowalrusdiablo.jpg',
+          'romergarciacover.jpg',
+          'worldzoom.jpg'
+        ];
 
         // Select a random image from the list
-        const randomIndex = Math.floor(Math.random() * imageList.length);
-        const randomImage = imageList[randomIndex];
-        const imageUrl = supabase.storage.from('images').getPublicUrl(randomImage.name).data.publicUrl;
+        const randomIndex = Math.floor(Math.random() * imageNames.length);
+        const randomImageName = imageNames[randomIndex];
+        const imageUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=${randomImageName}`;
         console.log('Selected random image:', imageUrl);
         setBackgroundImage(imageUrl);
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
         // Fallback to default image in case of any error
-        const fallbackUrl = supabase.storage.from('images').getPublicUrl('dualshadow.jpg').data.publicUrl;
+        const fallbackUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=dualshadow.jpg`;
         setBackgroundImage(fallbackUrl);
       }
     };

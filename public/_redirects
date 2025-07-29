@@ -1,0 +1,7 @@
+# Netlify redirects and rewrites
+# Handle client-side routing - redirect all non-file requests to index.html
+/*    /index.html   200
+
+# Optional: Handle specific error codes with custom pages
+# /404.html  404
+# /500.html  500

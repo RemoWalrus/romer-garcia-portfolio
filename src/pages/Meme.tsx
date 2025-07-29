@@ -134,9 +134,6 @@ const Meme = () => {
         <div className="space-y-8">
           {/* Header */}
           <div className="space-y-4">
-            <h1 className="text-6xl md:text-8xl font-bold text-white mb-4 tracking-wider">
-              MEME
-            </h1>
             <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto">
               Random developer humor from the vault
             </p>

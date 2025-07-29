@@ -84,9 +84,10 @@ const NotFound = () => {
       {/* Content */}
       <div className="container relative z-20 px-4 mx-auto text-center">
         <div className="flex flex-col items-center">
-          {/* Romer Garcia Title - slightly smaller than homepage */}
-          <h1
-            className="text-5xl md:text-6xl lg:text-7xl font-roc text-white mb-6 py-2"
+          {/* Romer Garcia Title - clickable to home */}
+          <button
+            onClick={() => window.location.href = '/'}
+            className="text-5xl md:text-6xl lg:text-7xl font-roc text-white mb-6 py-2 hover:opacity-80 transition-opacity cursor-pointer"
             style={{
               textShadow: `
                 2px 0 0 rgba(255,0,0,0.3),
@@ -99,7 +100,7 @@ const NotFound = () => {
               <span className="font-medium">romer</span>
               <span className="font-thin text-neutral-200">garcia</span>
             </span>
-          </h1>
+          </button>
 
           {/* Error Code - big and very thick */}
           <h2 className="text-8xl md:text-9xl lg:text-[12rem] font-black text-white mb-8 leading-none">
@@ -108,7 +109,7 @@ const NotFound = () => {
 
           {/* Error Message */}
           <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto font-roc mb-8">
-            Oops! The page you're looking for doesn't exist.
+            Segmentation fault: Page not found in memory space.
           </p>
 
           {/* Home Button */}

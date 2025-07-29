@@ -23,7 +23,8 @@ export const getProxiedData = async (table: string, options: {
   limit?: number;
   filter?: string;
 } = {}): Promise<any> => {
-  let query = supabase.from(table).select(options.columns || '*');
+  // Use type assertion to handle dynamic table names
+  let query = (supabase as any).from(table).select(options.columns || '*');
   
   if (options.filter) {
     const [column, operator, value] = options.filter.split(':');
@@ -47,15 +48,16 @@ export const getProxiedData = async (table: string, options: {
     throw new Error(error.message);
   }
   
-  return data;
+  return data || [];
 };
 
 export const callProxiedRpc = async (functionName: string, params: any = {}): Promise<any> => {
-  const { data, error } = await supabase.rpc(functionName, params);
+  // Use type assertion to handle dynamic function names
+  const { data, error } = await (supabase as any).rpc(functionName, params);
   
   if (error) {
     throw new Error(error.message);
   }
   
-  return data;
+  return data || [];
 };

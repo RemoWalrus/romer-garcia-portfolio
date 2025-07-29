@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { getProxiedStorageSignedUrl } from "@/utils/proxyHelper";
+import { getProxiedStorageUrl } from "@/utils/proxyHelper";
 
 interface HeroBackgroundProps {
   showVideo: boolean;
@@ -10,7 +10,7 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [videoUrl] = useState<string>(`${window.location.origin}/api/proxy-storage?bucket=graphics&file=staticglitchy.mp4`);
+  const [videoUrl] = useState<string>(getProxiedStorageUrl('graphics', 'staticglitchy.mp4'));
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -39,14 +39,14 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
         // Select a random image from the list
         const randomIndex = Math.floor(Math.random() * imageNames.length);
         const randomImageName = imageNames[randomIndex];
-        const imageUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=${randomImageName}`;
+        const imageUrl = getProxiedStorageUrl('images', randomImageName);
         console.log('Selected random image:', imageUrl);
         setBackgroundImage(imageUrl);
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
         // Fallback to default image in case of any error
-        const fallbackUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=dualshadow.jpg`;
+        const fallbackUrl = getProxiedStorageUrl('images', 'dualshadow.jpg');
         setBackgroundImage(fallbackUrl);
       }
     };

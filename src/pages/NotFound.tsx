@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProxiedStorageSignedUrl } from "@/utils/proxyHelper";
+import { getProxiedStorageUrl } from "@/utils/proxyHelper";
 import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
@@ -42,13 +42,13 @@ const NotFound = () => {
 
         const randomIndex = Math.floor(Math.random() * imageNames.length);
         const randomImageName = imageNames[randomIndex];
-        const imageUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=${randomImageName}`;
+        const imageUrl = getProxiedStorageUrl('images', randomImageName);
         console.log('Selected random image for error page:', imageUrl);
         setBackgroundImage(imageUrl);
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
-        const fallbackUrl = `${window.location.origin}/api/proxy-storage?bucket=images&file=dualshadow.jpg`;
+        const fallbackUrl = getProxiedStorageUrl('images', 'dualshadow.jpg');
         setBackgroundImage(fallbackUrl);
       }
     };

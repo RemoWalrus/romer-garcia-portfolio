@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProxiedData } from "@/utils/proxyHelper";
+import { getProxiedData, getProxiedStorageUrl } from "@/utils/proxyHelper";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -22,8 +22,8 @@ export const About = () => {
   });
 
   useEffect(() => {
-    // Set proxied storage URLs
-    setPortraitUrl(`${window.location.origin}/api/proxy-storage?bucket=profile&file=RomerSelfPortrait.jpg`);
+    // Set direct storage URLs using helper function
+    setPortraitUrl(getProxiedStorageUrl('profile', 'RomerSelfPortrait.jpg'));
   }, []);
 
   useEffect(() => {

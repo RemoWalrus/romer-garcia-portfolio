@@ -35,6 +35,42 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_memes: {
+        Row: {
+          attribution: string | null
+          coding_tip: string | null
+          created_at: string
+          fun_fact: string | null
+          id: number
+          is_active: boolean | null
+          meme_text: string
+          update_info: string | null
+          updated_at: string
+        }
+        Insert: {
+          attribution?: string | null
+          coding_tip?: string | null
+          created_at?: string
+          fun_fact?: string | null
+          id?: number
+          is_active?: boolean | null
+          meme_text: string
+          update_info?: string | null
+          updated_at?: string
+        }
+        Update: {
+          attribution?: string | null
+          coding_tip?: string | null
+          created_at?: string
+          fun_fact?: string | null
+          id?: number
+          is_active?: boolean | null
+          meme_text?: string
+          update_info?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       gallery: {
         Row: {
           created_at: string
@@ -283,6 +319,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_active_meme: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          attribution: string | null
+          coding_tip: string | null
+          created_at: string
+          fun_fact: string | null
+          id: number
+          is_active: boolean | null
+          meme_text: string
+          update_info: string | null
+          updated_at: string
+        }[]
+      }
       get_random_quote: {
         Args: Record<PropertyKey, never>
         Returns: {

@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.serve-index]
 verify_jwt = false
+
+[functions.proxy-storage]
+verify_jwt = false
+
+[functions.proxy-data]
+verify_jwt = false

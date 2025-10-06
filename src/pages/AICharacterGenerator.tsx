@@ -83,9 +83,9 @@ const AICharacterGenerator = () => {
       const nameDisplay = actualSpecies === "human"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : actualSpecies === "android"
-        ? `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`
+        ? `with the name "${processedName}" subtly laser-etched in small, refined futuristic typography on a body panel - barely visible but present`
         : actualSpecies === "robot"
-        ? `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`
+        ? `with the name "${processedName}" etched in futuristic typography on a visible body panel`
         : actualSpecies === "mutant"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : Math.random() > 0.5

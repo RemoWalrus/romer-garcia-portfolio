@@ -67,12 +67,18 @@ export const Footer = () => {
             <SocialIcon url={socialLinks.youtube_url} icon={Youtube} label="YouTube" />
           </div>
           <div className="text-center text-neutral-500 text-sm space-y-2">
-            <div>
+            <div className="flex gap-6 justify-center">
               <a 
                 href="/meme" 
                 className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
               >
                 Random Developer Meme
+              </a>
+              <a 
+                href="/paradoxxia" 
+                className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
+              >
+                パラドクシア
               </a>
             </div>
             <div>

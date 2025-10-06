@@ -159,12 +159,12 @@ const AICharacterGenerator = () => {
 
   const renderTitle = () => {
     return (
-      <span className="flex flex-wrap items-baseline justify-center md:inline-flex">
+      <span className="flex flex-col items-center">
+        <span style={{ fontWeight: 500 }}>パラドクシア</span>
         <span className="inline-flex items-baseline">
-          <span style={{ fontWeight: 500 }}>パラドクシア</span>
-          <span style={{ fontWeight: 100 }} className="ml-4">character</span>
+          <span style={{ fontWeight: 100 }}>character</span>
+          <span style={{ fontWeight: 500 }} className="ml-2">generator</span>
         </span>
-        <span style={{ fontWeight: 500 }} className="ml-4 md:ml-4">generator</span>
       </span>
     );
   };
@@ -199,11 +199,11 @@ const AICharacterGenerator = () => {
           >
             <div className="relative">
               <h1 
-                className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10"
+                className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10"
                 style={{
                   textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
                   fontFamily: 'var(--font-roc)',
-                  lineHeight: '1.1',
+                  lineHeight: '1.3',
                   letterSpacing: '-0.02em'
                 }}
               >
@@ -217,11 +217,11 @@ const AICharacterGenerator = () => {
                 }}
               >
                 <h1 
-                  className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 opacity-70"
+                  className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 opacity-70"
                   style={{
                     textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
                     fontFamily: 'var(--font-roc)',
-                    lineHeight: '1.1',
+                    lineHeight: '1.3',
                     letterSpacing: '-0.02em'
                   }}
                 >

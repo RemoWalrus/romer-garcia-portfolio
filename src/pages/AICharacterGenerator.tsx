@@ -84,15 +84,19 @@ const AICharacterGenerator = () => {
 
       const processedName = duplicateX(characterName);
       
-      // Randomly select actual species if "other" was chosen
+      // Special case: both "other" selections create a non-humanoid creature
       let selectedSpecies = species;
-      if (species === "other") {
+      if (species === "other" && gender === "other") {
+        selectedSpecies = "creature";
+      } else if (species === "other") {
         const otherOptions = ["cyborg", "mutant", "robot"];
         selectedSpecies = otherOptions[Math.floor(Math.random() * otherOptions.length)];
       }
       setActualSpecies(selectedSpecies);
       
-      const clothingDescription = selectedSpecies === "android" && Math.random() > 0.5
+      const clothingDescription = selectedSpecies === "creature"
+        ? "with organic or biomechanical elements integrated into its form"
+        : selectedSpecies === "android" && Math.random() > 0.5
         ? "wearing practical desert clothing made from hemp, linen, and cotton" 
         : selectedSpecies === "cyborg" && Math.random() > 0.5
         ? "wearing practical desert clothing made from hemp, linen, and cotton"
@@ -104,7 +108,9 @@ const AICharacterGenerator = () => {
         ? "wearing practical desert clothing made from hemp, linen, and cotton, with visible mutations"
         : "in their typical android form";
 
-      const location = selectedSpecies === "human" 
+      const location = selectedSpecies === "creature"
+        ? Math.random() > 0.5 ? "the desert surface with alien rock formations" : "underground caverns with bioluminescent features"
+        : selectedSpecies === "human" 
         ? "an underground human settlement with practical architecture" 
         : selectedSpecies === "android"
         ? "the ruins of an old city with crumbling buildings and overgrown structures"
@@ -116,7 +122,9 @@ const AICharacterGenerator = () => {
         ? "an underground human settlement" 
         : "the ruins of an old city";
 
-      const nameDisplay = selectedSpecies === "human"
+      const nameDisplay = selectedSpecies === "creature"
+        ? `with the name "${processedName}" marked or etched somewhere on its body in an alien script or biomechanical marking`
+        : selectedSpecies === "human"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : selectedSpecies === "android"
         ? `with the name "${processedName}" subtly laser-etched in small, refined futuristic typography on a body panel - barely visible but present`
@@ -138,7 +146,9 @@ const AICharacterGenerator = () => {
         ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features and NO white face plates."
         : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features. NO white face plates.";
 
-      const speciesDescription = selectedSpecies === "human"
+      const speciesDescription = selectedSpecies === "creature"
+        ? "This is a non-humanoid creature with an alien, otherworldly form. It has a unique physiology that defies traditional classification - could be insectoid, tentacled, amorphous, or have multiple limbs and appendages. The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. Its form suggests it has adapted to survive in the harsh post-apocalyptic environment in ways that transcend human or machine evolution."
+        : selectedSpecies === "human"
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
         : selectedSpecies === "android" 
         ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`

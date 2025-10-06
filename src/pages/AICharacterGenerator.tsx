@@ -47,7 +47,19 @@ const AICharacterGenerator = () => {
   };
 
   const duplicateX = (text: string) => {
-    return text.replace(/x/gi, (match) => match + match);
+    // Don't duplicate x if it would create 3 or more x's in a row
+    return text.replace(/x/gi, (match, offset, str) => {
+      // Check if previous character is also x (case insensitive)
+      const prevChar = str[offset - 1];
+      if (prevChar && prevChar.toLowerCase() === 'x') {
+        return match; // Don't duplicate if already consecutive
+      }
+      return match + match;
+    });
+  };
+
+  const hasTripleX = (text: string) => {
+    return /xxx/i.test(text);
   };
 
   const generateRandomName = () => {
@@ -103,9 +115,14 @@ const AICharacterGenerator = () => {
 
       
       
+      // Special case: names with exactly 3 X's create a defective being
+      const isDefective = hasTripleX(processedName);
+      
       // Special case: both "other" selections create a non-humanoid creature
       let selectedSpecies = species;
-      if (species === "other" && gender === "other") {
+      if (isDefective) {
+        selectedSpecies = "defective";
+      } else if (species === "other" && gender === "other") {
         selectedSpecies = "creature";
       } else if (species === "other") {
         const otherOptions = ["cyborg", "mutant", "robot"];
@@ -113,7 +130,9 @@ const AICharacterGenerator = () => {
       }
       setActualSpecies(selectedSpecies);
       
-      const clothingDescription = selectedSpecies === "creature"
+      const clothingDescription = selectedSpecies === "defective"
+        ? "with damaged, malfunctioning cybernetic parts and torn, deteriorating clothing showing severe wear and malfunction"
+        : selectedSpecies === "creature"
         ? "with organic or biomechanical elements integrated into its form"
         : selectedSpecies === "android" && Math.random() > 0.5
         ? "wearing practical desert clothing made from hemp, linen, and cotton" 
@@ -127,7 +146,9 @@ const AICharacterGenerator = () => {
         ? "wearing practical desert clothing made from hemp, linen, and cotton, with visible mutations"
         : "in their typical android form";
 
-      const location = selectedSpecies === "creature"
+      const location = selectedSpecies === "defective"
+        ? "a junkyard or scrapyard filled with broken machinery and failed experiments"
+        : selectedSpecies === "creature"
         ? Math.random() > 0.5 ? "the desert surface with alien rock formations" : "underground caverns with bioluminescent features"
         : selectedSpecies === "human" 
         ? "an underground human settlement with practical architecture" 
@@ -141,7 +162,9 @@ const AICharacterGenerator = () => {
         ? "an underground human settlement" 
         : "the ruins of an old city";
 
-      const nameDisplay = selectedSpecies === "creature"
+      const nameDisplay = selectedSpecies === "defective"
+        ? `with the name "${processedName}" partially erased or glitching on a damaged display panel or broken tag`
+        : selectedSpecies === "creature"
         ? `with the name "${processedName}" marked or etched somewhere on its body in an alien script or biomechanical marking`
         : selectedSpecies === "human"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
@@ -165,7 +188,9 @@ const AICharacterGenerator = () => {
         ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features and NO white face plates."
         : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features. NO white face plates.";
 
-      const speciesDescription = selectedSpecies === "creature"
+      const speciesDescription = selectedSpecies === "defective"
+        ? "This is a DEFECTIVE being - a failed experiment or malfunctioning entity. It could be a broken android with exposed wiring and sparking circuits, a corrupted AI manifestation with glitching holographic parts, or a failed cyborg with decaying flesh and malfunctioning mechanical components. Show visible damage: sparking wires, broken panels, leaking fluids, flickering lights, missing parts, and signs of system failure. The being is clearly broken, unstable, and deteriorating."
+        : selectedSpecies === "creature"
         ? "This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical."
         : selectedSpecies === "human"
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."

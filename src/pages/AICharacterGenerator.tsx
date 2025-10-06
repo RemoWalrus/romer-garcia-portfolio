@@ -113,10 +113,14 @@ const AICharacterGenerator = () => {
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`;
 
+      const androidFaceDescription = gender === "other"
+        ? "This android is not humanoid in form - it has a unique non-human shape."
+        : "This synthetic android has a humanoid form with a distinctive white mask-like face plate made of 1-4 smooth panels, and striking neon blue illuminated cybernetic eyes.";
+
       const speciesDescription = selectedSpecies === "human"
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
         : selectedSpecies === "android" 
-        ? "This is a sleek synthetic humanoid android with realistic human-like features but with subtle mechanical elements visible. Always humanoid in form."
+        ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`
         : selectedSpecies === "robot"
         ? Math.random() > 0.5 
           ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features."
@@ -231,9 +235,9 @@ const AICharacterGenerator = () => {
               </motion.div>
             </div>
             <p className="text-xl text-foreground max-w-2xl mx-auto font-roc">
-              <span className="font-thin">forge unique beings from the depths</span>{" "}
+              <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
               <span className="font-medium">of the</span>{" "}
-              <span className="font-thin">paradoxxia universe</span>
+              <span style={{ fontWeight: 300 }}>paradoxxia universe</span>
             </p>
           </motion.div>
 

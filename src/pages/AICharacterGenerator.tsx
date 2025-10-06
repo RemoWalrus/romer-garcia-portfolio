@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -13,12 +15,13 @@ import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variant
 const AICharacterGenerator = () => {
   const [prompt, setPrompt] = useState("");
   const [characterName, setCharacterName] = useState("");
+  const [gender, setGender] = useState("");
   const [generatedCharacter, setGeneratedCharacter] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const generateCharacter = async () => {
-    if (!prompt.trim() && !characterName.trim()) {
-      toast.error("Please provide at least a character name or description");
+    if (!prompt.trim() && !characterName.trim() && !gender.trim()) {
+      toast.error("Please provide at least a gender, character name, or description");
       return;
     }
 
@@ -26,7 +29,7 @@ const AICharacterGenerator = () => {
     try {
       const fullPrompt = `Generate a detailed character for the Paradoxxia universe. ${
         characterName ? `Character name: ${characterName}.` : ""
-      } ${prompt ? `Additional details: ${prompt}` : ""}
+      } ${gender ? `Gender: ${gender}.` : ""} ${prompt ? `Additional details: ${prompt}` : ""}
       
       Include:
       - Full character description and appearance
@@ -55,12 +58,13 @@ const AICharacterGenerator = () => {
   };
 
   const renderTitle = () => {
-    const words = "Paradoxxia Character Generator".split(" ");
-    return words.map((word, index) => (
-      <span key={index} className="font-thin">
-        {word}{" "}
+    return (
+      <span className="inline-flex items-baseline">
+        <span className="font-bold">paradoxxia</span>
+        <span className="font-thin ml-4">character</span>
+        <span className="font-bold ml-4">generator</span>
       </span>
-    ));
+    );
   };
 
   return (
@@ -124,27 +128,33 @@ const AICharacterGenerator = () => {
 
           {/* Input Section */}
           <Card className="p-6 space-y-6 bg-card border-border">
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-foreground">Gender</Label>
+              <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="male" id="male" />
+                  <Label htmlFor="male" className="cursor-pointer">Male</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="female" id="female" />
+                  <Label htmlFor="female" className="cursor-pointer">Female</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="other" id="other" />
+                  <Label htmlFor="other" className="cursor-pointer">Other</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
-                Character Name (Optional)
-              </label>
+              <Label className="text-sm font-medium text-foreground">
+                Name (Optional)
+              </Label>
               <Input
                 value={characterName}
                 onChange={(e) => setCharacterName(e.target.value)}
                 placeholder="Enter character name..."
                 className="bg-background"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">
-                Character Details (Optional)
-              </label>
-              <Textarea
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Describe your character (traits, role, species, abilities, etc.)..."
-                className="min-h-32 bg-background"
               />
             </div>
 

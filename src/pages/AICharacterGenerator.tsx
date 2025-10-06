@@ -378,11 +378,11 @@ const AICharacterGenerator = () => {
 - Precise eye shape, size, color, and spacing
 - Exact nose shape and size
 - Mouth and lip shape matching the reference
-- Hair color, texture, style, and length EXACTLY as shown
+- Hair color, texture, style, and length EXACTLY as shown${selectedSpecies === 'human' ? ' - preserve the EXACT hairstyle from the photo including length, style, and any specific cuts or styling' : ''}
 - Skin tone and complexion matching precisely
-- Facial hair (if present) matching the reference
+- Facial hair (if present) matching the reference${selectedSpecies === 'human' ? ' - CRITICAL: Keep ALL facial hair including beards, mustaches, goatees, sideburns EXACTLY as shown in the reference photo - same length, style, and coverage' : ''}
 - Body build and proportions similar to the reference
-- Any distinctive facial features, marks, or characteristics
+- Any distinctive facial features, marks, or characteristics${selectedSpecies === 'human' ? '\n- Accessories visible in the photo (glasses, earrings, piercings, hats, headbands, etc.) MUST be included and matched exactly in the final image' : ''}
 The final character should look like the person in the reference photo dressed for the apocalyptic ${selectedSpecies} setting. This is NOT just inspiration - the reference photo defines the character's appearance. All other creative elements are secondary to matching the reference photo.`
         : '';
 

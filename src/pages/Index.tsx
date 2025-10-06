@@ -9,6 +9,7 @@ import { Footer } from '@/components/Footer';
 import { Quote } from '@/components/Quote';
 import { ImageGallery } from '@/components/ImageGallery';
 import { GoogleAnalytics, trackEvent } from '@/components/GoogleAnalytics';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -47,6 +48,7 @@ const Index = () => {
 
   return (
     <div className="bg-neutral-950 min-h-screen flex flex-col overflow-x-hidden">
+      <ThemeToggle />
       <GoogleAnalytics />
       <div className="fixed inset-0 pointer-events-none z-[1] mix-blend-overlay opacity-5">
         <div className="absolute inset-0 animate-scanline" style={{

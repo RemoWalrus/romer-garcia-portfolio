@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { getProxiedStorageUrl, getProxiedData } from "@/utils/proxyHelper";
 import { useNavigate } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 interface MemeData {
   id: number;
@@ -111,6 +112,7 @@ const Meme = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950">
+      <ThemeToggle />
       {/* Gradient overlay that changes based on color scheme */}
       <div className={`absolute inset-0 bg-gradient-to-b 
         ${isDarkMode 

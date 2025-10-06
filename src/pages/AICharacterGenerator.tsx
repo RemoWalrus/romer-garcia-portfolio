@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
 import circuitBg from "@/assets/circuit-background.png";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const AICharacterGenerator = () => {
   const [step, setStep] = useState(1);
@@ -171,6 +172,7 @@ const AICharacterGenerator = () => {
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
+      <ThemeToggle />
       {/* Circuit board background */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
@@ -301,7 +303,7 @@ const AICharacterGenerator = () => {
                 onClick={step < 3 ? handleNext : generateCharacter}
                 disabled={isGenerating}
                 variant="outline"
-                className="w-full bg-white/20 border-white/20 hover:bg-white/30 text-white tracking-wider"
+                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                 size="lg"
               >
                 {isGenerating ? (
@@ -348,7 +350,7 @@ const AICharacterGenerator = () => {
               <Button
                 onClick={handleStartOver}
                 variant="outline"
-                className="w-full bg-white/20 border-white/20 hover:bg-white/30 text-white tracking-wider"
+                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                 size="lg"
               >
                 start over

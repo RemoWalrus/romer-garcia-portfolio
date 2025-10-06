@@ -148,7 +148,7 @@ const AICharacterGenerator = () => {
   const renderTitle = () => {
     return (
       <span className="inline-flex items-baseline">
-        <span style={{ fontWeight: 500 }}>paradodoxia</span>
+        <span style={{ fontWeight: 500 }}>パラドクシア</span>
         <span style={{ fontWeight: 100 }} className="ml-4">character</span>
         <span style={{ fontWeight: 500 }} className="ml-4">generator</span>
       </span>

@@ -68,8 +68,26 @@ const AICharacterGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Circuit board background */}
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="circuit" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+              <path d="M20 20h40v40h-40z" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-primary"/>
+              <circle cx="40" cy="40" r="2" fill="currentColor" className="text-primary"/>
+              <path d="M60 40h20M40 60v20M100 20h20v20M140 100h20v20" stroke="currentColor" strokeWidth="0.5" className="text-primary"/>
+              <circle cx="80" cy="40" r="1.5" fill="currentColor" className="text-primary"/>
+              <circle cx="40" cy="80" r="1.5" fill="currentColor" className="text-primary"/>
+              <circle cx="120" cy="40" r="2" fill="currentColor" className="text-primary"/>
+              <circle cx="160" cy="120" r="2" fill="currentColor" className="text-primary"/>
+              <path d="M120 40v20h20M40 80h20v20" stroke="currentColor" strokeWidth="0.5" className="text-primary"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#circuit)"/>
+        </svg>
+      </div>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border relative">
         <div className="container mx-auto px-4 py-4">
           <Link 
             to="/" 
@@ -80,7 +98,7 @@ const AICharacterGenerator = () => {
         </div>
       </nav>
       
-      <main className="container mx-auto px-4 py-24 mt-16">
+      <main className="container mx-auto px-4 py-24 mt-16 relative z-10">
         <div className="max-w-4xl mx-auto space-y-12">
           {/* Animated Header */}
           <motion.div 
@@ -91,7 +109,7 @@ const AICharacterGenerator = () => {
           >
             <div className="relative">
               <h1 
-                className="hero-title text-6xl md:text-8xl lg:text-9xl font-bold text-foreground px-4 relative z-10"
+                className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10"
                 style={{
                   textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
                   fontFamily: 'var(--font-roc)',
@@ -109,7 +127,7 @@ const AICharacterGenerator = () => {
                 }}
               >
                 <h1 
-                  className="hero-title text-6xl md:text-8xl lg:text-9xl font-bold text-foreground px-4 opacity-70"
+                  className="hero-title text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 opacity-70"
                   style={{
                     textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
                     fontFamily: 'var(--font-roc)',
@@ -161,7 +179,8 @@ const AICharacterGenerator = () => {
             <Button
               onClick={generateCharacter}
               disabled={isGenerating}
-              className="w-full"
+              variant="outline"
+              className="w-full bg-white/20 border-white/20 hover:bg-white/30 text-foreground uppercase tracking-wider"
               size="lg"
             >
               {isGenerating ? (

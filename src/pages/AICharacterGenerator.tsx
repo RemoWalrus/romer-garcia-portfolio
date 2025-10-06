@@ -579,7 +579,7 @@ const AICharacterGenerator = () => {
                         toast.error("Failed to save image");
                       }
                     }}
-                    className="hidden md:flex absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10 hidden md:block"
                     style={{
                       backdropFilter: 'blur(4px)'
                     }}

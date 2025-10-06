@@ -10,6 +10,7 @@ import { Loader2, Download, SquareArrowUp } from "lucide-react";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
 import { Share } from '@capacitor/share';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -26,6 +27,7 @@ const AICharacterGenerator = () => {
   const [displayName, setDisplayName] = useState("");
   const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [uploadedPhoto, setUploadedPhoto] = useState("");
 
   const handleNext = () => {
     if (step === 1 && !species) {
@@ -36,7 +38,7 @@ const AICharacterGenerator = () => {
       toast.error("Please select a gender");
       return;
     }
-    if (step < 3) {
+    if (step < 4) {
       setStep(step + 1);
     }
   };
@@ -49,6 +51,26 @@ const AICharacterGenerator = () => {
     setCharacterName("");
     setDisplayName("");
     setGeneratedImage("");
+    setUploadedPhoto("");
+  };
+
+  const handlePhotoUpload = async () => {
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Prompt, // Let user choose camera or gallery
+      });
+
+      if (image.dataUrl) {
+        setUploadedPhoto(image.dataUrl);
+        toast.success("Photo uploaded successfully!");
+      }
+    } catch (error) {
+      console.error("Camera error:", error);
+      toast.error("Failed to capture photo");
+    }
   };
 
   const duplicateX = (text: string) => {
@@ -117,12 +139,12 @@ const AICharacterGenerator = () => {
         const publicImageUrl = `${window.location.origin}/paradoxxia-poster.jpg`;
         const editPrompt = "Generate a closer, more zoomed-in dynamic pose of this exact character maintaining ALL the same visual characteristics: the same face, same long dark hair, same bright cyan/neon blue glowing eyes, same golden/bronze armored suit design, same body proportions, and same overall appearance. Show the character from mid-thigh up or closer (NOT full body - zoom in more) in a new dramatic action pose from an interesting angle in a DIFFERENT dystopian sci-fi environment - NOT ruins, but perhaps an abandoned industrial complex, a desolate wasteland with strange structures, a dark underground facility, or a dystopian cityscape. Frame the shot to show the character LARGER and more prominent - closer camera angle, heroic perspective. Keep EVERYTHING about the character's visual design identical - only change the pose, camera angle (closer/zoomed), and the background environment completely. Hyper-realistic 3D rendering style with the same dark, grim atmosphere. MANDATORY: The image MUST be 1:1 square format (1024x1024 pixels) - this is NON-NEGOTIABLE.";
         
-        const { data, error } = await supabase.functions.invoke("generate-character-image", {
-          body: { 
-            prompt: editPrompt,
-            imageUrl: publicImageUrl
-          },
-        });
+      const { data, error } = await supabase.functions.invoke("generate-character-image", {
+        body: { 
+          prompt: editPrompt,
+          imageUrl: uploadedPhoto || publicImageUrl
+        },
+      });
 
         if (error) throw error;
 
@@ -497,8 +519,36 @@ const AICharacterGenerator = () => {
                 </div>
               )}
 
+              {step === 4 && (
+                <div className="space-y-3">
+                  <Label className="text-base font-medium text-foreground font-roc">upload photo (optional):</Label>
+                  <p className="text-sm text-muted-foreground">Upload a photo to use as reference for your character</p>
+                  {uploadedPhoto ? (
+                    <div className="relative">
+                      <img src={uploadedPhoto} alt="Uploaded" className="w-full rounded-lg" />
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => setUploadedPhoto("")}
+                        className="absolute top-2 right-2"
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={handlePhotoUpload}
+                      variant="outline"
+                      className="w-full"
+                    >
+                      Take Photo or Choose from Gallery
+                    </Button>
+                  )}
+                </div>
+              )}
+
               <Button
-                onClick={step < 3 ? handleNext : generateCharacter}
+                onClick={step < 4 ? handleNext : generateCharacter}
                 disabled={isGenerating}
                 variant="outline"
                 className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
@@ -509,7 +559,7 @@ const AICharacterGenerator = () => {
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     generating character...
                   </>
-                ) : step < 3 ? (
+                ) : step < 4 ? (
                   "next"
                 ) : (
                   "generate character"

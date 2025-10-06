@@ -138,8 +138,8 @@ const Meme = () => {
               {/* Fun Fact */}
               {memeData.fun_fact && (
                 <div className="bg-card/50 rounded-lg p-4 border-l-4 border-secondary">
-                  <h3 className="text-secondary font-medium mb-2 font-roc">🎯 fun fact</h3>
-                  <p className="text-foreground font-roc font-extralight">{memeData.fun_fact}</p>
+                  <h3 className="text-foreground font-medium mb-2 font-roc">🎯 fun fact</h3>
+                  <p className="text-foreground/90 font-roc font-extralight">{memeData.fun_fact}</p>
                 </div>
               )}
             </div>

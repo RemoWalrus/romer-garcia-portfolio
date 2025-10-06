@@ -201,7 +201,7 @@ const AICharacterGenerator = () => {
           : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
         : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
 
-      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
+      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts. IMPORTANT: Add very small neon blue katakana text "パラドクシア" in the bottom right corner of the image as a subtle watermark.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },
@@ -418,15 +418,6 @@ const AICharacterGenerator = () => {
                     alt={displayName}
                     className="w-full"
                   />
-                  {/* Katakana watermark */}
-                  <div className="absolute bottom-2 right-2 text-xs opacity-50" style={{
-                    color: '#00d9ff',
-                    fontFamily: 'var(--font-roc)',
-                    textShadow: '0 0 5px rgba(0, 217, 255, 0.8)',
-                    fontSize: '10px'
-                  }}>
-                    パラドクシア
-                  </div>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

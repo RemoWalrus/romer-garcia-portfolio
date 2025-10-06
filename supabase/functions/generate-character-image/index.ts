@@ -22,7 +22,13 @@ serve(async (req) => {
     console.log("Image URL provided:", imageUrl ? "Yes" : "No");
 
     // Add watermark and 4:5 aspect ratio instruction to the prompt
-    const enhancedPrompt = `${prompt} CRITICAL FORMAT: Generate as a 4:5 aspect ratio portrait image (800x1000 pixels or similar 4:5 dimensions). CRITICAL WATERMARK: In the bottom right corner, add very small glowing neon cyan/blue katakana text "パラドクシア" (approximately 10-12pt font size). The text should have a subtle cyan glow effect, be clearly legible but unobtrusive, positioned 15-20 pixels from the bottom and right edges. Keep the watermark consistently small across all images.`;
+    const enhancedPrompt = `${prompt} 
+
+ABSOLUTE REQUIREMENTS:
+1. ASPECT RATIO: Must be exactly 4:5 portrait orientation (800x1000 pixels, 1200x1500 pixels, or any 4:5 ratio). The image MUST be vertical/portrait, NOT square or horizontal.
+2. WATERMARK: In the bottom right corner, add very small glowing neon cyan/blue katakana text "パラドクシア" (approximately 10-12pt font size). The text should have a subtle cyan glow effect, be clearly legible but unobtrusive, positioned 15-20 pixels from the bottom and right edges. Keep the watermark consistently small across all images.
+
+These requirements are NON-NEGOTIABLE. The image must be 4:5 portrait ratio.`;
 
     // Build the content array based on whether we're editing or generating
     const content = imageUrl 

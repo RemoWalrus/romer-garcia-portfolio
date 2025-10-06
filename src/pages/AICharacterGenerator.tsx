@@ -129,17 +129,21 @@ const AICharacterGenerator = () => {
         : `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`;
 
       const androidFaceDescription = gender === "other"
-        ? "This android is not humanoid in form - it has a unique non-human shape."
+        ? "This android is not humanoid in form - it has a unique non-human shape, but still has the distinctive white mask-like face plate made of 1-4 smooth panels with neon blue illuminated cybernetic eyes."
         : "This synthetic android has a humanoid form with a distinctive white mask-like face plate made of 1-4 smooth panels, and striking neon blue illuminated cybernetic eyes.";
+
+      const robotDescription = gender === "other"
+        ? "This is a drone-like robot with a non-humanoid form - could be flying, hovering, or have an unconventional shape. Purely mechanical with exposed machinery, sensors, and robotic features. NO white face plates."
+        : Math.random() > 0.5
+        ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features and NO white face plates."
+        : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features. NO white face plates.";
 
       const speciesDescription = selectedSpecies === "human"
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
         : selectedSpecies === "android" 
         ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`
         : selectedSpecies === "robot"
-        ? Math.random() > 0.5 
-          ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features."
-          : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features."
+        ? robotDescription
         : selectedSpecies === "mutant"
         ? Math.random() > 0.3
           ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."

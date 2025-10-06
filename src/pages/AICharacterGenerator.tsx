@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -171,7 +170,7 @@ const AICharacterGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-x-hidden">
       <ThemeToggle />
       {/* Circuit board background */}
       <div 
@@ -190,8 +189,8 @@ const AICharacterGenerator = () => {
         </div>
       </nav>
       
-      <main className="container mx-auto px-4 py-24 mt-16 relative z-10">
-        <div className="max-w-4xl mx-auto space-y-12">
+      <main className="container mx-auto px-4 py-16 mt-16 relative z-10">
+        <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
           <motion.div 
             className="text-center space-y-6"
@@ -238,64 +237,74 @@ const AICharacterGenerator = () => {
 
           {/* Sequential Prompt Section */}
           {!generatedImage && (
-            <Card className="p-6 space-y-6 bg-card border-border">
+            <Card className="p-4 space-y-4 bg-card border-border">
               {step === 1 && (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Label className="text-sm font-medium text-foreground whitespace-nowrap">species:</Label>
-                    <RadioGroup value={species} onValueChange={setSpecies} className="flex gap-6">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="human" id="human" />
-                        <Label htmlFor="human" className="cursor-pointer">human</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="android" id="android" />
-                        <Label htmlFor="android" className="cursor-pointer">android</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="other" id="other" />
-                        <Label htmlFor="other" className="cursor-pointer">other</Label>
-                      </div>
-                    </RadioGroup>
+                  <Label className="text-sm font-medium text-foreground">species:</Label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant={species === "human" ? "default" : "outline"}
+                      onClick={() => setSpecies("human")}
+                      className="flex-1 min-w-[100px]"
+                    >
+                      human
+                    </Button>
+                    <Button
+                      variant={species === "android" ? "default" : "outline"}
+                      onClick={() => setSpecies("android")}
+                      className="flex-1 min-w-[100px]"
+                    >
+                      android
+                    </Button>
+                    <Button
+                      variant={species === "other" ? "default" : "outline"}
+                      onClick={() => setSpecies("other")}
+                      className="flex-1 min-w-[100px]"
+                    >
+                      other
+                    </Button>
                   </div>
                 </div>
               )}
 
               {step === 2 && (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Label className="text-sm font-medium text-foreground whitespace-nowrap">gender:</Label>
-                    <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="male" id="male" />
-                        <Label htmlFor="male" className="cursor-pointer">male</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="female" id="female" />
-                        <Label htmlFor="female" className="cursor-pointer">female</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <RadioGroupItem value="other" id="other" />
-                        <Label htmlFor="other" className="cursor-pointer">other</Label>
-                      </div>
-                    </RadioGroup>
+                  <Label className="text-sm font-medium text-foreground">gender:</Label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      variant={gender === "male" ? "default" : "outline"}
+                      onClick={() => setGender("male")}
+                      className="flex-1 min-w-[100px]"
+                    >
+                      male
+                    </Button>
+                    <Button
+                      variant={gender === "female" ? "default" : "outline"}
+                      onClick={() => setGender("female")}
+                      className="flex-1 min-w-[100px]"
+                    >
+                      female
+                    </Button>
+                    <Button
+                      variant={gender === "other" ? "default" : "outline"}
+                      onClick={() => setGender("other")}
+                      className="flex-1 min-w-[100px]"
+                    >
+                      other
+                    </Button>
                   </div>
                 </div>
               )}
 
               {step === 3 && (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Label className="text-sm font-medium text-foreground whitespace-nowrap">
-                      name:
-                    </Label>
-                    <Input
-                      value={characterName}
-                      onChange={(e) => setCharacterName(e.target.value)}
-                      placeholder="enter character name..."
-                      className="bg-background flex-1"
-                    />
-                  </div>
+                  <Label className="text-sm font-medium text-foreground">name:</Label>
+                  <Input
+                    value={characterName}
+                    onChange={(e) => setCharacterName(e.target.value)}
+                    placeholder="enter character name..."
+                    className="bg-background w-full"
+                  />
                 </div>
               )}
 

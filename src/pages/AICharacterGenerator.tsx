@@ -356,7 +356,7 @@ const AICharacterGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen h-full bg-background relative overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-background relative overflow-x-hidden flex flex-col">
       <ThemeToggle />
       {/* Circuit board background */}
       <div 
@@ -375,7 +375,7 @@ const AICharacterGenerator = () => {
         </div>
       </nav>
       
-      <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-8">
+      <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-24">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
           <motion.div 
@@ -592,9 +592,8 @@ const AICharacterGenerator = () => {
                     />
                   </button>
                   
-                  {/* Mobile-only Share button */}
-                  {Capacitor.isNativePlatform() && (
-                    <button
+                  {/* Share button - always visible for testing */}
+                  <button
                       onClick={async () => {
                         try {
                           const response = await fetch(generatedImage);
@@ -639,7 +638,6 @@ const AICharacterGenerator = () => {
                         }}
                       />
                     </button>
-                  )}
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

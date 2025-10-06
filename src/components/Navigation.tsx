@@ -176,8 +176,18 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
               <SocialIcon url={socialLinks.youtube_url} icon={Youtube} label="YouTube" />
             </div>
 
-            <div className="absolute bottom-8 left-0 right-0 text-center text-neutral-500 dark:text-neutral-400 text-sm">
-              © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+            <div className="absolute bottom-8 left-0 right-0 text-center">
+              <div className="flex justify-center gap-3 mb-2">
+                <a href="/meme" className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50">
+                  meme
+                </a>
+                <a href="/paradoxxia" className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50">
+                  パラドクシア
+                </a>
+              </div>
+              <div className="text-neutral-500 dark:text-neutral-400 text-sm">
+                © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+              </div>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Loader2, Download } from "lucide-react";
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -228,6 +229,18 @@ const AICharacterGenerator = () => {
         ? Math.random() > 0.3
           ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."
           : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
+          : gender === "other"
+          ? Math.random() > 0.2
+            ? Math.random() > 0.75
+              ? "This is a sentient flying drone with NO humanoid form - a hovering autonomous unit with sleek aerodynamic design, propulsion systems, sensor arrays, and weapon mounts. Purely mechanical with no human features."
+              : Math.random() > 0.5
+              ? "This is an insectoid synthetic being with multiple segmented limbs, compound optical sensors, chitinous plating, and arthropod-inspired design. Completely non-humanoid with insect-like characteristics."
+              : Math.random() > 0.33
+              ? "This is a limbless serpentine synthetic entity - a long, flexible mechanical snake-like form with no arms or legs, using undulating movement. Has sensor clusters, armored segments, and a streamlined body design."
+              : Math.random() > 0.5
+              ? "This is a spherical or orb-like autonomous unit with no limbs - a hovering ball of technology with integrated weapons, sensors, and holographic displays rotating around its core. Completely non-humanoid."
+              : "This is a multi-limbed mechanical entity with 4-8 appendages in unexpected configurations - could be spider-like, crab-like, or completely alien in form. NO humanoid structure whatsoever."
+            : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts."
           : Math.random() > 0.8
           ? "This is a sentient flying drone with NO humanoid form - a hovering autonomous unit with sleek aerodynamic design, propulsion systems, sensor arrays, and weapon mounts. Purely mechanical with no human features."
           : Math.random() > 0.6
@@ -524,7 +537,7 @@ const AICharacterGenerator = () => {
                         const isMobile = Capacitor.isNativePlatform();
                         
                         if (isMobile) {
-                          // Mobile: Save to photo gallery
+                          // Mobile: Save to device storage first, then give option to save to photos
                           const response = await fetch(generatedImage);
                           const blob = await response.blob();
                           const base64Data = await new Promise<string>((resolve) => {
@@ -536,13 +549,23 @@ const AICharacterGenerator = () => {
                             reader.readAsDataURL(blob);
                           });
                           
-                          await Filesystem.writeFile({
-                            path: `${displayName.toLowerCase()}-${Date.now()}.png`,
+                          const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
+                          const savedFile = await Filesystem.writeFile({
+                            path: fileName,
                             data: base64Data,
-                            directory: Directory.Documents
+                            directory: Directory.Cache
                           });
                           
-                          toast.success("Image saved to device!");
+                          // Use Share API to allow user to save to Photos
+                          const fileUri = savedFile.uri;
+                          await Share.share({
+                            title: `${displayName} Character`,
+                            text: 'Save this character image',
+                            url: fileUri,
+                            dialogTitle: 'Save to Photos'
+                          });
+                          
+                          toast.success("Opening save options...");
                         } else {
                           // Web: Standard download
                           const link = document.createElement('a');

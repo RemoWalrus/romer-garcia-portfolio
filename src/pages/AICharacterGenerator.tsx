@@ -49,35 +49,60 @@ const AICharacterGenerator = () => {
     try {
       const processedName = duplicateX(characterName);
       
-      const clothingDescription = species === "android" && Math.random() > 0.5 
+      // Randomly select actual species if "other" was chosen
+      let actualSpecies = species;
+      if (species === "other") {
+        const otherOptions = ["cyborg", "mutant", "robot"];
+        actualSpecies = otherOptions[Math.floor(Math.random() * otherOptions.length)];
+      }
+      
+      const clothingDescription = actualSpecies === "android" && Math.random() > 0.5 
         ? "wearing practical desert clothing made from hemp, linen, and cotton" 
-        : species === "cyborg" && Math.random() > 0.5
+        : actualSpecies === "cyborg" && Math.random() > 0.5
         ? "wearing practical desert clothing made from hemp, linen, and cotton"
-        : species === "human"
+        : actualSpecies === "human"
         ? "wearing practical desert clothing made from hemp, linen, and cotton designed to withstand harsh desert weather"
+        : actualSpecies === "robot"
+        ? "in their mechanical form with possible clothing elements"
+        : actualSpecies === "mutant"
+        ? "wearing practical desert clothing made from hemp, linen, and cotton, with visible mutations"
         : "in their typical android form";
 
-      const location = species === "human" 
+      const location = actualSpecies === "human" 
         ? "an underground human settlement with practical architecture" 
-        : species === "android"
+        : actualSpecies === "android"
         ? "the ruins of an old city with crumbling buildings and overgrown structures"
+        : actualSpecies === "robot"
+        ? "the ruins of an old city with mechanical debris"
+        : actualSpecies === "mutant"
+        ? Math.random() > 0.5 ? "the desert surface" : "underground caverns"
         : Math.random() > 0.5 
         ? "an underground human settlement" 
         : "the ruins of an old city";
 
-      const nameDisplay = species === "human"
+      const nameDisplay = actualSpecies === "human"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
-        : species === "android"
+        : actualSpecies === "android"
         ? `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`
+        : actualSpecies === "robot"
+        ? `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`
+        : actualSpecies === "mutant"
+        ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : Math.random() > 0.5
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`;
 
-      const prompt = `Generate a hyper-realistic, 3D rendered full-body sci-fi image of ${processedName}, a ${gender} ${species} in action within ${location}. ${
-        species === "human" ? "This human has adapted to underground desert life, with weathered features from the harsh environment." :
-        species === "android" ? "This is a sleek synthetic android with realistic human-like features but with subtle mechanical elements visible." :
-        "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts."
-      } ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is hard sci-fi, not fantasy - think blade runner meets dune. Photorealistic 3D rendering style. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures and realistic lighting.`;
+      const speciesDescription = actualSpecies === "human" 
+        ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
+        : actualSpecies === "android" 
+        ? "This is a sleek synthetic android with realistic human-like features but with subtle mechanical elements visible."
+        : actualSpecies === "robot"
+        ? "This is a fully mechanical robot with advanced engineering and metallic components."
+        : actualSpecies === "mutant"
+        ? "This is a mutant human with visible genetic alterations and adaptations to the harsh environment."
+        : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
+
+      const prompt = `Generate a hyper-realistic, 3D rendered full-body sci-fi image of ${processedName}, a ${gender} ${actualSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is hard sci-fi, not fantasy - think blade runner meets dune. Photorealistic 3D rendering style. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures and realistic lighting.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },
@@ -198,8 +223,8 @@ const AICharacterGenerator = () => {
                       <Label htmlFor="android" className="cursor-pointer">android</Label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="cyborg" id="cyborg" />
-                      <Label htmlFor="cyborg" className="cursor-pointer">cyborg</Label>
+                      <RadioGroupItem value="other" id="other" />
+                      <Label htmlFor="other" className="cursor-pointer">other</Label>
                     </div>
                   </RadioGroup>
                 </div>
@@ -266,21 +291,27 @@ const AICharacterGenerator = () => {
 
           {/* Output Section */}
           {generatedImage && (
-            <Card className="p-6 bg-card border-border">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h2 className="text-2xl font-bold text-foreground">
-                    {duplicateX(characterName)}
-                  </h2>
-                  <p className="text-muted-foreground capitalize">
-                    {species}
-                  </p>
-                </div>
+            <Card className="p-0 bg-card border-border overflow-hidden">
+              <div className="relative">
                 <img 
                   src={generatedImage} 
                   alt={duplicateX(characterName)}
-                  className="w-full rounded-lg"
+                  className="w-full"
                 />
+                {/* Trading card overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                  <h2 className="text-3xl font-bold text-white mb-1" style={{ 
+                    fontFamily: 'var(--font-roc)',
+                    textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+                  }}>
+                    {duplicateX(characterName)}
+                  </h2>
+                  <p className="text-lg text-white/90 capitalize font-medium" style={{ 
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                  }}>
+                    {species === "other" ? "classified" : species}
+                  </p>
+                </div>
               </div>
             </Card>
           )}

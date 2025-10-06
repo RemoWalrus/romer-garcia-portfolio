@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
+import circuitBg from "@/assets/circuit-background.png";
 
 const AICharacterGenerator = () => {
   const [step, setStep] = useState(1);
@@ -34,6 +35,10 @@ const AICharacterGenerator = () => {
     }
   };
 
+  const duplicateX = (text: string) => {
+    return text.replace(/x/gi, (match) => match + match);
+  };
+
   const generateCharacter = async () => {
     if (!characterName.trim()) {
       toast.error("Please provide a name");
@@ -42,6 +47,8 @@ const AICharacterGenerator = () => {
 
     setIsGenerating(true);
     try {
+      const processedName = duplicateX(characterName);
+      
       const clothingDescription = species === "android" && Math.random() > 0.5 
         ? "wearing practical desert clothing made from hemp, linen, and cotton" 
         : species === "cyborg" && Math.random() > 0.5
@@ -59,14 +66,14 @@ const AICharacterGenerator = () => {
         : "the ruins of an old city";
 
       const nameDisplay = species === "human"
-        ? `wearing visible dog tags with the name "${characterName}" clearly engraved on them`
+        ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : species === "android"
-        ? `with the name "${characterName}" laser-etched in futuristic typography on a visible body panel`
+        ? `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`
         : Math.random() > 0.5
-        ? `wearing visible dog tags with the name "${characterName}" clearly engraved on them`
-        : `with the name "${characterName}" laser-etched in futuristic typography on a visible body panel`;
+        ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
+        : `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`;
 
-      const prompt = `Generate a hyper-realistic, 3D rendered full-body sci-fi image of ${characterName}, a ${gender} ${species} in action within ${location}. ${
+      const prompt = `Generate a hyper-realistic, 3D rendered full-body sci-fi image of ${processedName}, a ${gender} ${species} in action within ${location}. ${
         species === "human" ? "This human has adapted to underground desert life, with weathered features from the harsh environment." :
         species === "android" ? "This is a sleek synthetic android with realistic human-like features but with subtle mechanical elements visible." :
         "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts."
@@ -90,10 +97,20 @@ const AICharacterGenerator = () => {
     }
   };
 
+  const renderBackButton = () => {
+    return (
+      <span className="inline-flex items-baseline">
+        <span style={{ fontWeight: 100 }}>← back</span>
+        <span style={{ fontWeight: 500 }} className="ml-2">to</span>
+        <span style={{ fontWeight: 100 }} className="ml-2">home</span>
+      </span>
+    );
+  };
+
   const renderTitle = () => {
     return (
       <span className="inline-flex items-baseline">
-        <span style={{ fontWeight: 500 }}>paradoxxia</span>
+        <span style={{ fontWeight: 500 }}>paradodoxia</span>
         <span style={{ fontWeight: 100 }} className="ml-4">character</span>
         <span style={{ fontWeight: 500 }} className="ml-4">generator</span>
       </span>
@@ -103,30 +120,18 @@ const AICharacterGenerator = () => {
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
       {/* Circuit board background */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="circuit" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-              <path d="M20 20h40v40h-40z" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-primary"/>
-              <circle cx="40" cy="40" r="2" fill="currentColor" className="text-primary"/>
-              <path d="M60 40h20M40 60v20M100 20h20v20M140 100h20v20" stroke="currentColor" strokeWidth="0.5" className="text-primary"/>
-              <circle cx="80" cy="40" r="1.5" fill="currentColor" className="text-primary"/>
-              <circle cx="40" cy="80" r="1.5" fill="currentColor" className="text-primary"/>
-              <circle cx="120" cy="40" r="2" fill="currentColor" className="text-primary"/>
-              <circle cx="160" cy="120" r="2" fill="currentColor" className="text-primary"/>
-              <path d="M120 40v20h20M40 80h20v20" stroke="currentColor" strokeWidth="0.5" className="text-primary"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#circuit)"/>
-        </svg>
-      </div>
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
+        style={{ backgroundImage: `url(${circuitBg})` }}
+      />
+      
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border relative">
         <div className="container mx-auto px-4 py-4">
           <Link 
             to="/" 
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            ← Back to Home
+            {renderBackButton()}
           </Link>
         </div>
       </nav>
@@ -181,55 +186,61 @@ const AICharacterGenerator = () => {
           <Card className="p-6 space-y-6 bg-card border-border">
             {step === 1 && (
               <div className="space-y-3">
-                <Label className="text-sm font-medium text-foreground">Species</Label>
-                <RadioGroup value={species} onValueChange={setSpecies} className="flex gap-6">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="human" id="human" />
-                    <Label htmlFor="human" className="cursor-pointer">Human</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="android" id="android" />
-                    <Label htmlFor="android" className="cursor-pointer">Android</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="cyborg" id="cyborg" />
-                    <Label htmlFor="cyborg" className="cursor-pointer">Cyborg</Label>
-                  </div>
-                </RadioGroup>
+                <div className="flex items-center gap-3">
+                  <Label className="text-sm font-medium text-foreground whitespace-nowrap">species:</Label>
+                  <RadioGroup value={species} onValueChange={setSpecies} className="flex gap-6">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="human" id="human" />
+                      <Label htmlFor="human" className="cursor-pointer">human</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="android" id="android" />
+                      <Label htmlFor="android" className="cursor-pointer">android</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="cyborg" id="cyborg" />
+                      <Label htmlFor="cyborg" className="cursor-pointer">cyborg</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
               </div>
             )}
 
             {step === 2 && (
               <div className="space-y-3">
-                <Label className="text-sm font-medium text-foreground">Gender</Label>
-                <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="male" id="male" />
-                    <Label htmlFor="male" className="cursor-pointer">Male</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="female" id="female" />
-                    <Label htmlFor="female" className="cursor-pointer">Female</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="other" id="other" />
-                    <Label htmlFor="other" className="cursor-pointer">Other</Label>
-                  </div>
-                </RadioGroup>
+                <div className="flex items-center gap-3">
+                  <Label className="text-sm font-medium text-foreground whitespace-nowrap">gender:</Label>
+                  <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="male" id="male" />
+                      <Label htmlFor="male" className="cursor-pointer">male</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="female" id="female" />
+                      <Label htmlFor="female" className="cursor-pointer">female</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="other" id="other" />
+                      <Label htmlFor="other" className="cursor-pointer">other</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
               </div>
             )}
 
             {step === 3 && (
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">
-                  Name
-                </Label>
-                <Input
-                  value={characterName}
-                  onChange={(e) => setCharacterName(e.target.value)}
-                  placeholder="Enter character name..."
-                  className="bg-background"
-                />
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Label className="text-sm font-medium text-foreground whitespace-nowrap">
+                    name:
+                  </Label>
+                  <Input
+                    value={characterName}
+                    onChange={(e) => setCharacterName(e.target.value)}
+                    placeholder="enter character name..."
+                    className="bg-background flex-1"
+                  />
+                </div>
               </div>
             )}
 
@@ -237,18 +248,18 @@ const AICharacterGenerator = () => {
               onClick={step < 3 ? handleNext : generateCharacter}
               disabled={isGenerating}
               variant="outline"
-              className="w-full bg-white/20 border-white/20 hover:bg-white/30 text-foreground uppercase tracking-wider"
+              className="w-full bg-white/10 border-white/20 hover:bg-white/20 text-foreground tracking-wider"
               size="lg"
             >
               {isGenerating ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating Character...
+                  generating character...
                 </>
               ) : step < 3 ? (
-                "Next"
+                "next"
               ) : (
-                "Generate Character"
+                "generate character"
               )}
             </Button>
           </Card>
@@ -256,14 +267,21 @@ const AICharacterGenerator = () => {
           {/* Output Section */}
           {generatedImage && (
             <Card className="p-6 bg-card border-border">
-              <h2 className="text-2xl font-bold text-foreground mb-4">
-                {characterName}
-              </h2>
-              <img 
-                src={generatedImage} 
-                alt={characterName}
-                className="w-full rounded-lg"
-              />
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-bold text-foreground">
+                    {duplicateX(characterName)}
+                  </h2>
+                  <p className="text-muted-foreground capitalize">
+                    {species}
+                  </p>
+                </div>
+                <img 
+                  src={generatedImage} 
+                  alt={duplicateX(characterName)}
+                  className="w-full rounded-lg"
+                />
+              </div>
             </Card>
           )}
         </div>

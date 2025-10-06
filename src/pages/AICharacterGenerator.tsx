@@ -89,7 +89,12 @@ const AICharacterGenerator = () => {
     setIsGenerating(true);
     try {
       // Process name through duplicateX first
-      const processedName = duplicateX(finalName);
+      let processedName = duplicateX(finalName);
+      
+      // If it's a Paradoxia variant with 3+ X's, normalize to Paradoxxia
+      if (/parado[x]{3,}ia/i.test(processedName)) {
+        processedName = "Paradoxxia";
+      }
       
       // Check if name is "Paradoxxia" or becomes "Paradoxxia" after processing (case-insensitive)
       if (processedName.toLowerCase() === "paradoxxia") {

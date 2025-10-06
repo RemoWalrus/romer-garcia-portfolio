@@ -56,20 +56,56 @@ const AICharacterGenerator = () => {
 
   const handlePhotoUpload = async () => {
     try {
+      // Check if running on native platform
+      const isNative = Capacitor.isNativePlatform();
+      
+      if (!isNative) {
+        // Fallback for web - use file input
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.capture = 'environment'; // Request camera on mobile web
+        
+        input.onchange = (e) => {
+          const file = (e.target as HTMLInputElement).files?.[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const dataUrl = event.target?.result as string;
+              setUploadedPhoto(dataUrl);
+              toast.success("Photo uploaded successfully!");
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+        
+        input.click();
+        return;
+      }
+
+      // Native platform - use Capacitor Camera
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Prompt, // Let user choose camera or gallery
+        source: CameraSource.Prompt,
       });
 
       if (image.dataUrl) {
         setUploadedPhoto(image.dataUrl);
         toast.success("Photo uploaded successfully!");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Camera error:", error);
-      toast.error("Failed to capture photo");
+      
+      // Provide helpful error messages
+      if (error.message?.includes('permission')) {
+        toast.error("Camera permission denied. Please enable camera access in your device settings.");
+      } else if (error.message?.includes('cancelled') || error.message?.includes('canceled')) {
+        toast.info("Photo upload cancelled");
+      } else {
+        toast.error("Failed to capture photo. Please try again.");
+      }
     }
   };
 

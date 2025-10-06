@@ -22,7 +22,7 @@ serve(async (req) => {
     console.log("Image URL provided:", imageUrl ? "Yes" : "No");
 
     // Add watermark and square format instruction to the prompt
-    const enhancedPrompt = `${prompt} Generate as a perfect square image (1:1 aspect ratio). CRITICAL: Add very small neon blue katakana text "パラドクシア" in the bottom right corner of the image as a subtle watermark.`;
+    const enhancedPrompt = `${prompt} Generate as a perfect square image (1:1 aspect ratio, 1024x1024 pixels). CRITICAL WATERMARK: In the bottom right corner, add small glowing neon cyan/blue katakana text "パラドクシア" (PARADOXXIA in Japanese). The text should have a bright cyan glow effect and be clearly visible but subtle, positioned 20-30 pixels from the bottom and right edges. The katakana characters must be rendered accurately and legibly with the glowing neon effect.`;
 
     // Build the content array based on whether we're editing or generating
     const content = imageUrl 

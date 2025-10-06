@@ -136,8 +136,10 @@ const Meme = () => {
         <div className="space-y-8">
           {/* Header */}
           <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto">
-              Random developer humor from the vault
+            <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto font-roc">
+              <span className="font-thin">random</span>{" "}
+              <span className="font-medium">developer humor</span>{" "}
+              <span className="font-thin">from the vault</span>
             </p>
           </div>
 
@@ -155,11 +157,11 @@ const Meme = () => {
             <div className="bg-black/30 backdrop-blur-sm rounded-lg p-8 border border-white/10 space-y-6 animate-fade-in">
               {/* Meme Text */}
               <div className="space-y-2">
-                <h2 className="text-2xl md:text-4xl font-bold text-white leading-relaxed">
+                <h2 className="text-2xl md:text-4xl font-thin text-white leading-relaxed font-roc">
                   "{memeData.meme_text}"
                 </h2>
                 {memeData.attribution && (
-                  <p className="text-lg text-white/70 italic">
+                  <p className="text-lg text-white/70 italic font-roc font-extralight">
                     — {memeData.attribution}
                   </p>
                 )}
@@ -168,16 +170,16 @@ const Meme = () => {
               {/* Coding Tip */}
               {memeData.coding_tip && (
                 <div className="bg-white/10 rounded-lg p-4 border-l-4 border-primary">
-                  <h3 className="text-primary font-semibold mb-2">💡 Pro Tip</h3>
-                  <p className="text-white/90">{memeData.coding_tip}</p>
+                  <h3 className="text-primary font-medium mb-2 font-roc">💡 pro tip</h3>
+                  <p className="text-white/90 font-roc font-extralight">{memeData.coding_tip}</p>
                 </div>
               )}
 
               {/* Fun Fact */}
               {memeData.fun_fact && (
                 <div className="bg-white/10 rounded-lg p-4 border-l-4 border-secondary">
-                  <h3 className="text-secondary font-semibold mb-2">🎯 Fun Fact</h3>
-                  <p className="text-white/90">{memeData.fun_fact}</p>
+                  <h3 className="text-secondary font-medium mb-2 font-roc">🎯 fun fact</h3>
+                  <p className="text-white/90 font-roc font-extralight">{memeData.fun_fact}</p>
                 </div>
               )}
             </div>
@@ -187,19 +189,19 @@ const Meme = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               onClick={fetchRandomMeme}
-              className="bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 transition-all duration-300 hover-scale"
+              className="bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 transition-all duration-300 hover-scale font-roc font-extralight"
               disabled={isLoading}
             >
               <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-              {isLoading ? 'Loading...' : 'Another Meme'}
+              {isLoading ? 'loading...' : 'another meme'}
             </Button>
             
             <Button 
               onClick={() => navigate('/')}
               variant="outline"
-              className="bg-transparent text-white border-white/30 hover:bg-white/10 transition-all duration-300 hover-scale"
+              className="bg-transparent text-white border-white/30 hover:bg-white/10 transition-all duration-300 hover-scale font-roc font-extralight"
             >
-              Back to Portfolio
+              back to portfolio
             </Button>
           </div>
         </div>

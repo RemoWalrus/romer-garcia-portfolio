@@ -228,9 +228,71 @@ const AICharacterGenerator = () => {
         ? Math.random() > 0.3
           ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."
           : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
-        : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
+          : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
 
-      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
+      // Generate name-inspired thematic elements
+      const getNameInspiration = (name: string): string => {
+        const lowerName = name.toLowerCase();
+        
+        // Weapon/Combat names
+        if (lowerName.includes("blade") || lowerName.includes("edge") || lowerName.includes("razor")) {
+          return "The character has sharp, angular features and blade-like design elements. Include sleek, cutting-edge aesthetics with razor-sharp details on armor or body.";
+        }
+        if (lowerName.includes("fang") || lowerName.includes("claw") || lowerName.includes("talon")) {
+          return "The character has predatory, aggressive features with sharp protrusions, claw-like appendages, or fang-inspired design elements.";
+        }
+        if (lowerName.includes("gun") || lowerName.includes("shot") || lowerName.includes("bullet")) {
+          return "The character has a militaristic, weaponized appearance with integrated firearms or ballistic-inspired design elements.";
+        }
+        
+        // Elemental/Nature names
+        if (lowerName.includes("fire") || lowerName.includes("flame") || lowerName.includes("blaze") || lowerName.includes("inferno")) {
+          return "The character has fiery visual elements - glowing red/orange accents, heat distortion effects, or flame-inspired patterns on equipment.";
+        }
+        if (lowerName.includes("ice") || lowerName.includes("frost") || lowerName.includes("cryo")) {
+          return "The character has cold, crystalline features with icy blue accents, frost patterns, or frozen/crystalline design elements.";
+        }
+        if (lowerName.includes("storm") || lowerName.includes("thunder") || lowerName.includes("lightning")) {
+          return "The character has electric blue accents, crackling energy effects, and storm-inspired chaotic design elements.";
+        }
+        if (lowerName.includes("shadow") || lowerName.includes("dark") || lowerName.includes("night") || lowerName.includes("void")) {
+          return "The character has dark, stealthy aesthetics with deep black tones, shadow effects, and minimal reflective surfaces for a covert appearance.";
+        }
+        
+        // Tech/Cyber names
+        if (lowerName.includes("cyber") || lowerName.includes("tech") || lowerName.includes("byte") || lowerName.includes("data")) {
+          return "The character has high-tech cybernetic features with holographic displays, digital interfaces, and advanced technological integration.";
+        }
+        if (lowerName.includes("ghost") || lowerName.includes("phantom") || lowerName.includes("specter")) {
+          return "The character has translucent or ethereal visual elements, with ghostly pale coloring and semi-transparent holographic effects.";
+        }
+        
+        // Animal-inspired names
+        if (lowerName.includes("wolf") || lowerName.includes("fox") || lowerName.includes("bear")) {
+          return "The character has animalistic features inspired by their name - include subtle beast-like qualities in posture, equipment design, or facial features.";
+        }
+        if (lowerName.includes("spider") || lowerName.includes("scorpion") || lowerName.includes("venom")) {
+          return "The character has arachnid or insectoid features with multiple limbs, segmented armor, or venomous-looking design elements.";
+        }
+        
+        // Abstract/Concept names
+        if (lowerName.includes("echo") || lowerName.includes("pulse") || lowerName.includes("wave")) {
+          return "The character has flowing, wave-like design patterns and rhythmic visual elements that suggest motion and resonance.";
+        }
+        if (lowerName.includes("nova") || lowerName.includes("star") || lowerName.includes("solar")) {
+          return "The character has bright, radiant features with star-like glowing accents and celestial-inspired design elements.";
+        }
+        if (lowerName.includes("vortex") || lowerName.includes("spiral") || lowerName.includes("helix")) {
+          return "The character has swirling, spiral patterns in their design with dynamic, rotating visual elements.";
+        }
+        
+        // Default for unique names
+        return "The character's design reflects the unique essence of their name through subtle visual metaphors and thematic elements.";
+      };
+
+      const nameTheme = getNameInspiration(processedName);
+
+      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },

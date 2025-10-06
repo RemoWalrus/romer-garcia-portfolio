@@ -85,11 +85,11 @@ const Meme = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
+    <div className="relative min-h-screen overflow-hidden bg-background">
       <ThemeToggle />
       
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border relative">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <Link 
             to="/" 

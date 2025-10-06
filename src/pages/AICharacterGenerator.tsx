@@ -91,14 +91,19 @@ const AICharacterGenerator = () => {
     try {
       // Process name through duplicateX first
       let processedName = duplicateX(finalName);
+      console.log("Original name:", finalName);
+      console.log("Processed name after duplicateX:", processedName);
       
       // If it's a Paradoxia variant with 3+ X's, normalize to Paradoxxia
       if (/parado[x]{3,}ia/i.test(processedName)) {
         processedName = "Paradoxxia";
+        console.log("Normalized to Paradoxxia due to 3+ x's");
       }
       
       // Store the processed name for display
       setDisplayName(processedName);
+      
+      console.log("Checking if paradoxxia:", processedName.toLowerCase() === "paradoxxia");
       
       // Check if name is "Paradoxxia" or becomes "Paradoxxia" after processing (case-insensitive)
       if (processedName.toLowerCase() === "paradoxxia") {
@@ -107,7 +112,7 @@ const AICharacterGenerator = () => {
         
         // Generate a new pose using the provided image with a public URL
         const publicImageUrl = `${window.location.origin}/paradoxxia-poster.jpg`;
-        const editPrompt = "Generate a different dynamic action pose of this exact character maintaining ALL the same visual characteristics: the same face, same long dark hair, same bright cyan/neon blue glowing eyes, same golden/bronze armored suit design, same body proportions, and same overall appearance. Show the character in a new dramatic full-body pose in a similar dystopian sci-fi environment with ruins in the background. Keep EVERYTHING about the character's visual design identical - only change the pose, angle, and slight environmental variations. Hyper-realistic 3D rendering style with the same dark, grim atmosphere. IMPORTANT: Add very small neon blue katakana text \"パラドクシア\" in the bottom right corner of the image as a subtle watermark.";
+        const editPrompt = "Generate a different dynamic action pose of this exact character maintaining ALL the same visual characteristics: the same face, same long dark hair, same bright cyan/neon blue glowing eyes, same golden/bronze armored suit design, same body proportions, and same overall appearance. Show the character in a new dramatic full-body pose in a similar dystopian sci-fi environment with ruins in the background. Keep EVERYTHING about the character's visual design identical - only change the pose, angle, and slight environmental variations. Hyper-realistic 3D rendering style with the same dark, grim atmosphere.";
         
         const { data, error } = await supabase.functions.invoke("generate-character-image", {
           body: { 
@@ -217,7 +222,7 @@ const AICharacterGenerator = () => {
           : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
         : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
 
-      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts. IMPORTANT: Add very small neon blue katakana text "パラドクシア" in the bottom right corner of the image as a subtle watermark.`;
+      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },
@@ -434,6 +439,16 @@ const AICharacterGenerator = () => {
                     alt={displayName}
                     className="w-full"
                   />
+                  {/* Katakana watermark - CSS overlay since AI can't reliably generate text */}
+                  <div className="absolute bottom-2 right-2 text-xs opacity-70 pointer-events-none z-10" style={{
+                    color: '#00d9ff',
+                    fontFamily: 'var(--font-roc)',
+                    textShadow: '0 0 8px rgba(0, 217, 255, 0.8), 0 0 4px rgba(0, 217, 255, 0.5)',
+                    fontSize: '11px',
+                    fontWeight: 300
+                  }}>
+                    パラドクシア
+                  </div>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

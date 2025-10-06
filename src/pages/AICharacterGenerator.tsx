@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Download } from "lucide-react";
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Capacitor } from '@capacitor/core';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -211,7 +213,13 @@ const AICharacterGenerator = () => {
         : selectedSpecies === "creature"
         ? "This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical."
         : selectedSpecies === "human"
-        ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
+        ? `This human has adapted to underground desert life, with weathered features from the harsh environment. ${
+          Math.random() > 0.8 ? "East Asian descent with almond-shaped eyes and straight black hair" :
+          Math.random() > 0.6 ? "African descent with dark skin, broad nose, and coiled textured hair" :
+          Math.random() > 0.4 ? "South Asian descent with brown skin and dark features" :
+          Math.random() > 0.2 ? "Latino/Hispanic descent with tan skin and dark wavy hair" :
+          "Middle Eastern descent with olive skin and dark features"
+        }. Show realistic ethnic features appropriate to their heritage.`
         : selectedSpecies === "android" 
         ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`
         : selectedSpecies === "robot"
@@ -441,11 +449,41 @@ const AICharacterGenerator = () => {
                   />
                   {/* Download icon overlay */}
                   <button
-                    onClick={() => {
-                      const link = document.createElement('a');
-                      link.href = generatedImage;
-                      link.download = `${displayName.toLowerCase()}-character.png`;
-                      link.click();
+                    onClick={async () => {
+                      try {
+                        const isMobile = Capacitor.isNativePlatform();
+                        
+                        if (isMobile) {
+                          // Mobile: Save to photo gallery
+                          const response = await fetch(generatedImage);
+                          const blob = await response.blob();
+                          const base64Data = await new Promise<string>((resolve) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              const base64 = reader.result as string;
+                              resolve(base64.split(',')[1]);
+                            };
+                            reader.readAsDataURL(blob);
+                          });
+                          
+                          await Filesystem.writeFile({
+                            path: `${displayName.toLowerCase()}-${Date.now()}.png`,
+                            data: base64Data,
+                            directory: Directory.Documents
+                          });
+                          
+                          toast.success("Image saved to device!");
+                        } else {
+                          // Web: Standard download
+                          const link = document.createElement('a');
+                          link.href = generatedImage;
+                          link.download = `${displayName.toLowerCase()}-character.png`;
+                          link.click();
+                        }
+                      } catch (error) {
+                        console.error("Download error:", error);
+                        toast.error("Failed to save image");
+                      }
                     }}
                     className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
                     style={{

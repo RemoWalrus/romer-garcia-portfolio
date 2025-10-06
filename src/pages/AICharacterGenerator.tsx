@@ -13,42 +13,51 @@ import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
 
 const AICharacterGenerator = () => {
-  const [prompt, setPrompt] = useState("");
-  const [characterName, setCharacterName] = useState("");
+  const [step, setStep] = useState(1);
+  const [species, setSpecies] = useState("");
   const [gender, setGender] = useState("");
-  const [generatedCharacter, setGeneratedCharacter] = useState("");
+  const [characterName, setCharacterName] = useState("");
+  const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
+  const handleNext = () => {
+    if (step === 1 && !species) {
+      toast.error("Please select a species");
+      return;
+    }
+    if (step === 2 && !gender) {
+      toast.error("Please select a gender");
+      return;
+    }
+    if (step < 3) {
+      setStep(step + 1);
+    }
+  };
+
   const generateCharacter = async () => {
-    if (!prompt.trim() && !characterName.trim() && !gender.trim()) {
-      toast.error("Please provide at least a gender, character name, or description");
+    if (!characterName.trim()) {
+      toast.error("Please provide a name");
       return;
     }
 
     setIsGenerating(true);
     try {
-      const fullPrompt = `Generate a detailed character for the Paradoxxia universe. ${
-        characterName ? `Character name: ${characterName}.` : ""
-      } ${gender ? `Gender: ${gender}.` : ""} ${prompt ? `Additional details: ${prompt}` : ""}
-      
-      Include:
-      - Full character description and appearance
-      - Personality traits and quirks
-      - Background story
-      - Special abilities or skills
-      - Role in the Paradoxxia universe
-      - Notable relationships or conflicts
-      
-      Make it creative, unique, and fitting for a dark sci-fi/fantasy setting.`;
+      const prompt = `Generate a photorealistic image of ${characterName}, a ${gender} ${species} from a distant future where humans live underground under the desert, androids inhabit the ruins of old cities, and cyborgs exist with different combinations of human, robot and synthetic android parts. ${
+        species === "human" ? "This is a human who has adapted to underground life." :
+        species === "android" ? "This is an android that roams the ruins of old cities." :
+        "This is a cyborg with a unique combination of human, robot and synthetic android parts."
+      } The setting is a dark sci-fi dystopian future. Make it highly detailed and atmospheric.`;
 
-      const { data, error } = await supabase.functions.invoke("generate-character", {
-        body: { prompt: fullPrompt },
+      const { data, error } = await supabase.functions.invoke("generate-character-image", {
+        body: { prompt },
       });
 
       if (error) throw error;
 
-      setGeneratedCharacter(data.character);
-      toast.success("Character generated!");
+      if (data.imageUrl) {
+        setGeneratedImage(data.imageUrl);
+        toast.success("Character image generated!");
+      }
     } catch (error: any) {
       console.error("Error generating character:", error);
       toast.error(error.message || "Failed to generate character");
@@ -60,9 +69,9 @@ const AICharacterGenerator = () => {
   const renderTitle = () => {
     return (
       <span className="inline-flex items-baseline">
-        <span className="font-bold">paradoxxia</span>
-        <span className="font-thin ml-4">character</span>
-        <span className="font-bold ml-4">generator</span>
+        <span style={{ fontWeight: 500 }}>paradoxxia</span>
+        <span style={{ fontWeight: 100 }} className="ml-4">character</span>
+        <span style={{ fontWeight: 500 }} className="ml-4">generator</span>
       </span>
     );
   };
@@ -144,40 +153,64 @@ const AICharacterGenerator = () => {
             </p>
           </motion.div>
 
-          {/* Input Section */}
+          {/* Sequential Prompt Section */}
           <Card className="p-6 space-y-6 bg-card border-border">
-            <div className="space-y-3">
-              <Label className="text-sm font-medium text-foreground">Gender</Label>
-              <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="male" id="male" />
-                  <Label htmlFor="male" className="cursor-pointer">Male</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="female" id="female" />
-                  <Label htmlFor="female" className="cursor-pointer">Female</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="other" id="other" />
-                  <Label htmlFor="other" className="cursor-pointer">Other</Label>
-                </div>
-              </RadioGroup>
-            </div>
+            {step === 1 && (
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-foreground">Species</Label>
+                <RadioGroup value={species} onValueChange={setSpecies} className="flex gap-6">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="human" id="human" />
+                    <Label htmlFor="human" className="cursor-pointer">Human</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="android" id="android" />
+                    <Label htmlFor="android" className="cursor-pointer">Android</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="cyborg" id="cyborg" />
+                    <Label htmlFor="cyborg" className="cursor-pointer">Cyborg</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            )}
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-foreground">
-                Name (Optional)
-              </Label>
-              <Input
-                value={characterName}
-                onChange={(e) => setCharacterName(e.target.value)}
-                placeholder="Enter character name..."
-                className="bg-background"
-              />
-            </div>
+            {step === 2 && (
+              <div className="space-y-3">
+                <Label className="text-sm font-medium text-foreground">Gender</Label>
+                <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="male" id="male" />
+                    <Label htmlFor="male" className="cursor-pointer">Male</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="female" id="female" />
+                    <Label htmlFor="female" className="cursor-pointer">Female</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="other" id="other" />
+                    <Label htmlFor="other" className="cursor-pointer">Other</Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="space-y-2">
+                <Label className="text-sm font-medium text-foreground">
+                  Name
+                </Label>
+                <Input
+                  value={characterName}
+                  onChange={(e) => setCharacterName(e.target.value)}
+                  placeholder="Enter character name..."
+                  className="bg-background"
+                />
+              </div>
+            )}
 
             <Button
-              onClick={generateCharacter}
+              onClick={step < 3 ? handleNext : generateCharacter}
               disabled={isGenerating}
               variant="outline"
               className="w-full bg-white/20 border-white/20 hover:bg-white/30 text-foreground uppercase tracking-wider"
@@ -188,6 +221,8 @@ const AICharacterGenerator = () => {
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Generating Character...
                 </>
+              ) : step < 3 ? (
+                "Next"
               ) : (
                 "Generate Character"
               )}
@@ -195,16 +230,16 @@ const AICharacterGenerator = () => {
           </Card>
 
           {/* Output Section */}
-          {generatedCharacter && (
+          {generatedImage && (
             <Card className="p-6 bg-card border-border">
               <h2 className="text-2xl font-bold text-foreground mb-4">
-                Generated Character
+                {characterName}
               </h2>
-              <div className="prose prose-invert max-w-none">
-                <p className="text-foreground whitespace-pre-wrap">
-                  {generatedCharacter}
-                </p>
-              </div>
+              <img 
+                src={generatedImage} 
+                alt={characterName}
+                className="w-full rounded-lg"
+              />
             </Card>
           )}
         </div>

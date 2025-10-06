@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getProxiedStorageUrl, getProxiedData } from "@/utils/proxyHelper";
+import { getProxiedData } from "@/utils/proxyHelper";
 import { useNavigate } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import circuitBg from "@/assets/circuit-background.png";
 
 interface MemeData {
   id: number;
@@ -16,7 +17,6 @@ interface MemeData {
 
 const Meme = () => {
   const navigate = useNavigate();
-  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
   const [memeData, setMemeData] = useState<MemeData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,38 +27,6 @@ const Meme = () => {
     
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, []);
-
-  useEffect(() => {
-    const fetchRandomImage = async () => {
-      try {
-        console.log('Fetching random image for meme page...');
-        
-        // Use a predefined list of image names to randomly select from
-        const imageNames = [
-          'dualshadow.jpg',
-          'evenbrite-cover.jpg', 
-          'hautesummer.jpg',
-          'militarychild.jpg',
-          'remowalrusdiablo.jpg',
-          'romergarciacover.jpg',
-          'worldzoom.jpg'
-        ];
-
-        const randomIndex = Math.floor(Math.random() * imageNames.length);
-        const randomImageName = imageNames[randomIndex];
-        const imageUrl = getProxiedStorageUrl('images', randomImageName);
-        console.log('Selected random image for meme page:', imageUrl);
-        setBackgroundImage(imageUrl);
-
-      } catch (error) {
-        console.error('Error in fetchRandomImage:', error);
-        const fallbackUrl = getProxiedStorageUrl('images', 'dualshadow.jpg');
-        setBackgroundImage(fallbackUrl);
-      }
-    };
-
-    fetchRandomImage();
   }, []);
 
   const fetchRandomMeme = async () => {
@@ -106,13 +74,15 @@ const Meme = () => {
     fetchRandomMeme();
   }, []);
 
-  if (!backgroundImage) {
-    return null;
-  }
-
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       <ThemeToggle />
+      {/* Circuit board background */}
+      <div 
+        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
+        style={{ backgroundImage: `url(${circuitBg})` }}
+      />
+      
       {/* Gradient overlay that changes based on color scheme */}
       <div className={`absolute inset-0 bg-gradient-to-b 
         ${isDarkMode 
@@ -120,16 +90,6 @@ const Meme = () => {
           : 'from-white/20 via-white/10 to-transparent mix-blend-overlay'
         } z-10`} 
       />
-      
-      {/* Background image */}
-      {backgroundImage && (
-        <img 
-          src={backgroundImage} 
-          alt="Meme Background" 
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
-            ${isDarkMode ? 'opacity-40' : 'opacity-60'}`}
-        />
-      )}
       
       {/* Content */}
       <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">

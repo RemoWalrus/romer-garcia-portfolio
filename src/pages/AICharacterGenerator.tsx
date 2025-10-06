@@ -7,6 +7,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
 
 const AICharacterGenerator = () => {
   const [prompt, setPrompt] = useState("");
@@ -52,6 +54,15 @@ const AICharacterGenerator = () => {
     }
   };
 
+  const renderTitle = () => {
+    const words = "Paradoxxia Character Generator".split(" ");
+    return words.map((word, index) => (
+      <span key={index} className="font-thin">
+        {word}{" "}
+      </span>
+    ));
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -66,16 +77,50 @@ const AICharacterGenerator = () => {
       </nav>
       
       <main className="container mx-auto px-4 py-24 mt-16">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Header */}
-          <div className="text-center space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold text-foreground">
-              Paradoxxia Character Generator
-            </h1>
-            <p className="text-xl text-muted-foreground">
+        <div className="max-w-4xl mx-auto space-y-12">
+          {/* Animated Header */}
+          <motion.div 
+            className="text-center space-y-6"
+            variants={glitchVariants}
+            initial="initial"
+            animate="animate"
+          >
+            <div className="relative">
+              <h1 
+                className="hero-title text-6xl md:text-8xl lg:text-9xl font-bold text-foreground px-4 relative z-10"
+                style={{
+                  textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
+                  fontFamily: 'var(--font-roc)',
+                  lineHeight: '1.1',
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                {renderTitle()}
+              </h1>
+              <motion.div
+                className="absolute inset-0 z-0"
+                variants={pixelGlitch}
+                style={{
+                  clipPath: "inset(0 0 0 0)"
+                }}
+              >
+                <h1 
+                  className="hero-title text-6xl md:text-8xl lg:text-9xl font-bold text-foreground px-4 opacity-70"
+                  style={{
+                    textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
+                    fontFamily: 'var(--font-roc)',
+                    lineHeight: '1.1',
+                    letterSpacing: '-0.02em'
+                  }}
+                >
+                  {renderTitle()}
+                </h1>
+              </motion.div>
+            </div>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Forge unique beings from the depths of the Paradoxxia universe
             </p>
-          </div>
+          </motion.div>
 
           {/* Input Section */}
           <Card className="p-6 space-y-6 bg-card border-border">

@@ -115,11 +115,11 @@ const Meme = () => {
       />
       
       {/* Content */}
-      <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
-        <div className="space-y-8">
+      <main className="container mx-auto px-4 py-16 mt-16 relative z-20">
+        <div className="max-w-4xl mx-auto space-y-8">
           {/* Header */}
           <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto font-roc">
+            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto font-roc text-center">
               <span className="font-thin">random</span>{" "}
               <span className="font-medium">developer humor</span>{" "}
               <span className="font-thin">from the vault</span>
@@ -191,7 +191,7 @@ const Meme = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

@@ -37,6 +37,15 @@ const AICharacterGenerator = () => {
     }
   };
 
+  const handleStartOver = () => {
+    setStep(1);
+    setSpecies("");
+    setActualSpecies("");
+    setGender("");
+    setCharacterName("");
+    setGeneratedImage("");
+  };
+
   const duplicateX = (text: string) => {
     return text.replace(/x/gi, (match) => match + match);
   };
@@ -52,6 +61,7 @@ const AICharacterGenerator = () => {
       // Check if name is "Paradoxxia" (case-insensitive)
       if (characterName.toLowerCase() === "paradoxxia") {
         setGeneratedImage(paradoxxiaPoster);
+        setActualSpecies("android"); // Paradoxxia is always an android
         toast.success("Character revealed!");
         setIsGenerating(false);
         return;
@@ -223,112 +233,125 @@ const AICharacterGenerator = () => {
           </motion.div>
 
           {/* Sequential Prompt Section */}
-          <Card className="p-6 space-y-6 bg-card border-border">
-            {step === 1 && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Label className="text-sm font-medium text-foreground whitespace-nowrap">species:</Label>
-                  <RadioGroup value={species} onValueChange={setSpecies} className="flex gap-6">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="human" id="human" />
-                      <Label htmlFor="human" className="cursor-pointer">human</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="android" id="android" />
-                      <Label htmlFor="android" className="cursor-pointer">android</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="other" id="other" />
-                      <Label htmlFor="other" className="cursor-pointer">other</Label>
-                    </div>
-                  </RadioGroup>
+          {!generatedImage && (
+            <Card className="p-6 space-y-6 bg-card border-border">
+              {step === 1 && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Label className="text-sm font-medium text-foreground whitespace-nowrap">species:</Label>
+                    <RadioGroup value={species} onValueChange={setSpecies} className="flex gap-6">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="human" id="human" />
+                        <Label htmlFor="human" className="cursor-pointer">human</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="android" id="android" />
+                        <Label htmlFor="android" className="cursor-pointer">android</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="other" />
+                        <Label htmlFor="other" className="cursor-pointer">other</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
                 </div>
-              </div>
-            )}
-
-            {step === 2 && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Label className="text-sm font-medium text-foreground whitespace-nowrap">gender:</Label>
-                  <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="male" id="male" />
-                      <Label htmlFor="male" className="cursor-pointer">male</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="female" id="female" />
-                      <Label htmlFor="female" className="cursor-pointer">female</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="other" id="other" />
-                      <Label htmlFor="other" className="cursor-pointer">other</Label>
-                    </div>
-                  </RadioGroup>
-                </div>
-              </div>
-            )}
-
-            {step === 3 && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  <Label className="text-sm font-medium text-foreground whitespace-nowrap">
-                    name:
-                  </Label>
-                  <Input
-                    value={characterName}
-                    onChange={(e) => setCharacterName(e.target.value)}
-                    placeholder="enter character name..."
-                    className="bg-background flex-1"
-                  />
-                </div>
-              </div>
-            )}
-
-            <Button
-              onClick={step < 3 ? handleNext : generateCharacter}
-              disabled={isGenerating}
-              variant="outline"
-              className="w-full bg-white/10 border-white/20 hover:bg-white/20 text-foreground tracking-wider"
-              size="lg"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  generating character...
-                </>
-              ) : step < 3 ? (
-                "next"
-              ) : (
-                "generate character"
               )}
-            </Button>
-          </Card>
+
+              {step === 2 && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Label className="text-sm font-medium text-foreground whitespace-nowrap">gender:</Label>
+                    <RadioGroup value={gender} onValueChange={setGender} className="flex gap-6">
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="male" id="male" />
+                        <Label htmlFor="male" className="cursor-pointer">male</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="female" id="female" />
+                        <Label htmlFor="female" className="cursor-pointer">female</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="other" id="other" />
+                        <Label htmlFor="other" className="cursor-pointer">other</Label>
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Label className="text-sm font-medium text-foreground whitespace-nowrap">
+                      name:
+                    </Label>
+                    <Input
+                      value={characterName}
+                      onChange={(e) => setCharacterName(e.target.value)}
+                      placeholder="enter character name..."
+                      className="bg-background flex-1"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <Button
+                onClick={step < 3 ? handleNext : generateCharacter}
+                disabled={isGenerating}
+                variant="outline"
+                className="w-full bg-white/10 border-white/20 hover:bg-white/20 text-foreground tracking-wider"
+                size="lg"
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    generating character...
+                  </>
+                ) : step < 3 ? (
+                  "next"
+                ) : (
+                  "generate character"
+                )}
+              </Button>
+            </Card>
+          )}
 
           {/* Output Section */}
           {generatedImage && (
-            <Card className="p-0 bg-card border-border overflow-hidden">
-              <div className="relative">
-                <img 
-                  src={generatedImage} 
-                  alt={duplicateX(characterName)}
-                  className="w-full"
-                />
-                {/* Trading card overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
-                  <h2 className="text-3xl font-bold text-white mb-1" style={{ 
-                    fontFamily: 'var(--font-roc)',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
-                  }}>
-                    {duplicateX(characterName)}
-                  </h2>
-                  <p className="text-lg text-white/90 capitalize font-medium" style={{ 
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
-                  }}>
-                    {species === "other" && Math.random() > 0.7 ? "classified" : actualSpecies}
-                  </p>
+            <div className="space-y-4">
+              <Card className="p-0 bg-card border-border overflow-hidden">
+                <div className="relative">
+                  <img 
+                    src={generatedImage} 
+                    alt={duplicateX(characterName)}
+                    className="w-full"
+                  />
+                  {/* Trading card overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                    <h2 className="text-3xl font-bold text-white mb-1" style={{ 
+                      fontFamily: 'var(--font-roc)',
+                      textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+                    }}>
+                      {duplicateX(characterName)}
+                    </h2>
+                    <p className="text-lg text-white/90 capitalize font-medium" style={{ 
+                      textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                    }}>
+                      {species === "other" && Math.random() > 0.7 ? "classified" : actualSpecies}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+              
+              <Button
+                onClick={handleStartOver}
+                variant="outline"
+                className="w-full bg-white/10 border-white/20 hover:bg-white/20 text-foreground tracking-wider"
+                size="lg"
+              >
+                start over
+              </Button>
+            </div>
           )}
         </div>
       </main>

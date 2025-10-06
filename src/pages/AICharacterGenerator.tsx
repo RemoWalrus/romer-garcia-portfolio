@@ -147,7 +147,7 @@ const AICharacterGenerator = () => {
         : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features. NO white face plates.";
 
       const speciesDescription = selectedSpecies === "creature"
-        ? "This is a non-humanoid creature with an alien, otherworldly form. It has a unique physiology that defies traditional classification - could be insectoid, tentacled, amorphous, or have multiple limbs and appendages. The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. Its form suggests it has adapted to survive in the harsh post-apocalyptic environment in ways that transcend human or machine evolution."
+        ? "This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical."
         : selectedSpecies === "human"
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
         : selectedSpecies === "android" 

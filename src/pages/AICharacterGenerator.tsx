@@ -17,6 +17,7 @@ import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 const AICharacterGenerator = () => {
   const [step, setStep] = useState(1);
   const [species, setSpecies] = useState("");
+  const [actualSpecies, setActualSpecies] = useState("");
   const [gender, setGender] = useState("");
   const [characterName, setCharacterName] = useState("");
   const [generatedImage, setGeneratedImage] = useState("");
@@ -59,63 +60,64 @@ const AICharacterGenerator = () => {
       const processedName = duplicateX(characterName);
       
       // Randomly select actual species if "other" was chosen
-      let actualSpecies = species;
+      let selectedSpecies = species;
       if (species === "other") {
         const otherOptions = ["cyborg", "mutant", "robot"];
-        actualSpecies = otherOptions[Math.floor(Math.random() * otherOptions.length)];
+        selectedSpecies = otherOptions[Math.floor(Math.random() * otherOptions.length)];
       }
+      setActualSpecies(selectedSpecies);
       
-      const clothingDescription = actualSpecies === "android" && Math.random() > 0.5 
+      const clothingDescription = selectedSpecies === "android" && Math.random() > 0.5
         ? "wearing practical desert clothing made from hemp, linen, and cotton" 
-        : actualSpecies === "cyborg" && Math.random() > 0.5
+        : selectedSpecies === "cyborg" && Math.random() > 0.5
         ? "wearing practical desert clothing made from hemp, linen, and cotton"
-        : actualSpecies === "human"
+        : selectedSpecies === "human"
         ? "wearing practical desert clothing made from hemp, linen, and cotton designed to withstand harsh desert weather"
-        : actualSpecies === "robot"
+        : selectedSpecies === "robot"
         ? "in their mechanical form with possible clothing elements"
-        : actualSpecies === "mutant"
+        : selectedSpecies === "mutant"
         ? "wearing practical desert clothing made from hemp, linen, and cotton, with visible mutations"
         : "in their typical android form";
 
-      const location = actualSpecies === "human" 
+      const location = selectedSpecies === "human" 
         ? "an underground human settlement with practical architecture" 
-        : actualSpecies === "android"
+        : selectedSpecies === "android"
         ? "the ruins of an old city with crumbling buildings and overgrown structures"
-        : actualSpecies === "robot"
+        : selectedSpecies === "robot"
         ? "the ruins of an old city with mechanical debris"
-        : actualSpecies === "mutant"
+        : selectedSpecies === "mutant"
         ? Math.random() > 0.5 ? "the desert surface" : "underground caverns"
-        : Math.random() > 0.5 
+        : Math.random() > 0.5
         ? "an underground human settlement" 
         : "the ruins of an old city";
 
-      const nameDisplay = actualSpecies === "human"
+      const nameDisplay = selectedSpecies === "human"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
-        : actualSpecies === "android"
+        : selectedSpecies === "android"
         ? `with the name "${processedName}" subtly laser-etched in small, refined futuristic typography on a body panel - barely visible but present`
-        : actualSpecies === "robot"
+        : selectedSpecies === "robot"
         ? `with the name "${processedName}" etched in futuristic typography on a visible body panel`
-        : actualSpecies === "mutant"
+        : selectedSpecies === "mutant"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : Math.random() > 0.5
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`;
 
-      const speciesDescription = actualSpecies === "human" 
+      const speciesDescription = selectedSpecies === "human"
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
-        : actualSpecies === "android" 
+        : selectedSpecies === "android" 
         ? "This is a sleek synthetic humanoid android with realistic human-like features but with subtle mechanical elements visible. Always humanoid in form."
-        : actualSpecies === "robot"
+        : selectedSpecies === "robot"
         ? Math.random() > 0.5 
           ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features."
           : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features."
-        : actualSpecies === "mutant"
+        : selectedSpecies === "mutant"
         ? Math.random() > 0.3
           ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."
           : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
         : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
 
-      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${actualSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
+      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },
@@ -322,7 +324,7 @@ const AICharacterGenerator = () => {
                   <p className="text-lg text-white/90 capitalize font-medium" style={{ 
                     textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
                   }}>
-                    {species === "other" ? "classified" : species}
+                    {species === "other" && Math.random() > 0.7 ? "classified" : actualSpecies}
                   </p>
                 </div>
               </div>

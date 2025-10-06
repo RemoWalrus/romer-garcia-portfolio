@@ -104,8 +104,24 @@ const AICharacterGenerator = () => {
       if (processedName.toLowerCase() === "paradoxxia") {
         setActualSpecies("android"); // Paradoxxia is always an android
         setDisplayName(processedName);
-        setGeneratedImage(paradoxxiaPoster);
-        toast.success("Paradoxxia revealed!");
+        
+        // Generate a new pose using the provided image with a public URL
+        const publicImageUrl = `${window.location.origin}/paradoxxia-poster.jpg`;
+        const editPrompt = "Generate a different dynamic action pose of this exact character maintaining ALL the same visual characteristics: the same face, same long dark hair, same bright cyan/neon blue glowing eyes, same golden/bronze armored suit design, same body proportions, and same overall appearance. Show the character in a new dramatic full-body pose in a similar dystopian sci-fi environment with ruins in the background. Keep EVERYTHING about the character's visual design identical - only change the pose, angle, and slight environmental variations. Hyper-realistic 3D rendering style with the same dark, grim atmosphere. IMPORTANT: Add very small neon blue katakana text \"パラドクシア\" in the bottom right corner of the image as a subtle watermark.";
+        
+        const { data, error } = await supabase.functions.invoke("generate-character-image", {
+          body: { 
+            prompt: editPrompt,
+            imageUrl: publicImageUrl
+          },
+        });
+
+        if (error) throw error;
+
+        if (data.imageUrl) {
+          setGeneratedImage(data.imageUrl);
+          toast.success("Paradoxxia revealed in new pose!");
+        }
         setIsGenerating(false);
         return;
       }

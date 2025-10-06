@@ -194,6 +194,52 @@ This project is built with:
 - Tailwind CSS
 - Supabase for backend services
 
+## Additional Features
+
+### Paradoxxia - AI Character Generator
+
+The portfolio includes an interactive AI character generator accessible at `/paradoxxia`. This feature allows users to create unique sci-fi characters using AI image generation.
+
+**Features:**
+- Three-step character creation process:
+  1. Select species (human, android, robot, mutant, or other)
+  2. Choose gender presentation
+  3. Enter character name (or generate random names)
+- Special "Paradoxxia" easter egg - entering "Paradoxxia" as the character name reveals a pre-designed character with dynamic pose variations
+- AI-powered image generation using Lovable AI with Google Gemini models
+- Mobile-responsive design with native save-to-photos and share functionality
+- Character names with triple X's create "defective" character variants
+- Dynamic character descriptions based on species, gender, and name choices
+- Supports various character types: humans, androids, robots, mutants, cyborgs, and non-humanoid creatures
+
+**Technical Implementation:**
+- Uses Lovable AI Gateway (Google Gemini 2.5 Flash Image Preview) for image generation
+- Supabase Edge Functions handle AI requests
+- Capacitor integration for native mobile features (save to photos, sharing)
+- Circuit board background with animated elements
+- Responsive design with mobile-first considerations
+
+### Developer Humor - Meme Page
+
+A fun developer humor page accessible at `/meme` that displays random coding memes, tips, and facts.
+
+**Features:**
+- Random meme selection from database
+- Each meme includes:
+  - Main meme text with attribution
+  - Practical coding tip
+  - Interesting tech fun fact
+- "Another meme" button to refresh content
+- Circuit board background matching the site theme
+- Responsive design with dark/light mode support
+
+**Technical Implementation:**
+- Content managed through Supabase `daily_memes` table
+- Uses proxy helper for data fetching
+- Fallback memes in case of database errors
+- Smooth animations and transitions
+- Theme-aware gradient overlays
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be) and click on Share -> Publish.

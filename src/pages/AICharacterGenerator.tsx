@@ -73,9 +73,13 @@ const AICharacterGenerator = () => {
 
     setIsGenerating(true);
     try {
-      // Check if name is "Paradoxxia" (case-insensitive)
-      if (finalName.toLowerCase() === "paradoxxia") {
+      // Process name through duplicateX first
+      const processedName = duplicateX(finalName);
+      
+      // Check if name is "Paradoxxia" or becomes "Paradoxxia" after processing (case-insensitive)
+      if (processedName.toLowerCase() === "paradoxxia") {
         setActualSpecies("android"); // Paradoxxia is always an android
+        setCharacterName(processedName); // Update to show the processed name
         
         // Generate a new pose using the provided image
         const editPrompt = "Generate a different dynamic action pose of this character (Paradoxxia) maintaining the exact same character design, appearance, costume, and android features. Show the character in a new dramatic pose in a similar dystopian sci-fi environment. Keep all visual characteristics identical - only change the pose and camera angle. Hyper-realistic 3D rendering style with the same dark, grim atmosphere.";
@@ -97,7 +101,7 @@ const AICharacterGenerator = () => {
         return;
       }
 
-      const processedName = duplicateX(characterName);
+      
       
       // Special case: both "other" selections create a non-humanoid creature
       let selectedSpecies = species;

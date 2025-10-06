@@ -137,8 +137,8 @@ const AICharacterGenerator = () => {
         : `with the name "${processedName}" laser-etched in futuristic typography on a visible body panel`;
 
       const androidFaceDescription = gender === "other"
-        ? "This android is not humanoid in form - it has a unique non-human shape, but still has the distinctive white mask-like face plate made of 1-4 smooth panels with neon blue illuminated cybernetic eyes."
-        : "This synthetic android has a humanoid form with a distinctive white mask-like face plate made of 1-4 smooth panels with human-like features including a sculpted nose and subtle mouth. The android has neon blue illuminated cybernetic eyes. " + (Math.random() > 0.5 ? "Synthetic hair or fiber-optic cables cascade from the head area." : "Sleek cables or synthetic hair strands are integrated into the head design.");
+        ? "This android is NOT humanoid - it has a vehicle-like or animal-like form (could resemble a quadrupedal creature, a sleek vehicle, or a hovering machine). Despite the non-humanoid body, it still has the distinctive white mask-like face plate made of 1-4 smooth panels with neon blue illuminated cybernetic eyes integrated into its unique form."
+        : "This synthetic android has a humanoid form with a distinctive white face plate made of 1-4 smooth panels. The face is VERY HUMAN-LIKE with realistic sculpted features: a prominent nose, defined cheekbones, subtle lips/mouth, and expressive contours that closely mimic human facial structure. The android has neon blue illuminated cybernetic eyes that glow softly. " + (Math.random() > 0.5 ? "Synthetic hair that looks remarkably real cascades from the head area." : "Sleek fiber-optic cables styled like hair strands are integrated into the head design.");
 
       const robotDescription = gender === "other"
         ? "This is a drone-like robot with a non-humanoid form - could be flying, hovering, or have an unconventional shape. Purely mechanical with exposed machinery, sensors, and robotic features. NO white face plates."

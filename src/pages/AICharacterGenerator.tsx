@@ -242,7 +242,7 @@ const AICharacterGenerator = () => {
             <Card className="p-4 space-y-4 bg-card border-border">
               {step === 1 && (
                 <div className="space-y-3">
-                  <Label className="text-sm font-medium text-foreground">species:</Label>
+                  <Label className="text-base font-medium text-foreground font-roc">species:</Label>
                   <div className="flex flex-wrap gap-2">
                     <Button
                       variant={species === "human" ? "default" : "outline"}
@@ -271,7 +271,7 @@ const AICharacterGenerator = () => {
 
               {step === 2 && (
                 <div className="space-y-3">
-                  <Label className="text-sm font-medium text-foreground">gender:</Label>
+                  <Label className="text-base font-medium text-foreground font-roc">gender:</Label>
                   <div className="flex flex-wrap gap-2">
                     <Button
                       variant={gender === "male" ? "default" : "outline"}
@@ -300,7 +300,7 @@ const AICharacterGenerator = () => {
 
               {step === 3 && (
                 <div className="space-y-3">
-                  <Label className="text-sm font-medium text-foreground">name:</Label>
+                  <Label className="text-base font-medium text-foreground font-roc">name:</Label>
                   <Input
                     value={characterName}
                     onChange={(e) => setCharacterName(e.target.value)}

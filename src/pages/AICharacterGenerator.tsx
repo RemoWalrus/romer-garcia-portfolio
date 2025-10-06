@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
 import circuitBg from "@/assets/circuit-background.png";
+import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 
 const AICharacterGenerator = () => {
   const [step, setStep] = useState(1);
@@ -47,6 +48,14 @@ const AICharacterGenerator = () => {
 
     setIsGenerating(true);
     try {
+      // Check if name is "Paradoxxia" (case-insensitive)
+      if (characterName.toLowerCase() === "paradoxxia") {
+        setGeneratedImage(paradoxxiaPoster);
+        toast.success("Character revealed!");
+        setIsGenerating(false);
+        return;
+      }
+
       const processedName = duplicateX(characterName);
       
       // Randomly select actual species if "other" was chosen

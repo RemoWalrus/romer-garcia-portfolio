@@ -50,11 +50,27 @@ const AICharacterGenerator = () => {
         ? "wearing practical desert clothing made from hemp, linen, and cotton designed to withstand harsh desert weather"
         : "in their typical android form";
 
-      const prompt = `Generate a hyper-realistic, 3D rendered sci-fi portrait of ${characterName}, a ${gender} ${species}. ${
+      const location = species === "human" 
+        ? "an underground human settlement with practical architecture" 
+        : species === "android"
+        ? "the ruins of an old city with crumbling buildings and overgrown structures"
+        : Math.random() > 0.5 
+        ? "an underground human settlement" 
+        : "the ruins of an old city";
+
+      const nameDisplay = species === "human"
+        ? `wearing visible dog tags with the name "${characterName}" clearly engraved on them`
+        : species === "android"
+        ? `with the name "${characterName}" laser-etched in futuristic typography on a visible body panel`
+        : Math.random() > 0.5
+        ? `wearing visible dog tags with the name "${characterName}" clearly engraved on them`
+        : `with the name "${characterName}" laser-etched in futuristic typography on a visible body panel`;
+
+      const prompt = `Generate a hyper-realistic, 3D rendered full-body sci-fi image of ${characterName}, a ${gender} ${species} in action within ${location}. ${
         species === "human" ? "This human has adapted to underground desert life, with weathered features from the harsh environment." :
         species === "android" ? "This is a sleek synthetic android with realistic human-like features but with subtle mechanical elements visible." :
         "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts."
-      } ${clothingDescription}. The aesthetic is hard sci-fi, not fantasy - think blade runner meets dune. Photorealistic 3D rendering style. CRITICAL: Show ONLY this single character against a neutral or slightly blurred background - absolutely no other people or characters in the image. Portrait style composition focusing on the character. Highly detailed textures and realistic lighting.`;
+      } ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is hard sci-fi, not fantasy - think blade runner meets dune. Photorealistic 3D rendering style. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures and realistic lighting.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },

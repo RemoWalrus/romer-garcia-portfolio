@@ -47,12 +47,15 @@ const AICharacterGenerator = () => {
   };
 
   const duplicateX = (text: string) => {
-    // Don't duplicate x if it would create 3 or more x's in a row
+    // Don't duplicate x if it's already part of a consecutive xx
     return text.replace(/x/gi, (match, offset, str) => {
-      // Check if previous character is also x (case insensitive)
       const prevChar = str[offset - 1];
-      if (prevChar && prevChar.toLowerCase() === 'x') {
-        return match; // Don't duplicate if already consecutive
+      const nextChar = str[offset + 1];
+      
+      // Don't duplicate if previous OR next character is also x
+      if ((prevChar && prevChar.toLowerCase() === 'x') || 
+          (nextChar && nextChar.toLowerCase() === 'x')) {
+        return match;
       }
       return match + match;
     });

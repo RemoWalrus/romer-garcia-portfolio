@@ -114,7 +114,7 @@ const AICharacterGenerator = () => {
         
         // Generate a new pose using the provided image with a public URL
         const publicImageUrl = `${window.location.origin}/paradoxxia-poster.jpg`;
-        const editPrompt = "Generate a different dynamic action pose of this exact character maintaining ALL the same visual characteristics: the same face, same long dark hair, same bright cyan/neon blue glowing eyes, same golden/bronze armored suit design, same body proportions, and same overall appearance. Show the character in a new dramatic full-body pose in a similar dystopian sci-fi environment with ruins in the background. Keep EVERYTHING about the character's visual design identical - only change the pose, angle, and slight environmental variations. Hyper-realistic 3D rendering style with the same dark, grim atmosphere.";
+        const editPrompt = "Generate a different dynamic action pose of this exact character maintaining ALL the same visual characteristics: the same face, same long dark hair, same bright cyan/neon blue glowing eyes, same golden/bronze armored suit design, same body proportions, and same overall appearance. Show the character in a new dramatic full-body pose in a DIFFERENT dystopian sci-fi environment - NOT ruins, but perhaps an abandoned industrial complex, a desolate wasteland with strange structures, a dark underground facility, or a dystopian cityscape. Keep EVERYTHING about the character's visual design identical - only change the pose, angle, and the background environment completely. Hyper-realistic 3D rendering style with the same dark, grim atmosphere. CRITICAL: Generate as a perfect square composition (1:1 aspect ratio).";
         
         const { data, error } = await supabase.functions.invoke("generate-character-image", {
           body: { 
@@ -228,7 +228,15 @@ const AICharacterGenerator = () => {
         ? Math.random() > 0.3
           ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."
           : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
-          : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
+          : Math.random() > 0.8
+          ? "This is a sentient flying drone with NO humanoid form - a hovering autonomous unit with sleek aerodynamic design, propulsion systems, sensor arrays, and weapon mounts. Purely mechanical with no human features."
+          : Math.random() > 0.6
+          ? "This is an insectoid synthetic being with multiple segmented limbs, compound optical sensors, chitinous plating, and arthropod-inspired design. Completely non-humanoid with insect-like characteristics."
+          : Math.random() > 0.4
+          ? "This is a limbless serpentine synthetic entity - a long, flexible mechanical snake-like form with no arms or legs, using undulating movement. Has sensor clusters, armored segments, and a streamlined body design."
+          : Math.random() > 0.2
+          ? "This is a spherical or orb-like autonomous unit with no limbs - a hovering ball of technology with integrated weapons, sensors, and holographic displays rotating around its core. Completely non-humanoid."
+          : "This is a multi-limbed mechanical entity with 4-8 appendages in unexpected configurations - could be spider-like, crab-like, or completely alien in form. NO humanoid structure whatsoever.";
 
       // Generate name-inspired thematic elements
       const getNameInspiration = (name: string): string => {

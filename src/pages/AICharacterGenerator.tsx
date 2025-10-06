@@ -52,6 +52,7 @@ const AICharacterGenerator = () => {
     setDisplayName("");
     setGeneratedImage("");
     setUploadedPhoto("");
+    setIsGenerating(false);
   };
 
   const handlePhotoUpload = async () => {
@@ -372,7 +373,17 @@ const AICharacterGenerator = () => {
       const nameTheme = getNameInspiration(processedName);
 
       const photoReference = uploadedPhoto 
-        ? `CRITICAL REFERENCE PHOTO REQUIREMENTS: Use the provided reference photo to create the character's face, build, and physical features. Match the facial features, facial structure, hair style and color, skin tone, body build, and overall physical appearance as closely as possible from the reference photo. The character should be recognizable as the person in the reference photo but adapted to the ${selectedSpecies} type and apocalyptic setting. Preserve distinctive facial features including eyes, nose, mouth shape, face shape, and any notable characteristics. Keep hair texture and color accurate to the reference.`
+        ? `ABSOLUTE PRIORITY - REFERENCE PHOTO INSTRUCTIONS: A reference photo has been provided. You MUST use this photo as the PRIMARY and DOMINANT source for creating the character. The character's face MUST be recognizable as the person in the reference photo. Specifically match and preserve these features from the reference photo in exact detail:
+- Exact facial structure and bone structure (jawline, cheekbones, forehead shape, chin shape)
+- Precise eye shape, size, color, and spacing
+- Exact nose shape and size
+- Mouth and lip shape matching the reference
+- Hair color, texture, style, and length EXACTLY as shown
+- Skin tone and complexion matching precisely
+- Facial hair (if present) matching the reference
+- Body build and proportions similar to the reference
+- Any distinctive facial features, marks, or characteristics
+The final character should look like the person in the reference photo dressed for the apocalyptic ${selectedSpecies} setting. This is NOT just inspiration - the reference photo defines the character's appearance. All other creative elements are secondary to matching the reference photo.`
         : '';
 
       const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
@@ -380,7 +391,8 @@ const AICharacterGenerator = () => {
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { 
           prompt,
-          imageUrl: uploadedPhoto || undefined
+          imageUrl: uploadedPhoto || undefined,
+          timestamp: Date.now() // Force fresh generation by adding timestamp
         },
       });
 

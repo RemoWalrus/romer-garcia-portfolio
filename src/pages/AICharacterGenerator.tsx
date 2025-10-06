@@ -95,11 +95,15 @@ const AICharacterGenerator = () => {
       const speciesDescription = actualSpecies === "human" 
         ? "This human has adapted to underground desert life, with weathered features from the harsh environment."
         : actualSpecies === "android" 
-        ? "This is a sleek synthetic android with realistic human-like features but with subtle mechanical elements visible."
+        ? "This is a sleek synthetic humanoid android with realistic human-like features but with subtle mechanical elements visible. Always humanoid in form."
         : actualSpecies === "robot"
-        ? "This is a fully mechanical robot with advanced engineering and metallic components."
+        ? Math.random() > 0.5 
+          ? "This is a non-humanoid robot with advanced engineering - it could be quadrupedal, tracked, or have a completely unique mechanical form. Purely mechanical with no human features."
+          : "This is a bipedal robot with mechanical limbs and components, but clearly non-human in appearance with exposed machinery and robotic features."
         : actualSpecies === "mutant"
-        ? "This is a mutant human with visible genetic alterations and adaptations to the harsh environment."
+        ? Math.random() > 0.3
+          ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."
+          : "This is a mutant human with more dramatic adaptations to the harsh environment - could include extra sensory organs, modified limbs, or protective features, but still recognizably human-based."
         : "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts.";
 
       const prompt = `Generate a hyper-realistic, 3D rendered full-body sci-fi image of ${processedName}, a ${gender} ${actualSpecies} in action within ${location}. ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is hard sci-fi, not fantasy - think blade runner meets dune. Photorealistic 3D rendering style. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures and realistic lighting.`;

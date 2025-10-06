@@ -50,10 +50,25 @@ const AICharacterGenerator = () => {
     return text.replace(/x/gi, (match) => match + match);
   };
 
+  const generateRandomName = () => {
+    const prefixes = ["Kry", "Vex", "Zor", "Nyx", "Rax", "Cyx", "Dex", "Lux", "Myx", "Pyx"];
+    const middles = ["ax", "ex", "ix", "ox", "ux", "ar", "er", "or", "yn", "an"];
+    const suffixes = ["ion", "us", "is", "os", "yn", "ax", "ex", "or", "ar", "on"];
+    
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    const middle = Math.random() > 0.5 ? middles[Math.floor(Math.random() * middles.length)] : "";
+    const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+    
+    return prefix + middle + suffix;
+  };
+
   const generateCharacter = async () => {
-    if (!characterName.trim()) {
-      toast.error("Please provide a name");
-      return;
+    let finalName = characterName.trim();
+    
+    if (!finalName) {
+      finalName = generateRandomName();
+      setCharacterName(finalName);
+      toast.success(`Generated name: ${finalName}`);
     }
 
     setIsGenerating(true);

@@ -668,7 +668,7 @@ const AICharacterGenerator = () => {
                         toast.error("Failed to share image");
                       }
                     }}
-                    className="absolute top-2 right-14 md:right-28 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    className="absolute top-2 right-11 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
                     style={{
                       backdropFilter: 'blur(4px)'
                     }}

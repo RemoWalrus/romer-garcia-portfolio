@@ -27,7 +27,7 @@ export const ThemeToggle = () => {
       variant="outline"
       size="icon"
       onClick={toggleTheme}
-      className="fixed bottom-4 right-4 z-50 bg-background/80 backdrop-blur-sm border-border"
+      className="fixed top-20 right-4 md:bottom-4 md:top-auto z-50 bg-background/80 backdrop-blur-sm border-border"
       aria-label="Toggle theme"
     >
       {isDark ? (

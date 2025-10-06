@@ -51,9 +51,9 @@ const AICharacterGenerator = () => {
   };
 
   const generateRandomName = () => {
-    const prefixes = ["Kry", "Vex", "Zor", "Nyx", "Rax", "Cyx", "Dex", "Lux", "Myx", "Pyx"];
-    const middles = ["ax", "ex", "ix", "ox", "ux", "ar", "er", "or", "yn", "an"];
-    const suffixes = ["ion", "us", "is", "os", "yn", "ax", "ex", "or", "ar", "on"];
+    const prefixes = ["Kry", "Zor", "Ral", "Cal", "Del", "Lur", "Mir", "Pel"];
+    const middles = ["ar", "er", "or", "yn", "an", "el", "il", "on"];
+    const suffixes = ["ion", "us", "is", "os", "yn", "or", "ar", "on", "el"];
     
     const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
     const middle = Math.random() > 0.5 ? middles[Math.floor(Math.random() * middles.length)] : "";
@@ -130,7 +130,7 @@ const AICharacterGenerator = () => {
 
       const androidFaceDescription = gender === "other"
         ? "This android is not humanoid in form - it has a unique non-human shape, but still has the distinctive white mask-like face plate made of 1-4 smooth panels with neon blue illuminated cybernetic eyes."
-        : "This synthetic android has a humanoid form with a distinctive white mask-like face plate made of 1-4 smooth panels, and striking neon blue illuminated cybernetic eyes.";
+        : "This synthetic android has a humanoid form with a distinctive white mask-like face plate made of 1-4 smooth panels with human-like features including a sculpted nose and subtle mouth. The android has neon blue illuminated cybernetic eyes. " + (Math.random() > 0.5 ? "Synthetic hair or fiber-optic cables cascade from the head area." : "Sleek cables or synthetic hair strands are integrated into the head design.");
 
       const robotDescription = gender === "other"
         ? "This is a drone-like robot with a non-humanoid form - could be flying, hovering, or have an unconventional shape. Purely mechanical with exposed machinery, sensors, and robotic features. NO white face plates."

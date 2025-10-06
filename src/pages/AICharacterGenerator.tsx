@@ -230,7 +230,7 @@ const AICharacterGenerator = () => {
                 </h1>
               </motion.div>
             </div>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-foreground max-w-2xl mx-auto font-roc font-extralight">
               Forge unique beings from the depths of the Paradoxxia universe
             </p>
           </motion.div>

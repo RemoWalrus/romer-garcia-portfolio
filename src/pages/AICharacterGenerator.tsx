@@ -643,31 +643,26 @@ The final character should look like the person in the reference photo dressed f
                         const isMobile = Capacitor.isNativePlatform();
                         
                         if (isMobile) {
-                          // Mobile: Save to device storage first, then give option to save to photos
-                          const response = await fetch(generatedImage);
-                          const blob = await response.blob();
-                          const base64Data = await new Promise<string>((resolve) => {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                              const base64 = reader.result as string;
-                              resolve(base64.split(',')[1]);
-                            };
-                            reader.readAsDataURL(blob);
-                          });
+                          // Extract base64 data from data URL
+                          let base64Data = generatedImage;
+                          if (base64Data.includes(',')) {
+                            base64Data = base64Data.split(',')[1];
+                          }
                           
-                          const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
+                          const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                           const savedFile = await Filesystem.writeFile({
                             path: fileName,
                             data: base64Data,
                             directory: Directory.Cache
                           });
                           
+                          console.log("File saved:", savedFile.uri);
+                          
                           // Use Share API to allow user to save to Photos
-                          const fileUri = savedFile.uri;
                           await Share.share({
                             title: `${displayName} Character`,
                             text: 'Save this character image',
-                            url: fileUri,
+                            url: savedFile.uri,
                             dialogTitle: 'Save to Photos'
                           });
                           
@@ -678,10 +673,11 @@ The final character should look like the person in the reference photo dressed f
                           link.href = generatedImage;
                           link.download = `${displayName.toLowerCase()}-character.png`;
                           link.click();
+                          toast.success("Image downloaded!");
                         }
                       } catch (error) {
                         console.error("Download error:", error);
-                        toast.error("Failed to save image");
+                        toast.error("Failed to save image: " + (error as Error).message);
                       }
                     }}
                     className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10 hidden md:block"
@@ -698,27 +694,24 @@ The final character should look like the person in the reference photo dressed f
                     />
                   </button>
                   
-                  {/* Save to Photos button */}
+                  {/* Save to Photos button - mobile only */}
                   <button
                     onClick={async () => {
                       try {
-                        const response = await fetch(generatedImage);
-                        const blob = await response.blob();
-                        const base64Data = await new Promise<string>((resolve) => {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            const base64 = reader.result as string;
-                            resolve(base64.split(',')[1]);
-                          };
-                          reader.readAsDataURL(blob);
-                        });
+                        // Extract base64 data from data URL
+                        let base64Data = generatedImage;
+                        if (base64Data.includes(',')) {
+                          base64Data = base64Data.split(',')[1];
+                        }
                         
-                        const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
+                        const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
                           directory: Directory.Cache
                         });
+                        
+                        console.log("File saved for share:", savedFile.uri);
                         
                         // Use Share API to save to Photos
                         await Share.share({
@@ -731,7 +724,7 @@ The final character should look like the person in the reference photo dressed f
                         toast.success("Opening save options...");
                       } catch (error) {
                         console.error("Save error:", error);
-                        toast.error("Failed to save to photos");
+                        toast.error("Failed to save: " + (error as Error).message);
                       }
                     }}
                     className="md:hidden absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
@@ -752,23 +745,20 @@ The final character should look like the person in the reference photo dressed f
                   <button
                     onClick={async () => {
                       try {
-                        const response = await fetch(generatedImage);
-                        const blob = await response.blob();
-                        const base64Data = await new Promise<string>((resolve) => {
-                          const reader = new FileReader();
-                          reader.onloadend = () => {
-                            const base64 = reader.result as string;
-                            resolve(base64.split(',')[1]);
-                          };
-                          reader.readAsDataURL(blob);
-                        });
+                        // Extract base64 data from data URL
+                        let base64Data = generatedImage;
+                        if (base64Data.includes(',')) {
+                          base64Data = base64Data.split(',')[1];
+                        }
                         
-                        const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
+                        const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
                           directory: Directory.Cache
                         });
+                        
+                        console.log("File saved for share:", savedFile.uri);
                         
                         await Share.share({
                           title: `${displayName} Character`,
@@ -776,9 +766,11 @@ The final character should look like the person in the reference photo dressed f
                           url: savedFile.uri,
                           dialogTitle: 'Share Character'
                         });
+                        
+                        toast.success("Opening share options...");
                       } catch (error) {
                         console.error("Share error:", error);
-                        toast.error("Failed to share image");
+                        toast.error("Failed to share: " + (error as Error).message);
                       }
                     }}
                     className="absolute top-2 right-11 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"

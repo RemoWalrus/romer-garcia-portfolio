@@ -20,6 +20,7 @@ const AICharacterGenerator = () => {
   const [actualSpecies, setActualSpecies] = useState("");
   const [gender, setGender] = useState("");
   const [characterName, setCharacterName] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -43,6 +44,7 @@ const AICharacterGenerator = () => {
     setActualSpecies("");
     setGender("");
     setCharacterName("");
+    setDisplayName("");
     setGeneratedImage("");
   };
 
@@ -82,8 +84,7 @@ const AICharacterGenerator = () => {
     
     if (!finalName) {
       finalName = generateRandomName();
-      setCharacterName(finalName);
-      toast.success(`Generated name: ${finalName}`);
+      toast.success("Generated random name");
     }
 
     setIsGenerating(true);
@@ -96,10 +97,12 @@ const AICharacterGenerator = () => {
         processedName = "Paradoxxia";
       }
       
+      // Store the processed name for display
+      setDisplayName(processedName);
+      
       // Check if name is "Paradoxxia" or becomes "Paradoxxia" after processing (case-insensitive)
       if (processedName.toLowerCase() === "paradoxxia") {
         setActualSpecies("android"); // Paradoxxia is always an android
-        setCharacterName(processedName); // Update to show the processed name
         
         // Generate a new pose using the provided image
         const editPrompt = "Generate a different dynamic action pose of this character (Paradoxxia) maintaining the exact same character design, appearance, costume, and android features. Show the character in a new dramatic pose in a similar dystopian sci-fi environment. Keep all visual characteristics identical - only change the pose and camera angle. Hyper-realistic 3D rendering style with the same dark, grim atmosphere.";
@@ -423,7 +426,7 @@ const AICharacterGenerator = () => {
                 <div className="relative">
                   <img 
                     src={generatedImage} 
-                    alt={duplicateX(characterName)}
+                    alt={displayName}
                     className="w-full"
                   />
                   {/* Trading card overlay */}
@@ -432,7 +435,7 @@ const AICharacterGenerator = () => {
                       fontFamily: 'var(--font-roc)',
                       textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
                     }}>
-                      {duplicateX(characterName)}
+                      {displayName}
                     </h2>
                     <p className="text-lg text-white/90 capitalize font-medium" style={{ 
                       textShadow: '1px 1px 2px rgba(0,0,0,0.8)'

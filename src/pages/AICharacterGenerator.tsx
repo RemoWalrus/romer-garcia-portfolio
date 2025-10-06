@@ -74,10 +74,25 @@ const AICharacterGenerator = () => {
     setIsGenerating(true);
     try {
       // Check if name is "Paradoxxia" (case-insensitive)
-      if (characterName.toLowerCase() === "paradoxxia") {
-        setGeneratedImage(paradoxxiaPoster);
+      if (finalName.toLowerCase() === "paradoxxia") {
         setActualSpecies("android"); // Paradoxxia is always an android
-        toast.success("Character revealed!");
+        
+        // Generate a new pose using the provided image
+        const editPrompt = "Generate a different dynamic action pose of this character (Paradoxxia) maintaining the exact same character design, appearance, costume, and android features. Show the character in a new dramatic pose in a similar dystopian sci-fi environment. Keep all visual characteristics identical - only change the pose and camera angle. Hyper-realistic 3D rendering style with the same dark, grim atmosphere.";
+        
+        const { data, error } = await supabase.functions.invoke("generate-character-image", {
+          body: { 
+            prompt: editPrompt,
+            imageUrl: paradoxxiaPoster
+          },
+        });
+
+        if (error) throw error;
+
+        if (data.imageUrl) {
+          setGeneratedImage(data.imageUrl);
+          toast.success("Paradoxxia revealed in new pose!");
+        }
         setIsGenerating(false);
         return;
       }

@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import Meme from "./pages/Meme";
+import AICharacterGenerator from "./pages/AICharacterGenerator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -44,6 +45,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/meme" element={<Meme />} />
+            <Route path="/AI" element={<AICharacterGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

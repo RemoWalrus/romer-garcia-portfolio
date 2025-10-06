@@ -408,13 +408,25 @@ const AICharacterGenerator = () => {
           {/* Output Section */}
           {generatedImage && (
             <div className="space-y-4">
-              <Card className="p-0 bg-card border-border overflow-hidden">
+              <Card className="p-0 bg-card border-border overflow-hidden relative" style={{
+                border: '2px solid #00d9ff',
+                boxShadow: '0 0 10px rgba(0, 217, 255, 0.5)'
+              }}>
                 <div className="relative">
                   <img 
                     src={generatedImage} 
                     alt={displayName}
                     className="w-full"
                   />
+                  {/* Katakana watermark */}
+                  <div className="absolute bottom-2 right-2 text-xs opacity-50" style={{
+                    color: '#00d9ff',
+                    fontFamily: 'var(--font-roc)',
+                    textShadow: '0 0 5px rgba(0, 217, 255, 0.8)',
+                    fontSize: '10px'
+                  }}>
+                    パラドクシア
+                  </div>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

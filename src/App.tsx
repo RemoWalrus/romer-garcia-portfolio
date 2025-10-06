@@ -45,7 +45,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/meme" element={<Meme />} />
-            <Route path="/AI" element={<AICharacterGenerator />} />
+            <Route path="/paradoxxia" element={<AICharacterGenerator />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

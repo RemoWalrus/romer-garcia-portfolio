@@ -42,11 +42,19 @@ const AICharacterGenerator = () => {
 
     setIsGenerating(true);
     try {
-      const prompt = `Generate a photorealistic image of ${characterName}, a ${gender} ${species} from a distant future where humans live underground under the desert, androids inhabit the ruins of old cities, and cyborgs exist with different combinations of human, robot and synthetic android parts. ${
-        species === "human" ? "This is a human who has adapted to underground life." :
-        species === "android" ? "This is an android that roams the ruins of old cities." :
-        "This is a cyborg with a unique combination of human, robot and synthetic android parts."
-      } The setting is a dark sci-fi dystopian future. Make it highly detailed and atmospheric.`;
+      const clothingDescription = species === "android" && Math.random() > 0.5 
+        ? "wearing practical desert clothing made from hemp, linen, and cotton" 
+        : species === "cyborg" && Math.random() > 0.5
+        ? "wearing practical desert clothing made from hemp, linen, and cotton"
+        : species === "human"
+        ? "wearing practical desert clothing made from hemp, linen, and cotton designed to withstand harsh desert weather"
+        : "in their typical android form";
+
+      const prompt = `Generate a hyper-realistic, 3D rendered sci-fi portrait of ${characterName}, a ${gender} ${species}. ${
+        species === "human" ? "This human has adapted to underground desert life, with weathered features from the harsh environment." :
+        species === "android" ? "This is a sleek synthetic android with realistic human-like features but with subtle mechanical elements visible." :
+        "This is a cyborg with seamless integration of human flesh, robotic components, and synthetic android parts."
+      } ${clothingDescription}. The aesthetic is hard sci-fi, not fantasy - think blade runner meets dune. Photorealistic 3D rendering style. CRITICAL: Show ONLY this single character against a neutral or slightly blurred background - absolutely no other people or characters in the image. Portrait style composition focusing on the character. Highly detailed textures and realistic lighting.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { prompt },

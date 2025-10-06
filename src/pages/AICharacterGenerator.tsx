@@ -348,7 +348,7 @@ const AICharacterGenerator = () => {
               <Button
                 onClick={handleStartOver}
                 variant="outline"
-                className="w-full bg-white/10 border-white/20 hover:bg-white/20 text-foreground tracking-wider"
+                className="w-full bg-white/20 border-white/20 hover:bg-white/30 text-white tracking-wider"
                 size="lg"
               >
                 start over

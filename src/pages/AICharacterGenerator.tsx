@@ -356,7 +356,7 @@ const AICharacterGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-x-hidden">
+    <div className="min-h-screen h-full bg-background relative overflow-x-hidden flex flex-col">
       <ThemeToggle />
       {/* Circuit board background */}
       <div 
@@ -375,7 +375,7 @@ const AICharacterGenerator = () => {
         </div>
       </nav>
       
-      <main className="container mx-auto px-4 py-16 mt-16 relative z-10">
+      <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-8">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
           <motion.div 

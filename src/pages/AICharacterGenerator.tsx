@@ -702,13 +702,21 @@ const AICharacterGenerator = () => {
                         });
                         
                         const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
-                        await Filesystem.writeFile({
+                        const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
-                          directory: Directory.ExternalStorage
+                          directory: Directory.Cache
                         });
                         
-                        toast.success("Saved to Photos");
+                        // Use Share API to save to Photos
+                        await Share.share({
+                          title: `${displayName} Character`,
+                          text: 'Save this character image',
+                          url: savedFile.uri,
+                          dialogTitle: 'Save to Photos'
+                        });
+                        
+                        toast.success("Opening save options...");
                       } catch (error) {
                         console.error("Save error:", error);
                         toast.error("Failed to save to photos");

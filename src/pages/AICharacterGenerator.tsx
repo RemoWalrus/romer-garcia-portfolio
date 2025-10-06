@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -439,6 +439,27 @@ const AICharacterGenerator = () => {
                     alt={displayName}
                     className="w-full"
                   />
+                  {/* Download icon overlay */}
+                  <button
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = generatedImage;
+                      link.download = `${displayName.toLowerCase()}-character.png`;
+                      link.click();
+                    }}
+                    className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    style={{
+                      backdropFilter: 'blur(4px)'
+                    }}
+                  >
+                    <Download 
+                      size={24} 
+                      style={{
+                        color: '#00d9ff',
+                        filter: 'drop-shadow(0 0 4px rgba(0, 217, 255, 0.6))'
+                      }}
+                    />
+                  </button>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

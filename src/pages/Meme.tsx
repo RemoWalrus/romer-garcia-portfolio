@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { getProxiedData } from "@/utils/proxyHelper";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import circuitBg from "@/assets/circuit-background.png";
@@ -74,9 +74,32 @@ const Meme = () => {
     fetchRandomMeme();
   }, []);
 
+  const renderBackButton = () => {
+    return (
+      <span className="inline-flex items-baseline">
+        <span style={{ fontWeight: 100 }}>← back</span>
+        <span style={{ fontWeight: 500 }} className="ml-2">to</span>
+        <span style={{ fontWeight: 100 }} className="ml-2">home</span>
+      </span>
+    );
+  };
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
       <ThemeToggle />
+      
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border relative">
+        <div className="container mx-auto px-4 py-4">
+          <Link 
+            to="/" 
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {renderBackButton()}
+          </Link>
+        </div>
+      </nav>
+      
       {/* Circuit board background */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"

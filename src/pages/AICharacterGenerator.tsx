@@ -247,21 +247,21 @@ const AICharacterGenerator = () => {
                     <Button
                       variant={species === "human" ? "default" : "outline"}
                       onClick={() => setSpecies("human")}
-                      className="flex-1 min-w-[100px]"
+                      className="flex-1 min-w-[100px] font-roc font-medium"
                     >
                       human
                     </Button>
                     <Button
                       variant={species === "android" ? "default" : "outline"}
                       onClick={() => setSpecies("android")}
-                      className="flex-1 min-w-[100px]"
+                      className="flex-1 min-w-[100px] font-roc font-medium"
                     >
                       android
                     </Button>
                     <Button
                       variant={species === "other" ? "default" : "outline"}
                       onClick={() => setSpecies("other")}
-                      className="flex-1 min-w-[100px]"
+                      className="flex-1 min-w-[100px] font-roc font-medium"
                     >
                       other
                     </Button>
@@ -276,21 +276,21 @@ const AICharacterGenerator = () => {
                     <Button
                       variant={gender === "male" ? "default" : "outline"}
                       onClick={() => setGender("male")}
-                      className="flex-1 min-w-[100px]"
+                      className="flex-1 min-w-[100px] font-roc font-medium"
                     >
                       male
                     </Button>
                     <Button
                       variant={gender === "female" ? "default" : "outline"}
                       onClick={() => setGender("female")}
-                      className="flex-1 min-w-[100px]"
+                      className="flex-1 min-w-[100px] font-roc font-medium"
                     >
                       female
                     </Button>
                     <Button
                       variant={gender === "other" ? "default" : "outline"}
                       onClick={() => setGender("other")}
-                      className="flex-1 min-w-[100px]"
+                      className="flex-1 min-w-[100px] font-roc font-medium"
                     >
                       other
                     </Button>

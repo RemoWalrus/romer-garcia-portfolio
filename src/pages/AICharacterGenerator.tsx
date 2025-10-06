@@ -356,7 +356,8 @@ const AICharacterGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background relative overflow-x-hidden flex flex-col">
+    <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
+      <div className="min-h-full flex flex-col pb-safe">
       <ThemeToggle />
       {/* Circuit board background */}
       <div 
@@ -592,51 +593,93 @@ const AICharacterGenerator = () => {
                     />
                   </button>
                   
-                  {/* Share button - always visible for testing */}
+                  {/* Save to Photos button */}
                   <button
-                      onClick={async () => {
-                        try {
-                          const response = await fetch(generatedImage);
-                          const blob = await response.blob();
-                          const base64Data = await new Promise<string>((resolve) => {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                              const base64 = reader.result as string;
-                              resolve(base64.split(',')[1]);
-                            };
-                            reader.readAsDataURL(blob);
-                          });
-                          
-                          const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
-                          const savedFile = await Filesystem.writeFile({
-                            path: fileName,
-                            data: base64Data,
-                            directory: Directory.Cache
-                          });
-                          
-                          await Share.share({
-                            title: `${displayName} Character`,
-                            text: `Check out my ${displayName} character from Paradoxxia!`,
-                            url: savedFile.uri,
-                            dialogTitle: 'Share Character'
-                          });
-                        } catch (error) {
-                          console.error("Share error:", error);
-                          toast.error("Failed to share image");
-                        }
-                      }}
-                      className="absolute top-2 right-16 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    onClick={async () => {
+                      try {
+                        const response = await fetch(generatedImage);
+                        const blob = await response.blob();
+                        const base64Data = await new Promise<string>((resolve) => {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            const base64 = reader.result as string;
+                            resolve(base64.split(',')[1]);
+                          };
+                          reader.readAsDataURL(blob);
+                        });
+                        
+                        const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
+                        await Filesystem.writeFile({
+                          path: fileName,
+                          data: base64Data,
+                          directory: Directory.Documents
+                        });
+                        
+                        toast.success("Saved to your device");
+                      } catch (error) {
+                        console.error("Save error:", error);
+                        toast.error("Failed to save image");
+                      }
+                    }}
+                    className="absolute top-2 right-16 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    style={{
+                      backdropFilter: 'blur(4px)'
+                    }}
+                  >
+                    <Download 
+                      size={24} 
                       style={{
-                        backdropFilter: 'blur(4px)'
+                        color: '#00d9ff',
+                        filter: 'drop-shadow(0 0 4px rgba(0, 217, 255, 0.6))'
                       }}
-                    >
-                      <Share2 
-                        size={24} 
-                        style={{
-                          color: '#00d9ff',
-                          filter: 'drop-shadow(0 0 4px rgba(0, 217, 255, 0.6))'
-                        }}
-                      />
+                    />
+                  </button>
+
+                  {/* Share button */}
+                  <button
+                    onClick={async () => {
+                      try {
+                        const response = await fetch(generatedImage);
+                        const blob = await response.blob();
+                        const base64Data = await new Promise<string>((resolve) => {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            const base64 = reader.result as string;
+                            resolve(base64.split(',')[1]);
+                          };
+                          reader.readAsDataURL(blob);
+                        });
+                        
+                        const fileName = `${displayName.toLowerCase()}-${Date.now()}.png`;
+                        const savedFile = await Filesystem.writeFile({
+                          path: fileName,
+                          data: base64Data,
+                          directory: Directory.Cache
+                        });
+                        
+                        await Share.share({
+                          title: `${displayName} Character`,
+                          text: `Check out my ${displayName} character from Paradoxxia!`,
+                          url: savedFile.uri,
+                          dialogTitle: 'Share Character'
+                        });
+                      } catch (error) {
+                        console.error("Share error:", error);
+                        toast.error("Failed to share image");
+                      }
+                    }}
+                    className="absolute top-2 right-28 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    style={{
+                      backdropFilter: 'blur(4px)'
+                    }}
+                  >
+                    <Share2 
+                      size={24} 
+                      style={{
+                        color: '#00d9ff',
+                        filter: 'drop-shadow(0 0 4px rgba(0, 217, 255, 0.6))'
+                      }}
+                    />
                     </button>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
@@ -667,6 +710,7 @@ const AICharacterGenerator = () => {
           )}
         </div>
       </main>
+      </div>
     </div>
   );
 };

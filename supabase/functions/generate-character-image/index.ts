@@ -21,13 +21,16 @@ serve(async (req) => {
     console.log("Generating image with prompt:", prompt);
     console.log("Image URL provided:", imageUrl ? "Yes" : "No");
 
+    // Add watermark and square format instruction to the prompt
+    const enhancedPrompt = `${prompt} Generate as a perfect square image (1:1 aspect ratio). CRITICAL: Add very small neon blue katakana text "パラドクシア" in the bottom right corner of the image as a subtle watermark.`;
+
     // Build the content array based on whether we're editing or generating
     const content = imageUrl 
       ? [
-          { type: "text", text: prompt },
+          { type: "text", text: enhancedPrompt },
           { type: "image_url", image_url: { url: imageUrl } }
         ]
-      : prompt;
+      : enhancedPrompt;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

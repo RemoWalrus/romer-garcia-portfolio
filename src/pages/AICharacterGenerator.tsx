@@ -151,7 +151,7 @@ const AICharacterGenerator = () => {
         // Native platform - save directly to Photos/Gallery using Media plugin
         try {
           await Media.savePhoto({
-            path: base64Data
+            path: generatedImage // Use full data URL for Media plugin
           });
           toast.success("Saved to Photos");
         } catch (error) {

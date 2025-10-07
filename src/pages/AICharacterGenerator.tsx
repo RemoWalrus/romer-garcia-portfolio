@@ -643,7 +643,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
           {/* Output Section */}
           {generatedImage && (
             <div className="space-y-4">
-              <Card className="p-0 bg-card border-border overflow-visible relative" style={{
+              <Card className="p-0 bg-card border-border overflow-hidden relative" style={{
                 border: '2px solid #00d9ff',
                 boxShadow: '0 0 10px rgba(0, 217, 255, 0.5)'
               }}>
@@ -651,7 +651,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                   <img 
                     src={generatedImage} 
                     alt={displayName}
-                    className="w-full"
+                    className="w-full z-10"
                   />
                   {/* Download icon overlay */}
                   <button
@@ -689,7 +689,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                         toast.error("Failed to save image: " + (error as Error).message);
                       }
                     }}
-                    className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10 hidden md:block"
+                    className="absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-30 hidden md:block"
                     style={{
                       backdropFilter: 'blur(4px)'
                     }}
@@ -734,7 +734,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                         toast.error("Failed to save: " + (error as Error).message);
                       }
                     }}
-                    className="md:hidden absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    className="md:hidden absolute top-2 right-2 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-30"
                     style={{
                       backdropFilter: 'blur(4px)'
                     }}
@@ -780,7 +780,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                         toast.error("Failed to share: " + (error as Error).message);
                       }
                     }}
-                    className="absolute top-2 right-11 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-10"
+                    className="absolute top-2 right-11 p-2 rounded-lg bg-black/50 hover:bg-black/70 transition-colors cursor-pointer z-30"
                     style={{
                       backdropFilter: 'blur(4px)'
                     }}
@@ -794,7 +794,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                     />
                   </button>
                   {/* Trading card overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 
                       fontFamily: 'var(--font-roc)',
                       textShadow: '2px 2px 4px rgba(0,0,0,0.8)'

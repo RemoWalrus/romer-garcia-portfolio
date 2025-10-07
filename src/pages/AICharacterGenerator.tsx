@@ -908,22 +908,35 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                 boxShadow: '0 0 10px rgba(0, 217, 255, 0.5)'
               }}>
                 <div className="relative">
-                  <img 
-                    src={generatedImage} 
+                  <img
+                    src={generatedImage}
                     alt={displayName}
                     className="w-full z-10"
+                    onContextMenu={(e) => {
+                      if (Capacitor.isNativePlatform()) {
+                        e.preventDefault();
+                        handleNativeActions();
+                      }
+                    }}
+                    onTouchStart={(e) => {
+                      if (Capacitor.isNativePlatform()) {
+                        const touchTimer = setTimeout(() => {
+                          handleNativeActions();
+                        }, 500);
+                        
+                        const clearTimer = () => {
+                          clearTimeout(touchTimer);
+                          e.currentTarget.removeEventListener('touchend', clearTimer);
+                          e.currentTarget.removeEventListener('touchmove', clearTimer);
+                        };
+                        
+                        e.currentTarget.addEventListener('touchend', clearTimer);
+                        e.currentTarget.addEventListener('touchmove', clearTimer);
+                      }
+                    }}
                   />
-                  {/* Actions button - Native menu on mobile, download only on desktop */}
-                  {Capacitor.isNativePlatform() ? (
-                    <Button
-                      onClick={handleNativeActions}
-                      size="icon"
-                      variant="ghost"
-                      className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
-                    >
-                      <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
-                    </Button>
-                  ) : (
+                  {/* Download button - desktop only */}
+                  {!Capacitor.isNativePlatform() && (
                     <Button
                       onClick={handleDownload}
                       size="icon"

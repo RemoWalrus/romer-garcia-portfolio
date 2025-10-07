@@ -709,24 +709,16 @@ The final character should look like the person in the reference photo dressed f
                   <button
                     onClick={async () => {
                       try {
-                        // Convert data URL to blob
-                        const response = await fetch(generatedImage);
-                        const blob = await response.blob();
-                        
-                        // Convert blob to base64
-                        const reader = new FileReader();
-                        reader.readAsDataURL(blob);
-                        await new Promise((resolve) => reader.onloadend = resolve);
-                        const base64Data = (reader.result as string).split(',')[1];
+                        // Get base64 data from image
+                        const base64Data = generatedImage.split(',')[1];
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         
-                        // Write file to cache
+                        // Write file to cache with correct content type
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
-                          directory: Directory.Cache,
-                          recursive: true
+                          directory: Directory.Cache
                         });
                         
                         console.log("File saved to:", savedFile.uri);
@@ -762,15 +754,8 @@ The final character should look like the person in the reference photo dressed f
                   <button
                     onClick={async () => {
                       try {
-                        // Convert data URL to blob properly
-                        const response = await fetch(generatedImage);
-                        const blob = await response.blob();
-                        
-                        // Convert blob to base64
-                        const reader = new FileReader();
-                        reader.readAsDataURL(blob);
-                        await new Promise((resolve) => reader.onloadend = resolve);
-                        const base64Data = (reader.result as string).split(',')[1];
+                        // Get base64 data from image
+                        const base64Data = generatedImage.split(',')[1];
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         
@@ -778,8 +763,7 @@ The final character should look like the person in the reference photo dressed f
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
-                          directory: Directory.Cache,
-                          recursive: true
+                          directory: Directory.Cache
                         });
                         
                         console.log("File saved for share:", savedFile.uri);

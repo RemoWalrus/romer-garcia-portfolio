@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@capacitor-community/media": "^8.0.1",
+    "@capacitor/action-sheet": "^7.0.2",
     "@capacitor/android": "^7.0.1",
     "@capacitor/camera": "^7.0.2",
     "@capacitor/core": "^7.0.1",

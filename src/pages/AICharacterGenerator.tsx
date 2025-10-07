@@ -12,6 +12,7 @@ import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capaci
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Media } from '@capacitor-community/media';
+import { ActionSheet } from '@capacitor/action-sheet';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -178,6 +179,40 @@ const AICharacterGenerator = () => {
       } else {
         toast.error("Failed to capture photo. Please try again.");
       }
+    }
+  };
+
+  const handleNativeActions = async () => {
+    if (!generatedImage) return;
+
+    try {
+      const result = await ActionSheet.showActions({
+        title: 'Character Actions',
+        message: displayName || 'What would you like to do?',
+        options: [
+          {
+            title: 'Save to Photos',
+          },
+          {
+            title: 'Share',
+          },
+          {
+            title: 'Cancel',
+            style: 'cancel' as any,
+          },
+        ],
+      });
+
+      if (result.index === 0) {
+        // Save to Photos
+        await handleDownload();
+      } else if (result.index === 1) {
+        // Share
+        await handleShare();
+      }
+    } catch (error) {
+      console.error("Action sheet error:", error);
+      toast.error("Unable to show actions menu");
     }
   };
 
@@ -878,24 +913,38 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                     alt={displayName}
                     className="w-full z-10"
                   />
-                  {/* Share button */}
-                  <Button
-                    onClick={handleShare}
-                    size="icon"
-                    variant="ghost"
-                    className="absolute top-4 right-16 z-50 bg-transparent hover:bg-transparent p-2"
-                  >
-                    <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
-                  </Button>
-                  {/* Download button */}
-                  <Button
-                    onClick={handleDownload}
-                    size="icon"
-                    variant="ghost"
-                    className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
-                  >
-                    <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
-                  </Button>
+                  {/* Actions button - Native menu on mobile, separate buttons on desktop */}
+                  {Capacitor.isNativePlatform() ? (
+                    <Button
+                      onClick={handleNativeActions}
+                      size="icon"
+                      variant="ghost"
+                      className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
+                    >
+                      <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                    </Button>
+                  ) : (
+                    <>
+                      {/* Share button */}
+                      <Button
+                        onClick={handleShare}
+                        size="icon"
+                        variant="ghost"
+                        className="absolute top-4 right-16 z-50 bg-transparent hover:bg-transparent p-2"
+                      >
+                        <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                      </Button>
+                      {/* Download button */}
+                      <Button
+                        onClick={handleDownload}
+                        size="icon"
+                        variant="ghost"
+                        className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
+                      >
+                        <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                      </Button>
+                    </>
+                  )}
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

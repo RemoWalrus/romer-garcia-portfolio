@@ -737,10 +737,10 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                   <Button
                     onClick={handleShareDownload}
                     size="icon"
-                    variant="secondary"
-                    className="absolute top-4 right-4 z-50 bg-white/90 hover:bg-white text-black shadow-lg border-2 border-black/10"
+                    variant="ghost"
+                    className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
                   >
-                    <SquareArrowUp className="h-5 w-5" />
+                    <SquareArrowUp className="h-6 w-6" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
                   </Button>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">

@@ -205,7 +205,7 @@ const AICharacterGenerator = () => {
       } else if (species === "other" && gender === "other") {
         selectedSpecies = "creature";
       } else if (species === "other") {
-        const otherOptions = ["cyborg", "mutant", "robot"];
+        const otherOptions = ["cyborg", "mutant", "robot", "drone"];
         selectedSpecies = otherOptions[Math.floor(Math.random() * otherOptions.length)];
       }
       setActualSpecies(selectedSpecies);
@@ -222,6 +222,8 @@ const AICharacterGenerator = () => {
         ? "wearing practical desert clothing made from hemp, linen, and cotton designed to withstand harsh desert weather"
         : selectedSpecies === "robot"
         ? "in their mechanical form with possible clothing elements"
+        : selectedSpecies === "drone"
+        ? "in their hovering mechanical form with sensor arrays and no clothing"
         : selectedSpecies === "mutant"
         ? "wearing practical desert clothing made from hemp, linen, and cotton, with visible mutations"
         : "in their typical android form";
@@ -236,6 +238,8 @@ const AICharacterGenerator = () => {
         ? "the ruins of an old city with crumbling buildings and overgrown structures"
         : selectedSpecies === "robot"
         ? "the ruins of an old city with mechanical debris"
+        : selectedSpecies === "drone"
+        ? Math.random() > 0.5 ? "the desert surface with surveillance equipment" : "underground tunnels with technical infrastructure"
         : selectedSpecies === "mutant"
         ? Math.random() > 0.5 ? "the desert surface" : "underground caverns"
         : Math.random() > 0.5
@@ -252,6 +256,8 @@ const AICharacterGenerator = () => {
         ? `with the name "${processedName}" subtly laser-etched in small, refined futuristic typography on a body panel - barely visible but present`
         : selectedSpecies === "robot"
         ? `with the name "${processedName}" etched in futuristic typography on a visible body panel`
+        : selectedSpecies === "drone"
+        ? `with the name "${processedName}" printed on a small identification panel or sensor array`
         : selectedSpecies === "mutant"
         ? `wearing visible dog tags with the name "${processedName}" clearly engraved on them`
         : Math.random() > 0.5
@@ -295,6 +301,8 @@ const AICharacterGenerator = () => {
         ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`
         : selectedSpecies === "robot"
         ? robotDescription
+        : selectedSpecies === "drone"
+        ? "This is an autonomous hovering drone with a purely mechanical form. It has a compact, aerodynamic body with visible rotors, thrusters, or anti-gravity emitters. Features include camera arrays, sensor clusters, scanning equipment, weapon mounts, and communication antennas. The design is sleek and technical with exposed circuitry, LED indicators, and modular components. NO humanoid features, NO face plates - purely utilitarian surveillance/combat drone."
         : selectedSpecies === "mutant"
         ? Math.random() > 0.3
           ? "This is a mutant human with subtle genetic adaptations like enhanced eyes, skin patterns, or bone structure - still mostly human-looking but with clear evolutionary changes."

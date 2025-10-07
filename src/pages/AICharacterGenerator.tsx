@@ -11,6 +11,7 @@ import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Media } from '@capacitor-community/media';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -147,39 +148,26 @@ const AICharacterGenerator = () => {
       const isNative = Capacitor.isNativePlatform();
 
       if (isNative) {
-        // Native platform - save directly to Photos/Gallery
+        // Native platform - save directly to Photos/Gallery using Media plugin
         try {
-          // Try to save to External/Pictures directory (Photos app on iOS, Gallery on Android)
-          await Filesystem.writeFile({
-            path: `Pictures/${fileName}`,
-            data: base64Data,
-            directory: Directory.External,
-            recursive: true
+          await Media.savePhoto({
+            path: base64Data
           });
           toast.success("Saved to Photos");
-        } catch (externalError) {
-          // Fallback: Try Documents directory
-          try {
-            await Filesystem.writeFile({
-              path: fileName,
-              data: base64Data,
-              directory: Directory.Documents
-            });
-            toast.success("Saved to device");
-          } catch (docError) {
-            // Last resort: use share menu with save option
-            const savedFile = await Filesystem.writeFile({
-              path: fileName,
-              data: base64Data,
-              directory: Directory.Cache
-            });
-            
-            await Share.share({
-              title: 'Save Image',
-              url: savedFile.uri,
-              dialogTitle: 'Save to Photos'
-            });
-          }
+        } catch (error) {
+          console.error("Media save error:", error);
+          // Fallback to share menu
+          const savedFile = await Filesystem.writeFile({
+            path: fileName,
+            data: base64Data,
+            directory: Directory.Cache
+          });
+          
+          await Share.share({
+            title: 'Save Image',
+            url: savedFile.uri,
+            dialogTitle: 'Save to Photos'
+          });
         }
       } else {
         // Web - download the image

@@ -818,9 +818,17 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
               </Button>
 
               <div className="mt-8 p-6 bg-card border border-border rounded-lg space-y-4">
-                <p className="text-base text-foreground leading-relaxed">
-                  Step into the world you've just helped create. 
-                  Paradoxxia's story unfolds in the same shattered future your characters inhabit—a realm of memory, music, and machine evolution. She's more than legend; she's the pulse that echoes through the ruins.
+                <p className="text-base text-foreground leading-relaxed font-roc">
+                  <span style={{ fontWeight: 300 }}>Step into the world you've just helped</span>{" "}
+                  <span style={{ fontWeight: 500 }}>create.</span>{" "}
+                  <span style={{ fontWeight: 300 }}>Paradoxxia's story unfolds in the same shattered future your characters inhabit—a realm</span>{" "}
+                  <span style={{ fontWeight: 500 }}>of memory,</span>{" "}
+                  <span style={{ fontWeight: 500 }}>music,</span>{" "}
+                  <span style={{ fontWeight: 500 }}>and machine</span>{" "}
+                  <span style={{ fontWeight: 300 }}>evolution. She's more than</span>{" "}
+                  <span style={{ fontWeight: 500 }}>legend;</span>{" "}
+                  <span style={{ fontWeight: 300 }}>she's the pulse that echoes through the</span>{" "}
+                  <span style={{ fontWeight: 500 }}>ruins.</span>
                 </p>
                 <a 
                   href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"

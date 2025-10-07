@@ -273,13 +273,24 @@ const AICharacterGenerator = () => {
         : selectedSpecies === "creature"
         ? `This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical.${uploadedPhoto ? " IMPORTANT: If the uploaded photo shows a human face, you can EITHER (A) integrate that face onto the creature's head area - the face MUST be stylistically transformed to match the creature's aesthetic (same texture, color palette, lighting, and artistic style as the creature's body - if the creature is bioluminescent, the face should glow; if chitinous, the face should have an exoskeleton texture; if mechanical, the face should have robotic elements) OR (B) create a 'head in a jar' effect where the preserved human head is in a transparent sci-fi container seamlessly integrated into the creature's body with matching lighting and style." : ""}`
         : selectedSpecies === "human"
-        ? `This human has adapted to underground desert life, with weathered features from the harsh environment. ${
-          Math.random() > 0.8 ? "East Asian descent with almond-shaped eyes and straight black hair" :
-          Math.random() > 0.6 ? "African descent with dark skin, broad nose, and coiled textured hair" :
-          Math.random() > 0.4 ? "South Asian descent with brown skin and dark features" :
-          Math.random() > 0.2 ? "Latino/Hispanic descent with tan skin and dark wavy hair" :
-          "Middle Eastern descent with olive skin and dark features"
-        }. Show realistic ethnic features appropriate to their heritage.`
+        ? (() => {
+            const ethnicity = Math.random() > 0.8 ? "East Asian descent with almond-shaped eyes and straight black hair" :
+              Math.random() > 0.6 ? "African descent with dark skin, broad nose, and coiled textured hair" :
+              Math.random() > 0.4 ? "South Asian descent with brown skin and dark features" :
+              Math.random() > 0.2 ? "Latino/Hispanic descent with tan skin and dark wavy hair" :
+              "Middle Eastern descent with olive skin and dark features";
+            
+            const roleRandom = Math.random();
+            const role = roleRandom > 0.66 ? "soldier" : roleRandom > 0.33 ? "scientist" : "civilian";
+            
+            const roleDescription = role === "soldier" 
+              ? "This is a hardened SOLDIER adapted to underground desert life. They wear tactical gear, carry visible weapons (rifle, sidearm, knife), have military bearing, and show signs of combat experience (scars, weathered look, muscular build). Equipment includes tactical vest, ammunition pouches, combat boots, and protective gear."
+              : role === "scientist"
+              ? "This is a SCIENTIST adapted to underground desert life. They wear practical research gear with lab coat elements adapted for harsh conditions, carry scanning devices or tablets, have protective goggles or eyewear, and show intellectual demeanor. Equipment includes modified lab coat, tool belt with instruments, data pads, and sample collection gear."
+              : "This is a tough CIVILIAN survivor adapted to underground desert life. Despite not being military, they look capable and battle-hardened - weathered skin, determined expression, practical survival gear, makeshift armor pieces, improvised weapons (pipe, blade), and scavenged equipment. They have the look of someone who's fought to survive.";
+            
+            return `${roleDescription} ${ethnicity}. Show realistic ethnic features appropriate to their heritage. All humans in this world are survivors - even civilians look tough, resourceful, and ready for danger.`;
+          })()
         : selectedSpecies === "android" 
         ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`
         : selectedSpecies === "robot"

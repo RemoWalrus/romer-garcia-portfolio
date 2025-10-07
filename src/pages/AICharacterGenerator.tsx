@@ -148,11 +148,20 @@ const AICharacterGenerator = () => {
       const isNative = Capacitor.isNativePlatform();
 
       if (isNative) {
-        // Native platform - save directly to Photos/Gallery using Media plugin
+        // Native platform - save to filesystem first, then save to Photos
         try {
-          await Media.savePhoto({
-            path: generatedImage // Use full data URL for Media plugin
+          // Write file to cache directory first
+          const savedFile = await Filesystem.writeFile({
+            path: fileName,
+            data: base64Data,
+            directory: Directory.Cache
           });
+
+          // Use the file path to save to Photos
+          await Media.savePhoto({
+            path: savedFile.uri
+          });
+          
           toast.success("Saved to Photos");
         } catch (error) {
           console.error("Media save error:", error);

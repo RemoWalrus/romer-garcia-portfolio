@@ -271,7 +271,7 @@ const AICharacterGenerator = () => {
       const speciesDescription = selectedSpecies === "defective"
         ? "This is a DEFECTIVE being - a failed experiment or malfunctioning entity. It could be a broken android with exposed wiring and sparking circuits, a corrupted AI manifestation with glitching holographic parts, or a failed cyborg with decaying flesh and malfunctioning mechanical components. Show visible damage: sparking wires, broken panels, leaking fluids, flickering lights, missing parts, and signs of system failure. The being is clearly broken, unstable, and deteriorating."
         : selectedSpecies === "creature"
-        ? "This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical."
+        ? `This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical.${uploadedPhoto ? " IMPORTANT: If the uploaded photo shows a human face, you can EITHER integrate that face onto the creature's head area OR create a 'head in a jar' effect where the human head is preserved in a transparent container attached to or integrated into the creature's body." : ""}`
         : selectedSpecies === "human"
         ? `This human has adapted to underground desert life, with weathered features from the harsh environment. ${
           Math.random() > 0.8 ? "East Asian descent with almond-shaped eyes and straight black hair" :
@@ -705,21 +705,30 @@ The final character should look like the person in the reference photo dressed f
                         }
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
+                        
+                        // Write file with explicit MIME type
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
-                          directory: Directory.Cache
+                          directory: Directory.Cache,
+                          recursive: true
                         });
                         
-                        console.log("File saved for share:", savedFile.uri);
+                        console.log("File saved to:", savedFile.uri);
                         
-                        // Use Share API to save to Photos
-                        await Share.share({
+                        // For iOS, we need to provide files array instead of url
+                        const shareOptions: any = {
                           title: `${displayName} Character`,
                           text: 'Save this character image',
-                          url: savedFile.uri,
                           dialogTitle: 'Save to Photos'
-                        });
+                        };
+                        
+                        // Use files array for better iOS compatibility
+                        if (savedFile.uri) {
+                          shareOptions.files = [savedFile.uri];
+                        }
+                        
+                        await Share.share(shareOptions);
                         
                         toast.success("Opening save options...");
                       } catch (error) {
@@ -752,20 +761,30 @@ The final character should look like the person in the reference photo dressed f
                         }
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
+                        
+                        // Write file with explicit handling
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
-                          directory: Directory.Cache
+                          directory: Directory.Cache,
+                          recursive: true
                         });
                         
                         console.log("File saved for share:", savedFile.uri);
                         
-                        await Share.share({
+                        // For iOS, use files array instead of url
+                        const shareOptions: any = {
                           title: `${displayName} Character`,
                           text: `Check out my ${displayName} character from Paradoxxia!`,
-                          url: savedFile.uri,
                           dialogTitle: 'Share Character'
-                        });
+                        };
+                        
+                        // Use files array for better iOS compatibility
+                        if (savedFile.uri) {
+                          shareOptions.files = [savedFile.uri];
+                        }
+                        
+                        await Share.share(shareOptions);
                         
                         toast.success("Opening share options...");
                       } catch (error) {

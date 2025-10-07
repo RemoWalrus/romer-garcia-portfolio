@@ -596,7 +596,7 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                   <Label className="text-base font-medium text-foreground font-roc">upload photo (optional):</Label>
                   <p className="text-sm text-muted-foreground">Upload a photo to use as reference for your character</p>
                   {uploadedPhoto ? (
-                    <div className="relative max-h-[40vh] overflow-hidden">
+                    <div className="relative max-h-[25vh] overflow-hidden">
                       <img src={uploadedPhoto} alt="Uploaded" className="w-full h-full object-contain rounded-lg" />
                       <Button
                         variant="destructive"
@@ -647,11 +647,11 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                 border: '2px solid #00d9ff',
                 boxShadow: '0 0 10px rgba(0, 217, 255, 0.5)'
               }}>
-                <div className="relative">
+                <div className="relative max-h-[60vh] overflow-hidden">
                   <img 
                     src={generatedImage} 
                     alt={displayName}
-                    className="w-full"
+                    className="w-full h-full object-contain"
                   />
                   {/* Download icon overlay */}
                   <button

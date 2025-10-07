@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, SquareArrowUp } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Link } from "react-router-dom";
@@ -65,7 +65,7 @@ const AICharacterGenerator = () => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-        input.capture = 'environment'; // Request camera on mobile web
+        input.capture = 'user'; // Request front camera on mobile web
         
         input.onchange = (e) => {
           const file = (e.target as HTMLInputElement).files?.[0];
@@ -84,12 +84,13 @@ const AICharacterGenerator = () => {
         return;
       }
 
-      // Native platform - use Capacitor Camera
+      // Native platform - use Capacitor Camera with front camera default
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Prompt,
+        source: CameraSource.Prompt, // Allows choosing between camera and gallery
+        direction: CameraDirection.Front, // Default to front-facing camera
       });
 
       if (image.dataUrl) {
@@ -344,7 +345,18 @@ const AICharacterGenerator = () => {
               ? "This is a SCIENTIST adapted to underground desert life. They wear practical research gear with lab coat elements adapted for harsh conditions, carry scanning devices or tablets, have protective goggles or eyewear, and show intellectual demeanor. Equipment includes modified lab coat, tool belt with instruments, data pads, and sample collection gear."
               : "This is a tough CIVILIAN survivor adapted to underground desert life. Despite not being military, they look capable and battle-hardened - weathered skin, determined expression, practical survival gear, makeshift armor pieces, improvised weapons (pipe, blade), and scavenged equipment. They have the look of someone who's fought to survive.";
             
-            return `${roleDescription} ${ethnicity}. Show realistic ethnic features appropriate to their heritage. All humans in this world are survivors - even civilians look tough, resourceful, and ready for danger.`;
+            // Post-apocalyptic body types (scarce food/water) - unless photo reference is provided
+            const bodyType = uploadedPhoto 
+              ? "Body type and build MUST exactly match the reference photo provided"
+              : (() => {
+                  const rand = Math.random();
+                  if (rand > 0.7) return "lean and wiry build with visible muscle definition but minimal body fat - adapted to scarce resources";
+                  if (rand > 0.4) return "gaunt, thin frame showing signs of malnutrition with prominent bones and tight skin - survival mode physique";
+                  if (rand > 0.2) return "athletic but slim build with toned muscles and low body fat - efficient body for desert survival";
+                  return "emaciated appearance with visible ribs and angular features - harsh reality of limited food and water";
+                })();
+            
+            return `${roleDescription} ${ethnicity}. ${bodyType}. Show realistic ethnic features appropriate to their heritage. All humans in this world are survivors - even civilians look tough, resourceful, and ready for danger.`;
           })()
         : selectedSpecies === "android" 
         ? `This is a sleek synthetic android with smooth, artificial appearance rather than mechanical or robotic. ${androidFaceDescription} The body is synthetic with clean panels and seamless construction - no exposed gears or obvious mechanical parts, more like a high-tech mannequin with advanced materials.`
@@ -451,15 +463,15 @@ MANDATORY REFERENCE MATCHING (TOP PRIORITY):
 - EXACT mouth/lip shape from the reference
 - MATCH hair color and texture from the reference
 - REPLICATE distinctive features: scars, marks, facial characteristics
-- PRESERVE body build and proportions from the reference
+- PRESERVE body build and proportions from the reference - match EXACT body type, height proportions, muscle definition, body fat, and overall physique
 ${selectedSpecies === 'human' ? '- INCLUDE any accessories visible in the reference (glasses, piercings, etc.)' : ''}
 
 ${gender !== 'other' ? `GENDER TRANSFORMATION (if needed):
 If the reference photo appears to be a different gender than the selected "${gender}" gender:
-- Transform the character to be ${gender} while keeping ALL ethnic features, skin tone, and facial structure
-- For male: Add masculine features (stronger jaw, broader shoulders, facial hair options, deeper brow)
-- For female: Add feminine features (softer jawline, refined features, longer hair options, delicate bone structure)
-- PRESERVE: Exact skin color, ethnicity, eye shape/color, nose characteristics, and overall facial proportions
+- Transform the character to be ${gender} while keeping ALL ethnic features, skin tone, facial structure, and body proportions
+- For male: Add masculine features (stronger jaw, broader shoulders, facial hair options, deeper brow) while maintaining the reference body type
+- For female: Add feminine features (softer jawline, refined features, longer hair options, delicate bone structure) while maintaining the reference body type
+- PRESERVE: Exact skin color, ethnicity, eye shape/color, nose characteristics, body build, and overall physical proportions
 - The result should look like the same person if they were ${gender}
 ` : ''}
 STYLE REQUIREMENTS (Applied AFTER matching features):
@@ -468,7 +480,7 @@ STYLE REQUIREMENTS (Applied AFTER matching features):
 - Use the same dark, gritty textures across the entire character
 - Ensure cohesive artistic treatment - not a photo collage
 
-The result must preserve the EXACT ethnicity and skin tone from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
+The result must preserve the EXACT ethnicity, skin tone, and body type from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
         : '';
 
       const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;

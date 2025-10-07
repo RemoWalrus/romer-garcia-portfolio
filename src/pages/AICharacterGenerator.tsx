@@ -817,7 +817,7 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                 start over
               </Button>
 
-              <div className="mt-8 p-6 bg-card border border-border rounded-lg space-y-4">
+              <div className="mt-8 p-6 bg-muted/30 rounded-lg space-y-4">
                 <p className="text-base text-foreground leading-relaxed font-roc">
                   <span style={{ fontWeight: 300 }}>Step into the world you've just helped</span>{" "}
                   <span style={{ fontWeight: 500 }}>create.</span>{" "}

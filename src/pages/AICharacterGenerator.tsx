@@ -18,6 +18,7 @@ import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variant
 import circuitBg from "@/assets/circuit-background.png";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const AICharacterGenerator = () => {
   const [step, setStep] = useState(1);
@@ -570,6 +571,7 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
       <div className="min-h-full flex flex-col pb-safe">
+      <GoogleAnalytics />
       <ThemeToggle />
       {/* Circuit board background */}
       <div 

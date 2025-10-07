@@ -4,6 +4,7 @@ import { getProxiedData } from "@/utils/proxyHelper";
 import { useNavigate, Link } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import circuitBg from "@/assets/circuit-background.png";
 
 interface MemeData {
@@ -86,6 +87,7 @@ const Meme = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
+      <GoogleAnalytics />
       <ThemeToggle />
       
       {/* Navigation Bar */}

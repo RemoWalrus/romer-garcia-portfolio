@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getProxiedStorageUrl } from "@/utils/proxyHelper";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const NotFound = () => {
   const location = useLocation();
@@ -59,6 +60,7 @@ const NotFound = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950">
+      <GoogleAnalytics />
       <ThemeToggle />
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">

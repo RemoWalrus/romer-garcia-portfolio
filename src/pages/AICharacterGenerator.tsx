@@ -604,8 +604,8 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                   <Label className="text-base font-medium text-foreground font-roc">upload photo (optional):</Label>
                   <p className="text-sm text-muted-foreground">Upload a photo to use as reference for your character</p>
                   {uploadedPhoto ? (
-                    <div className="relative max-h-[20vh] overflow-hidden">
-                      <img src={uploadedPhoto} alt="Uploaded" className="w-full h-full object-contain rounded-lg" />
+                    <div className="relative h-[20vh] overflow-hidden flex items-center justify-center bg-black/10 rounded-lg">
+                      <img src={uploadedPhoto} alt="Uploaded" className="max-h-full max-w-full object-contain rounded-lg" />
                       <Button
                         variant="destructive"
                         size="sm"

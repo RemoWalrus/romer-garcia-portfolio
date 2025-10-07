@@ -392,23 +392,26 @@ const AICharacterGenerator = () => {
       const nameTheme = getNameInspiration(processedName);
 
       const photoReference = uploadedPhoto 
-        ? `CRITICAL STYLE INTEGRATION - REFERENCE PHOTO: A reference photo has been provided. You MUST seamlessly blend the reference person into the character while PERFECTLY MATCHING the overall artistic style, lighting, texture, and atmosphere of the rest of the image. This is not a photo collage - every part of the character must have the SAME artistic treatment:
+        ? `CRITICAL PHOTO REFERENCE INTEGRATION: A reference photo has been provided. You MUST accurately match the person's physical features while rendering in the 3D horror sci-fi style:
 
-STYLE MATCHING REQUIREMENTS (MANDATORY):
-- Apply the EXACT SAME rendering style to the face as the body/environment (3D rendered, not photographic)
-- Match the EXACT SAME lighting conditions, color grading, and atmospheric effects across ALL parts of the character
-- Use the EXACT SAME texture quality and level of detail for face, body, and clothing
-- Ensure the EXACT SAME level of weathering, grime, and dystopian wear on facial features as on the rest
-- Apply the EXACT SAME color palette and saturation levels to skin, hair, and facial features
-- The face should have the SAME dark, gritty, stylized treatment as everything else in the scene
-- NO photorealistic face on a stylized body - EVERYTHING must be cohesively rendered in the same dark 3D horror sci-fi style
+MANDATORY REFERENCE MATCHING (TOP PRIORITY):
+- EXACT skin tone and ethnicity from the reference photo - if the person is Black, Latino, Asian, White, or any other ethnicity, the character MUST have the same skin tone and ethnic features
+- PRECISE facial structure: Match the jawline, cheekbones, forehead shape, chin shape exactly as shown
+- ACCURATE eye shape, spacing, and color from the reference
+- PRECISE nose shape and size from the reference
+- EXACT mouth/lip shape from the reference
+- MATCH hair color, texture, length, and style from the reference${selectedSpecies === 'human' ? ' including facial hair style if present' : ''}
+- REPLICATE distinctive features: scars, marks, facial characteristics
+- PRESERVE body build and proportions from the reference
+${selectedSpecies === 'human' ? '- INCLUDE any accessories visible in the reference (glasses, piercings, etc.)' : ''}
 
-REFERENCE MATCHING (secondary to style):
-- Use the reference photo for: facial structure (jawline, cheekbones, forehead, chin), eye shape and spacing, nose shape, mouth shape, hair ${selectedSpecies === 'human' ? 'style/length/color' : 'color/texture'}, skin tone base${selectedSpecies === 'human' ? ', facial hair style, accessories (glasses, piercings, etc.)' : ''}
-- Body build and proportions similar to reference
-- Distinctive facial features and marks
+STYLE REQUIREMENTS (Applied AFTER matching features):
+- Render all matched features in the same 3D horror sci-fi style
+- Apply consistent lighting, weathering, and grime to the matched features
+- Use the same dark, gritty textures across the entire character
+- Ensure cohesive artistic treatment - not a photo collage
 
-The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the apocalyptic ${selectedSpecies} setting - not a photo edited onto a 3D render. Every pixel must share the same artistic DNA.`
+The result must be the SAME PERSON from the reference photo, but rendered in the apocalyptic ${selectedSpecies} style. Ethnicity and skin tone are NON-NEGOTIABLE - they must match the reference exactly.`
         : '';
 
       const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
@@ -665,10 +668,20 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                   <button
                     onClick={async () => {
                       try {
+                        if (!generatedImage || !generatedImage.startsWith('data:image')) {
+                          toast.error("No valid image to download");
+                          return;
+                        }
+
                         const isMobile = Capacitor.isNativePlatform();
                         
                         if (isMobile) {
                           const base64Data = generatedImage.split(',')[1];
+                          if (!base64Data) {
+                            toast.error("Invalid image data");
+                            return;
+                          }
+                          
                           const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                           
                           const savedFile = await Filesystem.writeFile({
@@ -689,7 +702,9 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                           const link = document.createElement('a');
                           link.href = generatedImage;
                           link.download = `${displayName.toLowerCase()}-character.png`;
+                          document.body.appendChild(link);
                           link.click();
+                          document.body.removeChild(link);
                           toast.success("Image downloaded!");
                         }
                       } catch (error) {
@@ -715,12 +730,19 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                   <button
                     onClick={async () => {
                       try {
-                        // Get base64 data from image
+                        if (!generatedImage || !generatedImage.startsWith('data:image')) {
+                          toast.error("No valid image to save");
+                          return;
+                        }
+
                         const base64Data = generatedImage.split(',')[1];
+                        if (!base64Data) {
+                          toast.error("Invalid image data");
+                          return;
+                        }
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         
-                        // Write file to cache with correct content type
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
@@ -729,7 +751,6 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                         
                         console.log("File saved to:", savedFile.uri);
                         
-                        // Share with files array (iOS compatible)
                         await Share.share({
                           files: [savedFile.uri],
                           title: `${displayName} Character`,
@@ -760,12 +781,19 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                   <button
                     onClick={async () => {
                       try {
-                        // Get base64 data from image
+                        if (!generatedImage || !generatedImage.startsWith('data:image')) {
+                          toast.error("No valid image to share");
+                          return;
+                        }
+
                         const base64Data = generatedImage.split(',')[1];
+                        if (!base64Data) {
+                          toast.error("Invalid image data");
+                          return;
+                        }
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         
-                        // Write file to cache
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
@@ -774,7 +802,6 @@ The final result must look like a SINGLE COHESIVE 3D-RENDERED CHARACTER in the a
                         
                         console.log("File saved for share:", savedFile.uri);
                         
-                        // Share with files array (iOS compatible)
                         await Share.share({
                           files: [savedFile.uri],
                           title: `${displayName} Character`,

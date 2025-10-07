@@ -400,18 +400,26 @@ MANDATORY REFERENCE MATCHING (TOP PRIORITY):
 - ACCURATE eye shape, spacing, and color from the reference
 - PRECISE nose shape and size from the reference
 - EXACT mouth/lip shape from the reference
-- MATCH hair color, texture, length, and style from the reference${selectedSpecies === 'human' ? ' including facial hair style if present' : ''}
+- MATCH hair color and texture from the reference
 - REPLICATE distinctive features: scars, marks, facial characteristics
 - PRESERVE body build and proportions from the reference
 ${selectedSpecies === 'human' ? '- INCLUDE any accessories visible in the reference (glasses, piercings, etc.)' : ''}
 
+${gender !== 'other' ? `GENDER TRANSFORMATION (if needed):
+If the reference photo appears to be a different gender than the selected "${gender}" gender:
+- Transform the character to be ${gender} while keeping ALL ethnic features, skin tone, and facial structure
+- For male: Add masculine features (stronger jaw, broader shoulders, facial hair options, deeper brow)
+- For female: Add feminine features (softer jawline, refined features, longer hair options, delicate bone structure)
+- PRESERVE: Exact skin color, ethnicity, eye shape/color, nose characteristics, and overall facial proportions
+- The result should look like the same person if they were ${gender}
+` : ''}
 STYLE REQUIREMENTS (Applied AFTER matching features):
 - Render all matched features in the same 3D horror sci-fi style
 - Apply consistent lighting, weathering, and grime to the matched features
 - Use the same dark, gritty textures across the entire character
 - Ensure cohesive artistic treatment - not a photo collage
 
-The result must be the SAME PERSON from the reference photo, but rendered in the apocalyptic ${selectedSpecies} style. Ethnicity and skin tone are NON-NEGOTIABLE - they must match the reference exactly.`
+The result must preserve the EXACT ethnicity and skin tone from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
         : '';
 
       const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;

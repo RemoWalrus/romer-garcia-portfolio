@@ -67,7 +67,6 @@ const AICharacterGenerator = () => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-        input.capture = 'user'; // Request front camera on mobile web
         
         input.onchange = (e) => {
           const file = (e.target as HTMLInputElement).files?.[0];
@@ -86,13 +85,15 @@ const AICharacterGenerator = () => {
         return;
       }
 
-      // Native platform - use Capacitor Camera with front camera default
+      // Native platform - use Capacitor Camera with gallery access
       const image = await Camera.getPhoto({
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.DataUrl,
-        source: CameraSource.Prompt, // Allows choosing between camera and gallery
-        direction: CameraDirection.Front, // Default to front-facing camera
+        source: CameraSource.Photos, // Direct access to photo gallery
+        promptLabelHeader: 'Select Photo',
+        promptLabelPhoto: 'From Gallery',
+        promptLabelPicture: 'Take Photo'
       });
 
       if (image.dataUrl) {
@@ -149,35 +150,45 @@ const AICharacterGenerator = () => {
       const isNative = Capacitor.isNativePlatform();
 
       if (isNative) {
-        // Native platform - save to filesystem first, then save to Photos
+        // Native platform - save directly to Photos using base64
         try {
-          // Write file to cache directory first
-          const savedFile = await Filesystem.writeFile({
-            path: fileName,
-            data: base64Data,
-            directory: Directory.Cache
-          });
-
-          // Use the file path to save to Photos
+          // On iOS, Media.savePhoto expects base64 data with proper prefix
           await Media.savePhoto({
-            path: savedFile.uri
+            path: generatedImage // Pass the full data URL
           });
           
           toast.success("Saved to Photos");
         } catch (error) {
           console.error("Media save error:", error);
-          // Fallback to share menu
-          const savedFile = await Filesystem.writeFile({
-            path: fileName,
-            data: base64Data,
-            directory: Directory.Cache
-          });
-          
-          await Share.share({
-            title: 'Save Image',
-            url: savedFile.uri,
-            dialogTitle: 'Save to Photos'
-          });
+          // Fallback: Try writing to filesystem first
+          try {
+            const savedFile = await Filesystem.writeFile({
+              path: fileName,
+              data: base64Data,
+              directory: Directory.Documents
+            });
+            
+            // Try saving with file URI
+            await Media.savePhoto({
+              path: savedFile.uri
+            });
+            
+            toast.success("Saved to Photos");
+          } catch (fallbackError) {
+            console.error("Fallback save error:", fallbackError);
+            // Last resort - use share menu
+            const savedFile = await Filesystem.writeFile({
+              path: fileName,
+              data: base64Data,
+              directory: Directory.Cache
+            });
+            
+            await Share.share({
+              title: 'Save Image',
+              url: savedFile.uri,
+              dialogTitle: 'Save to Photos'
+            });
+          }
         }
       } else {
         // Web - download the image

@@ -808,15 +808,6 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                 </div>
               </Card>
               
-              <Button
-                onClick={handleStartOver}
-                variant="outline"
-                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
-                size="lg"
-              >
-                start over
-              </Button>
-
               <div className="mt-8 p-6 bg-muted/30 rounded-lg space-y-4">
                 <p className="text-base text-foreground leading-relaxed font-roc">
                   <span style={{ fontWeight: 300 }}>Step into the world you've just helped</span>{" "}
@@ -839,6 +830,15 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                   Meet Paradoxxia on Spotify <MoveRight className="ml-2 w-4 h-4" />
                 </a>
               </div>
+
+              <Button
+                onClick={handleStartOver}
+                variant="outline"
+                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
+                size="lg"
+              >
+                start over
+              </Button>
             </div>
           )}
         </div>

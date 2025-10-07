@@ -118,26 +118,18 @@ const AICharacterGenerator = () => {
       const isNative = Capacitor.isNativePlatform();
 
       if (isNative) {
-        // Native platform - save to gallery and share
+        // Native platform - save directly to gallery/photos
         const base64Data = generatedImage.split(',')[1];
         const fileName = `${displayName || 'character'}_${Date.now()}.png`;
 
-        // Save to device
+        // Save to External directory which appears in device gallery
         const savedFile = await Filesystem.writeFile({
           path: fileName,
           data: base64Data,
-          directory: Directory.Cache
+          directory: Directory.External // This makes it appear in the gallery
         });
 
-        // Share the file
-        await Share.share({
-          title: displayName || 'My Character',
-          text: `Check out my character: ${displayName}`,
-          url: savedFile.uri,
-          dialogTitle: 'Share your character'
-        });
-
-        toast.success("Image ready to share!");
+        toast.success("Image saved to gallery!");
       } else {
         // Web - download the image
         const link = document.createElement('a');
@@ -149,11 +141,33 @@ const AICharacterGenerator = () => {
         toast.success("Image downloaded!");
       }
     } catch (error: any) {
-      console.error("Share/Download error:", error);
-      if (error.message?.includes('cancelled') || error.message?.includes('canceled')) {
-        toast.info("Share cancelled");
+      console.error("Save/Download error:", error);
+      
+      // If External directory fails, try sharing as fallback
+      if (error.message?.includes('permission') || error.message?.includes('External')) {
+        try {
+          const base64Data = generatedImage.split(',')[1];
+          const fileName = `${displayName || 'character'}_${Date.now()}.png`;
+          
+          const savedFile = await Filesystem.writeFile({
+            path: fileName,
+            data: base64Data,
+            directory: Directory.Cache
+          });
+
+          await Share.share({
+            title: displayName || 'My Character',
+            text: `Check out my character: ${displayName}`,
+            url: savedFile.uri,
+            dialogTitle: 'Save to gallery'
+          });
+          
+          toast.info("Use 'Save Image' from the share menu");
+        } catch (shareError) {
+          toast.error("Failed to save image. Please check app permissions.");
+        }
       } else {
-        toast.error("Failed to share/download image");
+        toast.error("Failed to save image");
       }
     }
   };
@@ -740,7 +754,7 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                     variant="ghost"
                     className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
                   >
-                    <SquareArrowUp className="h-6 w-6" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                    <SquareArrowUp className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
                   </Button>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">

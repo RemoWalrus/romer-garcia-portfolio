@@ -279,45 +279,27 @@ const AICharacterGenerator = () => {
       const isNative = Capacitor.isNativePlatform();
 
       if (isNative) {
-        // Native platform - save directly to Photos using base64
+        // Native platform - save to photo library
         try {
-          // On iOS, Media.savePhoto expects base64 data with proper prefix
-          await Media.savePhoto({
-            path: generatedImage // Pass the full data URL
+          // Write file to cache first
+          const savedFile = await Filesystem.writeFile({
+            path: fileName,
+            data: base64Data,
+            directory: Directory.Cache
           });
           
+          console.log('File saved to cache:', savedFile.uri);
+          
+          // Save to photo library using the file URI
+          const result = await Media.savePhoto({
+            path: savedFile.uri
+          });
+          
+          console.log('Media save result:', result);
           toast.success("Saved to Photos");
-        } catch (error) {
-          console.error("Media save error:", error);
-          // Fallback: Try writing to filesystem first
-          try {
-            const savedFile = await Filesystem.writeFile({
-              path: fileName,
-              data: base64Data,
-              directory: Directory.Documents
-            });
-            
-            // Try saving with file URI
-            await Media.savePhoto({
-              path: savedFile.uri
-            });
-            
-            toast.success("Saved to Photos");
-          } catch (fallbackError) {
-            console.error("Fallback save error:", fallbackError);
-            // Last resort - use share menu
-            const savedFile = await Filesystem.writeFile({
-              path: fileName,
-              data: base64Data,
-              directory: Directory.Cache
-            });
-            
-            await Share.share({
-              title: 'Save Image',
-              url: savedFile.uri,
-              dialogTitle: 'Save to Photos'
-            });
-          }
+        } catch (error: any) {
+          console.error("Save to photos error:", error);
+          toast.error(`Failed to save: ${error.message || 'Unknown error'}`);
         }
       } else {
         // Web - download the image

@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, Share2, Download } from "lucide-react";
+import { Loader2, Share2, Download, MoveRight } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
@@ -816,6 +816,21 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
               >
                 start over
               </Button>
+
+              <div className="mt-8 p-6 bg-card border border-border rounded-lg space-y-4">
+                <p className="text-base text-foreground leading-relaxed">
+                  Step into the world you've just helped create. 
+                  Paradoxxia's story unfolds in the same shattered future your characters inhabit—a realm of memory, music, and machine evolution. She's more than legend; she's the pulse that echoes through the ruins.
+                </p>
+                <a 
+                  href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                >
+                  Meet Paradoxxia on Spotify <MoveRight className="ml-2 w-4 h-4" />
+                </a>
+              </div>
             </div>
           )}
         </div>

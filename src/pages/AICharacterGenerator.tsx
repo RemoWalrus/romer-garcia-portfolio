@@ -271,7 +271,7 @@ const AICharacterGenerator = () => {
       const speciesDescription = selectedSpecies === "defective"
         ? "This is a DEFECTIVE being - a failed experiment or malfunctioning entity. It could be a broken android with exposed wiring and sparking circuits, a corrupted AI manifestation with glitching holographic parts, or a failed cyborg with decaying flesh and malfunctioning mechanical components. Show visible damage: sparking wires, broken panels, leaking fluids, flickering lights, missing parts, and signs of system failure. The being is clearly broken, unstable, and deteriorating."
         : selectedSpecies === "creature"
-        ? `This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical.${uploadedPhoto ? " IMPORTANT: If the uploaded photo shows a human face, you can EITHER integrate that face onto the creature's head area OR create a 'head in a jar' effect where the human head is preserved in a transparent container attached to or integrated into the creature's body." : ""}`
+        ? `This is a NON-HUMANOID creature with NO human features whatsoever. It has an alien, otherworldly form that could be animal-like (quadrupedal, winged, predatory), insect-like (chitinous exoskeleton, multiple limbs, compound eyes, antennae), or drone-like (hovering, mechanical-organic hybrid, sensor arrays). The creature has bioluminescent features, unusual sensory organs, and a completely alien anatomy. CRITICAL: This creature has ZERO human characteristics - no upright stance, no human face, no human limbs. Its form is purely alien, beast-like, or mechanical.${uploadedPhoto ? " IMPORTANT: If the uploaded photo shows a human face, you can EITHER (A) integrate that face onto the creature's head area - the face MUST be stylistically transformed to match the creature's aesthetic (same texture, color palette, lighting, and artistic style as the creature's body - if the creature is bioluminescent, the face should glow; if chitinous, the face should have an exoskeleton texture; if mechanical, the face should have robotic elements) OR (B) create a 'head in a jar' effect where the preserved human head is in a transparent sci-fi container seamlessly integrated into the creature's body with matching lighting and style." : ""}`
         : selectedSpecies === "human"
         ? `This human has adapted to underground desert life, with weathered features from the harsh environment. ${
           Math.random() > 0.8 ? "East Asian descent with almond-shaped eyes and straight black hair" :
@@ -698,15 +698,19 @@ The final character should look like the person in the reference photo dressed f
                   <button
                     onClick={async () => {
                       try {
-                        // Extract base64 data from data URL
-                        let base64Data = generatedImage;
-                        if (base64Data.includes(',')) {
-                          base64Data = base64Data.split(',')[1];
-                        }
+                        // Convert data URL to blob
+                        const response = await fetch(generatedImage);
+                        const blob = await response.blob();
+                        
+                        // Convert blob to base64
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        await new Promise((resolve) => reader.onloadend = resolve);
+                        const base64Data = (reader.result as string).split(',')[1];
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         
-                        // Write file with explicit MIME type
+                        // Write file to cache
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
@@ -716,19 +720,12 @@ The final character should look like the person in the reference photo dressed f
                         
                         console.log("File saved to:", savedFile.uri);
                         
-                        // For iOS, we need to provide files array instead of url
-                        const shareOptions: any = {
+                        // Share with files array (iOS compatible)
+                        await Share.share({
+                          files: [savedFile.uri],
                           title: `${displayName} Character`,
-                          text: 'Save this character image',
                           dialogTitle: 'Save to Photos'
-                        };
-                        
-                        // Use files array for better iOS compatibility
-                        if (savedFile.uri) {
-                          shareOptions.files = [savedFile.uri];
-                        }
-                        
-                        await Share.share(shareOptions);
+                        });
                         
                         toast.success("Opening save options...");
                       } catch (error) {
@@ -754,15 +751,19 @@ The final character should look like the person in the reference photo dressed f
                   <button
                     onClick={async () => {
                       try {
-                        // Extract base64 data from data URL
-                        let base64Data = generatedImage;
-                        if (base64Data.includes(',')) {
-                          base64Data = base64Data.split(',')[1];
-                        }
+                        // Convert data URL to blob properly
+                        const response = await fetch(generatedImage);
+                        const blob = await response.blob();
+                        
+                        // Convert blob to base64
+                        const reader = new FileReader();
+                        reader.readAsDataURL(blob);
+                        await new Promise((resolve) => reader.onloadend = resolve);
+                        const base64Data = (reader.result as string).split(',')[1];
                         
                         const fileName = `${displayName.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
                         
-                        // Write file with explicit handling
+                        // Write file to cache
                         const savedFile = await Filesystem.writeFile({
                           path: fileName,
                           data: base64Data,
@@ -772,19 +773,13 @@ The final character should look like the person in the reference photo dressed f
                         
                         console.log("File saved for share:", savedFile.uri);
                         
-                        // For iOS, use files array instead of url
-                        const shareOptions: any = {
+                        // Share with files array (iOS compatible)
+                        await Share.share({
+                          files: [savedFile.uri],
                           title: `${displayName} Character`,
                           text: `Check out my ${displayName} character from Paradoxxia!`,
                           dialogTitle: 'Share Character'
-                        };
-                        
-                        // Use files array for better iOS compatibility
-                        if (savedFile.uri) {
-                          shareOptions.files = [savedFile.uri];
-                        }
-                        
-                        await Share.share(shareOptions);
+                        });
                         
                         toast.success("Opening share options...");
                       } catch (error) {

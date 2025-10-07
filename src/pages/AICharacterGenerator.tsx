@@ -187,19 +187,46 @@ const AICharacterGenerator = () => {
 
       const base64Data = generatedImage.split(',')[1];
       const fileName = `${displayName || 'character'}_${Date.now()}.png`;
+      const isNative = Capacitor.isNativePlatform();
 
-      const savedFile = await Filesystem.writeFile({
-        path: fileName,
-        data: base64Data,
-        directory: Directory.Cache
-      });
+      if (isNative) {
+        // Mobile: Write file and share with files parameter
+        const savedFile = await Filesystem.writeFile({
+          path: fileName,
+          data: base64Data,
+          directory: Directory.Cache
+        });
 
-      await Share.share({
-        title: displayName || 'My Character',
-        text: `Check out my character: ${displayName}`,
-        url: savedFile.uri,
-        dialogTitle: 'Share your character'
-      });
+        await Share.share({
+          title: displayName || 'My Character',
+          text: `Check out my character: ${displayName}`,
+          url: savedFile.uri,
+          files: [savedFile.uri],
+          dialogTitle: 'Share your character'
+        });
+      } else {
+        // Desktop/Web: Use Web Share API with file blob
+        const response = await fetch(generatedImage);
+        const blob = await response.blob();
+        const file = new File([blob], fileName, { type: 'image/png' });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: displayName || 'My Character',
+            text: `Check out my character: ${displayName}`,
+            files: [file]
+          });
+        } else {
+          // Fallback: Copy to clipboard or download
+          toast.info("Share not supported. Downloading image instead.");
+          const link = document.createElement('a');
+          link.href = generatedImage;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
     } catch (error: any) {
       console.error("Share error:", error);
       if (!error.message?.includes('cancelled') && !error.message?.includes('canceled')) {

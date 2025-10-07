@@ -913,7 +913,7 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                     alt={displayName}
                     className="w-full z-10"
                   />
-                  {/* Actions button - Native menu on mobile, separate buttons on desktop */}
+                  {/* Actions button - Native menu on mobile, download only on desktop */}
                   {Capacitor.isNativePlatform() ? (
                     <Button
                       onClick={handleNativeActions}
@@ -924,26 +924,14 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                       <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
                     </Button>
                   ) : (
-                    <>
-                      {/* Share button */}
-                      <Button
-                        onClick={handleShare}
-                        size="icon"
-                        variant="ghost"
-                        className="absolute top-4 right-16 z-50 bg-transparent hover:bg-transparent p-2"
-                      >
-                        <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
-                      </Button>
-                      {/* Download button */}
-                      <Button
-                        onClick={handleDownload}
-                        size="icon"
-                        variant="ghost"
-                        className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
-                      >
-                        <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
-                      </Button>
-                    </>
+                    <Button
+                      onClick={handleDownload}
+                      size="icon"
+                      variant="ghost"
+                      className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
+                    >
+                      <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                    </Button>
                   )}
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">

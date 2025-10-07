@@ -6,9 +6,11 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, SquareArrowUp } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
@@ -104,6 +106,53 @@ const AICharacterGenerator = () => {
         toast.info("Photo upload cancelled");
       } else {
         toast.error("Failed to capture photo. Please try again.");
+      }
+    }
+  };
+
+  const handleShareDownload = async () => {
+    try {
+      if (!generatedImage) return;
+
+      const isNative = Capacitor.isNativePlatform();
+
+      if (isNative) {
+        // Native platform - save to gallery and share
+        const base64Data = generatedImage.split(',')[1];
+        const fileName = `${displayName || 'character'}_${Date.now()}.png`;
+
+        // Save to device
+        const savedFile = await Filesystem.writeFile({
+          path: fileName,
+          data: base64Data,
+          directory: Directory.Cache
+        });
+
+        // Share the file
+        await Share.share({
+          title: displayName || 'My Character',
+          text: `Check out my character: ${displayName}`,
+          url: savedFile.uri,
+          dialogTitle: 'Share your character'
+        });
+
+        toast.success("Image ready to share!");
+      } else {
+        // Web - download the image
+        const link = document.createElement('a');
+        link.href = generatedImage;
+        link.download = `${displayName || 'character'}_${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.success("Image downloaded!");
+      }
+    } catch (error: any) {
+      console.error("Share/Download error:", error);
+      if (error.message?.includes('cancelled') || error.message?.includes('canceled')) {
+        toast.info("Share cancelled");
+      } else {
+        toast.error("Failed to share/download image");
       }
     }
   };
@@ -672,6 +721,15 @@ The result must preserve the EXACT ethnicity and skin tone from the reference ph
                     alt={displayName}
                     className="w-full z-10"
                   />
+                  {/* Share/Download button */}
+                  <Button
+                    onClick={handleShareDownload}
+                    size="icon"
+                    variant="secondary"
+                    className="absolute top-4 right-4 z-30 bg-black/60 hover:bg-black/80 text-white border-white/20"
+                  >
+                    <SquareArrowUp className="h-5 w-5" />
+                  </Button>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">
                     <h2 className="text-3xl font-bold text-white mb-1" style={{ 

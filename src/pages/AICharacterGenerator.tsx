@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Loader2, SquareArrowUp } from "lucide-react";
+import { Loader2, Share2, Download } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
@@ -111,7 +111,34 @@ const AICharacterGenerator = () => {
     }
   };
 
-  const handleShareDownload = async () => {
+  const handleShare = async () => {
+    try {
+      if (!generatedImage) return;
+
+      const base64Data = generatedImage.split(',')[1];
+      const fileName = `${displayName || 'character'}_${Date.now()}.png`;
+
+      const savedFile = await Filesystem.writeFile({
+        path: fileName,
+        data: base64Data,
+        directory: Directory.Cache
+      });
+
+      await Share.share({
+        title: displayName || 'My Character',
+        text: `Check out my character: ${displayName}`,
+        url: savedFile.uri,
+        dialogTitle: 'Share your character'
+      });
+    } catch (error: any) {
+      console.error("Share error:", error);
+      if (!error.message?.includes('cancelled') && !error.message?.includes('canceled')) {
+        toast.error("Failed to share image");
+      }
+    }
+  };
+
+  const handleDownload = async () => {
     try {
       if (!generatedImage) return;
 
@@ -141,7 +168,7 @@ const AICharacterGenerator = () => {
         toast.success("Image downloaded!");
       }
     } catch (error: any) {
-      console.error("Save/Download error:", error);
+      console.error("Download error:", error);
       
       // If External directory fails, try sharing as fallback
       if (error.message?.includes('permission') || error.message?.includes('External')) {
@@ -747,14 +774,23 @@ The result must preserve the EXACT ethnicity, skin tone, and body type from the 
                     alt={displayName}
                     className="w-full z-10"
                   />
-                  {/* Share/Download button */}
+                  {/* Share button */}
                   <Button
-                    onClick={handleShareDownload}
+                    onClick={handleShare}
+                    size="icon"
+                    variant="ghost"
+                    className="absolute top-4 right-16 z-50 bg-transparent hover:bg-transparent p-2"
+                  >
+                    <Share2 className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                  </Button>
+                  {/* Download button */}
+                  <Button
+                    onClick={handleDownload}
                     size="icon"
                     variant="ghost"
                     className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
                   >
-                    <SquareArrowUp className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
+                    <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
                   </Button>
                   {/* Trading card overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">

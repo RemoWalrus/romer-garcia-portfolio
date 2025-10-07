@@ -142,58 +142,58 @@ const AICharacterGenerator = () => {
     try {
       if (!generatedImage) return;
 
+      const base64Data = generatedImage.split(',')[1];
+      const fileName = `${displayName || 'character'}_${Date.now()}.png`;
       const isNative = Capacitor.isNativePlatform();
 
       if (isNative) {
-        // Native platform - save directly to gallery/photos
-        const base64Data = generatedImage.split(',')[1];
-        const fileName = `${displayName || 'character'}_${Date.now()}.png`;
-
-        // Save to External directory which appears in device gallery
-        const savedFile = await Filesystem.writeFile({
-          path: fileName,
-          data: base64Data,
-          directory: Directory.External // This makes it appear in the gallery
-        });
-
-        toast.success("Image saved to gallery!");
+        // Native platform - save directly to Photos/Gallery
+        try {
+          // Try to save to External/Pictures directory (Photos app on iOS, Gallery on Android)
+          await Filesystem.writeFile({
+            path: `Pictures/${fileName}`,
+            data: base64Data,
+            directory: Directory.External,
+            recursive: true
+          });
+          toast.success("Saved to Photos");
+        } catch (externalError) {
+          // Fallback: Try Documents directory
+          try {
+            await Filesystem.writeFile({
+              path: fileName,
+              data: base64Data,
+              directory: Directory.Documents
+            });
+            toast.success("Saved to device");
+          } catch (docError) {
+            // Last resort: use share menu with save option
+            const savedFile = await Filesystem.writeFile({
+              path: fileName,
+              data: base64Data,
+              directory: Directory.Cache
+            });
+            
+            await Share.share({
+              title: 'Save Image',
+              url: savedFile.uri,
+              dialogTitle: 'Save to Photos'
+            });
+          }
+        }
       } else {
         // Web - download the image
         const link = document.createElement('a');
         link.href = generatedImage;
-        link.download = `${displayName || 'character'}_${Date.now()}.png`;
+        link.download = fileName;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        toast.success("Image downloaded!");
+        toast.success("Downloaded!");
       }
     } catch (error: any) {
       console.error("Download error:", error);
-      
-      // If External directory fails, try sharing as fallback
-      if (error.message?.includes('permission') || error.message?.includes('External')) {
-        try {
-          const base64Data = generatedImage.split(',')[1];
-          const fileName = `${displayName || 'character'}_${Date.now()}.png`;
-          
-          const savedFile = await Filesystem.writeFile({
-            path: fileName,
-            data: base64Data,
-            directory: Directory.Cache
-          });
-
-          await Share.share({
-            title: displayName || 'My Character',
-            text: `Check out my character: ${displayName}`,
-            url: savedFile.uri,
-            dialogTitle: 'Save to gallery'
-          });
-          
-          toast.info("Use 'Save Image' from the share menu");
-        } catch (shareError) {
-          toast.error("Failed to save image. Please check app permissions.");
-        }
-      } else {
+      if (!error.message?.includes('cancelled') && !error.message?.includes('canceled')) {
         toast.error("Failed to save image");
       }
     }

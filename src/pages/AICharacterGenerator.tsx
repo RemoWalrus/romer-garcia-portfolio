@@ -726,7 +726,7 @@ The result must preserve the EXACT ethnicity and skin tone from the reference ph
                     onClick={handleShareDownload}
                     size="icon"
                     variant="secondary"
-                    className="absolute top-4 right-4 z-30 bg-black/60 hover:bg-black/80 text-white border-white/20"
+                    className="absolute top-4 right-4 z-50 bg-white/90 hover:bg-white text-black shadow-lg border-2 border-black/10"
                   >
                     <SquareArrowUp className="h-5 w-5" />
                   </Button>

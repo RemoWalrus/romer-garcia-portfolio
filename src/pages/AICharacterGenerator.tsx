@@ -196,12 +196,14 @@ const AICharacterGenerator = () => {
       // Special case: names with exactly 3 X's create a defective being
       const isDefective = hasTripleX(processedName);
       
-      // Special case: both "other" selections create a non-humanoid creature
+      // Special case: both "other" selections create varied non-humanoid beings
       let selectedSpecies = species;
       if (isDefective) {
         selectedSpecies = "defective";
       } else if (species === "other" && gender === "other") {
-        selectedSpecies = "creature";
+        // Mix of non-humanoid robots, machine drones, mutants, and creatures
+        const doubleOtherOptions = ["creature", "robot", "drone", "mutant", "mutant"];
+        selectedSpecies = doubleOtherOptions[Math.floor(Math.random() * doubleOtherOptions.length)];
       } else if (species === "other") {
         const otherOptions = ["cyborg", "mutant", "robot", "drone"];
         selectedSpecies = otherOptions[Math.floor(Math.random() * otherOptions.length)];

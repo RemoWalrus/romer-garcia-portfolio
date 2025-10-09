@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { getProxiedData } from "@/utils/proxyHelper";
 import { useNavigate, Link } from "react-router-dom";
@@ -87,6 +88,21 @@ const Meme = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
+      <Helmet>
+        <title>Romer Garcia | Dev Memes & Coding Wisdom 🚀💻</title>
+        <meta name="description" content="Dive into Romer Garcia's vault of developer humor, coding tips, and tech trivia. A whimsical escape for creative minds and code warriors alike." />
+        <meta name="keywords" content="developer memes, coding humor, programming jokes, tech tips, Romer Garcia, software engineering, developer life" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />
+        <meta property="og:description" content="Dive into Romer Garcia's vault of developer humor, coding tips, and tech trivia. A whimsical escape for creative minds and code warriors alike." />
+        <meta property="og:type" content="website" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />
+        <meta name="twitter:description" content="Dive into Romer Garcia's vault of developer humor, coding tips, and tech trivia. A whimsical escape for creative minds and code warriors alike." />
+      </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />
       

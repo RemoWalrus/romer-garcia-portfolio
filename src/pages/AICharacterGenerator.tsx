@@ -645,7 +645,22 @@ STYLE REQUIREMENTS (Applied AFTER matching features):
 CRITICAL: The final image must look unmistakably like the person in the reference photo - someone who knows them should immediately recognize them. Preserve the EXACT ethnicity, skin tone, hair color, hair texture, facial features, and body type from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
         : '';
 
-      const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;
+      const prompt = `Generate a PHOTOREALISTIC full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. 
+
+PHOTOREALISM REQUIREMENTS (CRITICAL):
+- Render as if photographed with professional camera equipment (Canon EOS R5, 85mm f/1.4 lens, shallow depth of field)
+- ULTRA-REALISTIC skin with visible pores, subtle imperfections, natural skin variation, realistic subsurface scattering
+- Authentic material rendering: fabric weave details, metal oxidation and scratches, leather grain texture, accumulated dirt and grime
+- Natural cinematic lighting with realistic shadows, environmental bounce light, accurate ambient occlusion
+- Real-world physics: believable gravity effects, natural cloth draping, authentic wear patterns
+- Lifelike eyes with detailed iris structure, realistic catchlights, natural moisture and reflections
+- Natural hair rendering with individual strand detail, realistic texture, natural movement and flow
+- Authentic weathering and aging: rust progression, scratch patterns, stain accumulation should look genuinely aged
+- Subtle film grain and natural lens characteristics for photographic authenticity
+- NO cartoon/stylized features, NO obvious CGI look, NO plastic/waxy skin appearance
+- The final result should be indistinguishable from a high-quality photograph - aim for complete photorealism
+
+${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets Blade Runner meets The Road, but rendered as if captured by a real camera. Worn, weathered textures with photorealistic material properties, dark moody natural lighting with realistic shadow falloff, dystopian horror atmosphere with photographic quality. Show decay, dirt, scars, and the harsh reality of survival with complete photographic accuracy. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Ultra-detailed photorealistic textures emphasizing authentic grime, wear, and realistic material damage. Dark, desaturated color palette with natural cinematic lighting contrasts as seen in real photography.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { 

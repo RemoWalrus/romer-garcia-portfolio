@@ -614,34 +614,35 @@ const AICharacterGenerator = () => {
       const nameTheme = getNameInspiration(processedName);
 
       const photoReference = uploadedPhoto 
-        ? `CRITICAL PHOTO REFERENCE INTEGRATION: A reference photo has been provided. You MUST accurately match the person's physical features while rendering in the 3D horror sci-fi style:
+        ? `CRITICAL PHOTO REFERENCE INTEGRATION: A reference photo has been provided. You MUST PRECISELY REPLICATE the person's physical features while rendering in the 3D horror sci-fi style:
 
-MANDATORY REFERENCE MATCHING (TOP PRIORITY):
-- EXACT skin tone and ethnicity from the reference photo - if the person is Black, Latino, Asian, White, or any other ethnicity, the character MUST have the same skin tone and ethnic features
-- PRECISE facial structure: Match the jawline, cheekbones, forehead shape, chin shape exactly as shown
-- ACCURATE eye shape, spacing, and color from the reference
-- PRECISE nose shape and size from the reference
-- EXACT mouth/lip shape from the reference
-- MATCH hair color and texture from the reference
-- REPLICATE distinctive features: scars, marks, facial characteristics
-- PRESERVE body build and proportions from the reference - match EXACT body type, height proportions, muscle definition, body fat, and overall physique
+MANDATORY REFERENCE MATCHING (HIGHEST PRIORITY - FOLLOW EXACTLY):
+- EXACT skin tone and ethnicity from the reference photo - if the person is Black, Latino, Asian, White, or any other ethnicity, the character MUST have the IDENTICAL skin tone and ALL ethnic features
+- PRECISE facial structure: EXACTLY replicate the jawline, cheekbones, forehead shape, chin shape, face width, and facial proportions as shown in the reference
+- ACCURATE eye shape, size, spacing, and color from the reference - match the EXACT eye characteristics
+- PRECISE nose shape, size, bridge, and nostril characteristics from the reference - this is CRITICAL for facial recognition
+- EXACT mouth/lip shape, fullness, and proportions from the reference
+- MATCH hair color, texture, length, and style EXACTLY from the reference - if they have black wavy hair, use black wavy hair; if blonde straight hair, use blonde straight hair
+- REPLICATE ALL distinctive features: scars, marks, facial characteristics, expression tendencies
+- PRESERVE body build and proportions from the reference - match EXACT body type, height proportions, shoulder width, muscle definition, body fat percentage, and overall physique PRECISELY
+- MATCH the overall facial harmony and unique combination of features that makes this person recognizable
 ${selectedSpecies === 'human' ? '- INCLUDE any accessories visible in the reference (glasses, piercings, etc.)' : ''}
 
 ${gender !== 'other' ? `GENDER TRANSFORMATION (if needed):
 If the reference photo appears to be a different gender than the selected "${gender}" gender:
-- Transform the character to be ${gender} while keeping ALL ethnic features, skin tone, facial structure, and body proportions
-- For male: Add masculine features (stronger jaw, broader shoulders, facial hair options, deeper brow) while maintaining the reference body type
-- For female: Add feminine features (softer jawline, refined features, longer hair options, delicate bone structure) while maintaining the reference body type
-- PRESERVE: Exact skin color, ethnicity, eye shape/color, nose characteristics, body build, and overall physical proportions
-- The result should look like the same person if they were ${gender}
+- Transform the character to be ${gender} while keeping ALL ethnic features, skin tone, facial structure, and body proportions IDENTICAL
+- For male: Add masculine features (stronger jaw, broader shoulders, facial hair options, deeper brow) while maintaining the EXACT reference body type and facial bone structure
+- For female: Add feminine features (softer jawline, refined features, longer hair options, delicate bone structure) while maintaining the EXACT reference body type and facial bone structure
+- PRESERVE WITHOUT ANY CHANGES: Exact skin color, ethnicity, eye shape/color, nose characteristics, facial proportions, body build, and overall physical proportions
+- The result should look like the SAME PERSON if they were ${gender} - immediately recognizable as the reference individual
 ` : ''}
 STYLE REQUIREMENTS (Applied AFTER matching features):
-- Render all matched features in the same 3D horror sci-fi style
-- Apply consistent lighting, weathering, and grime to the matched features
+- Render all matched features in the same 3D horror sci-fi style with consistent artistic treatment
+- Apply consistent lighting, weathering, and grime to the matched features while preserving facial recognition
 - Use the same dark, gritty textures across the entire character
-- Ensure cohesive artistic treatment - not a photo collage
+- Ensure cohesive artistic treatment - not a photo collage - but features must remain CLEARLY RECOGNIZABLE as the reference person
 
-The result must preserve the EXACT ethnicity, skin tone, and body type from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
+CRITICAL: The final image must look unmistakably like the person in the reference photo - someone who knows them should immediately recognize them. Preserve the EXACT ethnicity, skin tone, hair color, hair texture, facial features, and body type from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
         : '';
 
       const prompt = `Generate a hyper-realistic, grim and dark 3D rendered full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets blade runner meets The Road. Photorealistic 3D rendering style with worn, weathered textures, dark moody lighting with deep shadows, dystopian horror atmosphere. Show decay, dirt, scars, and the harsh reality of survival. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Highly detailed textures with emphasis on grime, wear, and realistic damage. Dark, desaturated color palette with stark lighting contrasts.`;

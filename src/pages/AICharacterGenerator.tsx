@@ -656,22 +656,29 @@ STYLE REQUIREMENTS (Applied AFTER matching features):
 CRITICAL: The final image must look unmistakably like the person in the reference photo - someone who knows them should immediately recognize them. Preserve the EXACT ethnicity, skin tone, hair color, hair texture, facial features, and body type from the reference photo${gender !== 'other' ? `, transformed to ${gender} gender if needed` : ''}, rendered in the apocalyptic ${selectedSpecies} style.`
         : '';
 
-      const prompt = `Generate a PHOTOREALISTIC full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. 
+      const prompt = `Generate a HYPER-PHOTOREALISTIC full-body horror sci-fi image of ${processedName}, a ${gender} ${selectedSpecies} in action within ${location}. 
 
-PHOTOREALISM REQUIREMENTS (CRITICAL):
-- Render as if photographed with professional camera equipment (Canon EOS R5, 85mm f/1.4 lens, shallow depth of field)
-- ULTRA-REALISTIC skin with visible pores, subtle imperfections, natural skin variation, realistic subsurface scattering
-- Authentic material rendering: fabric weave details, metal oxidation and scratches, leather grain texture, accumulated dirt and grime
-- Natural cinematic lighting with realistic shadows, environmental bounce light, accurate ambient occlusion
-- Real-world physics: believable gravity effects, natural cloth draping, authentic wear patterns
-- Lifelike eyes with detailed iris structure, realistic catchlights, natural moisture and reflections
-- Natural hair rendering with individual strand detail, realistic texture, natural movement and flow
-- Authentic weathering and aging: rust progression, scratch patterns, stain accumulation should look genuinely aged
-- Subtle film grain and natural lens characteristics for photographic authenticity
-- NO cartoon/stylized features, NO obvious CGI look, NO plastic/waxy skin appearance
-- The final result should be indistinguishable from a high-quality photograph - aim for complete photorealism
+MAXIMUM PHOTOREALISM REQUIREMENTS (ABSOLUTE PRIORITY):
+- This MUST be indistinguishable from a real photograph taken by a professional photographer
+- Professional cinema camera quality (ARRI Alexa LF, RED Komodo 6K, or equivalent professional equipment)
+- Prime lens characteristics: 85mm f/1.4 or 50mm f/1.2 with natural bokeh, subtle chromatic aberration, realistic depth of field
+- ULTRA-DETAILED skin rendering: visible pores, skin texture variation, natural oils, fine wrinkles, authentic subsurface scattering, realistic blood flow under skin
+- Hyper-realistic eyes: detailed iris fibers, realistic pupil dilation, natural eye moisture and tear ducts, accurate catchlights and reflections, subtle veining
+- Perfect material physics: authentic fabric weave (individual thread detail), metal with realistic grain structure, leather with natural creasing patterns, plastic with proper light transmission
+- Advanced weathering: rust with accurate oxidation layers, scratches with proper edge highlights, dirt accumulation in natural crevices, grime with realistic transparency
+- Cinematic lighting setup: three-point lighting with realistic fall-off, accurate color temperature (cooler shadows, warmer highlights), natural ambient occlusion, realistic global illumination
+- Volumetric atmosphere: realistic fog/dust particles with accurate light scattering, atmospheric perspective, natural haze
+- Real-world imperfections: slight lens distortion, natural film grain or sensor noise, subtle motion blur where appropriate, authentic depth of field with proper bokeh
+- Perfect hair rendering: individual strand separation, natural hair movement, realistic texture and shine, flyaway hairs
+- Authentic skin imperfections: freckles, moles, scars with proper healing patterns, age spots, skin discoloration, natural blemishes
+- Realistic cloth physics: natural draping with gravity, wrinkle formation at stress points, fabric transparency where appropriate
+- Professional color grading: natural color palette, realistic saturation levels, authentic shadow and highlight detail
+- Real photographic composition: natural framing, authentic perspective, believable camera angles
+- NO stylization, NO CGI appearance, NO waxy skin, NO perfect symmetry, NO artificial smoothness
+- Add photographic artifacts: subtle lens flare where appropriate, natural vignetting, realistic edge sharpness variation
+- The final image should fool viewers into thinking this is a real photograph of a real scene - absolute photorealism is NON-NEGOTIABLE
 
-${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets Blade Runner meets The Road, but rendered as if captured by a real camera. Worn, weathered textures with photorealistic material properties, dark moody natural lighting with realistic shadow falloff, dystopian horror atmosphere with photographic quality. Show decay, dirt, scars, and the harsh reality of survival with complete photographic accuracy. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible. Ultra-detailed photorealistic textures emphasizing authentic grime, wear, and realistic material damage. Dark, desaturated color palette with natural cinematic lighting contrasts as seen in real photography.`;
+${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets Blade Runner meets The Road, but this MUST look like an actual photograph from these films, not concept art. Every surface must have photorealistic material properties: metal shows authentic oxidation and wear patterns, fabric has realistic weave and dirt accumulation, skin shows natural imperfections and realistic lighting. Natural cinematic lighting with realistic shadow gradients, authentic bounce light, and proper ambient occlusion. Dystopian atmosphere captured with photographic authenticity. Show decay, dirt, scars, and harsh survival conditions with complete photographic accuracy - every detail must be as realistic as a documentary photograph. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible with realistic engraving or etching. Maximum photorealistic detail in every aspect: authentic material aging, realistic environmental interaction, natural lighting behavior, genuine weathering patterns. Color palette should match real-world photography with natural desaturation, realistic contrast, and authentic shadow/highlight detail as captured by professional cinema cameras.`;
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { 

@@ -3,12 +3,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import Meme from "./pages/Meme";
 import AICharacterGenerator from "./pages/AICharacterGenerator";
+import ContactRedirect from "./pages/ContactRedirect";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -48,7 +49,7 @@ const App = () => {
               <Route path="/" element={<Index />} />
               <Route path="/meme" element={<Meme />} />
               <Route path="/paradoxxia" element={<AICharacterGenerator />} />
-              <Route path="/contact" element={<Navigate to="/#contact" replace />} />
+              <Route path="/contact" element={<ContactRedirect />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

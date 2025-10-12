@@ -6,12 +6,18 @@ const ContactRedirect = () => {
   
   useEffect(() => {
     navigate('/', { replace: true });
-    setTimeout(() => {
+    
+    // Wait for content to load before scrolling
+    const scrollToContact = () => {
       const contactSection = document.getElementById('contact');
       if (contactSection) {
         contactSection.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
+    };
+    
+    // Try multiple times with increasing delays to ensure content is loaded
+    setTimeout(scrollToContact, 500);
+    setTimeout(scrollToContact, 1000);
   }, [navigate]);
   
   return null;

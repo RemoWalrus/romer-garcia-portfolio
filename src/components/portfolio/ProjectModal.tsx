@@ -97,7 +97,7 @@ export const ProjectModal = ({
               <ProjectVideo url={project.youtube_url} title={project.title} />
             ) : project.additional_images?.length > 0 ? (
               <ProjectGallery 
-                images={project.additional_images}
+                images={[project.image_url, ...project.additional_images]}
                 title={project.title}
                 heroImageIndex={heroImageIndex}
                 onImageClick={onImageClick}

@@ -27,8 +27,16 @@ serve(async (req) => {
 ABSOLUTE REQUIREMENTS:
 1. ASPECT RATIO: Must be exactly 1:1 square format (1024x1024 pixels or similar square dimensions). The image MUST be square.
 2. WATERMARK: In the bottom right corner, add very small glowing neon cyan/blue katakana text "パラドクシア" (approximately 10-12pt font size). The text should have a subtle cyan glow effect, be clearly legible but unobtrusive, positioned 15-20 pixels from the bottom and right edges. Keep the watermark consistently small across all images.
+3. PHOTO-REALISTIC STYLE: Generate a highly photo-realistic image with:
+   - Ultra-realistic skin textures, pores, and fine details
+   - Natural, physically accurate lighting with realistic shadows and highlights
+   - True-to-life materials and surfaces (fabric, metal, skin, etc.)
+   - Cinematic depth of field and professional photography quality
+   - Lifelike proportions and anatomically correct features
+   - Realistic color grading and tones
+   - Professional portrait photography aesthetic similar to high-end Android smartphone cameras
 
-These requirements are NON-NEGOTIABLE. The image must be square 1:1 ratio.`;
+These requirements are NON-NEGOTIABLE. The image must be square 1:1 ratio and photo-realistic.`;
 
     // Build the content array based on whether we're editing or generating
     const content = imageUrl 

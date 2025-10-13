@@ -21,7 +21,7 @@ export const ProjectGallery = ({
       <div className="flex-1 min-h-0 flex flex-col md:justify-center bg-white dark:bg-neutral-950">
         <motion.div 
           key={heroImageIndex}
-          className="flex items-center justify-center p-4"
+          className="flex items-center justify-center p-2 md:p-4 w-full h-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
@@ -29,7 +29,7 @@ export const ProjectGallery = ({
           <img
             src={images[heroImageIndex]}
             alt={`${title} - Featured`}
-            className="max-w-full max-h-full object-contain"
+            className="w-full h-auto object-contain"
           />
         </motion.div>
         

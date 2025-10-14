@@ -29,7 +29,7 @@ export const ProjectGallery = ({
           <img
             src={images[heroImageIndex]}
             alt={`${title} - Featured`}
-            className="w-full h-auto object-contain"
+            className="max-w-full max-h-full object-contain"
           />
         </motion.div>
         

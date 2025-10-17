@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -22,73 +23,6 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
 const AICharacterGenerator = () => {
-  useEffect(() => {
-    // Update meta tags for Paradoxxia page
-    document.title = "パラドクシア | AI Character Generator | Paradoxxia Universe";
-    
-    // Meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator—where science meets poetry, and stories are born from the ruins.');
-    }
-    
-    // Meta keywords
-    const metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (metaKeywords) {
-      metaKeywords.setAttribute('content', 'パラドクシア, Paradoxxia universe, AI character generator, cinematic sci-fi, android creator, futuristic character builder, romergarcia, post-apocalyptic world, story generator, worldbuilding tool, character design AI, immersive sci-fi experience');
-    }
-    
-    // Open Graph tags
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) {
-      ogTitle.setAttribute('content', 'パラドクシア | AI Character Generator | Paradoxxia Universe');
-    }
-    
-    const ogDescription = document.querySelector('meta[property="og:description"]');
-    if (ogDescription) {
-      ogDescription.setAttribute('content', 'Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator.');
-    }
-    
-    // Twitter Card tags
-    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    if (twitterTitle) {
-      twitterTitle.setAttribute('content', 'パラドクシア | AI Character Generator');
-    }
-    
-    const twitterDescription = document.querySelector('meta[name="twitter:description"]');
-    if (twitterDescription) {
-      twitterDescription.setAttribute('content', 'Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator.');
-    }
-    
-    // Cleanup - restore original meta tags when component unmounts
-    return () => {
-      document.title = "Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader";
-      
-      if (metaDescription) {
-        metaDescription.setAttribute('content', 'STRATEGIC THINKER | DESIGN INNOVATOR | DIGITAL MEDIA LEADER. Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations. Known as a visionary problem solver, seamlessly blending strategy, creativity, and technology to craft compelling visual narratives.');
-      }
-      
-      if (metaKeywords) {
-        metaKeywords.setAttribute('content', 'Design Lead, Multimedia Designer, Digital Media, Brand Transformation, Visual Narrative, Creative Strategy, Digital Campaigns');
-      }
-      
-      if (ogTitle) {
-        ogTitle.setAttribute('content', 'Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader');
-      }
-      
-      if (ogDescription) {
-        ogDescription.setAttribute('content', 'Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations.');
-      }
-      
-      if (twitterTitle) {
-        twitterTitle.setAttribute('content', 'Romer Garcia | Strategic Thinker | Design Innovator');
-      }
-      
-      if (twitterDescription) {
-        twitterDescription.setAttribute('content', 'Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations.');
-      }
-    };
-  }, []);
   const [step, setStep] = useState(1);
   const [species, setSpecies] = useState("");
   const [actualSpecies, setActualSpecies] = useState("");
@@ -726,6 +660,22 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
+      <Helmet>
+        <title>パラドクシア | AI Character Generator | Paradoxxia Universe</title>
+        <meta name="description" content="Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator—where science meets poetry, and stories are born from the ruins." />
+        <meta name="keywords" content="パラドクシア, Paradoxxia universe, AI character generator, cinematic sci-fi, android creator, futuristic character builder, romergarcia, post-apocalyptic world, story generator, worldbuilding tool, character design AI, immersive sci-fi experience" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="パラドクシア | AI Character Generator | Paradoxxia Universe" />
+        <meta property="og:description" content="Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="パラドクシア | AI Character Generator" />
+        <meta name="twitter:description" content="Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator." />
+      </Helmet>
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />
       <ThemeToggle />

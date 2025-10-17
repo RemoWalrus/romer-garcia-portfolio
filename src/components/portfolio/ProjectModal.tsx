@@ -27,9 +27,9 @@ export const ProjectModal = ({
 
   return (
     <Dialog open={!!project} onOpenChange={onClose}>
-      <DialogContent className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[calc(100vh-2rem)] md:h-[90vh] overflow-y-auto md:overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent top-[50%] translate-y-[-50%]">
-        <div className="flex flex-col md:flex-row h-full">
-          <div className="md:w-2/5 p-6 md:p-12 overflow-y-auto">
+      <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
+        <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
+          <div className="md:w-2/5 p-4 md:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
               <div className="mb-2">
                 <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
@@ -92,7 +92,7 @@ export const ProjectModal = ({
             </div>
           </div>
 
-          <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col">
+          <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col w-full overflow-hidden">
             {project.youtube_url ? (
               <ProjectVideo url={project.youtube_url} title={project.title} />
             ) : project.additional_images?.length > 0 ? (

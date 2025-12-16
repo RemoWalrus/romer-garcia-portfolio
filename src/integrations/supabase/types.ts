@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -320,7 +320,7 @@ export type Database = {
     }
     Functions: {
       get_active_meme: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           attribution: string | null
           coding_tip: string | null
@@ -332,9 +332,15 @@ export type Database = {
           update_info: string | null
           updated_at: string
         }[]
+        SetofOptions: {
+          from: "*"
+          to: "daily_memes"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
       get_random_quote: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           author: string
           created_at: string
@@ -342,6 +348,12 @@ export type Database = {
           quote: string
           updated_at: string
         }[]
+        SetofOptions: {
+          from: "*"
+          to: "quotes"
+          isOneToOne: false
+          isSetofReturn: true
+        }
       }
     }
     Enums: {

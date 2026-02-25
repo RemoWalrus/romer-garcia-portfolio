@@ -22,7 +22,6 @@ export const About = () => {
   });
 
   useEffect(() => {
-    // Set direct storage URLs using helper function
     setPortraitUrl(getProxiedStorageUrl('profile', 'RomerSelfPortrait.jpg'));
   }, []);
 
@@ -52,7 +51,7 @@ export const About = () => {
   };
 
   return (
-    <section id="about" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden isolate">
+    <section id="about" aria-label="About Romer Garcia" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden isolate">
       <div 
         className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-multiply dark:mix-blend-soft-light"
         style={{
@@ -71,7 +70,7 @@ export const About = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-12 text-center"
         >
-          {aboutData.title}
+          U.S. Army Veteran & AI-Driven Design Leader
         </motion.h2>
         
         <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
@@ -84,7 +83,7 @@ export const About = () => {
             {portraitUrl && (
               <img 
                 src={portraitUrl} 
-                alt="Profile" 
+                alt="Romer Garcia — Design Lead and Multimedia Designer portrait" 
                 className="w-full h-full object-cover"
               />
             )}

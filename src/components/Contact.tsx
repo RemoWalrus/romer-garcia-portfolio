@@ -85,7 +85,7 @@ export const Contact = () => {
     <section id="contact" className="relative bg-white dark:bg-neutral-950 py-32">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-8 text-center">
-          {contactData.title}
+          Collaborate With Romer Garcia
         </h2>
         <p className="text-sm md:text-base text-neutral-600 dark:text-neutral-300 max-w-2xl mx-auto mb-12 font-sans text-center">
           {contactData.get_in_touch_text}

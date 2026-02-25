@@ -69,7 +69,7 @@ export const ImageGallery = () => {
     >
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
-          Gallery
+          Visual Portfolio & Creative Work
         </h2>
         
         <div className="relative max-w-[90rem] mx-auto">
@@ -86,7 +86,8 @@ export const ImageGallery = () => {
                 <div className="relative w-full h-full">
                   <img
                     src={image.image_url}
-                    alt={image.title || 'Gallery image'}
+                    alt={image.title ? `Romer Garcia — ${image.title}` : 'Romer Garcia creative work gallery image'}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -126,7 +127,7 @@ export const ImageGallery = () => {
             {selectedImage && (
               <img
                 src={selectedImage.image_url}
-                alt={selectedImage.title || 'Gallery image'}
+                alt={selectedImage.title ? `Romer Garcia — ${selectedImage.title}` : 'Romer Garcia creative work gallery image'}
                 className="w-full h-full object-contain"
               />
             )}

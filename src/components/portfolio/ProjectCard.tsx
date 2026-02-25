@@ -14,14 +14,15 @@ interface ProjectCardProps {
 
 export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
   return (
-    <div 
+    <article
       onClick={() => onSelect(project)}
       className="group relative cursor-pointer overflow-hidden bg-neutral-900"
       style={{ aspectRatio: '4/3' }}
     >
       <img 
         src={project.hero_image_url} 
-        alt={project.title}
+        alt={`Romer Garcia — ${project.title} | ${project.category}`}
+        loading="lazy"
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
       
@@ -33,6 +34,6 @@ export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
           Explore More <MoveRight className="ml-2 w-4 h-4" />
         </div>
       </div>
-    </div>
+    </article>
   );
 };

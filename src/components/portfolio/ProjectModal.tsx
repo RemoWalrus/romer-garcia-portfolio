@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ProjectGallery } from './ProjectGallery';
 import { ProjectVideo } from './ProjectVideo';
+import { ProjectExecutiveSummary } from './ProjectExecutiveSummary';
+import { ProjectCaseStudySchema } from '@/components/seo/JsonLdSchemas';
 
 interface ProjectModalProps {
   project: any;
@@ -28,6 +30,7 @@ export const ProjectModal = ({
   return (
     <Dialog open={!!project} onOpenChange={onClose}>
       <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
+        <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
           <div className="md:w-2/5 p-4 md:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
@@ -39,28 +42,31 @@ export const ProjectModal = ({
               <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
                 {project.title}
               </DialogTitle>
-              <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left">
-                {project.description}
-              </DialogDescription>
-
-              {project.tech_stack && project.tech_stack.length > 0 && (
-                <div className="mb-24">
-                  <h4 className="text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-3">
-                    Tech Stack
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech_stack.map((tech: string, index: number) => (
-                      <span 
-                        key={index}
-                        className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
             </DialogHeader>
+
+            <ProjectExecutiveSummary project={project} />
+
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left">
+              {project.description}
+            </DialogDescription>
+
+            {project.tech_stack && project.tech_stack.length > 0 && (
+              <div className="mb-24">
+                <h4 className="text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-3">
+                  Tech Stack & Tools
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech_stack.map((tech: string, index: number) => (
+                    <span 
+                      key={index}
+                      className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             
             <div className="flex flex-col gap-3">
               {project.project_url && (
@@ -107,7 +113,7 @@ export const ProjectModal = ({
               <div className="w-full h-full flex items-center justify-center">
                 <img
                   src={project.image_url}
-                  alt={project.title}
+                  alt={`Romer Garcia — ${project.title} project showcase`}
                   className="max-w-full max-h-full object-contain bg-white dark:bg-neutral-950"
                 />
               </div>

@@ -11,9 +11,12 @@ import { Quote } from '@/components/Quote';
 import { ImageGallery } from '@/components/ImageGallery';
 import { GoogleAnalytics, trackEvent } from '@/components/GoogleAnalytics';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { PersonSchema } from '@/components/seo/JsonLdSchemas';
+import { getProxiedData } from '@/utils/proxyHelper';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [projects, setProjects] = useState<any[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +26,20 @@ const Index = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await getProxiedData('projects', {
+          order: 'sort_order:asc'
+        });
+        if (data) setProjects(data);
+      } catch (error) {
+        console.error('Error fetching projects for schema:', error);
+      }
+    };
+    fetchProjects();
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -37,7 +54,6 @@ const Index = () => {
         behavior: 'smooth'
       });
 
-      // Track section visit
       trackEvent('Navigation', 'Section Visit', sectionId);
     }
   };
@@ -50,21 +66,25 @@ const Index = () => {
   return (
     <div className="bg-neutral-950 min-h-screen flex flex-col overflow-x-hidden">
       <Helmet>
-        <title>Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader</title>
-        <meta name="description" content="STRATEGIC THINKER | DESIGN INNOVATOR | DIGITAL MEDIA LEADER. Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations. Known as a visionary problem solver, seamlessly blending strategy, creativity, and technology to craft compelling visual narratives." />
-        <meta name="keywords" content="Design Lead, Multimedia Designer, Digital Media, Brand Transformation, Visual Narrative, Creative Strategy, Digital Campaigns" />
+        <title>Romer Garcia | Design Lead & AI-Driven Multimedia Strategist</title>
+        <meta name="description" content="Romer Garcia is a U.S. Army veteran turned Design Lead specializing in AI-assisted design, multimedia strategy, and brand transformation. Explore his portfolio of high-impact digital campaigns." />
+        <meta name="keywords" content="Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI" />
+        <link rel="canonical" href="https://romergarcia.com" />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader" />
-        <meta property="og:description" content="Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations." />
+        <meta property="og:title" content="Romer Garcia | Design Lead & AI-Driven Multimedia Strategist" />
+        <meta property="og:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com" />
+        <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Romer Garcia | Strategic Thinker | Design Innovator" />
-        <meta name="twitter:description" content="Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations." />
+        <meta name="twitter:title" content="Romer Garcia | Design Lead & AI-Driven Multimedia Strategist" />
+        <meta name="twitter:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
+        <meta name="twitter:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
       </Helmet>
+      <PersonSchema projects={projects} />
       <ThemeToggle />
       <GoogleAnalytics />
       <div className="fixed inset-0 pointer-events-none z-[1] mix-blend-overlay opacity-5">
@@ -80,12 +100,14 @@ const Index = () => {
         scrollToTop={scrollToTop}
       />
       
-      <Hero scrollToSection={scrollToSection} />
-      <Portfolio />
-      <About />
-      <ImageGallery />
-      <Contact />
-      <Quote />
+      <main>
+        <Hero scrollToSection={scrollToSection} />
+        <Portfolio />
+        <About />
+        <ImageGallery />
+        <Contact />
+        <Quote />
+      </main>
       <Footer />
     </div>
   );

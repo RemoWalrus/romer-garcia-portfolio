@@ -65,9 +65,6 @@ Deno.serve(async (req) => {
       })
     }
 
-    // Get current date for the meme display
-    const currentDate = new Date().toISOString().split('T')[0]
-    
     // Build the dynamic meme comment section
     const memeComment = `<!-- 
 
@@ -120,7 +117,7 @@ Deno.serve(async (req) => {
   🤓 MEME OF THE DAY: "${meme.meme_text}" 
      ${meme.attribution ? `-- ${meme.attribution}` : ''}
      
-  🚀 Updated: ${currentDate} | ${meme.update_info || 'Next rotation: Tomorrow at midnight UTC'}
+  🚀 ${meme.update_info || 'Refresh for a new meme!'}
   
   💡 Pro tip: If you can read this, you're one of us... welcome to the code cave!
   

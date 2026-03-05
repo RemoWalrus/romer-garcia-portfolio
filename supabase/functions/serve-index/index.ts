@@ -114,14 +114,14 @@ Deno.serve(async (req) => {
            @@************************************************************************************+
                                               RomerGarcia.com
 
-  🤓 MEME OF THE DAY: "${meme.meme_text}" 
+  🤓 RANDOM DEV MEME: "${meme.meme_text}" 
      ${meme.attribution ? `-- ${meme.attribution}` : ''}
      
-  🚀 ${meme.update_info || 'Refresh for a new meme!'}
+  🚀 Refresh for a new meme!
   
   💡 Pro tip: If you can read this, you're one of us... welcome to the code cave!
   
-  🎯 Today's coding wisdom: ${meme.coding_tip ? `"${meme.coding_tip}"` : '"There are only 10 types of people in the world: those who understand binary and those who don\'t."'}
+  🎯 Coding wisdom: ${meme.coding_tip ? `"${meme.coding_tip}"` : '"There are only 10 types of people in the world: those who understand binary and those who don\'t."'}
      
   🎮 Fun fact: ${meme.fun_fact || 'Remember when we thought Y2K would end civilization? Good times... *nervous developer laughter*'}
 

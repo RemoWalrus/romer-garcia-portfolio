@@ -48,11 +48,14 @@ The portfolio section is managed through the Supabase database. To update projec
 Each project requires:
 - A title
 - A category
-- A description
+- A description (the first 2 sentences are automatically used as the SEO meta summary in the project's JSON-LD schema)
 - A hero image URL
+- A tech stack array (optional — displayed as tags in the modal)
 - Additional images (optional)
-- External URL (optional)
+- External URL / Project URL / GitHub URL (optional)
 - YouTube URL (optional)
+
+> **Note:** The "Executive Summary" block was removed from the project modal to reduce redundancy. The first 2 sentences of each project's description are now used as the `description` field in the project's structured data (JSON-LD `CreativeWork` schema), while the full text is stored as `abstract` for richer SEO.
 
 ### Gallery Section
 The gallery section displays images in a horizontal filmstrip layout. To manage the gallery:

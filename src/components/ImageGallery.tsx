@@ -62,11 +62,17 @@ export const ImageGallery = () => {
   return (
     <section 
       id="gallery" 
-      className="relative py-16 -mt-16 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-900/90 before:backdrop-blur-sm" 
-      style={{
-        backgroundImage: "url('https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg')"
-      }}
+      className="relative py-16 -mt-16 overflow-hidden"
     >
+      {/* Fixed parallax background */}
+      <div 
+        className="fixed inset-0 bg-center bg-cover bg-no-repeat -z-10 pointer-events-none"
+        style={{
+          backgroundImage: "url('https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg')"
+        }}
+      />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm" />
       <div className="container mx-auto px-4 relative z-10">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
           Gallery

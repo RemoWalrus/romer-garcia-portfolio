@@ -130,11 +130,13 @@ export const PersonSchema = ({ projects = [] }: PersonSchemaProps) => {
 };
 
 export const ProjectCaseStudySchema = ({ project }: { project: Project }) => {
+  const summary = project.description.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
     "name": project.title,
-    "description": project.description,
+    "description": summary,
+    "abstract": project.description,
     "image": project.hero_image_url,
     "creator": {
       "@type": "Person",

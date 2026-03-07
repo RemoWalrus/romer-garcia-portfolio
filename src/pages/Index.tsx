@@ -102,11 +102,13 @@ const Index = () => {
       
       <main>
         <Hero scrollToSection={scrollToSection} />
-        <Portfolio />
-        <About />
-        <ImageGallery />
-        <Contact />
-        <Quote />
+        <div className="relative z-10 bg-background">
+          <Portfolio />
+          <About />
+          <ImageGallery />
+          <Contact />
+          <Quote />
+        </div>
       </main>
       <Footer />
     </div>

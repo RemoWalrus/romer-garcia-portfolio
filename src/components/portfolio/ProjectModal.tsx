@@ -43,7 +43,7 @@ export const ProjectModal = ({
               </DialogTitle>
             </DialogHeader>
 
-            <ProjectExecutiveSummary project={project} />
+            
 
             <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left">
               {project.description}

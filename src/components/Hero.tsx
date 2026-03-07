@@ -66,14 +66,16 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/[0.03] to-transparent via-transparent h-1/2 mix-blend-multiply pointer-events-none z-10" />
-      <HeroContent
-        titles={titles}
-        titleIndex={titleIndex}
-        scrollToSection={scrollToSection}
-      />
-    </section>
+    <div className="h-screen relative">
+      <section className="fixed inset-0 h-screen flex items-center justify-center overflow-hidden">
+        <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/[0.03] to-transparent via-transparent h-1/2 mix-blend-multiply pointer-events-none z-10" />
+        <HeroContent
+          titles={titles}
+          titleIndex={titleIndex}
+          scrollToSection={scrollToSection}
+        />
+      </section>
+    </div>
   );
 };

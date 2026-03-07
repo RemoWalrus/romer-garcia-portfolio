@@ -51,7 +51,7 @@ export const About = () => {
   };
 
   return (
-    <section id="about" aria-label="About Romer Garcia" className="relative bg-white dark:bg-neutral-900 py-32 overflow-hidden isolate">
+    <section id="about" aria-label="About Romer Garcia" className="relative bg-neutral-100 dark:bg-neutral-900 py-32 overflow-hidden isolate">
       <div 
         className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-multiply dark:mix-blend-soft-light"
         style={{

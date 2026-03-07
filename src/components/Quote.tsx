@@ -31,7 +31,7 @@ export const Quote = () => {
   }, []);
 
   return (
-    <section className="relative bg-white dark:bg-neutral-900 py-24 overflow-hidden isolate">
+    <section className="relative bg-neutral-100 dark:bg-neutral-900 py-24 overflow-hidden isolate">
       {/* Enhanced Grain Noise Effect */}
       <div 
         className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-multiply dark:mix-blend-soft-light"

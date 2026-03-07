@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ProjectGallery } from './ProjectGallery';
 import { ProjectVideo } from './ProjectVideo';
-import { ProjectExecutiveSummary } from './ProjectExecutiveSummary';
 import { ProjectCaseStudySchema } from '@/components/seo/JsonLdSchemas';
 
 interface ProjectModalProps {

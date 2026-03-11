@@ -111,12 +111,12 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         }}
         aria-hidden
       >
-        <h1
+        <div
           className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2"
           style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
         >
           {renderTitle(title.text, title.weights)}
-        </h1>
+        </div>
       </motion.div>
 
       {/* Cyan channel ghost */}
@@ -129,12 +129,12 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         }}
         aria-hidden
       >
-        <h1
+        <div
           className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2"
           style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
         >
           {renderTitle(title.text, title.weights)}
-        </h1>
+        </div>
       </motion.div>
 
       {/* Pixelation overlay - SVG filter applied to text clone */}
@@ -158,12 +158,12 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             }}
             aria-hidden
           >
-            <h1
+            <div
               className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2"
               style={{ opacity: 0.6 }}
             >
               {renderTitle(title.text, title.weights)}
-            </h1>
+            </div>
           </div>
         </>
       )}
@@ -193,9 +193,9 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <h1 className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2">
+        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2">
           {renderTitle(title.text, title.weights)}
-        </h1>
+        </div>
       </motion.div>
     </>
   );

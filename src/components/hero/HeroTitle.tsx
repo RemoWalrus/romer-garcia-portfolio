@@ -158,7 +158,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             }}
             aria-hidden
           >
-            <h1
+            <div
               className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2"
               style={{ opacity: 0.6 }}
             >

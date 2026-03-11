@@ -53,6 +53,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
   return (
     <>
+      {/* Main title - fades and pixelates on scroll */}
       <motion.h1
         variants={pixelGlitch}
         initial={{ scale: 0.5 }}
@@ -72,9 +73,26 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           fontFeatureSettings: '"ss01"',
           transform: `skewX(${gi * -2}deg)`,
           filter: `hue-rotate(${gi * 15}deg)`,
+          opacity: 1 - gi * 0.5,
         }}
       >
         {renderTitle(title.text, title.weights)}
+
+        {/* Scan lines masked to text via background-clip */}
+        <span
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden
+          style={{
+            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${gi * 0.35}) 2px, rgba(0,0,0,${gi * 0.35}) 4px)`,
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            color: 'transparent',
+            opacity: gi > 0.05 ? 1 : 0,
+          }}
+        >
+          {renderTitle(title.text, title.weights)}
+        </span>
       </motion.h1>
 
       {/* Red channel ghost */}
@@ -113,47 +131,38 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         </h1>
       </motion.div>
 
-      {/* Pixelated mosaic overlay on scroll */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none overflow-hidden"
-        style={{ opacity: gi * 0.5 }}
-        aria-hidden
-      >
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              repeating-linear-gradient(0deg, transparent, transparent ${Math.max(2, gi * 12)}px, rgba(255,255,255,${gi * 0.1}) ${Math.max(2, gi * 12)}px, rgba(255,255,255,${gi * 0.1}) ${Math.max(4, gi * 14)}px),
-              repeating-linear-gradient(90deg, transparent, transparent ${Math.max(4, gi * 16)}px, rgba(255,255,255,${gi * 0.06}) ${Math.max(4, gi * 16)}px, rgba(255,255,255,${gi * 0.06}) ${Math.max(6, gi * 18)}px)
-            `,
-            backdropFilter: gi > 0.15 ? `blur(${gi * 1.5}px)` : undefined,
-          }}
-        />
-        {/* Block glitch strips */}
-        {gi > 0.2 && (
-          <>
-            <div
-              className="absolute left-0 right-0"
-              style={{
-                top: `${20 + gi * 15}%`,
-                height: `${gi * 8}px`,
-                background: `rgba(255,255,255,${gi * 0.08})`,
-                transform: `translateX(${gi * 20}px)`,
-              }}
-            />
-            <div
-              className="absolute left-0 right-0"
-              style={{
-                top: `${55 + gi * 10}%`,
-                height: `${gi * 5}px`,
-                background: `rgba(255,255,255,${gi * 0.06})`,
-                transform: `translateX(${gi * -15}px)`,
-              }}
-            />
-          </>
-        )}
-      </motion.div>
+      {/* Pixelation overlay - SVG filter applied to text clone */}
+      {gi > 0.08 && (
+        <>
+          <svg className="absolute w-0 h-0" aria-hidden>
+            <filter id="pixelate">
+              <feFlood x="0" y="0" width={Math.max(1, Math.round(gi * 10))} height={Math.max(1, Math.round(gi * 10))} />
+              <feComposite width={Math.max(1, Math.round(gi * 10))} height={Math.max(1, Math.round(gi * 10))} />
+              <feTile result="a" />
+              <feComposite in="SourceGraphic" in2="a" operator="in" />
+              <feMorphology operator="dilate" radius={Math.max(1, Math.round(gi * 4))} />
+            </filter>
+          </svg>
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              filter: 'url(#pixelate)',
+              opacity: gi * 0.7,
+              mixBlendMode: 'overlay',
+            }}
+            aria-hidden
+          >
+            <h1
+              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2"
+              style={{ opacity: 0.6 }}
+            >
+              {renderTitle(title.text, title.weights)}
+            </h1>
+          </div>
+        </>
+      )}
 
+      {/* Difference blend glitch slice */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{

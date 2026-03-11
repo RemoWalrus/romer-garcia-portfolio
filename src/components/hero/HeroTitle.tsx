@@ -193,7 +193,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center">
+        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter">
           {renderTitle(title.text, title.weights)}
         </div>
       </motion.div>

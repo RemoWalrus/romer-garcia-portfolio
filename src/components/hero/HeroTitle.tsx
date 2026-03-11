@@ -134,7 +134,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
         >
           {renderTitle(title.text, title.weights)}
-        </h1>
+        </div>
       </motion.div>
 
       {/* Pixelation overlay - SVG filter applied to text clone */}

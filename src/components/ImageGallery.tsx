@@ -87,7 +87,7 @@ export const ImageGallery = () => {
                 <div className="relative w-full h-full">
                   <img
                     src={image.image_url}
-                    alt={image.title ? `Romer Garcia — ${image.title}` : 'Romer Garcia creative work gallery image'}
+                    alt={image.alt_text || (image.title ? `Romer Garcia — ${image.title}` : 'Romer Garcia creative work gallery image')}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />

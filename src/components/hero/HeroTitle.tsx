@@ -112,7 +112,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center"
           style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
         >
           {renderTitle(title.text, title.weights)}
@@ -130,7 +130,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center"
           style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
         >
           {renderTitle(title.text, title.weights)}
@@ -159,7 +159,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             aria-hidden
           >
             <div
-              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2"
+              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center"
               style={{ opacity: 0.6 }}
             >
               {renderTitle(title.text, title.weights)}
@@ -193,7 +193,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2">
+        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center">
           {renderTitle(title.text, title.weights)}
         </div>
       </motion.div>

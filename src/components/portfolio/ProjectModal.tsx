@@ -112,7 +112,7 @@ export const ProjectModal = ({
               <div className="w-full h-full flex items-center justify-center">
                 <img
                   src={project.image_url}
-                  alt={`${project.category} design work by Romer Garcia — ${project.title} project showcase with ${project.tech_stack?.join(', ') || 'creative tools'}`}
+                  alt={project.alt_text || `${project.category} design work by Romer Garcia — ${project.title} project showcase with ${project.tech_stack?.join(', ') || 'creative tools'}`}
                   className="max-w-full max-h-full object-contain bg-white dark:bg-neutral-950"
                 />
               </div>

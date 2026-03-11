@@ -24,7 +24,7 @@ export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
     >
       <img 
         src={project.hero_image_url} 
-        alt={`${project.category} project by Romer Garcia — ${project.title} showcasing ${project.category.toLowerCase()} design work`}
+        alt={project.alt_text || `${project.category} project by Romer Garcia — ${project.title} showcasing ${project.category.toLowerCase()} design work`}
         loading="lazy"
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
         itemProp="image"

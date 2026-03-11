@@ -68,10 +68,14 @@ The gallery section displays images in a horizontal filmstrip layout. To manage 
    - Add new images by inserting new rows
    - Add optional titles to images
    - Add optional descriptions that will appear in the modal view
+   - Add optional alt text for SEO and accessibility (auto-generated if empty)
    - Change the order of images using the `sort_order` column
    - Update image URLs
-   
+    
 The gallery displays images in a horizontal filmstrip layout with navigation arrows. Each image can be clicked to view it in a larger modal, which will display the title and description (if provided).
+
+### Alt Text for Images
+Both the `projects` and `gallery` tables have an `alt_text` column. When set, this value is used as the image's `alt` attribute for SEO and accessibility. If left empty, a descriptive alt text is auto-generated from the project/image title, category, and creator name. For best SEO results, write contextual alt text like: *"UI design for U.S. Army website rebrand by Romer Garcia showing responsive layout."*
 
 ### Contact Section
 - Title

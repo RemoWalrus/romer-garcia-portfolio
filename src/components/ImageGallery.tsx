@@ -128,7 +128,7 @@ export const ImageGallery = () => {
             {selectedImage && (
               <img
                 src={selectedImage.image_url}
-                alt={selectedImage.title ? `Romer Garcia — ${selectedImage.title}` : 'Romer Garcia creative work gallery image'}
+                alt={selectedImage.alt_text || (selectedImage.title ? `Romer Garcia — ${selectedImage.title}` : 'Romer Garcia creative work gallery image')}
                 className="w-full h-full object-contain"
               />
             )}

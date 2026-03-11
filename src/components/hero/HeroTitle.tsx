@@ -1,9 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { pixelGlitch } from './animation-variants';
 import type { TitleConfig } from './title-config';
-import { useState } from 'react';
 
 interface HeroTitleProps {
   title: TitleConfig;
@@ -12,9 +11,16 @@ interface HeroTitleProps {
 export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const { scrollY } = useScroll();
   const [glitchIntensity, setGlitchIntensity] = useState(0);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
-  // Map scroll position to glitch intensity (0-1)
-  const intensity = useTransform(scrollY, [0, 400], [0, 1]);
+  useEffect(() => {
+    const onResize = () => setViewportHeight(window.innerHeight);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Fade fully by the time portfolio section covers the hero
+  const intensity = useTransform(scrollY, [0, viewportHeight * 0.85], [0, 1]);
 
   useMotionValueEvent(intensity, "change", (v) => {
     setGlitchIntensity(v);

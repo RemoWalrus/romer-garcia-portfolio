@@ -951,6 +951,9 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           )}
         </div>
       </main>
+      <footer className="relative z-20 py-6 text-center text-muted-foreground text-sm font-roc">
+        © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+      </footer>
       </div>
     </div>
   );

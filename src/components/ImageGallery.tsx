@@ -10,6 +10,7 @@ interface GalleryImage {
   image_url: string;
   title: string | null;
   description: string | null;
+  alt_text?: string | null;
 }
 
 export const ImageGallery = () => {

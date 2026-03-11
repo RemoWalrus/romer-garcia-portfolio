@@ -10,6 +10,7 @@ interface GalleryImage {
   image_url: string;
   title: string | null;
   description: string | null;
+  alt_text?: string | null;
 }
 
 export const ImageGallery = () => {
@@ -86,7 +87,7 @@ export const ImageGallery = () => {
                 <div className="relative w-full h-full">
                   <img
                     src={image.image_url}
-                    alt={image.title ? `Romer Garcia — ${image.title}` : 'Romer Garcia creative work gallery image'}
+                    alt={image.alt_text || (image.title ? `Romer Garcia — ${image.title}` : 'Romer Garcia creative work gallery image')}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -127,7 +128,7 @@ export const ImageGallery = () => {
             {selectedImage && (
               <img
                 src={selectedImage.image_url}
-                alt={selectedImage.title ? `Romer Garcia — ${selectedImage.title}` : 'Romer Garcia creative work gallery image'}
+                alt={selectedImage.alt_text || (selectedImage.title ? `Romer Garcia — ${selectedImage.title}` : 'Romer Garcia creative work gallery image')}
                 className="w-full h-full object-contain"
               />
             )}

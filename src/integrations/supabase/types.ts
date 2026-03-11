@@ -73,6 +73,7 @@ export type Database = {
       }
       gallery: {
         Row: {
+          alt_text: string | null
           created_at: string
           description: string | null
           id: number
@@ -82,6 +83,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          alt_text?: string | null
           created_at?: string
           description?: string | null
           id?: number
@@ -91,6 +93,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          alt_text?: string | null
           created_at?: string
           description?: string | null
           id?: number
@@ -191,6 +194,7 @@ export type Database = {
       projects: {
         Row: {
           additional_images: string[] | null
+          alt_text: string | null
           category: string
           created_at: string
           description: string
@@ -207,6 +211,7 @@ export type Database = {
         }
         Insert: {
           additional_images?: string[] | null
+          alt_text?: string | null
           category: string
           created_at?: string
           description: string
@@ -223,6 +228,7 @@ export type Database = {
         }
         Update: {
           additional_images?: string[] | null
+          alt_text?: string | null
           category?: string
           created_at?: string
           description?: string

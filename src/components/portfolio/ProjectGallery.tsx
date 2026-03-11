@@ -48,7 +48,7 @@ export const ProjectGallery = ({
             >
               <img
                 src={image}
-                alt={`${title} preview ${index + 1}`}
+                alt={`${title} by Romer Garcia — detail view ${index + 1}`}
                 className="w-full h-full object-cover"
                 draggable={false}
               />

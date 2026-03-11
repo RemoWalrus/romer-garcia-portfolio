@@ -70,7 +70,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             ease: "easeOut"
           }
         }}
-        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 relative"
+        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 relative tracking-tighter"
         style={{
           textShadow: `
             ${2 + gi * 8}px ${gi * 2}px 0 rgba(255,0,0,${0.3 + gi * 0.5}),

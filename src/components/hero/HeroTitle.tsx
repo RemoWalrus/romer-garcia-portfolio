@@ -116,7 +116,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
         >
           {renderTitle(title.text, title.weights)}
-        </h1>
+        </div>
       </motion.div>
 
       {/* Cyan channel ghost */}

@@ -113,18 +113,45 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         </h1>
       </motion.div>
 
-      {/* Scan line overlay on scroll */}
+      {/* Pixelated mosaic overlay on scroll */}
       <motion.div
         className="absolute inset-0 pointer-events-none overflow-hidden"
-        style={{ opacity: gi * 0.4 }}
+        style={{ opacity: gi * 0.5 }}
         aria-hidden
       >
         <div
           className="absolute inset-0"
           style={{
-            background: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,${gi * 0.08}) 2px, rgba(255,255,255,${gi * 0.08}) 4px)`,
+            backgroundImage: `
+              repeating-linear-gradient(0deg, transparent, transparent ${Math.max(2, gi * 12)}px, rgba(255,255,255,${gi * 0.1}) ${Math.max(2, gi * 12)}px, rgba(255,255,255,${gi * 0.1}) ${Math.max(4, gi * 14)}px),
+              repeating-linear-gradient(90deg, transparent, transparent ${Math.max(4, gi * 16)}px, rgba(255,255,255,${gi * 0.06}) ${Math.max(4, gi * 16)}px, rgba(255,255,255,${gi * 0.06}) ${Math.max(6, gi * 18)}px)
+            `,
+            backdropFilter: gi > 0.15 ? `blur(${gi * 1.5}px)` : undefined,
           }}
         />
+        {/* Block glitch strips */}
+        {gi > 0.2 && (
+          <>
+            <div
+              className="absolute left-0 right-0"
+              style={{
+                top: `${20 + gi * 15}%`,
+                height: `${gi * 8}px`,
+                background: `rgba(255,255,255,${gi * 0.08})`,
+                transform: `translateX(${gi * 20}px)`,
+              }}
+            />
+            <div
+              className="absolute left-0 right-0"
+              style={{
+                top: `${55 + gi * 10}%`,
+                height: `${gi * 5}px`,
+                background: `rgba(255,255,255,${gi * 0.06})`,
+                transform: `translateX(${gi * -15}px)`,
+              }}
+            />
+          </>
+        )}
       </motion.div>
 
       <motion.div

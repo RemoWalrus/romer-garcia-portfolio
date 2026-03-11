@@ -163,7 +163,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
               style={{ opacity: 0.6 }}
             >
               {renderTitle(title.text, title.weights)}
-            </h1>
+            </div>
           </div>
         </>
       )}

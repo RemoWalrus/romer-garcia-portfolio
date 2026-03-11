@@ -38,14 +38,14 @@ export const ProjectModal = ({
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
+              <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase" itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>
 
             
 
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left" itemProp="description">
               {project.description}
             </DialogDescription>
 

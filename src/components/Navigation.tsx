@@ -27,8 +27,28 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     instagram_url: '',
     youtube_url: ''
   });
-  const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const logoFile = scrolled && !prefersDarkMode ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
+  const [isDark, setIsDark] = useState(() => 
+    document.documentElement.classList.contains('dark') || 
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  );
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => {
+      observer.disconnect();
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
+
+  const logoFile = scrolled && !isDark ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
   const logoUrl = getProxiedStorageUrl('graphics', logoFile);
 
   useEffect(() => {

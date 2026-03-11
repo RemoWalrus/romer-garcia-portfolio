@@ -20,7 +20,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   }, []);
 
   // Fade fully by the time portfolio section covers the hero
-  const intensity = useTransform(scrollY, [0, viewportHeight * 0.5], [0, 1]);
+  const intensity = useTransform(scrollY, [0, viewportHeight * 0.4], [0, 1]);
 
   useMotionValueEvent(intensity, "change", (v) => {
     setGlitchIntensity(v);

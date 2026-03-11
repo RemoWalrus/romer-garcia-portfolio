@@ -30,7 +30,7 @@ export const ProjectModal = ({
     <Dialog open={!!project} onOpenChange={onClose}>
       <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
         <ProjectCaseStudySchema project={project} />
-        <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
+        <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
           <div className="md:w-2/5 p-4 md:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
               <div className="mb-2">
@@ -38,14 +38,14 @@ export const ProjectModal = ({
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase">
+              <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase" itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>
 
             
 
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left" itemProp="description">
               {project.description}
             </DialogDescription>
 
@@ -112,7 +112,7 @@ export const ProjectModal = ({
               <div className="w-full h-full flex items-center justify-center">
                 <img
                   src={project.image_url}
-                  alt={`Romer Garcia — ${project.title} project showcase`}
+                  alt={`${project.category} design work by Romer Garcia — ${project.title} project showcase with ${project.tech_stack?.join(', ') || 'creative tools'}`}
                   className="max-w-full max-h-full object-contain bg-white dark:bg-neutral-950"
                 />
               </div>

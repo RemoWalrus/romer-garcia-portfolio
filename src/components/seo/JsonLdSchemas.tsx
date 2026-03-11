@@ -9,18 +9,35 @@ interface Project {
   project_url?: string;
 }
 
-interface PersonSchemaProps {
-  projects?: Project[];
+interface SocialLinks {
+  linkedin_url?: string;
+  facebook_url?: string;
+  twitter_url?: string;
+  instagram_url?: string;
+  youtube_url?: string;
 }
 
-export const PersonSchema = ({ projects = [] }: PersonSchemaProps) => {
+interface PersonSchemaProps {
+  projects?: Project[];
+  socialLinks?: SocialLinks;
+}
+
+export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaProps) => {
+  const sameAs = [
+    socialLinks.linkedin_url,
+    socialLinks.facebook_url,
+    socialLinks.twitter_url,
+    socialLinks.instagram_url,
+    socialLinks.youtube_url,
+  ].filter(Boolean);
+
   const personSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Romer Garcia",
     "url": "https://romergarcia.com",
     "image": "https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/profile/RomerSelfPortrait.jpg",
-    "jobTitle": "Design Lead & Multimedia Designer",
+    "jobTitle": "Design Lead & AI-Driven Multimedia Strategist",
     "description": "Strategic Thinker, Design Innovator, and Digital Media Leader with a proven track record of leading high-impact digital campaigns and brand transformations.",
     "alumniOf": {
       "@type": "Organization",
@@ -34,9 +51,10 @@ export const PersonSchema = ({ projects = [] }: PersonSchemaProps) => {
       "Creative Direction",
       "UI/UX Design",
       "Motion Graphics",
-      "Visual Storytelling"
+      "Visual Storytelling",
+      "Generative AI"
     ],
-    "sameAs": [],
+    "sameAs": sameAs,
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://romergarcia.com"
@@ -51,7 +69,8 @@ export const PersonSchema = ({ projects = [] }: PersonSchemaProps) => {
     "image": project.hero_image_url,
     "creator": {
       "@type": "Person",
-      "name": "Romer Garcia"
+      "name": "Romer Garcia",
+      "url": "https://romergarcia.com"
     },
     "keywords": [project.category, ...(project.tech_stack || [])].join(", "),
     "genre": project.category,
@@ -67,7 +86,7 @@ export const PersonSchema = ({ projects = [] }: PersonSchemaProps) => {
         "name": "What does Romer Garcia specialize in?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Romer Garcia is a Design Lead and Multimedia Designer specializing in AI-assisted design, multimedia strategy, digital media production, and brand transformation. He has a proven track record leading high-impact digital campaigns."
+          "text": "Romer Garcia is a Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design, multimedia strategy, digital media production, and brand transformation. He has a proven track record leading high-impact digital campaigns."
         }
       },
       {
@@ -102,7 +121,7 @@ export const PersonSchema = ({ projects = [] }: PersonSchemaProps) => {
     "@type": "WebSite",
     "name": "Romer Garcia Portfolio",
     "url": "https://romergarcia.com",
-    "description": "Portfolio of Romer Garcia — Design Lead, Multimedia Designer, and Digital Media Leader.",
+    "description": "Portfolio of Romer Garcia — Design Lead, AI-Driven Multimedia Strategist, and Digital Media Leader.",
     "author": {
       "@type": "Person",
       "name": "Romer Garcia"

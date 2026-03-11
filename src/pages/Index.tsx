@@ -17,6 +17,7 @@ import { getProxiedData } from '@/utils/proxyHelper';
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [projects, setProjects] = useState<any[]>([]);
+  const [socialLinks, setSocialLinks] = useState<any>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,7 +40,21 @@ const Index = () => {
         console.error('Error fetching projects for schema:', error);
       }
     };
+
+    const fetchSocialLinks = async () => {
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
+          filter: 'section_name:eq:social'
+        });
+        if (data && data.length > 0) setSocialLinks(data[0]);
+      } catch (error) {
+        console.error('Error fetching social links for schema:', error);
+      }
+    };
+
     fetchProjects();
+    fetchSocialLinks();
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -84,7 +99,7 @@ const Index = () => {
         <meta name="twitter:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
         <meta name="twitter:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
       </Helmet>
-      <PersonSchema projects={projects} />
+      <PersonSchema projects={projects} socialLinks={socialLinks} />
       <ThemeToggle />
       <GoogleAnalytics />
       <div className="fixed inset-0 pointer-events-none z-[1] mix-blend-overlay opacity-5">

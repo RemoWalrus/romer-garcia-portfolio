@@ -8,6 +8,7 @@ interface ProjectCardProps {
     category: string;
     title: string;
     description: string;
+    alt_text?: string | null;
   };
   onSelect: (project: any) => void;
 }

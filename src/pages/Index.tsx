@@ -99,7 +99,7 @@ const Index = () => {
         <meta name="twitter:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
         <meta name="twitter:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
       </Helmet>
-      <PersonSchema projects={projects} />
+      <PersonSchema projects={projects} socialLinks={socialLinks} />
       <ThemeToggle />
       <GoogleAnalytics />
       <div className="fixed inset-0 pointer-events-none z-[1] mix-blend-overlay opacity-5">

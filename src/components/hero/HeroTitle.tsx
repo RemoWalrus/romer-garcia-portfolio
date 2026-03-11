@@ -1,9 +1,8 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { pixelGlitch } from './animation-variants';
 import type { TitleConfig } from './title-config';
-import { useState } from 'react';
 
 interface HeroTitleProps {
   title: TitleConfig;

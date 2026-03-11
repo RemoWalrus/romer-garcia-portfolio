@@ -73,7 +73,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           fontFeatureSettings: '"ss01"',
           transform: `skewX(${gi * -2}deg)`,
           filter: `hue-rotate(${gi * 15}deg)`,
-          opacity: 1 - gi * 0.9,
+          opacity: 1 - gi,
         }}
       >
         {renderTitle(title.text, title.weights)}

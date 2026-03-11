@@ -50,6 +50,7 @@ Each project requires:
 - A category
 - A description (the first 2 sentences are automatically used as the SEO meta summary in the project's JSON-LD schema)
 - A hero image URL
+- An alt text for the hero image (optional — used for SEO and accessibility; auto-generated if empty)
 - A tech stack array (optional — displayed as tags in the modal)
 - Additional images (optional)
 - External URL / Project URL / GitHub URL (optional)

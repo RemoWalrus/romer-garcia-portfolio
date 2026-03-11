@@ -51,10 +51,14 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   }, [titleIndex, titles.length]);
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
     const handleScroll = () => {
-      if (window.scrollY === 0) {
+      const currentY = window.scrollY;
+      // Only trigger new background when user scrolls back to top (not on initial load or downward scroll)
+      if (currentY === 0 && lastScrollY > 50) {
         setTriggerNewBackground(prev => prev + 1);
       }
+      lastScrollY = currentY;
     };
 
     window.addEventListener('scroll', handleScroll);

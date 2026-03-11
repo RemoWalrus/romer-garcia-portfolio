@@ -70,7 +70,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             ease: "easeOut"
           }
         }}
-        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 relative tracking-tighter"
+        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 relative tracking-tighter text-center"
         style={{
           textShadow: `
             ${2 + gi * 8}px ${gi * 2}px 0 rgba(255,0,0,${0.3 + gi * 0.5}),
@@ -112,7 +112,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center tracking-tighter"
           style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
         >
           {renderTitle(title.text, title.weights)}
@@ -130,7 +130,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center tracking-tighter"
           style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
         >
           {renderTitle(title.text, title.weights)}
@@ -159,7 +159,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             aria-hidden
           >
             <div
-              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center"
+              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter"
               style={{ opacity: 0.6 }}
             >
               {renderTitle(title.text, title.weights)}
@@ -193,7 +193,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center">
+        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter">
           {renderTitle(title.text, title.weights)}
         </div>
       </motion.div>

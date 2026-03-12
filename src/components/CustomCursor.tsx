@@ -57,15 +57,22 @@ export const CustomCursor = () => {
         }
       }
 
-      // Ghost/afterimage follows even more slowly
+      const ghostSize = isHovering ? 64 : 36;
       ghost.current.x += (mouse.current.x - ghost.current.x) * 0.08;
       ghost.current.y += (mouse.current.y - ghost.current.y) * 0.08;
-      ghost.current.scale += (targetScale - ghost.current.scale) * 0.06;
 
       if (ghostRef.current) {
         const showGhost = isHovering || prevHovering.current;
-        ghostRef.current.style.transform = `translate(${ghost.current.x}px, ${ghost.current.y}px) scale(${ghost.current.scale})`;
+        const innerGhost = ghostRef.current.firstElementChild as HTMLElement;
+        ghostRef.current.style.transform = `translate(${ghost.current.x}px, ${ghost.current.y}px)`;
         ghostRef.current.style.opacity = showGhost ? '0.3' : '0';
+        if (innerGhost) {
+          const gHalf = ghostSize / 2;
+          innerGhost.style.width = `${ghostSize}px`;
+          innerGhost.style.height = `${ghostSize}px`;
+          innerGhost.style.marginLeft = `${-gHalf}px`;
+          innerGhost.style.marginTop = `${-gHalf}px`;
+        }
       }
 
       prevHovering.current = isHovering;

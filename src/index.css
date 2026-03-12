@@ -58,6 +58,10 @@
     cursor: none;
   }
 
+  #hero a, #hero button, #hero [role="button"], #hero select, #hero .cursor-pointer {
+    cursor: none !important;
+  }
+
   a, button, [role="button"], select, .cursor-pointer {
     cursor: pointer !important;
   }

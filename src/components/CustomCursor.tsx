@@ -6,6 +6,7 @@ export const CustomCursor = () => {
   const ringRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [onDarkBg, setOnDarkBg] = useState(false);
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
   const raf = useRef<number>();
@@ -26,6 +27,8 @@ export const CustomCursor = () => {
       const target = e.target as HTMLElement;
       const clickable = target.closest('a, button, [role="button"], input, textarea, select, [onclick], .cursor-pointer, [data-clickable]');
       setIsHovering(!!clickable);
+      const darkSection = target.closest('#hero, .bg-neutral-950, .bg-neutral-900, [data-dark-bg]');
+      setOnDarkBg(!!darkSection);
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -65,7 +68,7 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className="rounded-full bg-foreground transition-all duration-300"
+          className={`rounded-full transition-all duration-300 ${onDarkBg ? 'bg-white' : 'bg-foreground'}`}
           style={{
             width: isHovering ? 8 : 6,
             height: isHovering ? 8 : 6,
@@ -80,7 +83,7 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className="rounded-full border border-foreground/60 transition-all duration-300"
+          className={`rounded-full border transition-all duration-300 ${onDarkBg ? 'border-white/70' : 'border-foreground/60'}`}
           style={{
             width: 36,
             height: 36,

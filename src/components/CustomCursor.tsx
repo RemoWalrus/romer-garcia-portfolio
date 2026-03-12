@@ -10,7 +10,7 @@ export const CustomCursor = () => {
   const [onDarkBg, setOnDarkBg] = useState(false);
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
-  const ghost = useRef({ x: 0, y: 0, scale: 1 });
+  const ghost = useRef({ x: 0, y: 0 });
   const prevHovering = useRef(false);
   const raf = useRef<number>();
 

@@ -10,7 +10,7 @@ export const CustomCursor = () => {
   const [onDarkBg, setOnDarkBg] = useState(false);
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
-  const ghost = useRef({ x: 0, y: 0, scale: 1 });
+  const ghost = useRef({ x: 0, y: 0 });
   const prevHovering = useRef(false);
   const raf = useRef<number>();
 
@@ -43,21 +43,36 @@ export const CustomCursor = () => {
       ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15;
 
-      const targetScale = isHovering ? 1.8 : 1;
+      const size = isHovering ? 64 : 36;
+      const half = size / 2;
 
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${targetScale})`;
+        const innerRing = ringRef.current.firstElementChild as HTMLElement;
+        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`;
+        if (innerRing) {
+          innerRing.style.width = `${size}px`;
+          innerRing.style.height = `${size}px`;
+          innerRing.style.marginLeft = `${-half}px`;
+          innerRing.style.marginTop = `${-half}px`;
+        }
       }
 
-      // Ghost/afterimage follows even more slowly
+      const ghostSize = isHovering ? 64 : 36;
       ghost.current.x += (mouse.current.x - ghost.current.x) * 0.08;
       ghost.current.y += (mouse.current.y - ghost.current.y) * 0.08;
-      ghost.current.scale += (targetScale - ghost.current.scale) * 0.06;
 
       if (ghostRef.current) {
         const showGhost = isHovering || prevHovering.current;
-        ghostRef.current.style.transform = `translate(${ghost.current.x}px, ${ghost.current.y}px) scale(${ghost.current.scale})`;
+        const innerGhost = ghostRef.current.firstElementChild as HTMLElement;
+        ghostRef.current.style.transform = `translate(${ghost.current.x}px, ${ghost.current.y}px)`;
         ghostRef.current.style.opacity = showGhost ? '0.3' : '0';
+        if (innerGhost) {
+          const gHalf = ghostSize / 2;
+          innerGhost.style.width = `${ghostSize}px`;
+          innerGhost.style.height = `${ghostSize}px`;
+          innerGhost.style.marginLeft = `${-gHalf}px`;
+          innerGhost.style.marginTop = `${-gHalf}px`;
+        }
       }
 
       prevHovering.current = isHovering;
@@ -113,6 +128,7 @@ export const CustomCursor = () => {
             marginLeft: -18,
             marginTop: -18,
             border: `1px solid ${ghostGoldColor}`,
+            transition: 'width 0.3s ease-out, height 0.3s ease-out, margin 0.3s ease-out',
           }}
         />
       </div>
@@ -123,13 +139,14 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className="rounded-full transition-colors duration-300"
+          className="rounded-full"
           style={{
             width: 36,
             height: 36,
             marginLeft: -18,
             marginTop: -18,
             border: `1px solid ${goldColor}`,
+            transition: 'width 0.3s ease-out, height 0.3s ease-out, margin 0.3s ease-out',
           }}
         />
       </div>

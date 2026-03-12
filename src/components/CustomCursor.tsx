@@ -146,7 +146,7 @@ export const CustomCursor = () => {
             marginLeft: -18,
             marginTop: -18,
             border: `1px solid ${goldColor}`,
-            transition: 'width 0.3s ease-out, height 0.3s ease-out, margin 0.3s ease-out',
+            transition: 'width 0.45s cubic-bezier(0.25, 1, 0.5, 1), height 0.45s cubic-bezier(0.25, 1, 0.5, 1), margin 0.45s cubic-bezier(0.25, 1, 0.5, 1)',
           }}
         />
       </div>

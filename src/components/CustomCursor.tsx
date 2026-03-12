@@ -139,13 +139,14 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className="rounded-full transition-colors duration-300"
+          className="rounded-full"
           style={{
             width: 36,
             height: 36,
             marginLeft: -18,
             marginTop: -18,
             border: `1px solid ${goldColor}`,
+            transition: 'width 0.3s ease-out, height 0.3s ease-out, margin 0.3s ease-out',
           }}
         />
       </div>

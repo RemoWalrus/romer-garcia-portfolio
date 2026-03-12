@@ -71,7 +71,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   return (
     <div className="h-screen relative cursor-default">
-      <section className="fixed inset-0 h-screen flex items-center justify-center overflow-hidden">
+      <section id="hero" className="fixed inset-0 h-screen flex items-center justify-center overflow-hidden">
         <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/[0.03] to-transparent via-transparent h-1/2 mix-blend-multiply pointer-events-none z-10" />
         <HeroContent

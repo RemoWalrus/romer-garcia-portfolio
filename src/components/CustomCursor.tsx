@@ -80,7 +80,7 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className="rounded-full border border-white/60 mix-blend-difference transition-all duration-300"
+          className="rounded-full border border-foreground/60 transition-all duration-300"
           style={{
             width: 36,
             height: 36,

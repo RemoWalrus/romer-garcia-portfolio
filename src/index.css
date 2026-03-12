@@ -55,6 +55,11 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    cursor: none;
+  }
+
+  a, button, [role="button"], input, textarea, select, .cursor-pointer {
+    cursor: none;
   }
 
   .perspective-1000 {

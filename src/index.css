@@ -62,8 +62,12 @@
     cursor: pointer !important;
   }
 
-  #hero, #hero *, #hero a, #hero button, #hero [role="button"], #hero select, #hero .cursor-pointer {
+  #hero, #hero * {
     cursor: none !important;
+  }
+
+  #hero a, #hero button, #hero [role="button"], #hero .cursor-pointer {
+    cursor: pointer !important;
   }
 
   input, textarea {

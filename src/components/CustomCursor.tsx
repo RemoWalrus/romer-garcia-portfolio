@@ -4,11 +4,14 @@ import { useEffect, useRef, useState } from 'react';
 export const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const ghostRef = useRef<HTMLDivElement>(null);
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [onDarkBg, setOnDarkBg] = useState(false);
   const mouse = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
+  const ghost = useRef({ x: 0, y: 0, scale: 1 });
+  const prevHovering = useRef(false);
   const raf = useRef<number>();
 
   useEffect(() => {
@@ -39,9 +42,25 @@ export const CustomCursor = () => {
     const animate = () => {
       ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15;
+
+      const targetScale = isHovering ? 1.8 : 1;
+
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${isHovering ? 1.8 : 1})`;
+        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${targetScale})`;
       }
+
+      // Ghost/afterimage follows even more slowly
+      ghost.current.x += (mouse.current.x - ghost.current.x) * 0.08;
+      ghost.current.y += (mouse.current.y - ghost.current.y) * 0.08;
+      ghost.current.scale += (targetScale - ghost.current.scale) * 0.06;
+
+      if (ghostRef.current) {
+        const showGhost = isHovering || prevHovering.current;
+        ghostRef.current.style.transform = `translate(${ghost.current.x}px, ${ghost.current.y}px) scale(${ghost.current.scale})`;
+        ghostRef.current.style.opacity = showGhost ? '0.3' : '0';
+      }
+
+      prevHovering.current = isHovering;
       raf.current = requestAnimationFrame(animate);
     };
     raf.current = requestAnimationFrame(animate);
@@ -55,10 +74,12 @@ export const CustomCursor = () => {
     };
   }, [isHovering, isVisible]);
 
-  // Hide on touch devices
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
     return null;
   }
+
+  const borderColor = onDarkBg ? 'border-white/70' : 'border-foreground/60';
+  const ghostBorderColor = onDarkBg ? 'border-white/40' : 'border-foreground/30';
 
   return (
     <>
@@ -77,19 +98,37 @@ export const CustomCursor = () => {
           }}
         />
       </div>
+      {/* Ghost / afterimage ring */}
+      <div
+        ref={ghostRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9997] -translate-x-1/2 -translate-y-1/2"
+        style={{ opacity: 0, transition: 'opacity 0.4s ease-out' }}
+      >
+        <div
+          className={`rounded-full border ${ghostBorderColor}`}
+          style={{
+            width: 36,
+            height: 36,
+            marginLeft: -18,
+            marginTop: -18,
+            borderWidth: 1,
+          }}
+        />
+      </div>
+      {/* Main ring */}
       <div
         ref={ringRef}
         className="fixed top-0 left-0 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className={`rounded-full border transition-all duration-300 ${onDarkBg ? 'border-white/70' : 'border-foreground/60'}`}
+          className={`rounded-full border transition-colors duration-300 ${borderColor}`}
           style={{
             width: 36,
             height: 36,
             marginLeft: -18,
             marginTop: -18,
-            borderWidth: isHovering ? 2 : 1,
+            borderWidth: 1,
           }}
         />
       </div>

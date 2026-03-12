@@ -106,13 +106,13 @@ export const CustomCursor = () => {
         style={{ opacity: 0, transition: 'opacity 0.4s ease-out' }}
       >
         <div
-          className={`rounded-full border ${ghostBorderColor}`}
+          className="rounded-full"
           style={{
             width: 36,
             height: 36,
             marginLeft: -18,
             marginTop: -18,
-            borderWidth: 1,
+            border: `1px solid ${ghostGoldColor}`,
           }}
         />
       </div>

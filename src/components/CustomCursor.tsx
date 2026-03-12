@@ -68,7 +68,7 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className="rounded-full bg-foreground transition-all duration-300"
+          className={`rounded-full transition-all duration-300 ${onDarkBg ? 'bg-white' : 'bg-foreground'}`}
           style={{
             width: isHovering ? 8 : 6,
             height: isHovering ? 8 : 6,

@@ -58,8 +58,12 @@
     cursor: none;
   }
 
-  a, button, [role="button"], input, textarea, select, .cursor-pointer {
-    cursor: none;
+  a, button, [role="button"], select, .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  input, textarea {
+    cursor: text !important;
   }
 
   .perspective-1000 {

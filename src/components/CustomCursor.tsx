@@ -78,8 +78,8 @@ export const CustomCursor = () => {
     return null;
   }
 
-  const borderColor = onDarkBg ? 'border-white/70' : 'border-foreground/60';
-  const ghostBorderColor = onDarkBg ? 'border-white/40' : 'border-foreground/30';
+  const goldColor = 'hsl(43, 60%, 55%)';
+  const ghostGoldColor = 'hsl(43, 60%, 55%, 0.3)';
 
   return (
     <>
@@ -89,8 +89,9 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className={`rounded-full transition-all duration-300 ${onDarkBg ? 'bg-white' : 'bg-foreground'}`}
+          className="rounded-full transition-all duration-300"
           style={{
+            backgroundColor: goldColor,
             width: isHovering ? 8 : 6,
             height: isHovering ? 8 : 6,
             marginLeft: isHovering ? -4 : -3,
@@ -105,13 +106,13 @@ export const CustomCursor = () => {
         style={{ opacity: 0, transition: 'opacity 0.4s ease-out' }}
       >
         <div
-          className={`rounded-full border ${ghostBorderColor}`}
+          className="rounded-full"
           style={{
             width: 36,
             height: 36,
             marginLeft: -18,
             marginTop: -18,
-            borderWidth: 1,
+            border: `1px solid ${ghostGoldColor}`,
           }}
         />
       </div>
@@ -122,13 +123,13 @@ export const CustomCursor = () => {
         style={{ opacity: isVisible ? 1 : 0 }}
       >
         <div
-          className={`rounded-full border transition-colors duration-300 ${borderColor}`}
+          className="rounded-full transition-colors duration-300"
           style={{
             width: 36,
             height: 36,
             marginLeft: -18,
             marginTop: -18,
-            borderWidth: 1,
+            border: `1px solid ${goldColor}`,
           }}
         />
       </div>

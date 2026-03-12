@@ -40,7 +40,8 @@ export const CustomCursor = () => {
       ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15;
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${isHovering ? 1.8 : 1})`;
+        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${isHovering ? 1.6 : 1})`;
+        ringRef.current.style.opacity = isHovering ? '1' : '0';
       }
       raf.current = requestAnimationFrame(animate);
     };
@@ -89,7 +90,6 @@ export const CustomCursor = () => {
             height: 36,
             marginLeft: -18,
             marginTop: -18,
-            borderWidth: isHovering ? 2 : 1,
           }}
         />
       </div>

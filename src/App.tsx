@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
+import { CustomCursor } from "./components/CustomCursor";
 import Index from "./pages/Index";
 import Meme from "./pages/Meme";
 import AICharacterGenerator from "./pages/AICharacterGenerator";
@@ -42,6 +43,7 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
+          <CustomCursor />
           <Toaster />
           <Sonner />
           <BrowserRouter>

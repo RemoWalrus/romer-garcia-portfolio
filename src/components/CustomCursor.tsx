@@ -1,152 +1,190 @@
+import { useEffect, useRef, useCallback } from 'react';
 
-import { useEffect, useRef, useState } from 'react';
+const GOLD = 'hsl(43, 60%, 55%)';
+const GOLD_GHOST = 'hsl(43, 60%, 55%, 0.3)';
+const RING_LERP = 0.15;
+const GHOST_LERP = 0.08;
+const SIZE_DEFAULT = 36;
+const SIZE_HOVER = 64;
+const DOT_DEFAULT = 6;
+const DOT_HOVER = 8;
+
+const isTouchDevice = () =>
+  typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
 export const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const ghostRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [onDarkBg, setOnDarkBg] = useState(false);
   const mouse = useRef({ x: 0, y: 0 });
-  const ring = useRef({ x: 0, y: 0 });
-  const ghost = useRef({ x: 0, y: 0 });
+  const ringPos = useRef({ x: 0, y: 0 });
+  const ghostPos = useRef({ x: 0, y: 0 });
+  const hovering = useRef(false);
   const prevHovering = useRef(false);
-  const raf = useRef<number>();
+  const visible = useRef(false);
+  const raf = useRef<number>(0);
+
+  const onMouseMove = useCallback((e: MouseEvent) => {
+    mouse.current.x = e.clientX;
+    mouse.current.y = e.clientY;
+    if (!visible.current) {
+      visible.current = true;
+      if (dotRef.current) dotRef.current.style.opacity = '1';
+      if (ringRef.current) ringRef.current.style.opacity = '1';
+    }
+    if (dotRef.current) {
+      dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+    }
+  }, []);
+
+  const onMouseOver = useCallback((e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const isClickable = !!target.closest('a, button, [role="button"], input, textarea, select, [onclick], .cursor-pointer, [data-clickable]');
+    if (isClickable !== hovering.current) {
+      hovering.current = isClickable;
+      // Update dot size via CSS transition
+      const dot = dotRef.current?.firstElementChild as HTMLElement | null;
+      if (dot) {
+        const s = isClickable ? DOT_HOVER : DOT_DEFAULT;
+        dot.style.width = `${s}px`;
+        dot.style.height = `${s}px`;
+        dot.style.marginLeft = `${-s / 2}px`;
+        dot.style.marginTop = `${-s / 2}px`;
+      }
+    }
+  }, []);
+
+  const onMouseLeave = useCallback(() => {
+    visible.current = false;
+    if (dotRef.current) dotRef.current.style.opacity = '0';
+    if (ringRef.current) ringRef.current.style.opacity = '0';
+    if (ghostRef.current) ghostRef.current.style.opacity = '0';
+  }, []);
+
+  const onMouseEnter = useCallback(() => {
+    visible.current = true;
+    if (dotRef.current) dotRef.current.style.opacity = '1';
+    if (ringRef.current) ringRef.current.style.opacity = '1';
+  }, []);
 
   useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
-      mouse.current = { x: e.clientX, y: e.clientY };
-      if (!isVisible) setIsVisible(true);
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      }
-    };
+    if (isTouchDevice()) return;
 
-    const onMouseLeave = () => setIsVisible(false);
-    const onMouseEnter = () => setIsVisible(true);
-
-    const checkHover = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const clickable = target.closest('a, button, [role="button"], input, textarea, select, [onclick], .cursor-pointer, [data-clickable]');
-      setIsHovering(!!clickable);
-      const darkSection = target.closest('#hero, .bg-neutral-950, .bg-neutral-900, [data-dark-bg]');
-      setOnDarkBg(!!darkSection);
-    };
-
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseover', checkHover);
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseover', onMouseOver, { passive: true });
     document.addEventListener('mouseleave', onMouseLeave);
     document.addEventListener('mouseenter', onMouseEnter);
 
     const animate = () => {
-      ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
-      ring.current.y += (mouse.current.y - ring.current.y) * 0.15;
+      const mx = mouse.current.x;
+      const my = mouse.current.y;
 
-      const size = isHovering ? 64 : 36;
+      // Ring interpolation
+      ringPos.current.x += (mx - ringPos.current.x) * RING_LERP;
+      ringPos.current.y += (my - ringPos.current.y) * RING_LERP;
+
+      const isHover = hovering.current;
+      const size = isHover ? SIZE_HOVER : SIZE_DEFAULT;
       const half = size / 2;
 
       if (ringRef.current) {
-        const innerRing = ringRef.current.firstElementChild as HTMLElement;
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`;
-        if (innerRing) {
-          innerRing.style.width = `${size}px`;
-          innerRing.style.height = `${size}px`;
-          innerRing.style.marginLeft = `${-half}px`;
-          innerRing.style.marginTop = `${-half}px`;
+        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
+        const inner = ringRef.current.firstElementChild as HTMLElement;
+        if (inner) {
+          inner.style.width = `${size}px`;
+          inner.style.height = `${size}px`;
+          inner.style.marginLeft = `${-half}px`;
+          inner.style.marginTop = `${-half}px`;
         }
       }
 
-      const ghostSize = isHovering ? 64 : 36;
-      ghost.current.x += (mouse.current.x - ghost.current.x) * 0.08;
-      ghost.current.y += (mouse.current.y - ghost.current.y) * 0.08;
+      // Ghost interpolation
+      ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
+      ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
 
       if (ghostRef.current) {
-        const showGhost = isHovering || prevHovering.current;
-        const innerGhost = ghostRef.current.firstElementChild as HTMLElement;
-        ghostRef.current.style.transform = `translate(${ghost.current.x}px, ${ghost.current.y}px)`;
-        ghostRef.current.style.opacity = showGhost ? '0.3' : '0';
-        if (innerGhost) {
-          const gHalf = ghostSize / 2;
-          innerGhost.style.width = `${ghostSize}px`;
-          innerGhost.style.height = `${ghostSize}px`;
-          innerGhost.style.marginLeft = `${-gHalf}px`;
-          innerGhost.style.marginTop = `${-gHalf}px`;
+        ghostRef.current.style.transform = `translate3d(${ghostPos.current.x}px, ${ghostPos.current.y}px, 0)`;
+        ghostRef.current.style.opacity = (isHover || prevHovering.current) ? '0.3' : '0';
+        const inner = ghostRef.current.firstElementChild as HTMLElement;
+        if (inner) {
+          inner.style.width = `${size}px`;
+          inner.style.height = `${size}px`;
+          inner.style.marginLeft = `${-half}px`;
+          inner.style.marginTop = `${-half}px`;
         }
       }
 
-      prevHovering.current = isHovering;
+      prevHovering.current = isHover;
       raf.current = requestAnimationFrame(animate);
     };
     raf.current = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseover', checkHover);
+      document.removeEventListener('mouseover', onMouseOver);
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
-      if (raf.current) cancelAnimationFrame(raf.current);
+      cancelAnimationFrame(raf.current);
     };
-  }, [isHovering, isVisible]);
+  }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter]);
 
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-    return null;
-  }
+  if (isTouchDevice()) return null;
 
-  const goldColor = 'hsl(43, 60%, 55%)';
-  const ghostGoldColor = 'hsl(43, 60%, 55%, 0.3)';
+  const sizeTransition = 'width 0.45s cubic-bezier(0.25,1,0.5,1), height 0.45s cubic-bezier(0.25,1,0.5,1), margin 0.45s cubic-bezier(0.25,1,0.5,1)';
 
   return (
     <>
+      {/* Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
-        style={{ opacity: isVisible ? 1 : 0 }}
-      >
-        <div
-          className="rounded-full transition-all duration-300"
-          style={{
-            backgroundColor: goldColor,
-            width: isHovering ? 8 : 6,
-            height: isHovering ? 8 : 6,
-            marginLeft: isHovering ? -4 : -3,
-            marginTop: isHovering ? -4 : -3,
-          }}
-        />
-      </div>
-      {/* Ghost / afterimage ring */}
-      <div
-        ref={ghostRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9997] -translate-x-1/2 -translate-y-1/2"
-        style={{ opacity: 0, transition: 'opacity 0.4s ease-out' }}
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
+        style={{ opacity: 0, transition: 'opacity 0.3s', willChange: 'transform' }}
       >
         <div
           className="rounded-full"
           style={{
-            width: 36,
-            height: 36,
-            marginLeft: -18,
-            marginTop: -18,
-            border: `1px solid ${ghostGoldColor}`,
-            transition: 'width 0.5s cubic-bezier(0.25, 1, 0.5, 1), height 0.5s cubic-bezier(0.25, 1, 0.5, 1), margin 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
+            backgroundColor: GOLD,
+            width: DOT_DEFAULT,
+            height: DOT_DEFAULT,
+            marginLeft: -DOT_DEFAULT / 2,
+            marginTop: -DOT_DEFAULT / 2,
+            transition: 'width 0.3s, height 0.3s, margin 0.3s',
+          }}
+        />
+      </div>
+      {/* Ghost ring */}
+      <div
+        ref={ghostRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9997]"
+        style={{ opacity: 0, transition: 'opacity 0.4s ease-out', willChange: 'transform' }}
+      >
+        <div
+          className="rounded-full"
+          style={{
+            width: SIZE_DEFAULT,
+            height: SIZE_DEFAULT,
+            marginLeft: -SIZE_DEFAULT / 2,
+            marginTop: -SIZE_DEFAULT / 2,
+            border: `1px solid ${GOLD_GHOST}`,
+            transition: sizeTransition,
           }}
         />
       </div>
       {/* Main ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300"
-        style={{ opacity: isVisible ? 1 : 0 }}
+        className="fixed top-0 left-0 pointer-events-none z-[9998]"
+        style={{ opacity: 0, transition: 'opacity 0.3s', willChange: 'transform' }}
       >
         <div
           className="rounded-full"
           style={{
-            width: 36,
-            height: 36,
-            marginLeft: -18,
-            marginTop: -18,
-            border: `1px solid ${goldColor}`,
-            transition: 'width 0.45s cubic-bezier(0.25, 1, 0.5, 1), height 0.45s cubic-bezier(0.25, 1, 0.5, 1), margin 0.45s cubic-bezier(0.25, 1, 0.5, 1)',
+            width: SIZE_DEFAULT,
+            height: SIZE_DEFAULT,
+            marginLeft: -SIZE_DEFAULT / 2,
+            marginTop: -SIZE_DEFAULT / 2,
+            border: `1px solid ${GOLD}`,
+            transition: sizeTransition,
           }}
         />
       </div>

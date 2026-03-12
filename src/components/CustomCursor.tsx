@@ -89,7 +89,6 @@ export const CustomCursor = () => {
             height: 36,
             marginLeft: -18,
             marginTop: -18,
-            borderWidth: isHovering ? 2 : 1,
           }}
         />
       </div>

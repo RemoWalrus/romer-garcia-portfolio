@@ -42,6 +42,7 @@ export const CustomCursor = () => {
       if (ringRef.current) {
         ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${isHovering ? 1.6 : 1})`;
         ringRef.current.style.opacity = isHovering ? '1' : '0';
+      }
       raf.current = requestAnimationFrame(animate);
     };
     raf.current = requestAnimationFrame(animate);

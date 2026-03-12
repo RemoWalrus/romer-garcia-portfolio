@@ -43,10 +43,18 @@ export const CustomCursor = () => {
       ring.current.x += (mouse.current.x - ring.current.x) * 0.15;
       ring.current.y += (mouse.current.y - ring.current.y) * 0.15;
 
-      const targetScale = isHovering ? 1.8 : 1;
+      const size = isHovering ? 64 : 36;
+      const half = size / 2;
 
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px) scale(${targetScale})`;
+        const innerRing = ringRef.current.firstElementChild as HTMLElement;
+        ringRef.current.style.transform = `translate(${ring.current.x}px, ${ring.current.y}px)`;
+        if (innerRing) {
+          innerRing.style.width = `${size}px`;
+          innerRing.style.height = `${size}px`;
+          innerRing.style.marginLeft = `${-half}px`;
+          innerRing.style.marginTop = `${-half}px`;
+        }
       }
 
       // Ghost/afterimage follows even more slowly

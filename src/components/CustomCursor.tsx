@@ -78,8 +78,8 @@ export const CustomCursor = () => {
     return null;
   }
 
-  const borderColor = onDarkBg ? 'border-white/70' : 'border-foreground/60';
-  const ghostBorderColor = onDarkBg ? 'border-white/40' : 'border-foreground/30';
+  const goldColor = 'hsl(43, 60%, 55%)';
+  const ghostGoldColor = 'hsl(43, 60%, 55%, 0.3)';
 
   return (
     <>

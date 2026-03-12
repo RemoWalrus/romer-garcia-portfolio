@@ -27,6 +27,8 @@ export const CustomCursor = () => {
       const target = e.target as HTMLElement;
       const clickable = target.closest('a, button, [role="button"], input, textarea, select, [onclick], .cursor-pointer, [data-clickable]');
       setIsHovering(!!clickable);
+      const darkSection = target.closest('#hero, .bg-neutral-950, .bg-neutral-900, [data-dark-bg]');
+      setOnDarkBg(!!darkSection);
     };
 
     document.addEventListener('mousemove', onMouseMove);

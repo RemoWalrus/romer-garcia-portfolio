@@ -202,6 +202,25 @@ This project is built with:
 - Tailwind CSS
 - Supabase for backend services
 
+### Custom Cursor
+
+A performant custom cursor with a gold-colored dot and trailing ring, built entirely outside React's render cycle for zero re-renders during animation.
+
+**Features:**
+- Small dot follows the mouse instantly; outer ring trails with interpolated easing
+- Ring expands smoothly on hover over clickable elements with a ghost/afterimage effect
+- Muted gold color (`hsl(43, 60%, 55%)`) ensures visibility in both light and dark modes
+- Native pointer cursor restored on clickable elements outside the hero; text cursor on inputs
+- Hidden on touch devices (`pointer: coarse`)
+- GPU-accelerated via `translate3d` and `will-change: transform`
+
+**Technical Implementation:**
+- All animation state stored in `useRef` — no `useState` triggers during mousemove/animation
+- `requestAnimationFrame` loop with linear interpolation (ring: 0.15, ghost: 0.08)
+- Size changes use CSS transitions (`cubic-bezier(0.25, 1, 0.5, 1)`) on width/height instead of `scale()` to maintain consistent 1px border thickness
+- Passive event listeners for mousemove/mouseover
+- `useCallback` memoized handlers with stable dependency array
+
 ## Additional Features
 
 ### Paradoxxia - AI Character Generator

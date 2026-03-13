@@ -16,7 +16,7 @@ import { Media } from '@capacitor-community/media';
 import { ActionSheet } from '@capacitor/action-sheet';
 import { Link } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
-import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
+// animation-variants no longer used for title - using useAnimation controls instead
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";

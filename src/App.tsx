@@ -51,11 +51,10 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <BrowserRouter>
-            <CursorWrapper />
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <CursorWrapper />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/meme" element={<Meme />} />

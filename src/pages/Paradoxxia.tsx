@@ -75,7 +75,8 @@ const Paradoxxia = () => {
     const schedule = () => {
       const delay = 2000 + Math.random() * 5000;
       timeout = setTimeout(async () => {
-        await triggerGlitch();
+        const isHeavy = Math.random() < 0.15;
+        await triggerGlitch(isHeavy);
         schedule();
       }, delay);
     };

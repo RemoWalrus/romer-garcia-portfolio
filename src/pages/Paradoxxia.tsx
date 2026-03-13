@@ -33,7 +33,7 @@ const Paradoxxia = () => {
           <span className="relative inline-block">
             {/* Red channel ghost */}
             <span
-              className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
+              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
               aria-hidden
               style={{
                 fontWeight: 400,

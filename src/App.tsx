@@ -51,7 +51,8 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <CustomCursor />
+          <BrowserRouter>
+            <CursorWrapper />
           <Toaster />
           <Sonner />
           <BrowserRouter>

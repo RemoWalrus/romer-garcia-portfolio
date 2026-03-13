@@ -988,7 +988,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
               <Button
                 onClick={handleStartOver}
                 variant="outline"
-                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
+                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-[#00d4ff]/30 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                 size="lg"
               >
                 start over

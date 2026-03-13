@@ -816,7 +816,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={species === "other" ? "default" : "outline"}
                       onClick={() => setSpecies("other")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={species === "other" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       other

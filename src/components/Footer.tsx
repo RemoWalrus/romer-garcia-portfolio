@@ -70,7 +70,7 @@ export const Footer = () => {
             <div className="flex gap-6 justify-center">
               <a 
                 href="/meme" 
-                className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
+                className="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
               >
                 Random Developer Meme
               </a>

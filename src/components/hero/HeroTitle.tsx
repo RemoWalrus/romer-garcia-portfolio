@@ -170,7 +170,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
       {/* Difference blend glitch slice */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           mixBlendMode: "difference",
           textShadow: "none",
@@ -193,8 +193,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter">
-          {renderTitle(title.text, title.weights)}
+        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white py-2 tracking-tighter">
+          {renderTitle(title.text, title.weights, true)}
         </div>
       </motion.div>
     </>

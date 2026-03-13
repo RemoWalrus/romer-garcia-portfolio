@@ -56,8 +56,8 @@ export const pixelGlitch: Variants = {
       "inset(0 0 0 0)"
     ],
     transition: {
-      duration: 0.8,
-      ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
+      duration: 0.5,
+      ease: [0.165, 0.84, 0.44, 1],
       repeat: 1,
       repeatType: "reverse",
       times: [0, 0.2, 0.4, 0.6, 0.8, 1]

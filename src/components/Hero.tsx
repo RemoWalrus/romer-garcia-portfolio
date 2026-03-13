@@ -45,7 +45,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     if (titles.length > 0 && titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
         setTitleIndex(prev => prev + 1);
-      }, 800); // Increased slightly to give more time for easeOutQuart animation
+      }, 550);
       return () => clearTimeout(timer);
     }
   }, [titleIndex, titles.length]);

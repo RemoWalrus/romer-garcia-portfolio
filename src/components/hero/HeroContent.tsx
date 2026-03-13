@@ -41,7 +41,7 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
     setShowSubtitle(false);
     const timer = setTimeout(() => {
       setShowSubtitle(true);
-    }, 800);
+    }, 550);
     return () => clearTimeout(timer);
   }, [titleIndex]);
 

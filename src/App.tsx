@@ -12,6 +12,7 @@ import Meme from "./pages/Meme";
 import AICharacterGenerator from "./pages/AICharacterGenerator";
 import ContactRedirect from "./pages/ContactRedirect";
 import NotFound from "./pages/NotFound";
+import Paradoxxia from "./pages/Paradoxxia";
 
 const queryClient = new QueryClient({
   defaultOptions: {

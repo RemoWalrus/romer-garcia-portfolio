@@ -75,7 +75,7 @@ export const Footer = () => {
                 Random Developer Meme
               </a>
               <a 
-                href="/paradoxxia" 
+                href="/char-gen" 
                 className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
               >
                 パラドクシア

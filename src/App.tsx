@@ -50,7 +50,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/meme" element={<Meme />} />
-              <Route path="/paradoxxia" element={<AICharacterGenerator />} />
+              <Route path="/char-gen" element={<AICharacterGenerator />} />
               <Route path="/contact" element={<ContactRedirect />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

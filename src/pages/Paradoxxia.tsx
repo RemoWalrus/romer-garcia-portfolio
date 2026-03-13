@@ -55,10 +55,11 @@ const Paradoxxia = () => {
             <motion.span
               className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
               aria-hidden
-              initial={{ opacity: 0, x: 30, skewX: 4, filter: 'url(#pixelate-in) blur(2px)' }}
+              initial={{ opacity: 0, x: 30, y: -0.5, skewX: 4, filter: 'url(#pixelate-in) blur(2px)' }}
               animate={{
                 opacity: [0, 0.8, 0.6, 0.8, 1],
                 x: [30, -12, 8, -4, 2.5],
+                y: -0.5,
                 skewX: [4, -2, 1.5, -0.5, 0.3],
                 filter: [
                   'url(#pixelate-in) blur(2px)',
@@ -69,11 +70,7 @@ const Paradoxxia = () => {
                 ],
               }}
               transition={{ duration: 0.8, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.25, 0.5, 0.75, 1] }}
-              style={{
-                ...titleStyle,
-                transform: 'translateY(-0.5px)',
-                mixBlendMode: 'screen',
-              }}
+              style={{ ...titleStyle, mixBlendMode: 'screen' }}
             >
               パラドクシア
             </motion.span>
@@ -82,10 +79,11 @@ const Paradoxxia = () => {
             <motion.span
               className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
               aria-hidden
-              initial={{ opacity: 0, x: -30, skewX: -4, filter: 'url(#pixelate-in) blur(2px)' }}
+              initial={{ opacity: 0, x: -30, y: 0.5, skewX: -4, filter: 'url(#pixelate-in) blur(2px)' }}
               animate={{
                 opacity: [0, 0.7, 0.5, 0.7, 1],
                 x: [-30, 10, -6, 3, -2],
+                y: 0.5,
                 skewX: [-4, 2, -1, 0.4, -0.2],
                 filter: [
                   'url(#pixelate-in) blur(2px)',
@@ -96,11 +94,7 @@ const Paradoxxia = () => {
                 ],
               }}
               transition={{ duration: 0.8, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.25, 0.5, 0.75, 1] }}
-              style={{
-                ...titleStyle,
-                transform: 'translateY(0.5px)',
-                mixBlendMode: 'screen',
-              }}
+              style={{ ...titleStyle, mixBlendMode: 'screen' }}
             >
               パラドクシア
             </motion.span>
@@ -108,10 +102,9 @@ const Paradoxxia = () => {
             {/* Main title */}
             <motion.span
               className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-              initial={{ opacity: 0, scale: 0.92, filter: 'url(#pixelate-in)' }}
+              initial={{ opacity: 0, filter: 'url(#pixelate-in)' }}
               animate={{
                 opacity: [0, 0, 0.6, 1],
-                scale: [0.92, 0.96, 1, 1],
                 filter: [
                   'url(#pixelate-in)',
                   'url(#pixelate-in)',
@@ -127,7 +120,6 @@ const Paradoxxia = () => {
             >
               パラドクシア
             </motion.span>
-          </span>
         </h1>
       </div>
       <footer className="absolute bottom-0 left-0 right-0 z-10 py-6 text-center">

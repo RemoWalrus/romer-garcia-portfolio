@@ -71,7 +71,7 @@ export const CustomCursor = () => {
   }, []);
 
   useEffect(() => {
-    if (isTouchDevice()) return;
+    if (isTouchDevice() || isEditMode()) return;
 
     document.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseover', onMouseOver, { passive: true });

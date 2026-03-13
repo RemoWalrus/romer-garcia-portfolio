@@ -50,74 +50,84 @@ const Paradoxxia = () => {
 
       <div className="min-h-full flex flex-col items-center justify-center relative z-10">
         <h1 className="flex flex-col items-center relative">
-          {/* Red channel — starts offset, snaps into place */}
-          <motion.span
-            className="text-[3.2rem] md:text-9xl absolute inset-0 flex items-center justify-center pointer-events-none"
-            aria-hidden
-            initial={{ opacity: 0, x: 30, skewX: 4, filter: 'url(#pixelate-in) blur(2px)' }}
-            animate={{
-              opacity: [0, 0.8, 0.6, 0.8, 1],
-              x: [30, -12, 8, -4, 2.5],
-              skewX: [4, -2, 1.5, -0.5, 0.3],
-              filter: [
-                'url(#pixelate-in) blur(2px)',
-                'url(#pixelate-in) blur(1px)',
-                'none',
-                'none',
-                'none',
-              ],
-            }}
-            transition={{ duration: 0.8, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.25, 0.5, 0.75, 1] }}
-            style={{ ...titleStyle, mixBlendMode: 'screen' }}
-          >
-            <span className="dark:text-[rgba(255,0,0,0.4)] text-[rgba(255,0,0,0.22)]">パラドクシア</span>
-          </motion.span>
+          <span className="relative inline-block">
+            {/* Red channel ghost */}
+            <motion.span
+              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
+              aria-hidden
+              initial={{ opacity: 0, x: 30, skewX: 4, filter: 'url(#pixelate-in) blur(2px)' }}
+              animate={{
+                opacity: [0, 0.8, 0.6, 0.8, 1],
+                x: [30, -12, 8, -4, 2.5],
+                skewX: [4, -2, 1.5, -0.5, 0.3],
+                filter: [
+                  'url(#pixelate-in) blur(2px)',
+                  'url(#pixelate-in) blur(1px)',
+                  'none',
+                  'none',
+                  'none',
+                ],
+              }}
+              transition={{ duration: 0.8, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.25, 0.5, 0.75, 1] }}
+              style={{
+                ...titleStyle,
+                transform: 'translateY(-0.5px)',
+                mixBlendMode: 'screen',
+              }}
+            >
+              パラドクシア
+            </motion.span>
 
-          {/* Cyan channel — starts offset opposite, snaps into place */}
-          <motion.span
-            className="text-[3.2rem] md:text-9xl absolute inset-0 flex items-center justify-center pointer-events-none"
-            aria-hidden
-            initial={{ opacity: 0, x: -30, skewX: -4, filter: 'url(#pixelate-in) blur(2px)' }}
-            animate={{
-              opacity: [0, 0.7, 0.5, 0.7, 1],
-              x: [-30, 10, -6, 3, -2],
-              skewX: [-4, 2, -1, 0.4, -0.2],
-              filter: [
-                'url(#pixelate-in) blur(2px)',
-                'url(#pixelate-in) blur(1px)',
-                'none',
-                'none',
-                'none',
-              ],
-            }}
-            transition={{ duration: 0.8, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.25, 0.5, 0.75, 1] }}
-            style={{ ...titleStyle, mixBlendMode: 'screen' }}
-          >
-            <span className="dark:text-[rgba(0,255,255,0.35)] text-[rgba(0,255,255,0.18)]">パラドクシア</span>
-          </motion.span>
+            {/* Cyan channel ghost */}
+            <motion.span
+              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+              aria-hidden
+              initial={{ opacity: 0, x: -30, skewX: -4, filter: 'url(#pixelate-in) blur(2px)' }}
+              animate={{
+                opacity: [0, 0.7, 0.5, 0.7, 1],
+                x: [-30, 10, -6, 3, -2],
+                skewX: [-4, 2, -1, 0.4, -0.2],
+                filter: [
+                  'url(#pixelate-in) blur(2px)',
+                  'url(#pixelate-in) blur(1px)',
+                  'none',
+                  'none',
+                  'none',
+                ],
+              }}
+              transition={{ duration: 0.8, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.25, 0.5, 0.75, 1] }}
+              style={{
+                ...titleStyle,
+                transform: 'translateY(0.5px)',
+                mixBlendMode: 'screen',
+              }}
+            >
+              パラドクシア
+            </motion.span>
 
-          {/* Main title — fades in after channels converge */}
-          <motion.span
-            className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-            initial={{ opacity: 0, scale: 0.92, filter: 'url(#pixelate-in)' }}
-            animate={{
-              opacity: [0, 0, 0.6, 1],
-              scale: [0.92, 0.96, 1, 1],
-              filter: [
-                'url(#pixelate-in)',
-                'url(#pixelate-in)',
-                'none',
-                'none',
-              ],
-            }}
-            transition={{ duration: 0.9, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.3, 0.6, 1] }}
-            style={{
-              ...titleStyle,
-              textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
-            }}
-          >
-            パラドクシア
-          </motion.span>
+            {/* Main title */}
+            <motion.span
+              className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+              initial={{ opacity: 0, scale: 0.92, filter: 'url(#pixelate-in)' }}
+              animate={{
+                opacity: [0, 0, 0.6, 1],
+                scale: [0.92, 0.96, 1, 1],
+                filter: [
+                  'url(#pixelate-in)',
+                  'url(#pixelate-in)',
+                  'none',
+                  'none',
+                ],
+              }}
+              transition={{ duration: 0.9, ease: [0.16, 0.84, 0.44, 1], times: [0, 0.3, 0.6, 1] }}
+              style={{
+                ...titleStyle,
+                textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+              }}
+            >
+              パラドクシア
+            </motion.span>
+          </span>
         </h1>
       </div>
       <footer className="absolute bottom-0 left-0 right-0 z-10 py-6 text-center">

@@ -33,7 +33,7 @@ const Paradoxxia = () => {
           <span className="relative inline-block">
             {/* Red channel ghost */}
             <span
-              className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
+              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
               aria-hidden
               style={{
                 fontWeight: 400,
@@ -47,7 +47,7 @@ const Paradoxxia = () => {
             </span>
             {/* Cyan channel ghost */}
             <span
-              className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
               aria-hidden
               style={{
                 fontWeight: 400,
@@ -61,7 +61,7 @@ const Paradoxxia = () => {
             </span>
             {/* Main title */}
             <span
-              className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+              className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
               style={{
                 fontWeight: 400,
                 fontFamily: '"ab-karuta-bold", sans-serif',

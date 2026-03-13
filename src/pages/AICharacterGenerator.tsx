@@ -653,7 +653,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         <span className="relative inline-block">
           {/* Red channel ghost - behind main */}
           <span
-            className="text-7xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
             aria-hidden
             style={{
               fontWeight: 400,
@@ -667,7 +667,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           </span>
           {/* Cyan channel ghost - behind main */}
           <span
-            className="text-7xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
             aria-hidden
             style={{
               fontWeight: 400,
@@ -681,7 +681,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           </span>
           {/* Main title - on top */}
           <span
-            className="text-7xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+            className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
             style={{
               fontWeight: 400,
               fontFamily: '"ab-karuta-bold", sans-serif',

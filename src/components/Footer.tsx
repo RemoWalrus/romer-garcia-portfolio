@@ -47,7 +47,7 @@ export const Footer = () => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-neutral-500 hover:text-neutral-300 transition-colors"
+        className="text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-300 transition-colors"
         aria-label={label}
       >
         <Icon className="w-5 h-5" />

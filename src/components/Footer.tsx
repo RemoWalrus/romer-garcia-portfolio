@@ -47,7 +47,7 @@ export const Footer = () => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-neutral-500 hover:text-neutral-300 transition-colors"
+        className="text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-300 transition-colors"
         aria-label={label}
       >
         <Icon className="w-5 h-5" />
@@ -70,13 +70,13 @@ export const Footer = () => {
             <div className="flex gap-6 justify-center">
               <a 
                 href="/meme" 
-                className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
+                className="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
               >
                 Random Developer Meme
               </a>
               <a 
                 href="/char-gen" 
-                className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
+                className="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
               >
                 パラドクシア
               </a>

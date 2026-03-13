@@ -836,7 +836,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "female" ? "default" : "outline"}
                       onClick={() => setGender("female")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       female
                     </Button>

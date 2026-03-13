@@ -31,8 +31,8 @@ const RoutedCursor = () => {
   const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia';
   return (
     <CustomCursor
-      color={isCharGen ? NEON_BLUE : undefined}
-      ghostColor={isCharGen ? NEON_BLUE_GHOST : undefined}
+      color={useNeonCursor ? NEON_BLUE : undefined}
+      ghostColor={useNeonCursor ? NEON_BLUE_GHOST : undefined}
     />
   );
 };

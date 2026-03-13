@@ -15,7 +15,7 @@ const Paradoxxia = () => {
   const titleFont = {
     fontWeight: 400,
     fontFamily: '"ab-karuta-bold", sans-serif',
-    letterSpacing: '-0.1em',
+    letterSpacing: '-0.15em',
   };
 
   // Idle glitch — random micro-burst, occasionally heavy

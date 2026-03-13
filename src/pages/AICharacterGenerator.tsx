@@ -800,21 +800,21 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={species === "human" ? "default" : "outline"}
                       onClick={() => setSpecies("human")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "human" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "human" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       human
                     </Button>
                     <Button
                       variant={species === "android" ? "default" : "outline"}
                       onClick={() => setSpecies("android")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "android" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "android" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       android
                     </Button>
                     <Button
                       variant={species === "other" ? "default" : "outline"}
                       onClick={() => setSpecies("other")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       other
                     </Button>
@@ -829,21 +829,21 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "male" ? "default" : "outline"}
                       onClick={() => setGender("male")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       male
                     </Button>
                     <Button
                       variant={gender === "female" ? "default" : "outline"}
                       onClick={() => setGender("female")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       female
                     </Button>
                     <Button
                       variant={gender === "other" ? "default" : "outline"}
                       onClick={() => setGender("other")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                     >
                       other
                     </Button>
@@ -895,7 +895,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                 onClick={step < 4 ? handleNext : generateCharacter}
                 disabled={isGenerating}
                 variant="outline"
-                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
+                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-[#00d4ff]/30 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                 size="lg"
               >
                 {isGenerating ? (
@@ -988,7 +988,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
               <Button
                 onClick={handleStartOver}
                 variant="outline"
-                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-neutral-700 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
+                className="w-full bg-neutral-100/50 dark:bg-white/10 hover:bg-neutral-200/50 dark:hover:bg-white/20 text-neutral-900 dark:text-white border-neutral-200 dark:border-[#00d4ff]/30 font-roc uppercase tracking-wider text-lg font-extralight transition-all duration-300"
                 size="lg"
               >
                 start over

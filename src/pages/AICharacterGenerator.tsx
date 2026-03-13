@@ -648,50 +648,53 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
   const renderTitle = () => {
     return (
-      <span className="flex flex-col items-center relative">
-        {/* Red channel ghost - behind main */}
-        <span
-          className="text-7xl md:text-9xl absolute inset-0 pointer-events-none flex items-center justify-center"
-          aria-hidden
-          style={{
-            fontWeight: 400,
-            fontFamily: '"ab-karuta-bold", sans-serif',
-            letterSpacing: '-0.1em',
-            color: 'rgba(255, 0, 0, 0.22)',
-            transform: 'translateX(2.5px) translateY(-0.5px) skewX(0.3deg)',
-            mixBlendMode: 'screen',
-          }}
-        >
-          パラドクシア
+      <span className="flex flex-col items-center">
+        {/* Title wrapper with relative positioning for ghost layers */}
+        <span className="relative inline-block">
+          {/* Red channel ghost - behind main */}
+          <span
+            className="text-7xl md:text-9xl absolute inset-0 pointer-events-none"
+            aria-hidden
+            style={{
+              fontWeight: 400,
+              fontFamily: '"ab-karuta-bold", sans-serif',
+              letterSpacing: '-0.1em',
+              color: 'rgba(255, 0, 0, 0.22)',
+              transform: 'translateX(2.5px) translateY(-0.5px) skewX(0.3deg)',
+              mixBlendMode: 'screen',
+            }}
+          >
+            パラドクシア
+          </span>
+          {/* Cyan channel ghost - behind main */}
+          <span
+            className="text-7xl md:text-9xl absolute inset-0 pointer-events-none"
+            aria-hidden
+            style={{
+              fontWeight: 400,
+              fontFamily: '"ab-karuta-bold", sans-serif',
+              letterSpacing: '-0.1em',
+              color: 'rgba(0, 255, 255, 0.18)',
+              transform: 'translateX(-2px) translateY(0.5px) skewX(-0.2deg)',
+              mixBlendMode: 'screen',
+            }}
+          >
+            パラドクシア
+          </span>
+          {/* Main title - on top */}
+          <span
+            className="text-7xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+            style={{
+              fontWeight: 400,
+              fontFamily: '"ab-karuta-bold", sans-serif',
+              letterSpacing: '-0.1em',
+              textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+            }}
+          >
+            パラドクシア
+          </span>
         </span>
-        {/* Cyan channel ghost - behind main */}
-        <span
-          className="text-7xl md:text-9xl absolute inset-0 pointer-events-none flex items-center justify-center"
-          aria-hidden
-          style={{
-            fontWeight: 400,
-            fontFamily: '"ab-karuta-bold", sans-serif',
-            letterSpacing: '-0.1em',
-            color: 'rgba(0, 255, 255, 0.18)',
-            transform: 'translateX(-2px) translateY(0.5px) skewX(-0.2deg)',
-            mixBlendMode: 'screen',
-          }}
-        >
-          パラドクシア
-        </span>
-        {/* Main title - on top */}
-        <span
-          className="text-7xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-          style={{
-            fontWeight: 400,
-            fontFamily: '"ab-karuta-bold", sans-serif',
-            letterSpacing: '-0.1em',
-            textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
-          }}
-        >
-          パラドクシア
-        </span>
-        <span className="inline-flex items-baseline relative z-10">
+        <span className="inline-flex items-baseline">
           <span style={{ fontWeight: 100 }}>character</span>
           <span style={{ fontWeight: 500 }} className="ml-2">generator</span>
         </span>

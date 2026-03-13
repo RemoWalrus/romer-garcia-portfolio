@@ -131,7 +131,7 @@ export const CustomCursor = () => {
     };
   }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter]);
 
-  if (isTouchDevice()) return null;
+  if (isTouchDevice() || isEditMode()) return null;
 
   const sizeTransition = 'width 0.45s cubic-bezier(0.25,1,0.5,1), height 0.45s cubic-bezier(0.25,1,0.5,1), margin 0.45s cubic-bezier(0.25,1,0.5,1)';
 

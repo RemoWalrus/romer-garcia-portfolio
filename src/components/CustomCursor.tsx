@@ -12,6 +12,9 @@ const DOT_HOVER = 8;
 const isTouchDevice = () =>
   typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
+const isEditMode = () =>
+  typeof window !== 'undefined' && window.self !== window.top;
+
 export const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);

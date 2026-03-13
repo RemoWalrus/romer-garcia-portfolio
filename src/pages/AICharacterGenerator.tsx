@@ -686,7 +686,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
             fontWeight: 400,
             fontFamily: '"ab-karuta-bold", sans-serif',
             letterSpacing: '-0.1em',
-            textShadow: '1px 0 0 rgba(255,0,0,0.2), -1px 0 0 rgba(0,255,255,0.2)',
+            textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
           }}
         >
           パラドクシア

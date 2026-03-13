@@ -649,7 +649,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
   const renderTitle = () => {
     return (
       <span className="flex flex-col items-center">
-        <span style={{ fontWeight: 400, fontFamily: '"ab-karuta-bold", sans-serif' }}>パラドクシア</span>
+        <span className="text-6xl md:text-8xl" style={{ fontWeight: 400, fontFamily: '"ab-karuta-bold", sans-serif', letterSpacing: '-0.08em' }}>パラドクシア</span>
         <span className="inline-flex items-baseline">
           <span style={{ fontWeight: 100 }}>character</span>
           <span style={{ fontWeight: 500 }} className="ml-2">generator</span>

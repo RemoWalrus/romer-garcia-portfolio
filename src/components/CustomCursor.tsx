@@ -175,7 +175,7 @@ export const CustomCursor = ({ color = DEFAULT_COLOR }: CustomCursorProps) => {
             height: SIZE_DEFAULT,
             marginLeft: -SIZE_DEFAULT / 2,
             marginTop: -SIZE_DEFAULT / 2,
-            border: `1px solid ${GOLD_GHOST}`,
+            border: `1px solid ${cursorGhost}`,
             transition: sizeTransition,
           }}
         />

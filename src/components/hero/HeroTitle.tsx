@@ -103,7 +103,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
       {/* Red channel ghost */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           opacity: gi * 0.6,
           transform: `translateX(${gi * 12}px) translateY(${gi * -3}px) skewX(${gi * 1.5}deg)`,
@@ -112,16 +112,16 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center tracking-tighter"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter"
           style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
         >
-          {renderTitle(title.text, title.weights)}
+          {renderTitle(title.text, title.weights, true)}
         </div>
       </motion.div>
 
       {/* Cyan channel ghost */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           opacity: gi * 0.6,
           transform: `translateX(${gi * -10}px) translateY(${gi * 2}px) skewX(${gi * -1}deg)`,
@@ -130,10 +130,10 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center tracking-tighter"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter"
           style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
         >
-          {renderTitle(title.text, title.weights)}
+          {renderTitle(title.text, title.weights, true)}
         </div>
       </motion.div>
 

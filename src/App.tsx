@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { CustomCursor } from "./components/CustomCursor";
@@ -22,20 +22,28 @@ const queryClient = new QueryClient({
   },
 });
 
+const NEON_BLUE = 'hsl(192, 100%, 50%)';
+const NEON_BLUE_GHOST = 'hsla(192, 100%, 50%, 0.3)';
+
+const RoutedCursor = () => {
+  const location = useLocation();
+  const isCharGen = location.pathname === '/char-gen';
+  return (
+    <CustomCursor
+      color={isCharGen ? NEON_BLUE : undefined}
+      ghostColor={isCharGen ? NEON_BLUE_GHOST : undefined}
+    />
+  );
+};
+
 const App = () => {
   useEffect(() => {
-    // Set theme based on browser preference
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const updateTheme = (e: MediaQueryListEvent | MediaQueryList) => {
       document.documentElement.classList.toggle('dark', e.matches);
     };
-
-    // Initial theme setting
     updateTheme(mediaQuery);
-
-    // Listen for changes in system theme
     mediaQuery.addEventListener('change', updateTheme);
-
     return () => mediaQuery.removeEventListener('change', updateTheme);
   }, []);
 
@@ -43,10 +51,10 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <CustomCursor />
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <RoutedCursor />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/meme" element={<Meme />} />

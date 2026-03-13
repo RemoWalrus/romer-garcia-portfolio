@@ -26,12 +26,12 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     setGlitchIntensity(v);
   });
 
-  const renderTitle = (text: string, weights: string[]) => {
+  const renderTitle = (text: string, weights: string[], inheritColor = false) => {
     if (text === "romergarcia") {
       return (
         <span className="inline-flex items-baseline">
           <span className="font-medium">romer</span>
-          <span className="font-thin text-neutral-200">garcia</span>
+          <span className={`font-thin ${inheritColor ? '' : 'text-neutral-200'}`} style={inheritColor ? { color: 'inherit' } : undefined}>garcia</span>
         </span>
       );
     }
@@ -103,7 +103,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
       {/* Red channel ghost */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           opacity: gi * 0.6,
           transform: `translateX(${gi * 12}px) translateY(${gi * -3}px) skewX(${gi * 1.5}deg)`,
@@ -112,16 +112,16 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center tracking-tighter"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter"
           style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
         >
-          {renderTitle(title.text, title.weights)}
+          {renderTitle(title.text, title.weights, true)}
         </div>
       </motion.div>
 
       {/* Cyan channel ghost */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           opacity: gi * 0.6,
           transform: `translateX(${gi * -10}px) translateY(${gi * 2}px) skewX(${gi * -1}deg)`,
@@ -130,10 +130,10 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
       >
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc mb-8 py-2 text-center tracking-tighter"
+          className="text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter"
           style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
         >
-          {renderTitle(title.text, title.weights)}
+          {renderTitle(title.text, title.weights, true)}
         </div>
       </motion.div>
 
@@ -149,8 +149,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
               <feMorphology operator="dilate" radius={Math.max(1, Math.round(gi * 4))} />
             </filter>
           </svg>
-          <div
-            className="absolute inset-0 pointer-events-none"
+           <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
               filter: 'url(#pixelate)',
               opacity: gi * 0.7,
@@ -159,10 +159,10 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             aria-hidden
           >
             <div
-              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter"
+              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white py-2 tracking-tighter"
               style={{ opacity: 0.6 }}
             >
-              {renderTitle(title.text, title.weights)}
+              {renderTitle(title.text, title.weights, true)}
             </div>
           </div>
         </>
@@ -170,7 +170,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
       {/* Difference blend glitch slice */}
       <motion.div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{
           mixBlendMode: "difference",
           textShadow: "none",
@@ -193,8 +193,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           }
         }}
       >
-        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter">
-          {renderTitle(title.text, title.weights)}
+        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white py-2 tracking-tighter">
+          {renderTitle(title.text, title.weights, true)}
         </div>
       </motion.div>
     </>

@@ -149,8 +149,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
               <feMorphology operator="dilate" radius={Math.max(1, Math.round(gi * 4))} />
             </filter>
           </svg>
-          <div
-            className="absolute inset-0 pointer-events-none"
+           <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
               filter: 'url(#pixelate)',
               opacity: gi * 0.7,
@@ -159,10 +159,10 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
             aria-hidden
           >
             <div
-              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 text-center tracking-tighter"
+              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white py-2 tracking-tighter"
               style={{ opacity: 0.6 }}
             >
-              {renderTitle(title.text, title.weights)}
+              {renderTitle(title.text, title.weights, true)}
             </div>
           </div>
         </>

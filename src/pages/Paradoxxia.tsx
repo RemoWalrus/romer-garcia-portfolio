@@ -1,24 +1,118 @@
 import { Helmet } from "react-helmet-async";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useState, useEffect, useCallback } from "react";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 
 const Paradoxxia = () => {
-  const [phase, setPhase] = useState(0); // 0=glitchy, 1=settling, 2=done
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 400);
-    const t2 = setTimeout(() => setPhase(2), 800);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
+  const [intro, setIntro] = useState(true);
+  const redControls = useAnimation();
+  const cyanControls = useAnimation();
+  const mainControls = useAnimation();
+  const scanControls = useAnimation();
 
   const titleFont = {
     fontWeight: 400,
     fontFamily: '"ab-karuta-bold", sans-serif',
     letterSpacing: '-0.1em',
   };
+
+  // Idle glitch — random micro-burst
+  const triggerGlitch = useCallback(async () => {
+    const rx = (Math.random() - 0.5) * 10;
+    const ry = (Math.random() - 0.5) * 4;
+    const sk = (Math.random() - 0.5) * 3;
+    const dur = 0.12 + Math.random() * 0.1;
+
+    await Promise.all([
+      redControls.start({
+        x: [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.6, 2.5],
+        y: [-0.5, -0.5 + ry, -0.5],
+        skewX: [0.3, 0.3 + sk, 0.3],
+        opacity: [0.22, 0.5, 0.22],
+        transition: { duration: dur, ease: 'easeInOut' },
+      }),
+      cyanControls.start({
+        x: [-2, -2 - rx * 1.1, -2 + rx * 0.5, -2],
+        y: [0.5, 0.5 - ry, 0.5],
+        skewX: [-0.2, -0.2 - sk, -0.2],
+        opacity: [0.18, 0.45, 0.18],
+        transition: { duration: dur, ease: 'easeInOut' },
+      }),
+      mainControls.start({
+        skewX: [0, sk * 0.5, 0],
+        textShadow: [
+          '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+          `${Math.abs(rx) * 0.4}px 0 0 rgba(255,0,0,0.4), ${-Math.abs(rx) * 0.4}px 0 0 rgba(0,255,255,0.4)`,
+          '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+        ],
+        transition: { duration: dur, ease: 'easeInOut' },
+      }),
+    ]);
+  }, [redControls, cyanControls, mainControls]);
+
+  // Schedule random idle glitches
+  useEffect(() => {
+    if (intro) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      const delay = 2000 + Math.random() * 5000;
+      timeout = setTimeout(async () => {
+        await triggerGlitch();
+        schedule();
+      }, delay);
+    };
+    schedule();
+    return () => clearTimeout(timeout);
+  }, [intro, triggerGlitch]);
+
+  // Intro animation sequence — smooth continuous
+  useEffect(() => {
+    const run = async () => {
+      // Start from glitchy state, animate to rest
+      await Promise.all([
+        redControls.start({
+          x: [18, -8, 5, -2, 2.5],
+          y: [-6, 3, -1.5, 0.5, -0.5],
+          skewX: [4, -2, 1, -0.3, 0.3],
+          opacity: [0.65, 0.55, 0.4, 0.28, 0.22],
+          color: [
+            'rgba(255,0,0,0.6)', 'rgba(255,0,0,0.5)',
+            'rgba(255,0,0,0.35)', 'rgba(255,0,0,0.22)',
+          ],
+          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+        }),
+        cyanControls.start({
+          x: [-15, 7, -4, 1, -2],
+          y: [5, -2, 1, -0.3, 0.5],
+          skewX: [-3, 1.8, -0.8, 0.3, -0.2],
+          opacity: [0.6, 0.5, 0.35, 0.25, 0.18],
+          color: [
+            'rgba(0,255,255,0.55)', 'rgba(0,255,255,0.45)',
+            'rgba(0,255,255,0.3)', 'rgba(0,255,255,0.18)',
+          ],
+          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+        }),
+        mainControls.start({
+          opacity: [0, 0.6, 0.85, 1],
+          skewX: [3, -1, 0.5, 0],
+          textShadow: [
+            '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
+            '2px 0 0 rgba(255,0,0,0.35), -2px 0 0 rgba(0,255,255,0.35)',
+            '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+          ],
+          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] },
+        }),
+        scanControls.start({
+          opacity: [0.5, 0.3, 0],
+          transition: { duration: 1, ease: 'easeOut' },
+        }),
+      ]);
+      setIntro(false);
+    };
+    run();
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
@@ -37,17 +131,6 @@ const Paradoxxia = () => {
       <GoogleAnalytics />
       <ThemeToggle />
 
-      {/* SVG pixelation filter */}
-      <svg className="absolute w-0 h-0" aria-hidden>
-        <filter id="pdx-pixelate">
-          <feFlood x="0" y="0" width={phase === 0 ? 12 : phase === 1 ? 4 : 1} height={phase === 0 ? 12 : phase === 1 ? 4 : 1} />
-          <feComposite width={phase === 0 ? 12 : phase === 1 ? 4 : 1} height={phase === 0 ? 12 : phase === 1 ? 4 : 1} />
-          <feTile result="a" />
-          <feComposite in="SourceGraphic" in2="a" operator="in" />
-          <feMorphology operator="dilate" radius={phase === 0 ? 5 : phase === 1 ? 2 : 0} />
-        </filter>
-      </svg>
-
       {/* Circuit board background */}
       <div
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
@@ -62,24 +145,9 @@ const Paradoxxia = () => {
             <motion.span
               className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
               aria-hidden
-              style={{ ...titleFont, mixBlendMode: 'screen' }}
-              initial={{
-                x: 18, y: -6, skewX: 4, opacity: 0.7,
-                color: 'rgba(255,0,0,0.6)',
-              }}
-              animate={{
-                x: phase === 0 ? [18, -12, 8, -5, 2.5] : 2.5,
-                y: phase === 0 ? [-6, 4, -3, 1, -0.5] : -0.5,
-                skewX: phase === 0 ? [4, -3, 2, -1, 0.3] : 0.3,
-                opacity: phase === 2 ? 0.22 : 0.6,
-                color: phase === 2
-                  ? 'rgba(255,0,0,0.22)'
-                  : 'rgba(255,0,0,0.6)',
-              }}
-              transition={{
-                duration: phase === 0 ? 0.4 : 0.4,
-                ease: [0.165, 0.84, 0.44, 1],
-              }}
+              style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
+              initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
+              animate={redControls}
             >
               パラドクシア
             </motion.span>
@@ -88,24 +156,9 @@ const Paradoxxia = () => {
             <motion.span
               className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
               aria-hidden
-              style={{ ...titleFont, mixBlendMode: 'screen' }}
-              initial={{
-                x: -15, y: 5, skewX: -3, opacity: 0.6,
-                color: 'rgba(0,255,255,0.55)',
-              }}
-              animate={{
-                x: phase === 0 ? [-15, 10, -7, 4, -2] : -2,
-                y: phase === 0 ? [5, -3, 2, -1, 0.5] : 0.5,
-                skewX: phase === 0 ? [-3, 2.5, -1.5, 0.8, -0.2] : -0.2,
-                opacity: phase === 2 ? 0.18 : 0.55,
-                color: phase === 2
-                  ? 'rgba(0,255,255,0.18)'
-                  : 'rgba(0,255,255,0.55)',
-              }}
-              transition={{
-                duration: phase === 0 ? 0.4 : 0.4,
-                ease: [0.165, 0.84, 0.44, 1],
-              }}
+              style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
+              initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
+              animate={cyanControls}
             >
               パラドクシア
             </motion.span>
@@ -116,39 +169,24 @@ const Paradoxxia = () => {
               style={{ ...titleFont }}
               initial={{
                 opacity: 0,
-                filter: 'url(#pdx-pixelate) blur(2px)',
                 skewX: 3,
-                textShadow: '4px 0 0 rgba(255,0,0,0.5), -4px 0 0 rgba(0,255,255,0.5)',
+                textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
               }}
-              animate={{
-                opacity: 1,
-                filter: phase < 2 ? 'url(#pdx-pixelate) blur(0px)' : 'none',
-                skewX: phase === 0 ? [3, -2, 1.5, -0.5, 0] : 0,
-                textShadow: phase === 2
-                  ? '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)'
-                  : '3px 0 0 rgba(255,0,0,0.4), -3px 0 0 rgba(0,255,255,0.4)',
-              }}
-              transition={{
-                duration: phase === 0 ? 0.35 : 0.45,
-                ease: [0.165, 0.84, 0.44, 1],
-              }}
+              animate={mainControls}
             >
               パラドクシア
             </motion.span>
 
-            {/* Scan line overlay during glitch */}
-            {phase < 2 && (
-              <motion.span
-                className="absolute inset-0 pointer-events-none z-20"
-                aria-hidden
-                initial={{ opacity: 0.6 }}
-                animate={{ opacity: 0 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-                style={{
-                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px)',
-                }}
-              />
-            )}
+            {/* Scan line overlay */}
+            <motion.span
+              className="absolute inset-0 pointer-events-none z-20"
+              aria-hidden
+              initial={{ opacity: 0.5 }}
+              animate={scanControls}
+              style={{
+                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px)',
+              }}
+            />
           </span>
         </h1>
       </div>

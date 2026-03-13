@@ -829,21 +829,21 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "male" ? "default" : "outline"}
                       onClick={() => setGender("male")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       male
                     </Button>
                     <Button
                       variant={gender === "female" ? "default" : "outline"}
                       onClick={() => setGender("female")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       female
                     </Button>
                     <Button
                       variant={gender === "other" ? "default" : "outline"}
                       onClick={() => setGender("other")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       other
                     </Button>

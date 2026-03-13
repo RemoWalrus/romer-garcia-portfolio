@@ -201,7 +201,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 <a href="/meme" className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50">
                   meme
                 </a>
-                <a href="/char-gen" className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50" style={{ fontFamily: '"ab-karuta-bold", sans-serif' }}>
+                <a href="/char-gen" className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50">
                   パラドクシア
                 </a>
               </div>

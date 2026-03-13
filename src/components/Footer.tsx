@@ -77,7 +77,6 @@ export const Footer = () => {
               <a 
                 href="/char-gen" 
                 className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
-                style={{ fontFamily: '"ab-karuta-bold", sans-serif' }}
               >
                 パラドクシア
               </a>

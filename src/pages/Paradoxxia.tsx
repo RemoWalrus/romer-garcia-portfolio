@@ -47,7 +47,7 @@ const Paradoxxia = () => {
             </span>
             {/* Cyan channel ghost */}
             <span
-              className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
               aria-hidden
               style={{
                 fontWeight: 400,

@@ -872,50 +872,18 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-24">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
-          <motion.div 
-            className="text-center space-y-6"
-            variants={glitchVariants}
-            initial="initial"
-            animate="animate"
-          >
+          <div className="text-center space-y-6">
             <div className="relative">
-              <h1 
-                className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10"
-                style={{
-                  textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
-                  fontFamily: 'var(--font-roc)',
-                  lineHeight: '1.3',
-                  letterSpacing: '-0.02em'
-                }}
-              >
+              <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10">
                 {renderTitle()}
               </h1>
-              <motion.div
-                className="absolute inset-0 z-0"
-                variants={pixelGlitch}
-                style={{
-                  clipPath: "inset(0 0 0 0)"
-                }}
-              >
-                <h1 
-                  className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 opacity-70"
-                  style={{
-                    textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
-                    fontFamily: 'var(--font-roc)',
-                    lineHeight: '1.3',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {renderTitle()}
-                </h1>
-              </motion.div>
             </div>
             <p className="text-xl text-foreground max-w-2xl mx-auto font-roc">
               <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
               <span className="font-medium">of the</span>{" "}
               <span style={{ fontWeight: 300 }}>paradoxxia universe</span>
             </p>
-          </motion.div>
+          </div>
 
           {/* Sequential Prompt Section */}
           {!generatedImage && (

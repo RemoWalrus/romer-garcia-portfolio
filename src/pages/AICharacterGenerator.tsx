@@ -657,8 +657,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
             fontWeight: 400,
             fontFamily: '"ab-karuta-bold", sans-serif',
             letterSpacing: '-0.1em',
-            color: 'rgba(255, 0, 0, 0.15)',
-            transform: 'translateX(2px) translateY(-0.5px) skewX(0.3deg)',
+            color: 'rgba(255, 0, 0, 0.22)',
+            transform: 'translateX(2.5px) translateY(-0.5px) skewX(0.3deg)',
             mixBlendMode: 'screen',
           }}
         >
@@ -672,8 +672,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
             fontWeight: 400,
             fontFamily: '"ab-karuta-bold", sans-serif',
             letterSpacing: '-0.1em',
-            color: 'rgba(0, 255, 255, 0.12)',
-            transform: 'translateX(-1.5px) translateY(0.5px) skewX(-0.2deg)',
+            color: 'rgba(0, 255, 255, 0.18)',
+            transform: 'translateX(-2px) translateY(0.5px) skewX(-0.2deg)',
             mixBlendMode: 'screen',
           }}
         >
@@ -686,7 +686,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
             fontWeight: 400,
             fontFamily: '"ab-karuta-bold", sans-serif',
             letterSpacing: '-0.1em',
-            textShadow: '1px 0 0 rgba(255,0,0,0.2), -1px 0 0 rgba(0,255,255,0.2)',
+            textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
           }}
         >
           パラドクシア

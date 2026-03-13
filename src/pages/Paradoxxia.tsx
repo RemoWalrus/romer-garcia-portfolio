@@ -74,6 +74,11 @@ const Paradoxxia = () => {
           </span>
         </h1>
       </div>
+      <footer className="absolute bottom-0 left-0 right-0 z-10 py-6 text-center">
+        <p className="text-sm text-muted-foreground font-roc">
+          © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 };

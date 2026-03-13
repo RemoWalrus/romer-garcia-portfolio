@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect } from "react";
 import { CustomCursor } from "./components/CustomCursor";
@@ -12,6 +12,14 @@ import Meme from "./pages/Meme";
 import AICharacterGenerator from "./pages/AICharacterGenerator";
 import ContactRedirect from "./pages/ContactRedirect";
 import NotFound from "./pages/NotFound";
+
+const NEON_BLUE = 'hsl(190, 100%, 50%)';
+
+const CursorWrapper = () => {
+  const location = useLocation();
+  const isCharGen = location.pathname === '/char-gen';
+  return <CustomCursor color={isCharGen ? NEON_BLUE : undefined} />;
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,10 +51,10 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <CustomCursor />
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <CursorWrapper />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/meme" element={<Meme />} />

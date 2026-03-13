@@ -833,7 +833,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       variant={gender === "male" ? "default" : "outline"}
                       onClick={() => setGender("male")}
                       className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
-                      style={gender === "male" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)' } : undefined}
+                      style={gender === "male" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       male
                     </Button>

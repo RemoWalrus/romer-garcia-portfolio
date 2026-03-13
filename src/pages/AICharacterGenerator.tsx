@@ -800,7 +800,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={species === "human" ? "default" : "outline"}
                       onClick={() => setSpecies("human")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "human" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "human" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={species === "human" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       human
@@ -808,7 +808,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={species === "android" ? "default" : "outline"}
                       onClick={() => setSpecies("android")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "android" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "android" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={species === "android" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       android
@@ -816,7 +816,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={species === "other" ? "default" : "outline"}
                       onClick={() => setSpecies("other")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={species === "other" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       other
@@ -832,7 +832,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "male" ? "default" : "outline"}
                       onClick={() => setGender("male")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={gender === "male" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       male
@@ -840,7 +840,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "female" ? "default" : "outline"}
                       onClick={() => setGender("female")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={gender === "female" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       female
@@ -848,7 +848,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "other" ? "default" : "outline"}
                       onClick={() => setGender("other")}
-                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
                       style={gender === "other" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)', boxShadow: '2px 0 0 rgba(255,0,0,0.2), -2px 0 0 rgba(0,255,255,0.2)' } : undefined}
                     >
                       other

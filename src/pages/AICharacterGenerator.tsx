@@ -792,7 +792,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
           {/* Sequential Prompt Section */}
           {!generatedImage && (
-            <Card className="p-4 space-y-4 bg-card border-border">
+            <Card className="p-4 space-y-4 bg-card border-border dark:border-[#00d4ff]/30">
               {step === 1 && (
                 <div className="space-y-3">
                   <Label className="text-base font-medium text-foreground font-roc">species:</Label>

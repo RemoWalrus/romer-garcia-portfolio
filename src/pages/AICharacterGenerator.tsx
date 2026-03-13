@@ -725,9 +725,11 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       <ThemeToggle />
       {/* Circuit board background */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
+        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40 dark:opacity-40"
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
+      {/* Lighten background in light mode */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-white/30 dark:bg-transparent" />
       
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border relative">
         <div className="container mx-auto px-4 py-4">

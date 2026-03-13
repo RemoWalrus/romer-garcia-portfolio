@@ -801,6 +801,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       variant={species === "human" ? "default" : "outline"}
                       onClick={() => setSpecies("human")}
                       className={`flex-1 min-w-[100px] font-roc font-medium ${species === "human" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      style={species === "human" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)' } : undefined}
                     >
                       human
                     </Button>
@@ -808,6 +809,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       variant={species === "android" ? "default" : "outline"}
                       onClick={() => setSpecies("android")}
                       className={`flex-1 min-w-[100px] font-roc font-medium ${species === "android" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      style={species === "android" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)' } : undefined}
                     >
                       android
                     </Button>
@@ -815,6 +817,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       variant={species === "other" ? "default" : "outline"}
                       onClick={() => setSpecies("other")}
                       className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : "dark:border-[#00d4ff]/30 dark:text-neutral-300"}`}
+                      style={species === "other" ? { textShadow: '1.5px 0 0 rgba(255,0,0,0.3), -1.5px 0 0 rgba(0,255,255,0.3)' } : undefined}
                     >
                       other
                     </Button>

@@ -648,8 +648,43 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
   const renderTitle = () => {
     return (
-      <span className="flex flex-col items-center">
-        <span className="text-7xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff]" style={{ fontWeight: 400, fontFamily: '"ab-karuta-bold", sans-serif', letterSpacing: '-0.1em' }}>パラドクシア</span>
+      <span className="flex flex-col items-center relative">
+        {/* Main title */}
+        <span
+          className="text-7xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative"
+          style={{
+            fontWeight: 400,
+            fontFamily: '"ab-karuta-bold", sans-serif',
+            letterSpacing: '-0.1em',
+            textShadow: '2px 0 0 rgba(255,0,0,0.3), -2px 0 0 rgba(0,255,255,0.3)',
+          }}
+        >
+          パラドクシア
+          {/* Red channel ghost */}
+          <span
+            className="absolute inset-0 pointer-events-none"
+            aria-hidden
+            style={{
+              color: 'rgba(255, 0, 0, 0.15)',
+              transform: 'translateX(4px) translateY(-1px) skewX(0.5deg)',
+              mixBlendMode: 'screen',
+            }}
+          >
+            パラドクシア
+          </span>
+          {/* Cyan channel ghost */}
+          <span
+            className="absolute inset-0 pointer-events-none"
+            aria-hidden
+            style={{
+              color: 'rgba(0, 255, 255, 0.12)',
+              transform: 'translateX(-3px) translateY(1px) skewX(-0.3deg)',
+              mixBlendMode: 'screen',
+            }}
+          >
+            パラドクシア
+          </span>
+        </span>
         <span className="inline-flex items-baseline">
           <span style={{ fontWeight: 100 }}>character</span>
           <span style={{ fontWeight: 500 }} className="ml-2">generator</span>

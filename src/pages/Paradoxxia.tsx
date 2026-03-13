@@ -18,39 +18,55 @@ const Paradoxxia = () => {
     letterSpacing: '-0.1em',
   };
 
-  // Idle glitch — random micro-burst
-  const triggerGlitch = useCallback(async () => {
-    const rx = (Math.random() - 0.5) * 10;
-    const ry = (Math.random() - 0.5) * 4;
-    const sk = (Math.random() - 0.5) * 3;
-    const dur = 0.12 + Math.random() * 0.1;
+  // Idle glitch — random micro-burst, occasionally heavy
+  const triggerGlitch = useCallback(async (heavy = false) => {
+    const intensity = heavy ? 3.5 : 1;
+    const rx = (Math.random() - 0.5) * 10 * intensity;
+    const ry = (Math.random() - 0.5) * 4 * intensity;
+    const sk = (Math.random() - 0.5) * 3 * intensity;
+    const dur = heavy ? 0.25 + Math.random() * 0.1 : 0.12 + Math.random() * 0.1;
+    const peakRedOp = heavy ? 0.7 : 0.5;
+    const peakCyanOp = heavy ? 0.6 : 0.45;
+    const peakShadow = heavy ? Math.abs(rx) * 0.6 : Math.abs(rx) * 0.4;
 
-    await Promise.all([
+    const promises = [
       redControls.start({
-        x: [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.6, 2.5],
-        y: [-0.5, -0.5 + ry, -0.5],
-        skewX: [0.3, 0.3 + sk, 0.3],
-        opacity: [0.22, 0.5, 0.22],
+        x: heavy ? [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.8, 2.5 + rx * 0.3, 2.5] : [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.6, 2.5],
+        y: [-0.5, -0.5 + ry, -0.5 - ry * 0.3, -0.5],
+        skewX: heavy ? [0.3, 0.3 + sk, 0.3 - sk * 0.5, 0.3] : [0.3, 0.3 + sk, 0.3],
+        opacity: heavy ? [0.22, peakRedOp, 0.55, peakRedOp * 0.6, 0.22] : [0.22, peakRedOp, 0.22],
         transition: { duration: dur, ease: 'easeInOut' },
       }),
       cyanControls.start({
-        x: [-2, -2 - rx * 1.1, -2 + rx * 0.5, -2],
-        y: [0.5, 0.5 - ry, 0.5],
-        skewX: [-0.2, -0.2 - sk, -0.2],
-        opacity: [0.18, 0.45, 0.18],
+        x: heavy ? [-2, -2 - rx * 1.1, -2 + rx * 0.7, -2 - rx * 0.2, -2] : [-2, -2 - rx * 1.1, -2 + rx * 0.5, -2],
+        y: [0.5, 0.5 - ry, 0.5 + ry * 0.3, 0.5],
+        skewX: heavy ? [-0.2, -0.2 - sk, -0.2 + sk * 0.5, -0.2] : [-0.2, -0.2 - sk, -0.2],
+        opacity: heavy ? [0.18, peakCyanOp, 0.4, peakCyanOp * 0.5, 0.18] : [0.18, peakCyanOp, 0.18],
         transition: { duration: dur, ease: 'easeInOut' },
       }),
       mainControls.start({
-        skewX: [0, sk * 0.5, 0],
+        skewX: heavy ? [0, sk * 0.6, -sk * 0.3, 0] : [0, sk * 0.5, 0],
         textShadow: [
           '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
-          `${Math.abs(rx) * 0.4}px 0 0 rgba(255,0,0,0.4), ${-Math.abs(rx) * 0.4}px 0 0 rgba(0,255,255,0.4)`,
+          `${peakShadow}px 0 0 rgba(255,0,0,0.4), ${-peakShadow}px 0 0 rgba(0,255,255,0.4)`,
           '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
         ],
         transition: { duration: dur, ease: 'easeInOut' },
       }),
-    ]);
-  }, [redControls, cyanControls, mainControls]);
+    ];
+
+    // Heavy glitch also flashes scan lines
+    if (heavy) {
+      promises.push(
+        scanControls.start({
+          opacity: [0, 0.35, 0.15, 0],
+          transition: { duration: dur * 1.2, ease: 'easeOut' },
+        })
+      );
+    }
+
+    await Promise.all(promises);
+  }, [redControls, cyanControls, mainControls, scanControls]);
 
   // Schedule random idle glitches
   useEffect(() => {

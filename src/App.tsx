@@ -28,7 +28,7 @@ const NEON_BLUE_GHOST = 'hsla(192, 100%, 50%, 0.3)';
 
 const RoutedCursor = () => {
   const location = useLocation();
-  const isCharGen = location.pathname === '/char-gen';
+  const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia';
   return (
     <CustomCursor
       color={isCharGen ? NEON_BLUE : undefined}

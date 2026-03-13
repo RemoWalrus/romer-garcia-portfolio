@@ -1,13 +1,18 @@
 import { useEffect, useRef, useCallback } from 'react';
 
-const GOLD = 'hsl(43, 60%, 55%)';
-const GOLD_GHOST = 'hsl(43, 60%, 55%, 0.3)';
+const DEFAULT_COLOR = 'hsl(43, 60%, 55%)';
+const DEFAULT_GHOST_COLOR = 'hsl(43, 60%, 55%, 0.3)';
 const RING_LERP = 0.15;
 const GHOST_LERP = 0.08;
 const SIZE_DEFAULT = 36;
 const SIZE_HOVER = 64;
 const DOT_DEFAULT = 6;
 const DOT_HOVER = 8;
+
+interface CustomCursorProps {
+  color?: string;
+  ghostColor?: string;
+}
 
 const isTouchDevice = () =>
   typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;

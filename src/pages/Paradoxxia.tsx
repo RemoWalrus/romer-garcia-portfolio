@@ -120,6 +120,7 @@ const Paradoxxia = () => {
             >
               パラドクシア
             </motion.span>
+          </span>
         </h1>
       </div>
       <footer className="absolute bottom-0 left-0 right-0 z-10 py-6 text-center">

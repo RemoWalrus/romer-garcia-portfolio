@@ -36,8 +36,8 @@ export const glitchVariants: Variants = {
     ],
     x: [0, 0.5, -0.5, 0.25, -0.25, 0],
     transition: {
-      duration: 0.5,
-      ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
+      duration: 0.35,
+      ease: [0.165, 0.84, 0.44, 1],
     }
   }
 };

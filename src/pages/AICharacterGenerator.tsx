@@ -667,7 +667,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           </span>
           {/* Cyan channel ghost - behind main */}
           <span
-            className="text-7xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
             aria-hidden
             style={{
               fontWeight: 400,

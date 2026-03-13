@@ -211,7 +211,7 @@ const Meme = () => {
           </div>
         </div>
       </main>
-      <footer className="relative z-20 py-6 text-center text-muted-foreground text-sm font-roc">
+      <footer className="relative z-20 py-6 text-center text-muted-foreground dark:text-[#00d4ff] text-sm font-roc">
         © {new Date().getFullYear()} Romer Garcia. All rights reserved.
       </footer>
     </div>

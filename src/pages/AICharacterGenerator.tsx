@@ -725,9 +725,11 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       <ThemeToggle />
       {/* Circuit board background */}
       <div 
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
+        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40 dark:opacity-40"
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
+      {/* Lighten background in light mode */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-white/30 dark:bg-transparent" />
       
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border relative">
         <div className="container mx-auto px-4 py-4">
@@ -798,21 +800,21 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={species === "human" ? "default" : "outline"}
                       onClick={() => setSpecies("human")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "human" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       human
                     </Button>
                     <Button
                       variant={species === "android" ? "default" : "outline"}
                       onClick={() => setSpecies("android")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "android" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       android
                     </Button>
                     <Button
                       variant={species === "other" ? "default" : "outline"}
                       onClick={() => setSpecies("other")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${species === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       other
                     </Button>
@@ -827,21 +829,21 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <Button
                       variant={gender === "male" ? "default" : "outline"}
                       onClick={() => setGender("male")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "male" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       male
                     </Button>
                     <Button
                       variant={gender === "female" ? "default" : "outline"}
                       onClick={() => setGender("female")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "female" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       female
                     </Button>
                     <Button
                       variant={gender === "other" ? "default" : "outline"}
                       onClick={() => setGender("other")}
-                      className="flex-1 min-w-[100px] font-roc font-medium"
+                      className={`flex-1 min-w-[100px] font-roc font-medium ${gender === "other" ? "bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90" : ""}`}
                     >
                       other
                     </Button>

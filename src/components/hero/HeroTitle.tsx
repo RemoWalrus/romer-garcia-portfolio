@@ -26,12 +26,12 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     setGlitchIntensity(v);
   });
 
-  const renderTitle = (text: string, weights: string[]) => {
+  const renderTitle = (text: string, weights: string[], inheritColor = false) => {
     if (text === "romergarcia") {
       return (
         <span className="inline-flex items-baseline">
           <span className="font-medium">romer</span>
-          <span className="font-thin text-neutral-200">garcia</span>
+          <span className={`font-thin ${inheritColor ? '' : 'text-neutral-200'}`} style={inheritColor ? { color: 'inherit' } : undefined}>garcia</span>
         </span>
       );
     }

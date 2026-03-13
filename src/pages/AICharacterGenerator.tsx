@@ -773,48 +773,53 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
   const renderTitle = () => {
     return (
       <span className="flex flex-col items-center">
-        {/* Title wrapper with relative positioning for ghost layers */}
         <span className="relative inline-block">
-          {/* Red channel ghost - behind main */}
-          <span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
+          {/* Red channel ghost */}
+          <motion.span
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
             aria-hidden
-            style={{
-              fontWeight: 400,
-              fontFamily: '"ab-karuta-bold", sans-serif',
-              letterSpacing: '-0.1em',
-              transform: 'translateX(2.5px) translateY(-0.5px) skewX(0.3deg)',
-              mixBlendMode: 'screen',
-            }}
+            style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
+            initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
+            animate={redControls}
           >
             パラドクシア
-          </span>
-          {/* Cyan channel ghost - behind main */}
-          <span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+          </motion.span>
+
+          {/* Cyan channel ghost */}
+          <motion.span
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
             aria-hidden
-            style={{
-              fontWeight: 400,
-              fontFamily: '"ab-karuta-bold", sans-serif',
-              letterSpacing: '-0.1em',
-              transform: 'translateX(-2px) translateY(0.5px) skewX(-0.2deg)',
-              mixBlendMode: 'screen',
-            }}
+            style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
+            initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
+            animate={cyanControls}
           >
             パラドクシア
-          </span>
-          {/* Main title - on top */}
-          <span
+          </motion.span>
+
+          {/* Main title */}
+          <motion.span
             className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-            style={{
-              fontWeight: 400,
-              fontFamily: '"ab-karuta-bold", sans-serif',
-              letterSpacing: '-0.1em',
-              textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+            style={{ ...titleFont }}
+            initial={{
+              opacity: 0,
+              skewX: 3,
+              textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
             }}
+            animate={mainControls}
           >
             パラドクシア
-          </span>
+          </motion.span>
+
+          {/* Scan line overlay */}
+          <motion.span
+            className="absolute inset-0 pointer-events-none z-20"
+            aria-hidden
+            initial={{ opacity: 0.5 }}
+            animate={scanControls}
+            style={{
+              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px)',
+            }}
+          />
         </span>
         <span className="inline-flex items-baseline">
           <span style={{ fontWeight: 100 }}>character</span>

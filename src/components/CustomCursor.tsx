@@ -153,7 +153,7 @@ export const CustomCursor = ({ color = DEFAULT_COLOR }: CustomCursorProps) => {
         <div
           className="rounded-full"
           style={{
-            backgroundColor: GOLD,
+            backgroundColor: cursorColor,
             width: DOT_DEFAULT,
             height: DOT_DEFAULT,
             marginLeft: -DOT_DEFAULT / 2,

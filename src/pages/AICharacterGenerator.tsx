@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,8 +15,8 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Media } from '@capacitor-community/media';
 import { ActionSheet } from '@capacitor/action-sheet';
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
+import { motion, useAnimation } from "framer-motion";
+// animation-variants no longer used for title - using useAnimation controls instead
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -32,6 +32,130 @@ const AICharacterGenerator = () => {
   const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [uploadedPhoto, setUploadedPhoto] = useState("");
+  const [introComplete, setIntroComplete] = useState(false);
+
+  // Animation controls for title glitch effect
+  const redControls = useAnimation();
+  const cyanControls = useAnimation();
+  const mainControls = useAnimation();
+  const scanControls = useAnimation();
+
+  const titleFont = {
+    fontWeight: 400,
+    fontFamily: '"ab-karuta-bold", sans-serif',
+    letterSpacing: '-0.15em',
+  };
+
+  // Idle glitch — random micro-burst, occasionally heavy
+  const triggerGlitch = useCallback(async (heavy = false) => {
+    const intensity = heavy ? 3.5 : 1;
+    const rx = (Math.random() - 0.5) * 10 * intensity;
+    const ry = (Math.random() - 0.5) * 4 * intensity;
+    const sk = (Math.random() - 0.5) * 3 * intensity;
+    const dur = heavy ? 0.25 + Math.random() * 0.1 : 0.12 + Math.random() * 0.1;
+    const peakRedOp = heavy ? 0.7 : 0.5;
+    const peakCyanOp = heavy ? 0.6 : 0.45;
+    const peakShadow = heavy ? Math.abs(rx) * 0.6 : Math.abs(rx) * 0.4;
+
+    const promises = [
+      redControls.start({
+        x: heavy ? [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.8, 2.5 + rx * 0.3, 2.5] : [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.6, 2.5],
+        y: [-0.5, -0.5 + ry, -0.5 - ry * 0.3, -0.5],
+        skewX: heavy ? [0.3, 0.3 + sk, 0.3 - sk * 0.5, 0.3] : [0.3, 0.3 + sk, 0.3],
+        opacity: heavy ? [0.22, peakRedOp, 0.55, peakRedOp * 0.6, 0.22] : [0.22, peakRedOp, 0.22],
+        transition: { duration: dur, ease: 'easeInOut' },
+      }),
+      cyanControls.start({
+        x: heavy ? [-2, -2 - rx * 1.1, -2 + rx * 0.7, -2 - rx * 0.2, -2] : [-2, -2 - rx * 1.1, -2 + rx * 0.5, -2],
+        y: [0.5, 0.5 - ry, 0.5 + ry * 0.3, 0.5],
+        skewX: heavy ? [-0.2, -0.2 - sk, -0.2 + sk * 0.5, -0.2] : [-0.2, -0.2 - sk, -0.2],
+        opacity: heavy ? [0.18, peakCyanOp, 0.4, peakCyanOp * 0.5, 0.18] : [0.18, peakCyanOp, 0.18],
+        transition: { duration: dur, ease: 'easeInOut' },
+      }),
+      mainControls.start({
+        skewX: heavy ? [0, sk * 0.6, -sk * 0.3, 0] : [0, sk * 0.5, 0],
+        textShadow: [
+          '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+          `${peakShadow}px 0 0 rgba(255,0,0,0.4), ${-peakShadow}px 0 0 rgba(0,255,255,0.4)`,
+          '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+        ],
+        transition: { duration: dur, ease: 'easeInOut' },
+      }),
+    ];
+
+    if (heavy) {
+      promises.push(
+        scanControls.start({
+          opacity: [0, 0.35, 0.15, 0],
+          transition: { duration: dur * 1.2, ease: 'easeOut' },
+        })
+      );
+    }
+
+    await Promise.all(promises);
+  }, [redControls, cyanControls, mainControls, scanControls]);
+
+  // Schedule random idle glitches
+  useEffect(() => {
+    if (!introComplete) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      const delay = 2000 + Math.random() * 5000;
+      timeout = setTimeout(async () => {
+        const isHeavy = Math.random() < 0.15;
+        await triggerGlitch(isHeavy);
+        schedule();
+      }, delay);
+    };
+    schedule();
+    return () => clearTimeout(timeout);
+  }, [introComplete, triggerGlitch]);
+
+  // Intro animation sequence
+  useEffect(() => {
+    const run = async () => {
+      await Promise.all([
+        redControls.start({
+          x: [18, -8, 5, -2, 2.5],
+          y: [-6, 3, -1.5, 0.5, -0.5],
+          skewX: [4, -2, 1, -0.3, 0.3],
+          opacity: [0.65, 0.55, 0.4, 0.28, 0.22],
+          color: [
+            'rgba(255,0,0,0.6)', 'rgba(255,0,0,0.5)',
+            'rgba(255,0,0,0.35)', 'rgba(255,0,0,0.22)',
+          ],
+          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+        }),
+        cyanControls.start({
+          x: [-15, 7, -4, 1, -2],
+          y: [5, -2, 1, -0.3, 0.5],
+          skewX: [-3, 1.8, -0.8, 0.3, -0.2],
+          opacity: [0.6, 0.5, 0.35, 0.25, 0.18],
+          color: [
+            'rgba(0,255,255,0.55)', 'rgba(0,255,255,0.45)',
+            'rgba(0,255,255,0.3)', 'rgba(0,255,255,0.18)',
+          ],
+          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+        }),
+        mainControls.start({
+          opacity: [0, 0.6, 0.85, 1],
+          skewX: [3, -1, 0.5, 0],
+          textShadow: [
+            '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
+            '2px 0 0 rgba(255,0,0,0.35), -2px 0 0 rgba(0,255,255,0.35)',
+            '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+          ],
+          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] },
+        }),
+        scanControls.start({
+          opacity: [0.5, 0.3, 0],
+          transition: { duration: 1, ease: 'easeOut' },
+        }),
+      ]);
+      setIntroComplete(true);
+    };
+    run();
+  }, []);
 
   const handleNext = () => {
     if (step === 1 && !species) {
@@ -649,48 +773,53 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
   const renderTitle = () => {
     return (
       <span className="flex flex-col items-center">
-        {/* Title wrapper with relative positioning for ghost layers */}
         <span className="relative inline-block">
-          {/* Red channel ghost - behind main */}
-          <span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(255,0,0,0.22)] dark:text-[rgba(255,0,0,0.4)]"
+          {/* Red channel ghost */}
+          <motion.span
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
             aria-hidden
-            style={{
-              fontWeight: 400,
-              fontFamily: '"ab-karuta-bold", sans-serif',
-              letterSpacing: '-0.1em',
-              transform: 'translateX(2.5px) translateY(-0.5px) skewX(0.3deg)',
-              mixBlendMode: 'screen',
-            }}
+            style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
+            initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
+            animate={redControls}
           >
             パラドクシア
-          </span>
-          {/* Cyan channel ghost - behind main */}
-          <span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none text-[rgba(0,255,255,0.18)] dark:text-[rgba(0,255,255,0.35)]"
+          </motion.span>
+
+          {/* Cyan channel ghost */}
+          <motion.span
+            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
             aria-hidden
-            style={{
-              fontWeight: 400,
-              fontFamily: '"ab-karuta-bold", sans-serif',
-              letterSpacing: '-0.1em',
-              transform: 'translateX(-2px) translateY(0.5px) skewX(-0.2deg)',
-              mixBlendMode: 'screen',
-            }}
+            style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
+            initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
+            animate={cyanControls}
           >
             パラドクシア
-          </span>
-          {/* Main title - on top */}
-          <span
+          </motion.span>
+
+          {/* Main title */}
+          <motion.span
             className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-            style={{
-              fontWeight: 400,
-              fontFamily: '"ab-karuta-bold", sans-serif',
-              letterSpacing: '-0.1em',
-              textShadow: '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+            style={{ ...titleFont }}
+            initial={{
+              opacity: 0,
+              skewX: 3,
+              textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
             }}
+            animate={mainControls}
           >
             パラドクシア
-          </span>
+          </motion.span>
+
+          {/* Scan line overlay */}
+          <motion.span
+            className="absolute inset-0 pointer-events-none z-20"
+            aria-hidden
+            initial={{ opacity: 0.5 }}
+            animate={scanControls}
+            style={{
+              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px)',
+            }}
+          />
         </span>
         <span className="inline-flex items-baseline">
           <span style={{ fontWeight: 100 }}>character</span>
@@ -743,50 +872,18 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-24">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
-          <motion.div 
-            className="text-center space-y-6"
-            variants={glitchVariants}
-            initial="initial"
-            animate="animate"
-          >
+          <div className="text-center space-y-6">
             <div className="relative">
-              <h1 
-                className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10"
-                style={{
-                  textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
-                  fontFamily: 'var(--font-roc)',
-                  lineHeight: '1.3',
-                  letterSpacing: '-0.02em'
-                }}
-              >
+              <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10">
                 {renderTitle()}
               </h1>
-              <motion.div
-                className="absolute inset-0 z-0"
-                variants={pixelGlitch}
-                style={{
-                  clipPath: "inset(0 0 0 0)"
-                }}
-              >
-                <h1 
-                  className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 opacity-70"
-                  style={{
-                    textShadow: '2px 2px 0px rgba(0, 0, 0, 0.1)',
-                    fontFamily: 'var(--font-roc)',
-                    lineHeight: '1.3',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {renderTitle()}
-                </h1>
-              </motion.div>
             </div>
             <p className="text-xl text-foreground max-w-2xl mx-auto font-roc">
               <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
               <span className="font-medium">of the</span>{" "}
               <span style={{ fontWeight: 300 }}>paradoxxia universe</span>
             </p>
-          </motion.div>
+          </div>
 
           {/* Sequential Prompt Section */}
           {!generatedImage && (

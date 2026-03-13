@@ -12,9 +12,6 @@ const DOT_HOVER = 8;
 const isTouchDevice = () =>
   typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
-const isEditMode = () =>
-  typeof window !== 'undefined' && window.self !== window.top;
-
 export const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
@@ -71,9 +68,7 @@ export const CustomCursor = () => {
   }, []);
 
   useEffect(() => {
-    if (isTouchDevice() || isEditMode()) return;
-    document.body.classList.add('custom-cursor-active');
-    return () => { document.body.classList.remove('custom-cursor-active'); };
+    if (isTouchDevice()) return;
 
     document.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseover', onMouseOver, { passive: true });
@@ -133,7 +128,7 @@ export const CustomCursor = () => {
     };
   }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter]);
 
-  if (isTouchDevice() || isEditMode()) return null;
+  if (isTouchDevice()) return null;
 
   const sizeTransition = 'width 0.45s cubic-bezier(0.25,1,0.5,1), height 0.45s cubic-bezier(0.25,1,0.5,1), margin 0.45s cubic-bezier(0.25,1,0.5,1)';
 

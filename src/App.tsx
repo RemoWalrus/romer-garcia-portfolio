@@ -12,6 +12,7 @@ import Meme from "./pages/Meme";
 import AICharacterGenerator from "./pages/AICharacterGenerator";
 import ContactRedirect from "./pages/ContactRedirect";
 import NotFound from "./pages/NotFound";
+import Paradoxxia from "./pages/Paradoxxia";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,11 +28,11 @@ const NEON_BLUE_GHOST = 'hsla(192, 100%, 50%, 0.3)';
 
 const RoutedCursor = () => {
   const location = useLocation();
-  const isCharGen = location.pathname === '/char-gen';
+  const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia';
   return (
     <CustomCursor
-      color={isCharGen ? NEON_BLUE : undefined}
-      ghostColor={isCharGen ? NEON_BLUE_GHOST : undefined}
+      color={useNeonCursor ? NEON_BLUE : undefined}
+      ghostColor={useNeonCursor ? NEON_BLUE_GHOST : undefined}
     />
   );
 };
@@ -60,6 +61,7 @@ const App = () => {
               <Route path="/meme" element={<Meme />} />
               <Route path="/char-gen" element={<AICharacterGenerator />} />
               <Route path="/contact" element={<ContactRedirect />} />
+              <Route path="/paradoxxia" element={<Paradoxxia />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

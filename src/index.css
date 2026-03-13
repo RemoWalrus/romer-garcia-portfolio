@@ -55,6 +55,9 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+  }
+
+  body.custom-cursor-active {
     cursor: none;
   }
 
@@ -62,7 +65,7 @@
     cursor: pointer !important;
   }
 
-  #hero, #hero * {
+  body.custom-cursor-active #hero, body.custom-cursor-active #hero * {
     cursor: none !important;
   }
 

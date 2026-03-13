@@ -72,6 +72,8 @@ export const CustomCursor = () => {
 
   useEffect(() => {
     if (isTouchDevice() || isEditMode()) return;
+    document.body.classList.add('custom-cursor-active');
+    return () => { document.body.classList.remove('custom-cursor-active'); };
 
     document.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseover', onMouseOver, { passive: true });

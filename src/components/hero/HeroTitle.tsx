@@ -19,8 +19,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Fade fully just before the portfolio section covers the hero
-  const intensity = useTransform(scrollY, [0, viewportHeight * 0.45], [0, 1]);
+  // Fade fully by the time portfolio section covers the hero
+  const intensity = useTransform(scrollY, [0, viewportHeight * 0.7], [0, 1]);
 
   useMotionValueEvent(intensity, "change", (v) => {
     setGlitchIntensity(v);

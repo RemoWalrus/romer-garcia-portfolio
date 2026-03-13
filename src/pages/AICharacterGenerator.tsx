@@ -681,7 +681,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           </span>
           {/* Main title - on top */}
           <span
-            className="text-7xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+            className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
             style={{
               fontWeight: 400,
               fontFamily: '"ab-karuta-bold", sans-serif',

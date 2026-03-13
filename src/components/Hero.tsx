@@ -36,7 +36,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     if (titles.length > 0 && titleIndex === titles.length - 1) {
       const timer = setTimeout(() => {
         setShowVideo(false);
-      }, 1000);
+      }, 600);
       return () => clearTimeout(timer);
     }
   }, [titleIndex, titles.length]);

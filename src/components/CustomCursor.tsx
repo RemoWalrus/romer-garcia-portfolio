@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 
-const DEFAULT_COLOR = 'hsl(43, 60%, 55%)';
+const GOLD = 'hsl(43, 60%, 55%)';
+const GOLD_GHOST = 'hsl(43, 60%, 55%, 0.3)';
 const RING_LERP = 0.15;
 const GHOST_LERP = 0.08;
 const SIZE_DEFAULT = 36;
@@ -14,13 +15,7 @@ const isTouchDevice = () =>
 const isEditMode = () =>
   typeof window !== 'undefined' && window.self !== window.top;
 
-interface CustomCursorProps {
-  color?: string;
-}
-
-export const CustomCursor = ({ color = DEFAULT_COLOR }: CustomCursorProps) => {
-  const cursorColor = color;
-  const cursorGhost = color.replace(')', ', 0.3)').replace('hsl(', 'hsla(');
+export const CustomCursor = () => {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const ghostRef = useRef<HTMLDivElement>(null);
@@ -153,7 +148,7 @@ export const CustomCursor = ({ color = DEFAULT_COLOR }: CustomCursorProps) => {
         <div
           className="rounded-full"
           style={{
-            backgroundColor: cursorColor,
+            backgroundColor: GOLD,
             width: DOT_DEFAULT,
             height: DOT_DEFAULT,
             marginLeft: -DOT_DEFAULT / 2,
@@ -175,7 +170,7 @@ export const CustomCursor = ({ color = DEFAULT_COLOR }: CustomCursorProps) => {
             height: SIZE_DEFAULT,
             marginLeft: -SIZE_DEFAULT / 2,
             marginTop: -SIZE_DEFAULT / 2,
-            border: `1px solid ${cursorGhost}`,
+            border: `1px solid ${GOLD_GHOST}`,
             transition: sizeTransition,
           }}
         />
@@ -193,7 +188,7 @@ export const CustomCursor = ({ color = DEFAULT_COLOR }: CustomCursorProps) => {
             height: SIZE_DEFAULT,
             marginLeft: -SIZE_DEFAULT / 2,
             marginTop: -SIZE_DEFAULT / 2,
-            border: `1px solid ${cursorColor}`,
+            border: `1px solid ${GOLD}`,
             transition: sizeTransition,
           }}
         />

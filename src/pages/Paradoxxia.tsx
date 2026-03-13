@@ -1,5 +1,7 @@
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { glitchVariants, pixelGlitch } from "@/components/hero/animation-variants";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 

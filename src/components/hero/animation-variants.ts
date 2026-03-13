@@ -20,10 +20,10 @@ export const glitchVariants: Variants = {
     ],
     x: [0, -0.5, 0.5, -0.25, 0.25, 0],
     transition: {
-      duration: 0.8,
+      duration: 0.5,
       times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      ease: [0.165, 0.84, 0.44, 1], // easeOutQuart
-      staggerChildren: 0.05,
+      ease: [0.165, 0.84, 0.44, 1],
+      staggerChildren: 0.03,
     }
   },
   exit: {

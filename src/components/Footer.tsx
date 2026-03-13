@@ -76,7 +76,7 @@ export const Footer = () => {
               </a>
               <a 
                 href="/char-gen" 
-                className="text-neutral-400 hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
+                className="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors duration-300 story-link text-sm"
               >
                 パラドクシア
               </a>

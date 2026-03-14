@@ -75,9 +75,9 @@ const AICharacterGenerator = () => {
       mainControls.start({
         skewX: heavy ? [0, sk * 0.6, -sk * 0.3, 0] : [0, sk * 0.5, 0],
         textShadow: [
-          '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
-          `${peakShadow}px 0 0 rgba(255,0,0,0.4), ${-peakShadow}px 0 0 rgba(0,255,255,0.4)`,
-          '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+          '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
+          `${peakShadow}px 0 0 rgba(255,0,0,0.5), ${-peakShadow}px 0 0 rgba(0,255,255,0.5)`,
+          '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
         ],
         transition: { duration: dur, ease: 'easeInOut' },
       }),

@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { motion, useAnimation } from "framer-motion";

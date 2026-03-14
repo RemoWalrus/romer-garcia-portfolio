@@ -24,26 +24,33 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const intensity = useTransform(scrollY, [0, viewportHeight * 0.7], [0, 1]);
   useMotionValueEvent(intensity, "change", (v) => setGi(v));
 
+  // Random zoom punch on each word switch
+  const [zoomPunch, setZoomPunch] = useState(1);
+
   // Transition burst: animate ghost layers in then settle
   useEffect(() => {
     setIsTransitioning(true);
+    // Random zoom: either punch in (1.06-1.12) or out (0.88-0.94)
+    const zoomIn = Math.random() > 0.5;
+    const magnitude = zoomIn ? 1.06 + Math.random() * 0.06 : 0.88 + Math.random() * 0.06;
+    setZoomPunch(magnitude);
+
     const run = async () => {
       await Promise.all([
         redControls.start({
           x: [18, -8, 4, -1, 3],
           y: [-4, 2, -1, 0, -0.5],
-          skewX: [5, -3, 1, 0, 0.3],
           opacity: [0.75, 0.6, 0.45, 0.35, 0.25],
           transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.7, 1] },
         }),
         cyanControls.start({
           x: [-16, 7, -3, 1, -2.5],
           y: [3, -2, 0.5, 0, 0.5],
-          skewX: [-4, 2.5, -0.8, 0, -0.2],
           opacity: [0.7, 0.55, 0.4, 0.3, 0.2],
           transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.7, 1] },
         }),
       ]);
+      setZoomPunch(1);
       setIsTransitioning(false);
     };
     run();
@@ -53,7 +60,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const preGlitch = Math.min(1, gi / 0.5);
   const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2);
   const chromatic = burstZone * 8 + preGlitch * 3;
-  const skew = burstZone * 4;
+  const scrollSkew = burstZone * 4; // only for scroll-out
   const scanOp = burstZone * 0.7 + preGlitch * 0.12;
   const titleOpacity = gi < 0.4 ? 1 : gi < 0.55 ? Math.max(0, 1 - (gi - 0.4) / 0.15) : 0;
 
@@ -95,7 +102,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const scrollCyanX = -3 - chromatic * 1.2;
 
   return (
-    <div className="relative" style={{ opacity: titleOpacity }}>
+    <div className="relative" style={{ opacity: titleOpacity, transform: `scale(${zoomPunch})`, transition: zoomPunch === 1 ? 'transform 0.35s cubic-bezier(0.25,0.1,0.25,1)' : 'none' }}>
       {/* Red ghost layer */}
       <motion.span
         className={`${textClass} absolute inset-0 pointer-events-none text-center whitespace-nowrap`}
@@ -104,7 +111,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         style={{
           color: `rgba(255,20,20,${isTransitioning ? 1 : (0.25 + preGlitch * 0.2 + burstZone * 0.4)})`,
           mixBlendMode: 'screen',
-          transform: isTransitioning ? undefined : `translateX(${scrollRedX}px) translateY(${burstZone * 3}px) skewX(${skew * 0.8}deg)`,
+          transform: isTransitioning ? undefined : `translateX(${scrollRedX}px) translateY(${burstZone * 3}px)`,
           fontFeatureSettings: '"ss01"',
         }}
       >
@@ -119,7 +126,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         style={{
           color: `rgba(0,255,255,${isTransitioning ? 1 : (0.2 + preGlitch * 0.18 + burstZone * 0.35)})`,
           mixBlendMode: 'screen',
-          transform: isTransitioning ? undefined : `translateX(${scrollCyanX}px) translateY(${burstZone * -2}px) skewX(${-skew * 0.6}deg)`,
+          transform: isTransitioning ? undefined : `translateX(${scrollCyanX}px) translateY(${burstZone * -2}px)`,
           fontFeatureSettings: '"ss01"',
         }}
       >
@@ -131,7 +138,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         className={`${textClass} text-white mb-8 relative text-center z-10`}
         style={{
           fontFeatureSettings: '"ss01"',
-          transform: `skewX(${skew}deg)`,
+          transform: `skewX(${scrollSkew}deg)`,
           textShadow: `
             ${3 + chromatic * 1.2}px ${burstZone * 3}px 0 rgba(255,20,20,${0.45 + preGlitch * 0.2 + burstZone * 0.35}),
             ${-3 - chromatic * 1.2}px ${burstZone * -2}px 0 rgba(0,255,255,${0.4 + preGlitch * 0.18 + burstZone * 0.35})

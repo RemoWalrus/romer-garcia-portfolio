@@ -6,24 +6,18 @@ import { Variants } from "framer-motion";
 export const glitchVariants: Variants = {
   initial: {
     opacity: 1,
-    scale: 1.02,
-    skewX: 0,
   },
   animate: {
     opacity: 1,
-    scale: [1.02, 0.995, 1],
-    skewX: [4, -2, 0],
     transition: {
-      duration: 0.55,
+      duration: 0.45,
       ease: [0.25, 0.1, 0.25, 1],
     },
   },
   exit: {
     opacity: 1,
-    scale: [1, 0.97],
-    skewX: [0, -4, 2, 0],
     transition: {
-      duration: 0.3,
+      duration: 0.25,
       ease: [0.25, 0.1, 0.25, 1],
     },
   },

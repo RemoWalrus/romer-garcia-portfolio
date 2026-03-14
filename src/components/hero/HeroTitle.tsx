@@ -92,7 +92,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
         style={{
           mixBlendMode: 'screen',
-          transform: `translateX(${2.5 + chromatic * 0.7}px) translateY(${burstZone * -3}px) skewX(${skew * 0.8}deg)`,
+          transform: `translateX(${1 + chromatic * 0.5}px) translateY(${burstZone * -2}px) skewX(${skew * 0.6}deg)`,
           opacity: titleOpacity,
         }}
       >

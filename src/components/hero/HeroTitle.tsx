@@ -24,26 +24,33 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const intensity = useTransform(scrollY, [0, viewportHeight * 0.7], [0, 1]);
   useMotionValueEvent(intensity, "change", (v) => setGi(v));
 
+  // Random zoom punch on each word switch
+  const [zoomPunch, setZoomPunch] = useState(1);
+
   // Transition burst: animate ghost layers in then settle
   useEffect(() => {
     setIsTransitioning(true);
+    // Random zoom: either punch in (1.06-1.12) or out (0.88-0.94)
+    const zoomIn = Math.random() > 0.5;
+    const magnitude = zoomIn ? 1.06 + Math.random() * 0.06 : 0.88 + Math.random() * 0.06;
+    setZoomPunch(magnitude);
+
     const run = async () => {
       await Promise.all([
         redControls.start({
           x: [18, -8, 4, -1, 3],
           y: [-4, 2, -1, 0, -0.5],
-          skewX: [5, -3, 1, 0, 0.3],
           opacity: [0.75, 0.6, 0.45, 0.35, 0.25],
           transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.7, 1] },
         }),
         cyanControls.start({
           x: [-16, 7, -3, 1, -2.5],
           y: [3, -2, 0.5, 0, 0.5],
-          skewX: [-4, 2.5, -0.8, 0, -0.2],
           opacity: [0.7, 0.55, 0.4, 0.3, 0.2],
           transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.7, 1] },
         }),
       ]);
+      setZoomPunch(1);
       setIsTransitioning(false);
     };
     run();

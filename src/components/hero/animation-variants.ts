@@ -4,42 +4,57 @@ import { Variants } from "framer-motion";
 export const glitchVariants: Variants = {
   initial: {
     opacity: 0,
-    scale: 0.99,
-    filter: "blur(0px)",
+    scale: 1,
     x: 0,
+    skewX: 0,
+    filter: "blur(0px) brightness(100%) hue-rotate(0deg)",
   },
   animate: {
-    opacity: 1,
-    scale: [0.99, 1.002, 0.998, 1],
+    opacity: [0, 0.6, 0.85, 1, 1],
+    scale: [0.98, 1.005, 0.998, 1],
+    x: [12, -6, 3, -1, 0],
+    skewX: [4, -2, 1, -0.3, 0],
     filter: [
-      "blur(0px) brightness(100%) contrast(100%)",
-      "blur(0.5px) brightness(110%) contrast(98%) hue-rotate(0.5deg)",
-      "blur(0px) brightness(100%) contrast(100%)",
-      "blur(0.25px) brightness(105%) contrast(99%) hue-rotate(-0.5deg)",
-      "blur(0px) brightness(100%) contrast(100%)"
+      "blur(2px) brightness(140%) hue-rotate(15deg)",
+      "blur(1px) brightness(120%) hue-rotate(-8deg)",
+      "blur(0.5px) brightness(108%) hue-rotate(3deg)",
+      "blur(0px) brightness(100%) hue-rotate(0deg)",
     ],
-    x: [0, -0.5, 0.5, -0.25, 0.25, 0],
+    textShadow: [
+      "6px 0 0 rgba(255,0,0,0.5), -6px 0 0 rgba(0,255,255,0.5)",
+      "3px 0 0 rgba(255,0,0,0.35), -3px 0 0 rgba(0,255,255,0.35)",
+      "1px 0 0 rgba(255,0,0,0.2), -1px 0 0 rgba(0,255,255,0.2)",
+      "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
+    ],
     transition: {
-      duration: 0.5,
-      times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      ease: [0.165, 0.84, 0.44, 1],
+      duration: 0.7,
+      ease: [0.25, 0.1, 0.25, 1],
+      times: [0, 0.25, 0.5, 0.75, 1],
       staggerChildren: 0.03,
-    }
+    },
   },
   exit: {
-    opacity: 0,
-    scale: 0.99,
+    opacity: [1, 0.8, 0.5, 0],
+    scale: [1, 1.003, 0.99, 0.98],
+    x: [0, -8, 5, -3, 0],
+    skewX: [0, -3, 1.5, -0.5, 0],
     filter: [
-      "blur(0px) brightness(100%) contrast(100%)",
-      "blur(0.75px) brightness(120%) contrast(95%) hue-rotate(1deg)",
-      "blur(0px) brightness(100%) contrast(100%)"
+      "blur(0px) brightness(100%) hue-rotate(0deg)",
+      "blur(1px) brightness(130%) hue-rotate(-10deg)",
+      "blur(2px) brightness(150%) hue-rotate(20deg)",
+      "blur(3px) brightness(100%) hue-rotate(0deg)",
     ],
-    x: [0, 0.5, -0.5, 0.25, -0.25, 0],
+    textShadow: [
+      "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
+      "4px 0 0 rgba(255,0,0,0.4), -4px 0 0 rgba(0,255,255,0.4)",
+      "8px 0 0 rgba(255,0,0,0.5), -8px 0 0 rgba(0,255,255,0.5)",
+      "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
+    ],
     transition: {
-      duration: 0.35,
-      ease: [0.165, 0.84, 0.44, 1],
-    }
-  }
+      duration: 0.45,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
 };
 
 export const pixelGlitch: Variants = {
@@ -64,4 +79,3 @@ export const pixelGlitch: Variants = {
     }
   }
 };
-

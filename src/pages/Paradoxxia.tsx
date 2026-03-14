@@ -266,9 +266,9 @@ const Paradoxxia = () => {
               >
                 {/* Red ghost — English */}
                 <span
-                  className="text-[3.2rem] md:text-9xl absolute"
+                  className="text-[3.2rem] md:text-9xl absolute font-roc"
                   style={{
-                    ...titleFont,
+                    fontWeight: 800,
                     letterSpacing: '-0.05em',
                     mixBlendMode: 'screen',
                     color: `rgba(255,0,0,${Math.max(0, (gi - 0.4)) * 0.6})`,
@@ -279,9 +279,9 @@ const Paradoxxia = () => {
                 </span>
                 {/* Cyan ghost — English */}
                 <span
-                  className="text-[3.2rem] md:text-9xl absolute"
+                  className="text-[3.2rem] md:text-9xl absolute font-roc"
                   style={{
-                    ...titleFont,
+                    fontWeight: 800,
                     letterSpacing: '-0.05em',
                     mixBlendMode: 'screen',
                     color: `rgba(0,255,255,${Math.max(0, (gi - 0.4)) * 0.5})`,
@@ -292,9 +292,9 @@ const Paradoxxia = () => {
                 </span>
                 {/* Main English title */}
                 <span
-                  className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative"
+                  className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative font-roc"
                   style={{
-                    ...titleFont,
+                    fontWeight: 800,
                     letterSpacing: '-0.05em',
                     opacity: Math.max(0, (gi - 0.3) / 0.7),
                     textShadow: `

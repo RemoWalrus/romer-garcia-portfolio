@@ -8,6 +8,13 @@ import circuitBg from "@/assets/paradoxxia-bg.png";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll({ container: scrollRef });
+  const [gi, setGi] = useState(0); // glitch intensity from scroll
+  
+  const scrollGlitch = useTransform(scrollY, [0, 300], [0, 1]);
+  useMotionValueEvent(scrollGlitch, "change", (v) => setGi(v));
+  
   const redControls = useAnimation();
   const cyanControls = useAnimation();
   const mainControls = useAnimation();

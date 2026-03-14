@@ -60,7 +60,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const preGlitch = Math.min(1, gi / 0.5);
   const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2);
   const chromatic = burstZone * 8 + preGlitch * 3;
-  const skew = burstZone * 4;
+  const scrollSkew = burstZone * 4; // only for scroll-out
   const scanOp = burstZone * 0.7 + preGlitch * 0.12;
   const titleOpacity = gi < 0.4 ? 1 : gi < 0.55 ? Math.max(0, 1 - (gi - 0.4) / 0.15) : 0;
 

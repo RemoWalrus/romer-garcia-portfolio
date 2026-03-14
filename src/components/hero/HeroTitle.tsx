@@ -57,146 +57,127 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
   const gi = glitchIntensity;
 
+  // Glitch intensity peaks around the midpoint then snaps out
+  const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2); // peaks at 0.5, ±0.2 range
+  const preGlitch = Math.min(1, gi / 0.5); // 0→1 approaching burst
+  const chromatic = burstZone * 20 + preGlitch * 8;
+  const skew = burstZone * 7;
+  const scanOp = burstZone * 0.8 + preGlitch * 0.15;
+  // Hard cutoff — title disappears at 0.55
+  const visible = gi < 0.55;
+  const titleOpacity = gi < 0.4 ? 1 : gi < 0.55 ? Math.max(0, 1 - (gi - 0.4) / 0.15) : 0;
+
+  if (!visible && burstZone === 0) return null;
+
+  const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter";
+
   return (
     <>
-      {/* Main title - fades and pixelates on scroll */}
+      {/* SVG pixelation filter */}
+      {burstZone > 0.2 && (
+        <svg className="absolute w-0 h-0" aria-hidden>
+          <filter id="pixelate">
+            <feFlood x="0" y="0" width={Math.max(1, Math.round(burstZone * 14))} height={Math.max(1, Math.round(burstZone * 14))} />
+            <feComposite width={Math.max(1, Math.round(burstZone * 14))} height={Math.max(1, Math.round(burstZone * 14))} />
+            <feTile result="a" />
+            <feComposite in="SourceGraphic" in2="a" operator="in" />
+            <feMorphology operator="dilate" radius={Math.max(1, Math.round(burstZone * 6))} />
+          </filter>
+        </svg>
+      )}
+
+      {/* Red channel ghost */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        aria-hidden
+        style={{
+          mixBlendMode: 'screen',
+          transform: `translateX(${2.5 + chromatic * 0.7}px) translateY(${burstZone * -3}px) skewX(${skew * 0.8}deg)`,
+          opacity: titleOpacity,
+        }}
+      >
+        <div
+          className={`${textClass}`}
+          style={{ color: `rgba(255, 0, 0, ${0.2 + burstZone * 0.5})` }}
+        >
+          {renderTitle(title.text, title.weights, true)}
+        </div>
+      </div>
+
+      {/* Cyan channel ghost */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
+        aria-hidden
+        style={{
+          mixBlendMode: 'screen',
+          transform: `translateX(${-2 - chromatic * 0.6}px) translateY(${burstZone * 2}px) skewX(${-skew * 0.6}deg)`,
+          opacity: titleOpacity,
+        }}
+      >
+        <div
+          className={`${textClass}`}
+          style={{ color: `rgba(0, 255, 255, ${0.18 + burstZone * 0.45})` }}
+        >
+          {renderTitle(title.text, title.weights, true)}
+        </div>
+      </div>
+
+      {/* Main title */}
       <motion.h1
         variants={pixelGlitch}
         initial={{ scale: 0.5 }}
-        animate={{ 
+        animate={{
           scale: 1,
-          transition: {
-            duration: 0.6,
-            ease: "easeOut"
-          }
+          transition: { duration: 0.6, ease: "easeOut" },
         }}
-        className="text-6xl md:text-7xl lg:text-9xl font-roc text-white mb-8 py-2 relative tracking-tighter text-center"
+        className={`${textClass} text-white mb-8 relative text-center`}
         style={{
-          textShadow: `
-            ${2 + gi * 8}px ${gi * 2}px 0 rgba(255,0,0,${0.3 + gi * 0.5}),
-            ${-2 - gi * 8}px ${gi * -1}px 0 rgba(0,255,255,${0.3 + gi * 0.5})
-          `,
           fontFeatureSettings: '"ss01"',
-          transform: `skewX(${gi * -2}deg)`,
-          filter: `hue-rotate(${gi * 15}deg)`,
-          opacity: 1 - gi,
+          filter: burstZone > 0.3 ? `url(#pixelate) hue-rotate(${burstZone * 40}deg)` : (preGlitch > 0.3 ? `hue-rotate(${preGlitch * 15}deg)` : undefined),
+          transform: `skewX(${skew}deg)`,
+          textShadow: `
+            ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.3 + burstZone * 0.4}),
+            ${-chromatic * 0.5}px ${burstZone * -1}px 0 rgba(0,255,255,${0.3 + burstZone * 0.4})
+          `,
+          opacity: titleOpacity,
         }}
       >
         {renderTitle(title.text, title.weights)}
 
-        {/* Scan lines masked to text via background-clip */}
+        {/* Scan lines */}
         <span
           className="absolute inset-0 pointer-events-none"
           aria-hidden
           style={{
-            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${gi * 0.35}) 2px, rgba(0,0,0,${gi * 0.35}) 4px)`,
+            backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${scanOp * 0.4}) 2px, rgba(0,0,0,${scanOp * 0.4}) 4px)`,
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             color: 'transparent',
-            opacity: gi > 0.05 ? 1 : 0,
+            opacity: scanOp > 0.05 ? 1 : 0,
           }}
         >
           {renderTitle(title.text, title.weights)}
         </span>
       </motion.h1>
 
-      {/* Red channel ghost */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{
-          opacity: gi * 0.6,
-          transform: `translateX(${gi * 12}px) translateY(${gi * -3}px) skewX(${gi * 1.5}deg)`,
-          mixBlendMode: "screen",
-        }}
-        aria-hidden
-      >
+      {/* Horizontal glitch slice at burst */}
+      {burstZone > 0.3 && (
         <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter"
-          style={{ color: `rgba(255, 0, 0, ${gi * 0.4})` }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          aria-hidden
+          style={{
+            mixBlendMode: 'difference',
+            clipPath: `inset(${30 + burstZone * 15}% 0 ${35 - burstZone * 10}% 0)`,
+            transform: `translateX(${burstZone * 14}px)`,
+            opacity: titleOpacity,
+          }}
         >
-          {renderTitle(title.text, title.weights, true)}
-        </div>
-      </motion.div>
-
-      {/* Cyan channel ghost */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{
-          opacity: gi * 0.6,
-          transform: `translateX(${gi * -10}px) translateY(${gi * 2}px) skewX(${gi * -1}deg)`,
-          mixBlendMode: "screen",
-        }}
-        aria-hidden
-      >
-        <div
-          className="text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter"
-          style={{ color: `rgba(0, 255, 255, ${gi * 0.35})` }}
-        >
-          {renderTitle(title.text, title.weights, true)}
-        </div>
-      </motion.div>
-
-      {/* Pixelation overlay - SVG filter applied to text clone */}
-      {gi > 0.08 && (
-        <>
-          <svg className="absolute w-0 h-0" aria-hidden>
-            <filter id="pixelate">
-              <feFlood x="0" y="0" width={Math.max(1, Math.round(gi * 10))} height={Math.max(1, Math.round(gi * 10))} />
-              <feComposite width={Math.max(1, Math.round(gi * 10))} height={Math.max(1, Math.round(gi * 10))} />
-              <feTile result="a" />
-              <feComposite in="SourceGraphic" in2="a" operator="in" />
-              <feMorphology operator="dilate" radius={Math.max(1, Math.round(gi * 4))} />
-            </filter>
-          </svg>
-           <div
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{
-              filter: 'url(#pixelate)',
-              opacity: gi * 0.7,
-              mixBlendMode: 'overlay',
-            }}
-            aria-hidden
-          >
-            <div
-              className="text-6xl md:text-7xl lg:text-9xl font-roc text-white py-2 tracking-tighter"
-              style={{ opacity: 0.6 }}
-            >
-              {renderTitle(title.text, title.weights, true)}
-            </div>
+          <div className={`${textClass} text-white`}>
+            {renderTitle(title.text, title.weights, true)}
           </div>
-        </>
-      )}
-
-      {/* Difference blend glitch slice */}
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{
-          mixBlendMode: "difference",
-          textShadow: "none",
-          clipPath: gi > 0.1
-            ? `inset(${30 + gi * 20}% 0 ${40 - gi * 15}% 0)`
-            : undefined,
-        }}
-        animate={{
-          clipPath: [
-            "inset(50% 0 50% 0)",
-            "inset(0% 0 0% 0)",
-            "inset(50% 0 50% 0)"
-          ],
-          transition: {
-            duration: 0.4,
-            ease: "easeInOut",
-            times: [0, 0.5, 1],
-            repeat: 1,
-            repeatType: "reverse"
-          }
-        }}
-      >
-        <div className="text-6xl md:text-7xl lg:text-9xl font-roc text-white py-2 tracking-tighter">
-          {renderTitle(title.text, title.weights, true)}
         </div>
-      </motion.div>
+      )}
     </>
   );
 };

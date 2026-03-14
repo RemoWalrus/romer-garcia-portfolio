@@ -138,7 +138,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         className={`${textClass} text-white mb-8 relative text-center z-10`}
         style={{
           fontFeatureSettings: '"ss01"',
-          transform: `skewX(${skew}deg)`,
+          transform: `skewX(${scrollSkew}deg)`,
           textShadow: `
             ${3 + chromatic * 1.2}px ${burstZone * 3}px 0 rgba(255,20,20,${0.45 + preGlitch * 0.2 + burstZone * 0.35}),
             ${-3 - chromatic * 1.2}px ${burstZone * -2}px 0 rgba(0,255,255,${0.4 + preGlitch * 0.18 + burstZone * 0.35})

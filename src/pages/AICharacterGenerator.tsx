@@ -62,7 +62,7 @@ const AICharacterGenerator = () => {
         x: heavy ? [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.8, 2.5 + rx * 0.3, 2.5] : [2.5, 2.5 + rx * 1.2, 2.5 - rx * 0.6, 2.5],
         y: [-0.5, -0.5 + ry, -0.5 - ry * 0.3, -0.5],
         skewX: heavy ? [0.3, 0.3 + sk, 0.3 - sk * 0.5, 0.3] : [0.3, 0.3 + sk, 0.3],
-        opacity: heavy ? [0.22, peakRedOp, 0.55, peakRedOp * 0.6, 0.22] : [0.22, peakRedOp, 0.22],
+        opacity: heavy ? [0.38, peakRedOp, 0.55, peakRedOp * 0.6, 0.38] : [0.38, peakRedOp, 0.38],
         transition: { duration: dur, ease: 'easeInOut' },
       }),
       cyanControls.start({

@@ -883,13 +883,13 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-24">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
-          <div className="text-center space-y-6">
+          <div className={`text-center ${generatedImage ? 'space-y-2' : 'space-y-6'}`}>
             <div className="relative">
-              <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10">
+              <h1 className={`hero-title font-bold text-foreground px-4 relative z-10 ${generatedImage ? 'text-xl sm:text-2xl md:text-3xl' : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'} transition-all duration-500`}>
                 {renderTitle()}
               </h1>
             </div>
-            <p className="text-xl text-foreground max-w-2xl mx-auto font-roc">
+            <p className={`text-foreground max-w-2xl mx-auto font-roc ${generatedImage ? 'text-sm' : 'text-xl'} transition-all duration-500`}>
               <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
               <span className="font-medium">of the</span>{" "}
               <span style={{ fontWeight: 300 }}>paradoxxia universe</span>

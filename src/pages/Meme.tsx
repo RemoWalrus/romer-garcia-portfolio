@@ -123,7 +123,7 @@ const Meme = () => {
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-white/50 dark:bg-transparent" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
       
       {/* Gradient overlay that changes based on color scheme */}
       <div className={`absolute inset-0 bg-gradient-to-b 

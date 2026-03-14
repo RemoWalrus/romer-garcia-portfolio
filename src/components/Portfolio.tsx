@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { getProxiedData } from "@/utils/proxyHelper";
 import { ProjectCard } from './portfolio/ProjectCard';
 import { ProjectModal } from './portfolio/ProjectModal';

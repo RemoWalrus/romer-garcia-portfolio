@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { useToast } from "@/components/ui/use-toast";
 import { getProxiedData } from "@/utils/proxyHelper";
 

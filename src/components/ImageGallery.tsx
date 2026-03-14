@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
+import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { getProxiedData } from "@/utils/proxyHelper";
 import { ChevronLeft, ChevronRight } from 'lucide-react';

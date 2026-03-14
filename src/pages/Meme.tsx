@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Button } from "@/components/ui/button";
 import { getProxiedData } from "@/utils/proxyHelper";
 import { useNavigate, Link } from "react-router-dom";

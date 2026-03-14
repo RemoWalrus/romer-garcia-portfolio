@@ -9,13 +9,3 @@ const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiO
 // import { supabase } from "@/integrations/supabase/client";
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-
-// Helper to convert Supabase storage URLs to proxied relative paths (for Netlify rewrites)
-const SUPABASE_STORAGE_PREFIX = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/';
-
-export const toStorageUrl = (url: string): string => {
-  if (url.startsWith(SUPABASE_STORAGE_PREFIX)) {
-    return '/storage/' + url.slice(SUPABASE_STORAGE_PREFIX.length);
-  }
-  return url;
-};

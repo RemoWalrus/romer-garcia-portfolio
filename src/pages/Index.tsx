@@ -26,10 +26,10 @@ const Index = () => {
     ogTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     ogDescription: 'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
     ogUrl: 'https://romergarcia.com',
-    ogImage: 'https://romergarcia.com/storage/graphics/RomerGarcia-cover.svg',
+    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
     twitterTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     twitterDescription: 'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
-    twitterImage: 'https://romergarcia.com/storage/graphics/RomerGarcia-cover.svg',
+    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
   });
 
   useEffect(() => {

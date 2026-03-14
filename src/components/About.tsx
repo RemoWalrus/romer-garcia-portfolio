@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { getProxiedData, getProxiedStorageUrl } from "@/utils/proxyHelper";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';

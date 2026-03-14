@@ -70,7 +70,9 @@ export const About = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-12 text-center"
         >
-          {aboutData.title}
+          <ChromaticTitle className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-12 text-center">
+            {aboutData.title}
+          </ChromaticTitle>
         </motion.h2>
         
         <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">

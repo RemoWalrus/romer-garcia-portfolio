@@ -889,7 +889,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                 {renderTitle()}
               </h1>
             </div>
-            <p className={`text-foreground max-w-2xl mx-auto font-roc ${generatedImage ? 'text-sm' : 'text-xl'} transition-all duration-500`}>
+            <p className={`text-foreground max-w-2xl mx-auto font-roc ${generatedImage ? 'text-xs sm:text-sm' : 'text-base sm:text-xl'} transition-all duration-500`}>
               <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
               <span className="font-medium">of the</span>{" "}
               <span style={{ fontWeight: 300 }}>paradoxxia universe</span>

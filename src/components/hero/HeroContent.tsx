@@ -53,7 +53,7 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
         transition={{ duration: 0.6 }}
         className="flex flex-col items-center"
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={titles[titleIndex].text}
             initial="initial"

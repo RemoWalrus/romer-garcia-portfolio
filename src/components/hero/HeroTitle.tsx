@@ -100,8 +100,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter mb-8";
 
   // Ghost layer base offsets when scroll is involved
-  const scrollRedX = 3 + chromatic * 1.2;
-  const scrollCyanX = -3 - chromatic * 1.2;
+  const scrollRedX = 1.5 + chromatic * 1.2;
+  const scrollCyanX = -1.5 - chromatic * 1.2;
 
   return (
     <div className="relative" style={{ opacity: titleOpacity, transform: `scale(${zoomPunch})` }}>

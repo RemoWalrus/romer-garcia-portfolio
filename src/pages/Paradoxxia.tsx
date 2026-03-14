@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { motion, useAnimation } from "framer-motion";
@@ -11,6 +12,16 @@ const Paradoxxia = () => {
   const cyanControls = useAnimation();
   const mainControls = useAnimation();
   const scanControls = useAnimation();
+  const meta = usePageMeta('paradoxxia', {
+    title: 'パラドクシア | Paradoxxia Universe',
+    description: 'Explore パラドクシア (Paradoxxia) — an original cinematic sci-fi universe by Romer Garcia. A post-apocalyptic world where technology and poetry collide, featuring AI-powered character generation, immersive worldbuilding, and stories born from the ruins of civilization.',
+    keywords: 'パラドクシア, Paradoxxia, Paradoxxia universe, cinematic sci-fi world, romergarcia, post-apocalyptic worldbuilding, AI character generator, original sci-fi IP, futuristic storytelling',
+    ogTitle: 'パラドクシア | Paradoxxia Universe',
+    ogDescription: 'An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide.',
+    ogUrl: 'https://romergarcia.com/paradoxxia',
+    twitterTitle: 'パラドクシア | Paradoxxia Universe',
+    twitterDescription: 'An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide.',
+  });
 
   const titleFont = {
     fontWeight: 400,
@@ -134,16 +145,16 @@ const Paradoxxia = () => {
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
       <Helmet>
-        <title>パラドクシア | Paradoxxia Universe</title>
-        <meta name="description" content="Explore パラドクシア (Paradoxxia) — an original cinematic sci-fi universe by Romer Garcia. A post-apocalyptic world where technology and poetry collide, featuring AI-powered character generation, immersive worldbuilding, and stories born from the ruins of civilization." />
-        <meta name="keywords" content="パラドクシア, Paradoxxia, Paradoxxia universe, cinematic sci-fi world, romergarcia, post-apocalyptic worldbuilding, AI character generator, original sci-fi IP, futuristic storytelling" />
-        <meta property="og:title" content="パラドクシア | Paradoxxia Universe" />
-        <meta property="og:description" content="An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide." />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
+        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="パラドクシア | Paradoxxia Universe" />
-        <meta name="twitter:description" content="An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide." />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
       </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />

@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { usePageMeta } from '@/hooks/use-page-meta';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { Portfolio } from '@/components/Portfolio';
@@ -18,6 +19,18 @@ const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [projects, setProjects] = useState<any[]>([]);
   const [socialLinks, setSocialLinks] = useState<any>({});
+  const meta = usePageMeta(undefined, {
+    title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
+    description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
+    keywords: 'Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI',
+    ogTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
+    ogDescription: 'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
+    ogUrl: 'https://romergarcia.com',
+    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+    twitterTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
+    twitterDescription: 'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
+    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,23 +94,23 @@ const Index = () => {
   return (
     <div className="bg-neutral-950 min-h-screen flex flex-col overflow-x-hidden">
       <Helmet>
-        <title>Romer Garcia | Design Lead & AI-Driven Multimedia Strategist</title>
-        <meta name="description" content="Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling." />
-        <meta name="keywords" content="Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI" />
-        <link rel="canonical" href="https://romergarcia.com" />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
+        <link rel="canonical" href={meta.ogUrl} />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Romer Garcia | Design Lead & AI-Driven Multimedia Strategist" />
-        <meta property="og:description" content="Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects." />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://romergarcia.com" />
-        <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
+        <meta property="og:url" content={meta.ogUrl} />
+        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Romer Garcia | Design Lead & AI-Driven Multimedia Strategist" />
-        <meta name="twitter:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
-        <meta name="twitter:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
+        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
       </Helmet>
       <PersonSchema projects={projects} socialLinks={socialLinks} />
       <ThemeToggle />

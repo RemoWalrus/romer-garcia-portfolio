@@ -7,13 +7,33 @@
 
 ## SEO Optimization
 
-The website has been optimized for search engines with the following metadata:
+The website has been optimized for search engines, GEO (Generative Engine Optimization), and AEO (Answer Engine Optimization) with the following:
 
-- **Title**: Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader
-- **Description**: STRATEGIC THINKER | DESIGN INNOVATOR | DIGITAL MEDIA LEADER. Accomplished Design Lead and Multimedia Designer with a proven track record of leading high-impact digital campaigns and brand transformations. Known as a visionary problem solver, seamlessly blending strategy, creativity, and technology to craft compelling visual narratives.
-- **Keywords**: Design Lead, Multimedia Designer, Digital Media, Brand Transformation, Visual Narrative, Creative Strategy, Digital Campaigns
-- **Open Graph Tags**: Included for better social media sharing
-- **Twitter Card Tags**: Included for Twitter sharing
+- **Dynamic Meta Tags**: All page titles, descriptions, keywords, Open Graph, and Twitter Card tags are stored in the Supabase `metadata` table and fetched at runtime via the `usePageMeta` hook. Hardcoded fallbacks ensure fast initial rendering.
+- **JSON-LD Structured Data**: Person, CreativeWork, FAQPage, and WebSite schemas on the homepage.
+- **Semantic HTML**: Single H1 per page, proper heading hierarchy, alt text on all images.
+- **Sitemap & Robots**: `sitemap.xml` and `robots.txt` allow AI crawlers (GPTBot, Claude-Web, OAI-SearchBot).
+- **Canonical Tags**: Set per page to prevent duplicate content.
+
+### Managing Meta Tags via Supabase
+
+Page meta tags are stored in the `metadata` table using a key convention:
+- **Homepage**: `title`, `description`, `keywords`, `og_title`, `og_description`, `og_url`, `og_image`, `twitter_title`, `twitter_description`, `twitter_image`
+- **Other pages**: Prefixed with page slug, e.g. `paradoxxia.title`, `chargen.description`, `meme.og_title`
+
+To update meta tags:
+1. Access your Supabase dashboard → Table Editor → `metadata`
+2. Find the row with the `meta_key` you want to update (e.g. `chargen.description`)
+3. Edit the `meta_value` column
+4. Changes take effect on next page load (no code changes needed)
+
+**Current page prefixes:**
+| Page | Prefix | Route |
+|------|--------|-------|
+| Homepage | *(none)* | `/` |
+| Paradoxxia | `paradoxxia` | `/paradoxxia` |
+| AI Character Generator | `chargen` | `/char-gen` |
+| Dev Memes | `meme` | `/meme` |
 
 ## How to edit sections
 

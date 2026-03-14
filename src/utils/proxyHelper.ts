@@ -1,10 +1,10 @@
 // Temporarily reverting to direct Supabase client usage
 // The proxy functions had routing conflicts with existing edge functions
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, toStorageUrl } from "@/integrations/supabase/client";
 
 export const getProxiedStorageUrl = (bucket: string, file: string): string => {
   const { data } = supabase.storage.from(bucket).getPublicUrl(file);
-  return data.publicUrl;
+  return toStorageUrl(data.publicUrl);
 };
 
 export const getProxiedStorageSignedUrl = async (bucket: string, file: string): Promise<string> => {

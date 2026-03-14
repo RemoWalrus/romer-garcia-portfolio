@@ -36,7 +36,7 @@ export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaPr
     "@type": "Person",
     "name": "Romer Garcia",
     "url": "https://romergarcia.com",
-    "image": "https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/profile/RomerSelfPortrait.jpg",
+    "image": "https://romergarcia.com/storage/profile/RomerSelfPortrait.jpg",
     "jobTitle": "Design Lead & AI-Driven Multimedia Strategist",
     "description": "Strategic Thinker, Design Innovator, and Digital Media Leader with a proven track record of leading high-impact digital campaigns and brand transformations.",
     "alumniOf": {

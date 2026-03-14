@@ -136,8 +136,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           filter: burstZone > 0.3 ? `url(#pixelate) hue-rotate(${burstZone * 40}deg)` : (preGlitch > 0.3 ? `hue-rotate(${preGlitch * 15}deg)` : undefined),
           transform: `skewX(${skew}deg)`,
           textShadow: `
-            ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.3 + burstZone * 0.4}),
-            ${-chromatic * 0.5}px ${burstZone * -1}px 0 rgba(0,255,255,${0.3 + burstZone * 0.4})
+            ${chromatic * 0.35}px ${burstZone * 1.5}px 0 rgba(255,0,0,${0.3 + burstZone * 0.35}),
+            ${-chromatic * 0.35}px ${burstZone * -0.8}px 0 rgba(0,255,255,${0.3 + burstZone * 0.35})
           `,
           opacity: titleOpacity,
         }}

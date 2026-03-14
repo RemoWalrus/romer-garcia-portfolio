@@ -147,7 +147,7 @@ const Meme = () => {
 
           {/* Meme Content */}
           {isLoading ? (
-            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30">
+            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30 dark:border-[#00d4ff]/30">
               <div className="animate-pulse space-y-4">
                 <div className="h-6 bg-foreground/20 rounded w-3/4 mx-auto"></div>
                 <div className="h-4 bg-foreground/20 rounded w-1/2 mx-auto"></div>

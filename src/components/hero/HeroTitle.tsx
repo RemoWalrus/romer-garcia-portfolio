@@ -69,7 +69,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
   if (!visible && burstZone === 0) return null;
 
-  const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter";
+  const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter mb-8";
 
   return (
     <>

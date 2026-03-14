@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { usePageMeta } from '@/hooks/use-page-meta';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { Portfolio } from '@/components/Portfolio';

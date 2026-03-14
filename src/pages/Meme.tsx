@@ -138,7 +138,7 @@ const Meme = () => {
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Header */}
           <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto font-roc text-center">
+            <p className="text-xl md:text-2xl text-foreground dark:text-[#00d4ff] max-w-2xl mx-auto font-roc text-center">
               <span className="font-thin">random</span>{" "}
               <span className="font-medium">developer humor</span>{" "}
               <span className="font-thin">from the vault</span>

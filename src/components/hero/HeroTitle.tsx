@@ -69,8 +69,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         fontFeatureSettings: '"ss01"',
         transform: `skewX(${skew}deg)`,
         textShadow: `
-          ${0.5 + chromatic * 0.7}px ${burstZone * 2}px 0 rgba(255,0,0,${0.15 + preGlitch * 0.15 + burstZone * 0.4}),
-          ${-0.5 - chromatic * 0.7}px ${burstZone * -1}px 0 rgba(0,255,255,${0.12 + preGlitch * 0.12 + burstZone * 0.35})
+          ${2 + chromatic * 0.7}px ${burstZone * 2}px 0 rgba(255,0,0,${0.3 + preGlitch * 0.15 + burstZone * 0.4}),
+          ${-2 - chromatic * 0.7}px ${burstZone * -1}px 0 rgba(0,255,255,${0.25 + preGlitch * 0.12 + burstZone * 0.35})
         `,
         opacity: titleOpacity,
         filter: preGlitch > 0.3 ? `hue-rotate(${preGlitch * 12 + burstZone * 30}deg)` : undefined,

@@ -100,8 +100,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter mb-8";
 
   // Ghost layer base offsets when scroll is involved
-  const scrollRedX = 3 + chromatic * 1.2;
-  const scrollCyanX = -3 - chromatic * 1.2;
+  const scrollRedX = 1.5 + chromatic * 1.2;
+  const scrollCyanX = -1.5 - chromatic * 1.2;
 
   return (
     <div className="relative" style={{ opacity: titleOpacity, transform: `scale(${zoomPunch})` }}>
@@ -142,8 +142,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           fontFeatureSettings: '"ss01"',
           transform: `skewX(${scrollSkew}deg)`,
           textShadow: `
-            ${3 + chromatic * 1.2}px ${burstZone * 3}px 0 rgba(255,20,20,${0.45 + preGlitch * 0.2 + burstZone * 0.35}),
-            ${-3 - chromatic * 1.2}px ${burstZone * -2}px 0 rgba(0,255,255,${0.4 + preGlitch * 0.18 + burstZone * 0.35})
+            ${1.5 + chromatic * 1.2}px ${burstZone * 3}px 0 rgba(255,20,20,${0.45 + preGlitch * 0.2 + burstZone * 0.35}),
+            ${-1.5 - chromatic * 1.2}px ${burstZone * -2}px 0 rgba(0,255,255,${0.4 + preGlitch * 0.18 + burstZone * 0.35})
           `,
           filter: preGlitch > 0.3 ? `hue-rotate(${preGlitch * 12 + burstZone * 30}deg)` : undefined,
         }}

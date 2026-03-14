@@ -35,7 +35,7 @@ export const glitchVariants: Variants = {
     },
   },
   exit: {
-    opacity: [1, 1, 1, 0],
+    opacity: 1,
     scale: 1,
     x: [0, 6, -4, 2, 0],
     skewX: [0, -2, 1, -0.3, 0],

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { getProxiedData, getProxiedStorageUrl } from "@/utils/proxyHelper";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -64,14 +65,15 @@ export const About = () => {
         <div className="absolute inset-0 opacity-[0.015] bg-blue-500 -translate-x-[1px]" />
       </div>
       <div className="container mx-auto px-4 relative z-10">
-        <motion.h2 
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-12 text-center"
         >
-          {aboutData.title}
-        </motion.h2>
+          <ChromaticTitle className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-12 text-center">
+            {aboutData.title}
+          </ChromaticTitle>
+        </motion.div>
         
         <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
           <motion.div 

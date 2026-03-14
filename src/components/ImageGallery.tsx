@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
+import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { getProxiedData } from "@/utils/proxyHelper";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -69,9 +70,9 @@ export const ImageGallery = () => {
       }}
     >
       <div className="container mx-auto px-4 relative z-10">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
+        <ChromaticTitle className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">
           Gallery
-        </h2>
+        </ChromaticTitle>
         
         <div className="relative max-w-[90rem] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

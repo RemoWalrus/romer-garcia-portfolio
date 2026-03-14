@@ -2,23 +2,20 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_DIRECT_URL = "https://xxigtbxqgbdcfpmnrzvp.supabase.co";
+const SUPABASE_URL = "https://xxigtbxqgbdcfpmnrzvp.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4aWd0YnhxZ2JkY2ZwbW5yenZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQyNjUsImV4cCI6MjA1NDY1MDI2NX0.N9TKpkYmeitE3kthByFOnmR0gKBvBrMshEXez6D5IU8";
-
-// Use relative URL for Netlify rewrites in production, direct URL in development
-const isNetlify = typeof window !== 'undefined' && window.location.hostname !== 'localhost';
-const SUPABASE_URL = isNetlify ? '/api/v1' : SUPABASE_DIRECT_URL;
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
-export const supabase = createClient<Database>(isNetlify ? SUPABASE_DIRECT_URL : SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 
-// Helper to convert Supabase storage URLs to proxied relative paths
-export const toStorageUrl = (path: string): string => {
-  const supabaseStoragePrefix = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/';
-  if (path.startsWith(supabaseStoragePrefix)) {
-    return '/storage/' + path.slice(supabaseStoragePrefix.length);
+// Helper to convert Supabase storage URLs to proxied relative paths (for Netlify rewrites)
+const SUPABASE_STORAGE_PREFIX = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/';
+
+export const toStorageUrl = (url: string): string => {
+  if (url.startsWith(SUPABASE_STORAGE_PREFIX)) {
+    return '/storage/' + url.slice(SUPABASE_STORAGE_PREFIX.length);
   }
-  return path;
+  return url;
 };

@@ -90,8 +90,8 @@ const Meme = () => {
     <div className="relative min-h-screen overflow-hidden bg-background">
       <Helmet>
         <title>Romer Garcia | Dev Memes & Coding Wisdom 🚀💻</title>
-        <meta name="description" content="Dive into Romer Garcia's vault of developer humor, coding tips, and tech trivia. A whimsical escape for creative minds and code warriors alike." />
-        <meta name="keywords" content="developer memes, coding humor, programming jokes, tech tips, Romer Garcia, software engineering, developer life" />
+        <meta name="description" content="Enjoy a random feed of developer memes, coding tips, and fun tech trivia curated by Romer Garcia. A lighthearted break for software engineers, designers, and anyone who speaks code — refresh for a new meme every time." />
+        <meta name="keywords" content="developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes, developer life, random meme generator" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />

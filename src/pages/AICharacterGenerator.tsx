@@ -838,7 +838,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         
         {/* Open Graph */}
         <meta property="og:title" content="パラドクシア | AI Character Generator | Paradoxxia Universe" />
-        <meta property="og:description" content="Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator." />
+        <meta property="og:description" content="Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
         

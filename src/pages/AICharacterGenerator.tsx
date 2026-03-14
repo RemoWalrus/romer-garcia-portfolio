@@ -787,7 +787,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         <span className="relative inline-block">
           {/* Red channel ghost */}
           <motion.span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
+            className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} absolute inset-0 pointer-events-none transition-all duration-500`}
             aria-hidden
             style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
             initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
@@ -798,7 +798,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
           {/* Cyan channel ghost */}
           <motion.span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
+            className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} absolute inset-0 pointer-events-none transition-all duration-500`}
             aria-hidden
             style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
             initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
@@ -809,7 +809,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
           {/* Main title */}
           <motion.span
-            className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+            className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} text-[#0a1e5c] dark:text-[#00d4ff] relative z-10 transition-all duration-500`}
             style={{ ...titleFont }}
             initial={{
               opacity: 0,

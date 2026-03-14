@@ -34,6 +34,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     const zoomIn = Math.random() > 0.5;
     const magnitude = zoomIn ? 1.06 + Math.random() * 0.06 : 0.88 + Math.random() * 0.06;
     setZoomPunch(magnitude);
+    // Snap back after one frame
+    requestAnimationFrame(() => setZoomPunch(1));
 
     const run = async () => {
       await Promise.all([

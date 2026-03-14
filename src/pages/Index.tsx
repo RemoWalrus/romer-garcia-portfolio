@@ -88,7 +88,7 @@ const Index = () => {
         
         {/* Open Graph */}
         <meta property="og:title" content="Romer Garcia | Design Lead & AI-Driven Multimedia Strategist" />
-        <meta property="og:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
+        <meta property="og:description" content="Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com" />
         <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />

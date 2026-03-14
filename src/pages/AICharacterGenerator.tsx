@@ -845,7 +845,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="パラドクシア | AI Character Generator" />
-        <meta name="twitter:description" content="Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator." />
+        <meta name="twitter:description" content="Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia." />
       </Helmet>
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />

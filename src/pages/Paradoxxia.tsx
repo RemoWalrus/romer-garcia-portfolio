@@ -143,7 +143,7 @@ const Paradoxxia = () => {
         <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="パラドクシア | Paradoxxia Universe" />
-        <meta name="twitter:description" content="Enter the パラドクシア universe — a cinematic sci-fi world where science meets poetry." />
+        <meta name="twitter:description" content="An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide." />
       </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />

@@ -101,7 +101,7 @@ const Meme = () => {
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />
-        <meta name="twitter:description" content="Dive into Romer Garcia's vault of developer humor, coding tips, and tech trivia. A whimsical escape for creative minds and code warriors alike." />
+        <meta name="twitter:description" content="Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time." />
       </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />

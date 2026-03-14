@@ -192,120 +192,118 @@ const Paradoxxia = () => {
         <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
-              {/* Red channel ghost — katakana */}
-              <motion.span
-                className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
-                aria-hidden
-                style={{
-                  ...titleFont,
-                  mixBlendMode: 'screen',
-                  color: 'rgba(255,0,0,0.6)',
-                  opacity: gi < 0.85 ? 0.38 + gi * 0.3 : (1 - gi) * 4,
-                }}
-                initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
-                animate={redControls}
-              >
-                パラドクシア
-              </motion.span>
+              {/* --- Before switch: katakana. After switch: PARADOXXIA --- */}
+              {(() => {
+                const switchPoint = 0.5;
+                const switched = gi >= switchPoint;
+                // Glitch intensity peaks at the switch point
+                const distFromSwitch = Math.abs(gi - switchPoint);
+                const burstZone = Math.max(0, 1 - distFromSwitch / 0.15); // 1.0 at switch, 0 outside ±0.15
+                const preGlitch = switched ? 0 : gi / switchPoint; // 0→1 approaching switch
+                const postSettle = switched ? Math.min(1, (gi - switchPoint) / 0.3) : 0; // 0→1 settling after switch
+                const chromatic = burstZone * 18 + (switched ? (1 - postSettle) * 6 : preGlitch * 8);
+                const skew = burstZone * 6 * (switched ? -1 : 1);
+                const scanOp = burstZone * 0.7 + (switched ? 0 : preGlitch * 0.15);
 
-              {/* Cyan channel ghost — katakana */}
-              <motion.span
-                className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
-                aria-hidden
-                style={{
-                  ...titleFont,
-                  mixBlendMode: 'screen',
-                  color: 'rgba(0,255,255,0.55)',
-                  opacity: gi < 0.85 ? 0.32 + gi * 0.25 : (1 - gi) * 4,
-                }}
-                initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
-                animate={cyanControls}
-              >
-                パラドクシア
-              </motion.span>
+                const textClass = "text-[3.2rem] md:text-9xl";
+                const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
-              {/* Main katakana title — fades out and glitches on scroll */}
-              <motion.span
-                className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-                style={{
-                  ...titleFont,
-                  opacity: 1 - gi,
-                  filter: gi > 0.05 ? `url(#paradox-pixelate) hue-rotate(${gi * 30}deg)` : undefined,
-                  transform: `skewX(${gi * -3}deg)`,
-                  textShadow: `
-                    ${1.5 + gi * 10}px ${gi * 2}px 0 rgba(255,0,0,${0.35 + gi * 0.4}),
-                    ${-1.5 - gi * 10}px ${gi * -1}px 0 rgba(0,255,255,${0.35 + gi * 0.4})
-                  `,
-                }}
-                initial={{
-                  opacity: 0,
-                  skewX: 3,
-                  textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
-                }}
-                animate={mainControls}
-              >
-                パラドクシア
-              </motion.span>
+                const currentFont = switched
+                  ? { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' }
+                  : titleFont;
+                const currentText = switched ? 'PARADOXXIA' : 'パラドクシア';
 
-              {/* Scan line overlay — intensifies on scroll */}
-              <motion.span
-                className="absolute inset-0 pointer-events-none z-20"
-                aria-hidden
-                initial={{ opacity: 0.5 }}
-                animate={scanControls}
-                style={{
-                  backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${0.12 + gi * 0.3}) 2px, rgba(0,0,0,${0.12 + gi * 0.3}) 4px)`,
-                  opacity: gi > 0.05 ? gi * 0.8 : undefined,
-                }}
-              />
+                return (
+                  <>
+                    {/* Red channel ghost */}
+                    <span
+                      className={`${textClass} absolute inset-0 pointer-events-none`}
+                      aria-hidden
+                      style={{
+                        ...currentFont,
+                        mixBlendMode: 'screen',
+                        color: `rgba(255,0,0,${0.22 + burstZone * 0.5})`,
+                        transform: `translateX(${2.5 + chromatic * 0.7}px) translateY(${burstZone * -3}px) skewX(${skew * 0.8}deg)`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {currentText}
+                    </span>
 
-              {/* PARADOXXIA — English title fades in */}
-              <span
-                className="absolute inset-0 flex items-center justify-center pointer-events-none z-30"
-                aria-hidden={gi < 0.5}
-              >
-                {/* Red ghost — English */}
-                <span
-                  className="text-[3.2rem] md:text-9xl absolute font-roc"
-                  style={{
-                    fontWeight: 800,
-                    letterSpacing: '-0.05em',
-                    mixBlendMode: 'screen',
-                    color: `rgba(255,0,0,${Math.max(0, (gi - 0.4)) * 0.6})`,
-                    transform: `translateX(${Math.max(0, (gi - 0.4)) * 6}px) translateY(${Math.max(0, (gi - 0.4)) * -2}px)`,
-                  }}
-                >
-                  PARADOXXIA
-                </span>
-                {/* Cyan ghost — English */}
-                <span
-                  className="text-[3.2rem] md:text-9xl absolute font-roc"
-                  style={{
-                    fontWeight: 800,
-                    letterSpacing: '-0.05em',
-                    mixBlendMode: 'screen',
-                    color: `rgba(0,255,255,${Math.max(0, (gi - 0.4)) * 0.5})`,
-                    transform: `translateX(${Math.max(0, (gi - 0.4)) * -5}px) translateY(${Math.max(0, (gi - 0.4)) * 1.5}px)`,
-                  }}
-                >
-                  PARADOXXIA
-                </span>
-                {/* Main English title */}
-                <span
-                  className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative font-roc"
-                  style={{
-                    fontWeight: 800,
-                    letterSpacing: '-0.05em',
-                    opacity: Math.max(0, (gi - 0.3) / 0.7),
-                    textShadow: `
-                      ${Math.max(0, (gi - 0.4)) * 4}px 0 0 rgba(255,0,0,${Math.max(0, (gi - 0.5)) * 0.35}),
-                      ${Math.max(0, (gi - 0.4)) * -4}px 0 0 rgba(0,255,255,${Math.max(0, (gi - 0.5)) * 0.35})
-                    `,
-                  }}
-                >
-                  PARADOXXIA
-                </span>
-              </span>
+                    {/* Cyan channel ghost */}
+                    <span
+                      className={`${textClass} absolute inset-0 pointer-events-none`}
+                      aria-hidden
+                      style={{
+                        ...currentFont,
+                        mixBlendMode: 'screen',
+                        color: `rgba(0,255,255,${0.18 + burstZone * 0.45})`,
+                        transform: `translateX(${-2 - chromatic * 0.6}px) translateY(${burstZone * 2}px) skewX(${-skew * 0.6}deg)`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {currentText}
+                    </span>
+
+                    {/* Main title */}
+                    <motion.span
+                      className={`${textClass} ${mainColor} relative z-10`}
+                      style={{
+                        ...currentFont,
+                        filter: burstZone > 0.3 ? `url(#paradox-pixelate) hue-rotate(${burstZone * 40}deg)` : (preGlitch > 0.3 ? `hue-rotate(${preGlitch * 15}deg)` : undefined),
+                        transform: `skewX(${skew}deg)`,
+                        textShadow: `
+                          ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.35 + burstZone * 0.4}),
+                          ${-chromatic * 0.5}px ${burstZone * -1}px 0 rgba(0,255,255,${0.35 + burstZone * 0.4})
+                        `,
+                      }}
+                      initial={{
+                        opacity: 0,
+                        skewX: 3,
+                        textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
+                      }}
+                      animate={mainControls}
+                    >
+                      {currentText}
+                    </motion.span>
+
+                    {/* Scan line overlay — peaks at switch */}
+                    <motion.span
+                      className="absolute inset-0 pointer-events-none z-20"
+                      aria-hidden
+                      initial={{ opacity: 0.5 }}
+                      animate={scanControls}
+                      style={{
+                        backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${0.12 + scanOp * 0.4}) 2px, rgba(0,0,0,${0.12 + scanOp * 0.4}) 4px)`,
+                        opacity: scanOp,
+                      }}
+                    />
+
+                    {/* Horizontal glitch slices at burst moment */}
+                    {burstZone > 0.3 && (
+                      <span
+                        className={`${textClass} ${mainColor} absolute inset-0 pointer-events-none z-15`}
+                        aria-hidden
+                        style={{
+                          ...currentFont,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mixBlendMode: 'difference',
+                          clipPath: `inset(${30 + burstZone * 15}% 0 ${35 - burstZone * 10}% 0)`,
+                          transform: `translateX(${burstZone * 12 * (switched ? -1 : 1)}px)`,
+                        }}
+                      >
+                        {currentText}
+                      </span>
+                    )}
+                  </>
+                );
+              })()}
             </span>
           </h1>
         </div>

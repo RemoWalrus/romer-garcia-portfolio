@@ -82,13 +82,13 @@ const Index = () => {
     <div className="bg-neutral-950 min-h-screen flex flex-col overflow-x-hidden">
       <Helmet>
         <title>Romer Garcia | Design Lead & AI-Driven Multimedia Strategist</title>
-        <meta name="description" content="Romer Garcia is a U.S. Army veteran turned Design Lead specializing in AI-assisted design, multimedia strategy, and brand transformation. Explore his portfolio of high-impact digital campaigns." />
+        <meta name="description" content="Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling." />
         <meta name="keywords" content="Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI" />
         <link rel="canonical" href="https://romergarcia.com" />
         
         {/* Open Graph */}
         <meta property="og:title" content="Romer Garcia | Design Lead & AI-Driven Multimedia Strategist" />
-        <meta property="og:description" content="U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling." />
+        <meta property="og:description" content="Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com" />
         <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />

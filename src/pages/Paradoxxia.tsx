@@ -135,15 +135,15 @@ const Paradoxxia = () => {
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
       <Helmet>
         <title>パラドクシア | Paradoxxia Universe</title>
-        <meta name="description" content="Enter the パラドクシア universe — a cinematic sci-fi world where science meets poetry, and stories are born from the ruins." />
-        <meta name="keywords" content="パラドクシア, Paradoxxia universe, cinematic sci-fi, romergarcia, post-apocalyptic world, worldbuilding" />
+        <meta name="description" content="Explore パラドクシア (Paradoxxia) — an original cinematic sci-fi universe by Romer Garcia. A post-apocalyptic world where technology and poetry collide, featuring AI-powered character generation, immersive worldbuilding, and stories born from the ruins of civilization." />
+        <meta name="keywords" content="パラドクシア, Paradoxxia, Paradoxxia universe, cinematic sci-fi world, romergarcia, post-apocalyptic worldbuilding, AI character generator, original sci-fi IP, futuristic storytelling" />
         <meta property="og:title" content="パラドクシア | Paradoxxia Universe" />
-        <meta property="og:description" content="Enter the パラドクシア universe — a cinematic sci-fi world where science meets poetry." />
+        <meta property="og:description" content="An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="パラドクシア | Paradoxxia Universe" />
-        <meta name="twitter:description" content="Enter the パラドクシア universe — a cinematic sci-fi world where science meets poetry." />
+        <meta name="twitter:description" content="An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide." />
       </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />

@@ -60,8 +60,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   // Glitch intensity peaks around the midpoint then snaps out
   const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2); // peaks at 0.5, ±0.2 range
   const preGlitch = Math.min(1, gi / 0.5); // 0→1 approaching burst
-  const chromatic = burstZone * 20 + preGlitch * 8;
-  const skew = burstZone * 7;
+  const chromatic = burstZone * 10 + preGlitch * 4;
+  const skew = burstZone * 4;
   const scanOp = burstZone * 0.8 + preGlitch * 0.15;
   // Hard cutoff — title disappears at 0.55
   const visible = gi < 0.55;
@@ -69,7 +69,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
   if (!visible && burstZone === 0) return null;
 
-  const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter";
+  const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter mb-8";
 
   return (
     <>
@@ -92,7 +92,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
         style={{
           mixBlendMode: 'screen',
-          transform: `translateX(${2.5 + chromatic * 0.7}px) translateY(${burstZone * -3}px) skewX(${skew * 0.8}deg)`,
+          transform: `translateX(${1 + chromatic * 0.5}px) translateY(${burstZone * -2}px) skewX(${skew * 0.6}deg)`,
           opacity: titleOpacity,
         }}
       >
@@ -110,7 +110,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         aria-hidden
         style={{
           mixBlendMode: 'screen',
-          transform: `translateX(${-2 - chromatic * 0.6}px) translateY(${burstZone * 2}px) skewX(${-skew * 0.6}deg)`,
+          transform: `translateX(${-1 - chromatic * 0.5}px) translateY(${burstZone * 1.5}px) skewX(${-skew * 0.5}deg)`,
           opacity: titleOpacity,
         }}
       >
@@ -136,8 +136,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           filter: burstZone > 0.3 ? `url(#pixelate) hue-rotate(${burstZone * 40}deg)` : (preGlitch > 0.3 ? `hue-rotate(${preGlitch * 15}deg)` : undefined),
           transform: `skewX(${skew}deg)`,
           textShadow: `
-            ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.3 + burstZone * 0.4}),
-            ${-chromatic * 0.5}px ${burstZone * -1}px 0 rgba(0,255,255,${0.3 + burstZone * 0.4})
+            ${chromatic * 0.35}px ${burstZone * 1.5}px 0 rgba(255,0,0,${0.3 + burstZone * 0.35}),
+            ${-chromatic * 0.35}px ${burstZone * -0.8}px 0 rgba(0,255,255,${0.3 + burstZone * 0.35})
           `,
           opacity: titleOpacity,
         }}

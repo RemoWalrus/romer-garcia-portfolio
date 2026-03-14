@@ -153,7 +153,7 @@ const Paradoxxia = () => {
         className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-white/50 dark:bg-transparent" />
+      <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
 
       <div className="min-h-full flex flex-col items-center justify-center relative z-10">
         <h1 className="flex flex-col items-center">

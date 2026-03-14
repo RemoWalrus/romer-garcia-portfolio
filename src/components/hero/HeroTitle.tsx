@@ -60,8 +60,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   // Glitch intensity peaks around the midpoint then snaps out
   const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2); // peaks at 0.5, ±0.2 range
   const preGlitch = Math.min(1, gi / 0.5); // 0→1 approaching burst
-  const chromatic = burstZone * 20 + preGlitch * 8;
-  const skew = burstZone * 7;
+  const chromatic = burstZone * 10 + preGlitch * 4;
+  const skew = burstZone * 4;
   const scanOp = burstZone * 0.8 + preGlitch * 0.15;
   // Hard cutoff — title disappears at 0.55
   const visible = gi < 0.55;

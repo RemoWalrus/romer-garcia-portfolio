@@ -29,7 +29,7 @@ const Index = () => {
     ogImage: 'https://romergarcia.com/storage/graphics/RomerGarcia-cover.svg',
     twitterTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     twitterDescription: 'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
-    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+    twitterImage: 'https://romergarcia.com/storage/graphics/RomerGarcia-cover.svg',
   });
 
   useEffect(() => {

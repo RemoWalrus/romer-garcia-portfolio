@@ -65,7 +65,7 @@ export const ImageGallery = () => {
       id="gallery" 
       className="relative py-16 -mt-16 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-900/90 before:backdrop-blur-sm" 
       style={{
-        backgroundImage: "url('https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg')"
+        backgroundImage: "url('/storage/projects//Hairwars16.jpg')"
       }}
     >
       <div className="container mx-auto px-4 relative z-10">

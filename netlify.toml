@@ -5,11 +5,22 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Proxy Supabase Storage through /storage/*
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/storage/*"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/:splat"
   status = 200
-  conditions = {Role = ["admin"], Country = ["US"]}
+  force = true
+
+# Proxy Supabase REST API through /api/v1/*
+[[redirects]]
+  from = "/api/v1/*"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/rest/v1/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4aWd0YnhxZ2JkY2ZwbW5yenZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQyNjUsImV4cCI6MjA1NDY1MDI2NX0.N9TKpkYmeitE3kthByFOnmR0gKBvBrMshEXez6D5IU8"
+    Authorization = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4aWd0YnhxZ2JkY2ZwbW5yenZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQyNjUsImV4cCI6MjA1NDY1MDI2NX0.N9TKpkYmeitE3kthByFOnmR0gKBvBrMshEXez6D5IU8"
 
 # Handle SPA routing - send all requests to index.html so React Router can handle them
 [[redirects]]

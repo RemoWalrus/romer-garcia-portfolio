@@ -95,7 +95,7 @@ const Meme = () => {
         
         {/* Open Graph */}
         <meta property="og:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />
-        <meta property="og:description" content="Dive into Romer Garcia's vault of developer humor, coding tips, and tech trivia. A whimsical escape for creative minds and code warriors alike." />
+        <meta property="og:description" content="Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time." />
         <meta property="og:type" content="website" />
         
         {/* Twitter Card */}

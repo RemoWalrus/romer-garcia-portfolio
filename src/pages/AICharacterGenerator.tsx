@@ -833,8 +833,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
       <Helmet>
         <title>パラドクシア | AI Character Generator | Paradoxxia Universe</title>
-        <meta name="description" content="Awaken your imagination inside the パラドクシア universe. Forge mysterious androids, wanderers, and forgotten souls with our AI-powered Character Generator—where science meets poetry, and stories are born from the ruins." />
-        <meta name="keywords" content="パラドクシア, Paradoxxia universe, AI character generator, cinematic sci-fi, android creator, futuristic character builder, romergarcia, post-apocalyptic world, story generator, worldbuilding tool, character design AI, immersive sci-fi experience" />
+        <meta name="description" content="Create unique AI-generated characters inside the パラドクシア (Paradoxxia) universe. Describe your vision and watch as AI forges androids, wanderers, and forgotten souls with cinematic portraits, backstories, and stats — a free character design tool by Romer Garcia." />
+        <meta name="keywords" content="パラドクシア, Paradoxxia, AI character generator, free AI character creator, cinematic sci-fi characters, android creator, futuristic character builder, romergarcia, AI art generator, character design tool, worldbuilding AI, post-apocalyptic character creator" />
         
         {/* Open Graph */}
         <meta property="og:title" content="パラドクシア | AI Character Generator | Paradoxxia Universe" />

@@ -143,7 +143,7 @@ const AICharacterGenerator = () => {
           textShadow: [
             '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
             '2px 0 0 rgba(255,0,0,0.35), -2px 0 0 rgba(0,255,255,0.35)',
-            '0.5px 0 0 rgba(255,0,0,0.25), -0.5px 0 0 rgba(0,255,255,0.25)',
+            '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
           ],
           transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] },
         }),

@@ -1,60 +1,45 @@
 
 import { Variants } from "framer-motion";
 
+// Paradoxxia-style chromatic aberration transition between words
 export const glitchVariants: Variants = {
   initial: {
     opacity: 1,
-    scale: 1,
+    scale: 1.03,
     x: 0,
     skewX: 0,
-    filter: "blur(0px) brightness(100%) contrast(100%) hue-rotate(0deg)",
-    textShadow: "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
+    textShadow: "5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)",
   },
   animate: {
     opacity: 1,
-    scale: 1,
-    x: [10, -5, 2, -1, 0],
-    skewX: [3, -1.5, 0.6, -0.2, 0],
-    filter: [
-      "blur(1.4px) brightness(135%) contrast(98%) hue-rotate(10deg)",
-      "blur(0.8px) brightness(118%) contrast(99%) hue-rotate(-6deg)",
-      "blur(0.3px) brightness(108%) contrast(100%) hue-rotate(2deg)",
-      "blur(0px) brightness(100%) contrast(100%) hue-rotate(0deg)",
-    ],
+    scale: [1.03, 0.995, 1.008, 1],
+    x: [14, -6, 3, -1, 0],
+    skewX: [3.5, -1.8, 0.8, -0.2, 0],
     textShadow: [
-      "6px 0 0 rgba(255,0,0,0.5), -6px 0 0 rgba(0,255,255,0.5)",
-      "3px 0 0 rgba(255,0,0,0.35), -3px 0 0 rgba(0,255,255,0.35)",
-      "1.5px 0 0 rgba(255,0,0,0.2), -1.5px 0 0 rgba(0,255,255,0.2)",
-      "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
+      "5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)",
+      "2.5px 0 0 rgba(255,0,0,0.35), -2.5px 0 0 rgba(0,255,255,0.35)",
+      "1.5px 0 0 rgba(255,0,0,0.22), -1.5px 0 0 rgba(0,255,255,0.22)",
+      "0.5px 0 0 rgba(255,0,0,0.15), -0.5px 0 0 rgba(0,255,255,0.15)",
     ],
     transition: {
-      duration: 0.55,
+      duration: 0.7,
       ease: [0.25, 0.1, 0.25, 1],
-      times: [0, 0.3, 0.6, 1],
-      staggerChildren: 0.03,
+      times: [0, 0.3, 0.6, 0.85, 1],
     },
   },
   exit: {
     opacity: 1,
-    scale: 1,
-    x: [0, 6, -4, 2, 0],
-    skewX: [0, -2, 1, -0.3, 0],
-    filter: [
-      "blur(0px) brightness(100%) contrast(100%) hue-rotate(0deg)",
-      "blur(1px) brightness(125%) contrast(97%) hue-rotate(-8deg)",
-      "blur(1.8px) brightness(145%) contrast(95%) hue-rotate(16deg)",
-      "blur(0px) brightness(100%) contrast(100%) hue-rotate(0deg)",
-    ],
+    scale: [1, 1.01, 0.97],
+    x: [0, -10, 6, -3, 0],
+    skewX: [0, -3, 1.5, -0.5, 0],
     textShadow: [
-      "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
-      "4px 0 0 rgba(255,0,0,0.4), -4px 0 0 rgba(0,255,255,0.4)",
-      "8px 0 0 rgba(255,0,0,0.5), -8px 0 0 rgba(0,255,255,0.5)",
-      "0px 0 0 rgba(255,0,0,0), 0px 0 0 rgba(0,255,255,0)",
+      "0.5px 0 0 rgba(255,0,0,0.15), -0.5px 0 0 rgba(0,255,255,0.15)",
+      "4px 0 0 rgba(255,0,0,0.45), -4px 0 0 rgba(0,255,255,0.45)",
+      "7px 0 0 rgba(255,0,0,0.55), -7px 0 0 rgba(0,255,255,0.55)",
     ],
     transition: {
       duration: 0.35,
       ease: [0.25, 0.1, 0.25, 1],
-      times: [0, 0.35, 0.75, 1],
     },
   },
 };
@@ -64,20 +49,6 @@ export const pixelGlitch: Variants = {
     clipPath: "inset(0 0 0 0)",
   },
   animate: {
-    clipPath: [
-      "inset(0 0 0 0)",
-      "inset(2% 3% 4% 1%)",
-      "inset(4% 1% 3% 2%)",
-      "inset(3% 4% 1% 3%)",
-      "inset(1% 2% 3% 2%)",
-      "inset(0 0 0 0)",
-    ],
-    transition: {
-      duration: 0.5,
-      ease: [0.165, 0.84, 0.44, 1],
-      repeat: 1,
-      repeatType: "reverse",
-      times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-    },
+    clipPath: "inset(0 0 0 0)",
   },
 };

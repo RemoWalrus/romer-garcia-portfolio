@@ -104,7 +104,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const scrollCyanX = -3 - chromatic * 1.2;
 
   return (
-    <div className="relative" style={{ opacity: titleOpacity, transform: `scale(${zoomPunch})`, transition: zoomPunch === 1 ? 'transform 0.35s cubic-bezier(0.25,0.1,0.25,1)' : 'none' }}>
+    <div className="relative" style={{ opacity: titleOpacity, transform: `scale(${zoomPunch})` }}>
       {/* Red ghost layer */}
       <motion.span
         className={`${textClass} absolute inset-0 pointer-events-none text-center whitespace-nowrap`}

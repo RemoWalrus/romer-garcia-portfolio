@@ -2,12 +2,19 @@ import { Helmet } from "react-helmet-async";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { motion, useAnimation } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { motion, useAnimation, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { scrollY } = useScroll({ container: scrollRef });
+  const [gi, setGi] = useState(0); // glitch intensity from scroll
+  
+  const scrollGlitch = useTransform(scrollY, [0, 300], [0, 1]);
+  useMotionValueEvent(scrollGlitch, "change", (v) => setGi(v));
+  
   const redControls = useAnimation();
   const cyanControls = useAnimation();
   const mainControls = useAnimation();
@@ -143,7 +150,7 @@ const Paradoxxia = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
+      <div ref={scrollRef} className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
@@ -166,58 +173,144 @@ const Paradoxxia = () => {
       />
       <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
 
-      <div className="min-h-full flex flex-col items-center justify-center relative z-10">
-        <h1 className="flex flex-col items-center">
-          <span className="relative inline-block">
-            {/* Red channel ghost */}
-            <motion.span
-              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
-              aria-hidden
-              style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
-              initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
-              animate={redControls}
-            >
-              パラドクシア
-            </motion.span>
+      {/* SVG pixelation filter */}
+      {gi > 0.05 && (
+        <svg className="absolute w-0 h-0" aria-hidden>
+          <filter id="paradox-pixelate">
+            <feFlood x="0" y="0" width={Math.max(1, Math.round(gi * 12))} height={Math.max(1, Math.round(gi * 12))} />
+            <feComposite width={Math.max(1, Math.round(gi * 12))} height={Math.max(1, Math.round(gi * 12))} />
+            <feTile result="a" />
+            <feComposite in="SourceGraphic" in2="a" operator="in" />
+            <feMorphology operator="dilate" radius={Math.max(1, Math.round(gi * 5))} />
+          </filter>
+        </svg>
+      )}
 
-            {/* Cyan channel ghost */}
-            <motion.span
-              className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
-              aria-hidden
-              style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
-              initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
-              animate={cyanControls}
-            >
-              パラドクシア
-            </motion.span>
+      {/* Scrollable content — 2x viewport height to allow scroll */}
+      <div className="min-h-[200vh] relative z-10">
+        {/* Sticky title container */}
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
+          <h1 className="flex flex-col items-center">
+            <span className="relative inline-block">
+              {/* Red channel ghost — katakana */}
+              <motion.span
+                className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
+                aria-hidden
+                style={{
+                  ...titleFont,
+                  mixBlendMode: 'screen',
+                  color: 'rgba(255,0,0,0.6)',
+                  opacity: gi < 0.85 ? 0.38 + gi * 0.3 : (1 - gi) * 4,
+                }}
+                initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
+                animate={redControls}
+              >
+                パラドクシア
+              </motion.span>
 
-            {/* Main title */}
-            <motion.span
-              className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
-              style={{ ...titleFont }}
-              initial={{
-                opacity: 0,
-                skewX: 3,
-                textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
-              }}
-              animate={mainControls}
-            >
-              パラドクシア
-            </motion.span>
+              {/* Cyan channel ghost — katakana */}
+              <motion.span
+                className="text-[3.2rem] md:text-9xl absolute inset-0 pointer-events-none"
+                aria-hidden
+                style={{
+                  ...titleFont,
+                  mixBlendMode: 'screen',
+                  color: 'rgba(0,255,255,0.55)',
+                  opacity: gi < 0.85 ? 0.32 + gi * 0.25 : (1 - gi) * 4,
+                }}
+                initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
+                animate={cyanControls}
+              >
+                パラドクシア
+              </motion.span>
 
-            {/* Scan line overlay */}
-            <motion.span
-              className="absolute inset-0 pointer-events-none z-20"
-              aria-hidden
-              initial={{ opacity: 0.5 }}
-              animate={scanControls}
-              style={{
-                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px)',
-              }}
-            />
-          </span>
-        </h1>
+              {/* Main katakana title — fades out and glitches on scroll */}
+              <motion.span
+                className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+                style={{
+                  ...titleFont,
+                  opacity: 1 - gi,
+                  filter: gi > 0.05 ? `url(#paradox-pixelate) hue-rotate(${gi * 30}deg)` : undefined,
+                  transform: `skewX(${gi * -3}deg)`,
+                  textShadow: `
+                    ${1.5 + gi * 10}px ${gi * 2}px 0 rgba(255,0,0,${0.35 + gi * 0.4}),
+                    ${-1.5 - gi * 10}px ${gi * -1}px 0 rgba(0,255,255,${0.35 + gi * 0.4})
+                  `,
+                }}
+                initial={{
+                  opacity: 0,
+                  skewX: 3,
+                  textShadow: '5px 0 0 rgba(255,0,0,0.5), -5px 0 0 rgba(0,255,255,0.5)',
+                }}
+                animate={mainControls}
+              >
+                パラドクシア
+              </motion.span>
+
+              {/* Scan line overlay — intensifies on scroll */}
+              <motion.span
+                className="absolute inset-0 pointer-events-none z-20"
+                aria-hidden
+                initial={{ opacity: 0.5 }}
+                animate={scanControls}
+                style={{
+                  backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${0.12 + gi * 0.3}) 2px, rgba(0,0,0,${0.12 + gi * 0.3}) 4px)`,
+                  opacity: gi > 0.05 ? gi * 0.8 : undefined,
+                }}
+              />
+
+              {/* PARADOXXIA — English title fades in */}
+              <span
+                className="absolute inset-0 flex items-center justify-center pointer-events-none z-30"
+                aria-hidden={gi < 0.5}
+              >
+                {/* Red ghost — English */}
+                <span
+                  className="text-[3.2rem] md:text-9xl absolute"
+                  style={{
+                    ...titleFont,
+                    letterSpacing: '-0.05em',
+                    mixBlendMode: 'screen',
+                    color: `rgba(255,0,0,${Math.max(0, (gi - 0.4)) * 0.6})`,
+                    transform: `translateX(${Math.max(0, (gi - 0.4)) * 6}px) translateY(${Math.max(0, (gi - 0.4)) * -2}px)`,
+                  }}
+                >
+                  PARADOXXIA
+                </span>
+                {/* Cyan ghost — English */}
+                <span
+                  className="text-[3.2rem] md:text-9xl absolute"
+                  style={{
+                    ...titleFont,
+                    letterSpacing: '-0.05em',
+                    mixBlendMode: 'screen',
+                    color: `rgba(0,255,255,${Math.max(0, (gi - 0.4)) * 0.5})`,
+                    transform: `translateX(${Math.max(0, (gi - 0.4)) * -5}px) translateY(${Math.max(0, (gi - 0.4)) * 1.5}px)`,
+                  }}
+                >
+                  PARADOXXIA
+                </span>
+                {/* Main English title */}
+                <span
+                  className="text-[3.2rem] md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative"
+                  style={{
+                    ...titleFont,
+                    letterSpacing: '-0.05em',
+                    opacity: Math.max(0, (gi - 0.3) / 0.7),
+                    textShadow: `
+                      ${Math.max(0, (gi - 0.4)) * 4}px 0 0 rgba(255,0,0,${Math.max(0, (gi - 0.5)) * 0.35}),
+                      ${Math.max(0, (gi - 0.4)) * -4}px 0 0 rgba(0,255,255,${Math.max(0, (gi - 0.5)) * 0.35})
+                    `,
+                  }}
+                >
+                  PARADOXXIA
+                </span>
+              </span>
+            </span>
+          </h1>
+        </div>
       </div>
+
       <footer className="absolute bottom-0 left-0 right-0 z-10 py-6 text-center">
         <p className="text-sm text-muted-foreground dark:text-[#00d4ff] font-roc">
           © {new Date().getFullYear()} Romer Garcia. All rights reserved.

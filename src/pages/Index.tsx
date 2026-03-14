@@ -19,6 +19,18 @@ const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [projects, setProjects] = useState<any[]>([]);
   const [socialLinks, setSocialLinks] = useState<any>({});
+  const meta = usePageMeta(undefined, {
+    title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
+    description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
+    keywords: 'Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI',
+    ogTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
+    ogDescription: 'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
+    ogUrl: 'https://romergarcia.com',
+    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+    twitterTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
+    twitterDescription: 'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
+    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+  });
 
   useEffect(() => {
     const handleScroll = () => {

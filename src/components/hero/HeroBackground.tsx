@@ -84,7 +84,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
             muted
             loop
             playsInline
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 
               ${showVideo ? (isDarkMode ? 'opacity-20' : 'opacity-30') : 'opacity-0'}`}
             src={videoUrl}
           />

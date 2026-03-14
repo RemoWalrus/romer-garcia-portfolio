@@ -34,6 +34,16 @@ const AICharacterGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [introComplete, setIntroComplete] = useState(false);
+  const meta = usePageMeta('chargen', {
+    title: 'パラドクシア | AI Character Generator | Paradoxxia Universe',
+    description: 'Create unique AI-generated characters inside the パラドクシア (Paradoxxia) universe. Describe your vision and watch as AI forges androids, wanderers, and forgotten souls with cinematic portraits, backstories, and stats — a free character design tool by Romer Garcia.',
+    keywords: 'パラドクシア, Paradoxxia, AI character generator, free AI character creator, cinematic sci-fi characters, android creator, futuristic character builder, romergarcia, AI art generator, character design tool, worldbuilding AI, post-apocalyptic character creator',
+    ogTitle: 'パラドクシア | AI Character Generator | Paradoxxia Universe',
+    ogDescription: 'Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia.',
+    ogUrl: 'https://romergarcia.com/char-gen',
+    twitterTitle: 'パラドクシア | AI Character Generator',
+    twitterDescription: 'Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia.',
+  });
 
   // Animation controls for title glitch effect
   const redControls = useAnimation();

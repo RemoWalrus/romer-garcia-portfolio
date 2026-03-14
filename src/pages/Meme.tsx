@@ -23,6 +23,15 @@ const Meme = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
   const [memeData, setMemeData] = useState<MemeData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const meta = usePageMeta('meme', {
+    title: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
+    description: 'Enjoy a random feed of developer memes, coding tips, and fun tech trivia curated by Romer Garcia. A lighthearted break for software engineers, designers, and anyone who speaks code — refresh for a new meme every time.',
+    keywords: 'developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes, developer life, random meme generator',
+    ogTitle: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
+    ogDescription: 'Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.',
+    twitterTitle: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
+    twitterDescription: 'Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.',
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');

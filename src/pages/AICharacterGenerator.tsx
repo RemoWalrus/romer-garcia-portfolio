@@ -787,7 +787,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         <span className="relative inline-block">
           {/* Red channel ghost */}
           <motion.span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
+            className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} absolute inset-0 pointer-events-none transition-all duration-500`}
             aria-hidden
             style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
             initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
@@ -798,7 +798,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
           {/* Cyan channel ghost */}
           <motion.span
-            className="text-5xl md:text-9xl absolute inset-0 pointer-events-none"
+            className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} absolute inset-0 pointer-events-none transition-all duration-500`}
             aria-hidden
             style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
             initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
@@ -809,7 +809,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
           {/* Main title */}
           <motion.span
-            className="text-5xl md:text-9xl text-[#0a1e5c] dark:text-[#00d4ff] relative z-10"
+            className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} text-[#0a1e5c] dark:text-[#00d4ff] relative z-10 transition-all duration-500`}
             style={{ ...titleFont }}
             initial={{
               opacity: 0,
@@ -883,13 +883,13 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       <main className="container mx-auto px-4 py-16 mt-16 relative z-10 flex-1 pb-24">
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Animated Header */}
-          <div className="text-center space-y-6">
+          <div className={`text-center ${generatedImage ? 'space-y-2' : 'space-y-6'}`}>
             <div className="relative">
-              <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground px-4 relative z-10">
+              <h1 className={`hero-title font-bold text-foreground px-4 relative z-10 ${generatedImage ? 'text-xl sm:text-2xl md:text-3xl' : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'} transition-all duration-500`}>
                 {renderTitle()}
               </h1>
             </div>
-            <p className="text-xl text-foreground max-w-2xl mx-auto font-roc">
+            <p className={`text-foreground max-w-2xl mx-auto font-roc ${generatedImage ? 'text-sm' : 'text-xl'} transition-all duration-500`}>
               <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
               <span className="font-medium">of the</span>{" "}
               <span style={{ fontWeight: 300 }}>paradoxxia universe</span>

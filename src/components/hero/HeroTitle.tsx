@@ -126,7 +126,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         style={{
           color: `rgba(0,255,255,${isTransitioning ? 1 : (0.2 + preGlitch * 0.18 + burstZone * 0.35)})`,
           mixBlendMode: 'screen',
-          transform: isTransitioning ? undefined : `translateX(${scrollCyanX}px) translateY(${burstZone * -2}px) skewX(${-skew * 0.6}deg)`,
+          transform: isTransitioning ? undefined : `translateX(${scrollCyanX}px) translateY(${burstZone * -2}px)`,
           fontFeatureSettings: '"ss01"',
         }}
       >

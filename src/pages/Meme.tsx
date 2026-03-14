@@ -138,7 +138,7 @@ const Meme = () => {
         <div className="max-w-4xl mx-auto space-y-8">
           {/* Header */}
           <div className="space-y-4">
-            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto font-roc text-center">
+            <p className="text-xl md:text-2xl text-foreground dark:text-[#00d4ff] max-w-2xl mx-auto font-roc text-center">
               <span className="font-thin">random</span>{" "}
               <span className="font-medium">developer humor</span>{" "}
               <span className="font-thin">from the vault</span>
@@ -147,7 +147,7 @@ const Meme = () => {
 
           {/* Meme Content */}
           {isLoading ? (
-            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30">
+            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30 dark:border-[#00d4ff]/30">
               <div className="animate-pulse space-y-4">
                 <div className="h-6 bg-foreground/20 rounded w-3/4 mx-auto"></div>
                 <div className="h-4 bg-foreground/20 rounded w-1/2 mx-auto"></div>
@@ -156,7 +156,7 @@ const Meme = () => {
               </div>
             </div>
           ) : memeData ? (
-            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30 space-y-6 animate-fade-in">
+            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30 dark:border-[#00d4ff]/30 space-y-6 animate-fade-in">
               {/* Meme Text */}
               <div className="space-y-2">
                 <h2 className="text-2xl md:text-4xl font-thin text-foreground leading-relaxed font-roc">

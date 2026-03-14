@@ -86,43 +86,7 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
         </svg>
       )}
 
-      {/* Red channel ghost */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        aria-hidden
-        style={{
-          mixBlendMode: 'screen',
-          transform: `translateX(${0.35 + chromatic * 0.42}px) translateY(${burstZone * -2}px) skewX(${skew * 0.6}deg)`,
-          opacity: titleOpacity,
-        }}
-      >
-        <div
-          className={`${textClass}`}
-          style={{ color: `rgba(255, 0, 0, ${0.2 + burstZone * 0.5})` }}
-        >
-          {renderTitle(title.text, title.weights, true)}
-        </div>
-      </div>
-
-      {/* Cyan channel ghost */}
-      <div
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        aria-hidden
-        style={{
-          mixBlendMode: 'screen',
-          transform: `translateX(${-0.35 - chromatic * 0.42}px) translateY(${burstZone * 1.5}px) skewX(${-skew * 0.5}deg)`,
-          opacity: titleOpacity,
-        }}
-      >
-        <div
-          className={`${textClass}`}
-          style={{ color: `rgba(0, 255, 255, ${0.18 + burstZone * 0.45})` }}
-        >
-          {renderTitle(title.text, title.weights, true)}
-        </div>
-      </div>
-
-      {/* Main title */}
+      {/* Main title — chromatic aberration via text-shadow only (Paradoxxia style) */}
       <motion.h1
         variants={pixelGlitch}
         initial="initial"
@@ -133,8 +97,8 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
           filter: burstZone > 0.3 ? `url(#pixelate) hue-rotate(${burstZone * 40}deg)` : (preGlitch > 0.3 ? `hue-rotate(${preGlitch * 15}deg)` : undefined),
           transform: `skewX(${skew}deg)`,
           textShadow: `
-            ${chromatic * 0.35}px ${burstZone * 1.5}px 0 rgba(255,0,0,${0.3 + burstZone * 0.35}),
-            ${-chromatic * 0.35}px ${burstZone * -0.8}px 0 rgba(0,255,255,${0.3 + burstZone * 0.35})
+            ${0.5 + chromatic * 0.6}px ${burstZone * 2}px 0 rgba(255,0,0,${0.22 + preGlitch * 0.15 + burstZone * 0.4}),
+            ${-0.5 - chromatic * 0.6}px ${burstZone * -1}px 0 rgba(0,255,255,${0.18 + preGlitch * 0.12 + burstZone * 0.35})
           `,
           opacity: titleOpacity,
         }}
@@ -178,4 +142,3 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     </>
   );
 };
-

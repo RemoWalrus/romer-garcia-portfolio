@@ -74,7 +74,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
           <img 
             src={backgroundImage} 
             alt="Hero Background" 
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 
               ${showVideo ? 'opacity-0' : isDarkMode ? 'opacity-40' : 'opacity-60'}`}
           />
         )}

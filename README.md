@@ -1,33 +1,98 @@
 
-# Welcome to your Lovable project
-
-## Project info
+# Romer Garcia — Portfolio Site
 
 **URL**: https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be
+**Live**: https://romer-garcia-portfolio.lovable.app
+
+## Tech Stack
+
+- **React** + **TypeScript** + **Vite**
+- **Tailwind CSS** + **shadcn/ui** design system
+- **Supabase** backend (database, edge functions, storage)
+- **Framer Motion** animations
+- **React Router** client-side routing
+- **Capacitor** for native mobile features
+
+## Site Architecture
+
+A single-page portfolio with fixed hero and scrollable content sections:
+
+| Section | Description |
+|---------|-------------|
+| **Hero** | Animated title sequence with chromatic aberration effects and AI-generated backgrounds |
+| **Portfolio** | Project grid with modal detail views, galleries, and video embeds |
+| **About** | Bio section with downloadable portfolio PDF |
+| **Gallery** | Horizontal filmstrip with lightbox modals |
+| **Quote** | Random inspirational quotes from database |
+| **Contact** | Contact form powered by Supabase Edge Function |
+
+### Additional Pages
+
+| Route | Page | Description |
+|-------|------|-------------|
+| `/paradoxxia` | Paradoxxia | AI Character Generator with Gemini-powered image generation |
+| `/char-gen` | AI Character Generator | Three-step character creation (species → gender → name) |
+| `/meme` | Dev Memes | Random coding memes, tips, and fun facts |
+| `/contact` | Contact Redirect | Redirects to homepage contact section |
+
+## Key Features & Capabilities
+
+### Hero Section — Chromatic Aberration Title Animation
+
+The hero features a Paradoxxia-inspired glitch title system:
+
+- **Word cycling**: Titles fetched from Supabase cycle with configurable timing
+- **Chromatic ghost layers**: Red and cyan ghost text layers animate independently using Framer Motion `useAnimation` controls
+- **Transition burst**: On each word switch, ghost layers burst outward with high offset/opacity, then settle to subtle resting positions (red: 1.5px, cyan: -1.5px offset at ~15-18% opacity)
+- **Single-frame zoom punch**: Each word switch triggers a randomized scale (zoom in 1.06–1.12× or zoom out 0.88–0.94×) lasting exactly one animation frame, then instantly snaps back to normal
+- **Scroll-driven effects**: As user scrolls, chromatic aberration intensifies, scan lines appear, skew increases, and title fades out with a burst zone around 50% scroll
+- **AI-generated backgrounds**: Background images change when user scrolls back to top
+
+### Custom Cursor
+
+A performant gold-dot cursor with trailing ring, built outside React's render cycle:
+
+- Dot follows mouse instantly; ring trails with interpolated easing (0.15 factor)
+- Ring expands on hover over clickable elements with ghost/afterimage effect
+- GPU-accelerated via `translate3d` and `will-change: transform`
+- All state in `useRef` — zero re-renders during animation
+- Hidden on touch devices (`pointer: coarse`)
+
+### Portfolio Projects
+
+- Grid layout with sort-order control
+- Modal detail view with hero image, description, tech stack tags
+- Image gallery with navigation
+- YouTube video embeds
+- External/GitHub/project URL links
+- JSON-LD `CreativeWork` schema per project (first 2 sentences as meta description)
+
+### AI Character Generator (Paradoxxia)
+
+- Three-step creation: species → gender → name
+- Google Gemini 2.5 Flash image generation via Supabase Edge Functions
+- "Paradoxxia" easter egg with pre-designed character variants
+- Triple-X names create "defective" character variants
+- Capacitor integration for native save-to-photos and sharing
+
+### Developer Memes
+
+- Random meme display from `daily_memes` table
+- Each meme includes coding tip and tech fun fact
+- Fallback content on database errors
 
 ## SEO Optimization
 
-The website has been optimized for search engines, GEO (Generative Engine Optimization), and AEO (Answer Engine Optimization) with the following:
-
-- **Dynamic Meta Tags**: All page titles, descriptions, keywords, Open Graph, and Twitter Card tags are stored in the Supabase `metadata` table and fetched at runtime via the `usePageMeta` hook. Hardcoded fallbacks ensure fast initial rendering.
-- **JSON-LD Structured Data**: Person, CreativeWork, FAQPage, and WebSite schemas on the homepage.
-- **Semantic HTML**: Single H1 per page, proper heading hierarchy, alt text on all images.
-- **Sitemap & Robots**: `sitemap.xml` and `robots.txt` allow AI crawlers (GPTBot, Claude-Web, OAI-SearchBot).
-- **Canonical Tags**: Set per page to prevent duplicate content.
+- **Dynamic meta tags**: All titles, descriptions, OG/Twitter tags stored in Supabase `metadata` table, fetched via `usePageMeta` hook
+- **JSON-LD structured data**: Person, CreativeWork, FAQPage, WebSite schemas
+- **Semantic HTML**: Single H1 per page, proper heading hierarchy, alt text on all images
+- **Sitemap & robots.txt**: Allows AI crawlers (GPTBot, Claude-Web, OAI-SearchBot)
+- **Canonical tags**: Set per page
 
 ### Managing Meta Tags via Supabase
 
-Page meta tags are stored in the `metadata` table using a key convention:
-- **Homepage**: `title`, `description`, `keywords`, `og_title`, `og_description`, `og_url`, `og_image`, `twitter_title`, `twitter_description`, `twitter_image`
-- **Other pages**: Prefixed with page slug, e.g. `paradoxxia.title`, `chargen.description`, `meme.og_title`
+Meta tags use a key convention in the `metadata` table:
 
-To update meta tags:
-1. Access your Supabase dashboard → Table Editor → `metadata`
-2. Find the row with the `meta_key` you want to update (e.g. `chargen.description`)
-3. Edit the `meta_value` column
-4. Changes take effect on next page load (no code changes needed)
-
-**Current page prefixes:**
 | Page | Prefix | Route |
 |------|--------|-------|
 | Homepage | *(none)* | `/` |
@@ -35,262 +100,46 @@ To update meta tags:
 | AI Character Generator | `chargen` | `/char-gen` |
 | Dev Memes | `meme` | `/meme` |
 
-## How to edit sections
+Keys: `title`, `description`, `keywords`, `og_title`, `og_description`, `og_url`, `og_image`, `twitter_title`, `twitter_description`, `twitter_image` — prefixed with page slug for non-homepage (e.g. `paradoxxia.title`).
 
-The website content is managed through the Supabase database. Each section's content can be updated through the sections table.
+## Content Management (Supabase)
 
-### Hero Section Titles
-The titles that appear in the hero section animation are managed through the Supabase database. To update them:
+All content is database-driven — no code changes needed for updates.
 
-1. Access your Supabase dashboard
-2. Navigate to the Table Editor
-3. Select the `hero_titles` table
-4. Here you can:
-   - Add new titles by inserting new rows
-   - Modify existing titles by updating their text or weights
-   - Change the order of titles by updating the `sort_order` column
-   - Delete titles you no longer want to display
-
-Each title can have custom font weights applied to different words. The weights are stored as an array of Tailwind classes (e.g., `['font-thin', 'font-medium']`).
-
-### Portfolio Projects
-The portfolio section is managed through the Supabase database. To update projects:
-
-1. Access your Supabase dashboard
-2. Navigate to the Table Editor
-3. Select the `projects` table
-4. Here you can:
-   - Add new projects
-   - Update existing project details
-   - Change the order of projects using the `sort_order` column
-   - Update project images by providing new URLs
-
-Each project requires:
-- A title
-- A category
-- A description (the first 2 sentences are automatically used as the SEO meta summary in the project's JSON-LD schema)
-- A hero image URL
-- An alt text for the hero image (optional — used for SEO and accessibility; auto-generated if empty)
-- A tech stack array (optional — displayed as tags in the modal)
-- Additional images (optional)
-- External URL / Project URL / GitHub URL (optional)
-- YouTube URL (optional)
-
-> **Note:** The "Executive Summary" block was removed from the project modal to reduce redundancy. The first 2 sentences of each project's description are now used as the `description` field in the project's structured data (JSON-LD `CreativeWork` schema), while the full text is stored as `abstract` for richer SEO.
-
-### Gallery Section
-The gallery section displays images in a horizontal filmstrip layout. To manage the gallery:
-
-1. Access your Supabase dashboard
-2. Navigate to the Table Editor
-3. Select the `gallery` table
-4. Here you can:
-   - Add new images by inserting new rows
-   - Add optional titles to images
-   - Add optional descriptions that will appear in the modal view
-   - Add optional alt text for SEO and accessibility (auto-generated if empty)
-   - Change the order of images using the `sort_order` column
-   - Update image URLs
-    
-The gallery displays images in a horizontal filmstrip layout with navigation arrows. Each image can be clicked to view it in a larger modal, which will display the title and description (if provided).
+| Table | Purpose |
+|-------|---------|
+| `hero_titles` | Animated hero titles with font weight arrays and sort order |
+| `projects` | Portfolio projects (title, category, description, images, tech stack, URLs) |
+| `sections` | About, contact, and social media section content |
+| `gallery` | Gallery images with optional titles, descriptions, alt text |
+| `quotes` | Inspirational quotes (randomly selected via `get_random_quote` function) |
+| `daily_memes` | Developer memes with coding tips and fun facts |
+| `metadata` | Page-level SEO meta tags |
+| `config` | Site configuration key-value pairs |
+| `profile` | Profile information |
 
 ### Alt Text for Images
-Both the `projects` and `gallery` tables have an `alt_text` column. When set, this value is used as the image's `alt` attribute for SEO and accessibility. If left empty, a descriptive alt text is auto-generated from the project/image title, category, and creator name. For best SEO results, write contextual alt text like: *"UI design for U.S. Army website rebrand by Romer Garcia showing responsive layout."*
 
-### Contact Section
-- Title
-- Description
-- "Get in touch" text
+Both `projects` and `gallery` tables have an `alt_text` column. When empty, descriptive alt text is auto-generated from title/category/creator. For best SEO: *"UI design for U.S. Army website rebrand by Romer Garcia showing responsive layout."*
 
-### Social Media Links
-Social media links are managed through the Supabase database and are displayed in the footer on both desktop and mobile devices. To update the social media links:
+## Deployment
 
-1. Access your Supabase dashboard
-2. Navigate to the Table Editor
-3. Select the `sections` table
-4. Find the row with `section_name = 'social'`
-5. Update the following fields as needed:
-   - facebook_url
-   - twitter_url
-   - linkedin_url
-   - instagram_url
-   - youtube_url
+### Lovable (Recommended)
+Open [Lovable](https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be) → Share → Publish.
 
-The social media links will be displayed in the footer across all device sizes.
+### GitHub Pages
+The repo includes `.github/workflows/static.yml` — pushes to main auto-deploy via GitHub Actions.
 
-### Other Sections
-The remaining website content is managed through the `sections` table in Supabase:
+### Netlify
+`netlify.toml` is included for Netlify deployments with SPA redirect support.
 
-1. Access your Supabase dashboard
-2. Navigate to the Table Editor
-3. Select the `sections` table
-4. Here you can update various sections:
-
-#### About Section
-- Title
-- Description
-- Portfolio URL
-- Button text for the portfolio download
-
-#### Contact Section
-- Title
-- Description
-- "Get in touch" text
-
-#### Quote Section
-- Quote text
-- Author
-
-Each section in the database includes:
-- A unique section name
-- Required fields based on the section type
-- Default values for important fields to prevent null values
-
-## Deployment to GitHub Pages
-
-To deploy your site to GitHub Pages:
-
-1. Make sure your repository is pushed to GitHub.
-
-2. In your repository settings on GitHub:
-   - Go to the "Pages" section
-   - Under "Source", select "GitHub Actions"
-
-3. The repository already includes a GitHub Actions workflow file (`.github/workflows/static.yml`) that handles the deployment process.
-
-4. Each time you push changes to the main branch, GitHub Actions will automatically:
-   - Build your project
-   - Deploy it to GitHub Pages
-   - Make it available at your GitHub Pages URL (typically `https://[username].github.io/[repository-name]`)
-
-5. You can monitor the deployment status in the "Actions" tab of your repository.
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Local Development
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-- Supabase for backend services
-
-### Custom Cursor
-
-A performant custom cursor with a gold-colored dot and trailing ring, built entirely outside React's render cycle for zero re-renders during animation.
-
-**Features:**
-- Small dot follows the mouse instantly; outer ring trails with interpolated easing
-- Ring expands smoothly on hover over clickable elements with a ghost/afterimage effect
-- Muted gold color (`hsl(43, 60%, 55%)`) ensures visibility in both light and dark modes
-- Native pointer cursor restored on clickable elements outside the hero; text cursor on inputs
-- Hidden on touch devices (`pointer: coarse`)
-- GPU-accelerated via `translate3d` and `will-change: transform`
-
-**Technical Implementation:**
-- All animation state stored in `useRef` — no `useState` triggers during mousemove/animation
-- `requestAnimationFrame` loop with linear interpolation (ring: 0.15, ghost: 0.08)
-- Size changes use CSS transitions (`cubic-bezier(0.25, 1, 0.5, 1)`) on width/height instead of `scale()` to maintain consistent 1px border thickness
-- Passive event listeners for mousemove/mouseover
-- `useCallback` memoized handlers with stable dependency array
-
-## Additional Features
-
-### Paradoxxia - AI Character Generator
-
-The portfolio includes an interactive AI character generator accessible at `/paradoxxia`. This feature allows users to create unique sci-fi characters using AI image generation.
-
-**Features:**
-- Three-step character creation process:
-  1. Select species (human, android, robot, mutant, or other)
-  2. Choose gender presentation
-  3. Enter character name (or generate random names)
-- Special "Paradoxxia" easter egg - entering "Paradoxxia" as the character name reveals a pre-designed character with dynamic pose variations
-- AI-powered image generation using Lovable AI with Google Gemini models
-- Mobile-responsive design with native save-to-photos and share functionality
-- Character names with triple X's create "defective" character variants
-- Dynamic character descriptions based on species, gender, and name choices
-- Supports various character types: humans, androids, robots, mutants, cyborgs, and non-humanoid creatures
-
-**Technical Implementation:**
-- Uses Lovable AI Gateway (Google Gemini 2.5 Flash Image Preview) for image generation
-- Supabase Edge Functions handle AI requests
-- Capacitor integration for native mobile features (save to photos, sharing)
-- Circuit board background with animated elements
-- Responsive design with mobile-first considerations
-
-### Developer Humor - Meme Page
-
-A fun developer humor page accessible at `/meme` that displays random coding memes, tips, and facts.
-
-**Features:**
-- Random meme selection from database
-- Each meme includes:
-  - Main meme text with attribution
-  - Practical coding tip
-  - Interesting tech fun fact
-- "Another meme" button to refresh content
-- Circuit board background matching the site theme
-- Responsive design with dark/light mode support
-
-**Technical Implementation:**
-- Content managed through Supabase `daily_memes` table
-- Uses proxy helper for data fetching
-- Fallback memes in case of database errors
-- Smooth animations and transitions
-- Theme-aware gradient overlays
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/f17bb7a1-677e-48f9-9788-57f3494140be) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+Requires Node.js & npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).

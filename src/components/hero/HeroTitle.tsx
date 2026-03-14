@@ -40,15 +40,15 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     const run = async () => {
       await Promise.all([
         redControls.start({
-          x: [18, -8, 4, -1, 3],
-          y: [-4, 2, -1, 0, -0.5],
-          opacity: [0.75, 0.6, 0.45, 0.35, 0.25],
+          x: [18, -8, 4, -1, 1.5],
+          y: [-4, 2, -1, 0, -0.3],
+          opacity: [0.75, 0.6, 0.45, 0.35, 0.18],
           transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.7, 1] },
         }),
         cyanControls.start({
-          x: [-16, 7, -3, 1, -2.5],
-          y: [3, -2, 0.5, 0, 0.5],
-          opacity: [0.7, 0.55, 0.4, 0.3, 0.2],
+          x: [-16, 7, -3, 1, -1.5],
+          y: [3, -2, 0.5, 0, 0.3],
+          opacity: [0.7, 0.55, 0.4, 0.3, 0.15],
           transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.7, 1] },
         }),
       ]);

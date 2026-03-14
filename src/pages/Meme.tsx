@@ -156,7 +156,7 @@ const Meme = () => {
               </div>
             </div>
           ) : memeData ? (
-            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30 space-y-6 animate-fade-in">
+            <div className="bg-card/30 backdrop-blur-sm rounded-lg p-8 border border-border/30 dark:border-[#00d4ff]/30 space-y-6 animate-fade-in">
               {/* Meme Text */}
               <div className="space-y-2">
                 <h2 className="text-2xl md:text-4xl font-thin text-foreground leading-relaxed font-roc">

@@ -99,19 +99,19 @@ const Meme = () => {
   return (
     <div className="relative min-h-screen overflow-hidden bg-background">
       <Helmet>
-        <title>Romer Garcia | Dev Memes & Coding Wisdom 🚀💻</title>
-        <meta name="description" content="Enjoy a random feed of developer memes, coding tips, and fun tech trivia curated by Romer Garcia. A lighthearted break for software engineers, designers, and anyone who speaks code — refresh for a new meme every time." />
-        <meta name="keywords" content="developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes, developer life, random meme generator" />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
         
         {/* Open Graph */}
-        <meta property="og:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />
-        <meta property="og:description" content="Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time." />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Romer Garcia | Dev Memes & Coding Wisdom 🚀💻" />
-        <meta name="twitter:description" content="Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time." />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
       </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />

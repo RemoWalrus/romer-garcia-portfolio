@@ -843,20 +843,20 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
       <Helmet>
-        <title>パラドクシア | AI Character Generator | Paradoxxia Universe</title>
-        <meta name="description" content="Create unique AI-generated characters inside the パラドクシア (Paradoxxia) universe. Describe your vision and watch as AI forges androids, wanderers, and forgotten souls with cinematic portraits, backstories, and stats — a free character design tool by Romer Garcia." />
-        <meta name="keywords" content="パラドクシア, Paradoxxia, AI character generator, free AI character creator, cinematic sci-fi characters, android creator, futuristic character builder, romergarcia, AI art generator, character design tool, worldbuilding AI, post-apocalyptic character creator" />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
         
         {/* Open Graph */}
-        <meta property="og:title" content="パラドクシア | AI Character Generator | Paradoxxia Universe" />
-        <meta property="og:description" content="Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia." />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
+        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="パラドクシア | AI Character Generator" />
-        <meta name="twitter:description" content="Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia." />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
       </Helmet>
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />

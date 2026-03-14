@@ -138,7 +138,7 @@ const Paradoxxia = () => {
         <meta name="description" content="Explore パラドクシア (Paradoxxia) — an original cinematic sci-fi universe by Romer Garcia. A post-apocalyptic world where technology and poetry collide, featuring AI-powered character generation, immersive worldbuilding, and stories born from the ruins of civilization." />
         <meta name="keywords" content="パラドクシア, Paradoxxia, Paradoxxia universe, cinematic sci-fi world, romergarcia, post-apocalyptic worldbuilding, AI character generator, original sci-fi IP, futuristic storytelling" />
         <meta property="og:title" content="パラドクシア | Paradoxxia Universe" />
-        <meta property="og:description" content="Enter the パラドクシア universe — a cinematic sci-fi world where science meets poetry." />
+        <meta property="og:description" content="An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com/paradoxxia" />
         <meta name="twitter:card" content="summary_large_image" />

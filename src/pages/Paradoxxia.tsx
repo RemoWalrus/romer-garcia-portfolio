@@ -340,20 +340,26 @@ const Paradoxxia = () => {
           <AnimatePresence>
             {phase < 2 && (
               <motion.div
-                className="absolute bottom-20 flex flex-col items-center gap-1"
+                className="absolute bottom-20 flex flex-col items-center"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <span className="text-xs font-roc tracking-widest uppercase text-muted-foreground dark:text-[#00d4ff]/60">
-                  Scroll
-                </span>
                 <motion.div
                   animate={{ y: [0, 8, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <ChevronDown className="w-5 h-5 text-muted-foreground dark:text-[#00d4ff]/60" />
+                  {/* Mouse icon */}
+                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className="text-muted-foreground dark:text-[#00d4ff]/60">
+                    <rect x="1" y="1" width="22" height="34" rx="11" stroke="currentColor" strokeWidth="1.5" />
+                    <motion.line
+                      x1="12" y1="8" x2="12" y2="14"
+                      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"
+                      animate={{ y1: [8, 12, 8], y2: [14, 18, 14] }}
+                      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </svg>
                 </motion.div>
               </motion.div>
             )}

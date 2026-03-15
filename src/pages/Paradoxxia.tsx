@@ -3,7 +3,7 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ParadoxxiaLandingSchema } from "@/components/seo/ParadoxxiaSchemas";
-import { motion, useAnimation, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 

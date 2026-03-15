@@ -31,7 +31,7 @@ export const ProjectModal = ({
       <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
         <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
-          <div className="md:w-2/5 p-3 md:p-8 lg:p-12 overflow-y-auto w-full">
+          <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
               <div className="-mb-1 md:mb-0.5">
                 <span className="text-[10px] md:text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider leading-none">

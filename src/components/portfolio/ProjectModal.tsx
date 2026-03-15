@@ -31,34 +31,34 @@ export const ProjectModal = ({
       <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
         <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
-          <div className="md:w-2/5 p-4 md:p-12 overflow-y-auto w-full">
+          <div className="md:w-2/5 p-3 md:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
-              <div className="mb-2">
-                <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+              <div className="mb-1 md:mb-2">
+                <span className="text-[10px] md:text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-2xl font-roc font-extralight mb-4 uppercase" itemProp="name">
+              <DialogTitle className="text-lg md:text-2xl font-roc font-extralight mb-2 md:mb-4 uppercase" itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>
 
             
 
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-8 text-base whitespace-pre-line leading-relaxed text-left" itemProp="description">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-4 md:mb-8 text-xs md:text-base whitespace-pre-line leading-relaxed text-left" itemProp="description">
               {project.description}
             </DialogDescription>
 
             {project.tech_stack && project.tech_stack.length > 0 && (
-              <div className="mb-24">
-                <h4 className="text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-3">
+              <div className="mb-4 md:mb-24">
+                <h4 className="text-[10px] md:text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2 md:mb-3">
                   Tech Stack & Tools
                 </h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 md:gap-2">
                   {project.tech_stack.map((tech: string, index: number) => (
                     <span 
                       key={index}
-                      className="px-3 py-1 text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
+                      className="px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-xs font-medium bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 rounded-full"
                     >
                       {tech}
                     </span>
@@ -67,31 +67,50 @@ export const ProjectModal = ({
               </div>
             )}
             
-            <div className="flex flex-col gap-3">
+            {/* Mini thumbnail navigator - mobile only */}
+            {!isMobile ? null : (project.additional_images?.length > 0 && !project.youtube_url) && (
+              <div className="flex gap-1.5 mb-4 overflow-x-auto pb-1">
+                {[project.image_url, ...project.additional_images].map((img: string, index: number) => (
+                  <div
+                    key={index}
+                    onClick={() => onImageClick(index)}
+                    className={`flex-shrink-0 w-12 h-12 rounded overflow-hidden cursor-pointer border-2 transition-all ${
+                      index === heroImageIndex 
+                        ? 'border-neutral-900 dark:border-white opacity-100' 
+                        : 'border-transparent opacity-50 hover:opacity-80'
+                    }`}
+                  >
+                    <img src={img} alt={`${project.title} thumbnail ${index + 1}`} className="w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="flex flex-col gap-1 md:gap-3">
               {project.project_url && (
                 <div 
                   onClick={() => onExternalLink(project.project_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase px-3 py-2 rounded"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
-                  View Live Project <MoveRight className="ml-2 w-4 h-4" />
+                  View Live Project <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>
               )}
               
               {project.github_url && (
                 <div 
                   onClick={() => onExternalLink(project.github_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase px-3 py-2 rounded"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
-                  View Source Code <MoveRight className="ml-2 w-4 h-4" />
+                  View Source Code <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>
               )}
 
               {project.ext_url && !project.project_url && (
                 <div 
                   onClick={() => onExternalLink(project.ext_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-sm font-roc font-bold uppercase px-3 py-2 rounded"
+                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
-                  View Project <MoveRight className="ml-2 w-4 h-4" />
+                  View Project <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>
               )}
             </div>

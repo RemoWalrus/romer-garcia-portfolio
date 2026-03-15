@@ -123,6 +123,23 @@ const AICharacterGenerator = () => {
     return () => clearTimeout(timeout);
   }, [introComplete, triggerGlitch]);
 
+  // Random title text switch between katakana and English
+  useEffect(() => {
+    if (!introComplete) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      const delay = 10000 + Math.random() * 20000; // 10-30 seconds
+      timeout = setTimeout(async () => {
+        // Trigger a heavy glitch burst during the switch
+        await triggerGlitch(true);
+        setTitleText(prev => prev === 'katakana' ? 'english' : 'katakana');
+        schedule();
+      }, delay);
+    };
+    schedule();
+    return () => clearTimeout(timeout);
+  }, [introComplete, triggerGlitch]);
+
   // Intro animation sequence
   useEffect(() => {
     const run = async () => {

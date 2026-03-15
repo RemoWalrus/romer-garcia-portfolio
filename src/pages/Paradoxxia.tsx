@@ -13,7 +13,7 @@ const Paradoxxia = () => {
   const { scrollY } = useScroll({ container: scrollRef });
   const [gi, setGi] = useState(0); // glitch intensity from scroll
   
-  const scrollGlitch = useTransform(scrollY, [0, 300], [0, 1]);
+  const scrollGlitch = useTransform(scrollY, [0, 500], [0, 1]);
   useMotionValueEvent(scrollGlitch, "change", (v) => setGi(v));
   
   const redControls = useAnimation();
@@ -189,31 +189,48 @@ const Paradoxxia = () => {
       )}
 
       {/* Scrollable content — 2x viewport height to allow scroll */}
-      <div className="min-h-[200vh] relative z-10">
+      <div className="min-h-[300vh] relative z-10">
         {/* Sticky title container */}
         <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
-              {/* --- Before switch: katakana. After switch: PARADOXXIA --- */}
               {(() => {
-                const switchPoint = 0.5;
-                const switched = gi >= switchPoint;
-                // Glitch intensity peaks at the switch point
-                const distFromSwitch = Math.abs(gi - switchPoint);
-                const burstZone = Math.max(0, 1 - distFromSwitch / 0.15); // 1.0 at switch, 0 outside ±0.15
-                const preGlitch = switched ? 0 : gi / switchPoint; // 0→1 approaching switch
-                const postSettle = switched ? Math.min(1, (gi - switchPoint) / 0.3) : 0; // 0→1 settling after switch
-                const chromatic = burstZone * 18 + (switched ? (1 - postSettle) * 6 : preGlitch * 8);
-                const skew = burstZone * 6 * (switched ? -1 : 1);
-                const scanOp = burstZone * 0.7 + (switched ? 0 : preGlitch * 0.15);
+                const switch1 = 0.35;  // katakana → PARADOXXIA
+                const switch2 = 0.7;   // PARADOXXIA → coming soon
+                
+                // Determine current phase
+                const phase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;
+                
+                // Active switch point
+                const activeSwitch = phase === 2 ? switch2 : switch1;
+                const distFromSwitch = phase === 0 
+                  ? Math.abs(gi - switch1) 
+                  : phase === 1 
+                    ? Math.min(Math.abs(gi - switch1), Math.abs(gi - switch2))
+                    : Math.abs(gi - switch2);
+                
+                const burstZone = Math.max(0, 1 - distFromSwitch / 0.12);
+                const preGlitch = phase === 0 ? gi / switch1 : 0;
+                const chromatic = burstZone * 18 + (phase === 0 ? preGlitch * 8 : burstZone * 6);
+                const skew = burstZone * 6 * (phase === 1 ? -1 : 1);
+                const scanOp = burstZone * 0.7 + (phase === 0 ? preGlitch * 0.15 : 0);
 
                 const textClass = "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
-                const currentFont = switched
-                  ? { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' }
-                  : titleFont;
-                const currentText = switched ? 'PARADOXXIA' : 'パラドクシア';
+                let currentFont: React.CSSProperties;
+                let currentText: string;
+
+                if (phase === 0) {
+                  currentFont = titleFont;
+                  currentText = 'パラドクシア';
+                } else if (phase === 1) {
+                  currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
+                  currentText = 'PARADOXXIA';
+                } else {
+                  currentFont = { fontWeight: 300, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
+                  currentText = 'coming soon';
+                }
 
                 return (
                   <>
@@ -273,7 +290,7 @@ const Paradoxxia = () => {
                       {currentText}
                     </motion.span>
 
-                    {/* Scan line overlay — peaks at switch */}
+                    {/* Scan line overlay */}
                     <motion.span
                       className="absolute inset-0 pointer-events-none z-20"
                       aria-hidden
@@ -297,7 +314,7 @@ const Paradoxxia = () => {
                           justifyContent: 'center',
                           mixBlendMode: 'difference',
                           clipPath: `inset(${30 + burstZone * 15}% 0 ${35 - burstZone * 10}% 0)`,
-                          transform: `translateX(${burstZone * 12 * (switched ? -1 : 1)}px)`,
+                          transform: `translateX(${burstZone * 12 * (phase % 2 === 0 ? 1 : -1)}px)`,
                         }}
                       >
                         {currentText}

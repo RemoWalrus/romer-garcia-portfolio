@@ -253,7 +253,8 @@ const Paradoxxia = () => {
       <div className="relative z-10">
 
         {/* Sticky title container */}
-        <div className="fixed inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
+        <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-20">
+          <div className="flex flex-col items-center">
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
               {(() => {

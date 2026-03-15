@@ -31,9 +31,9 @@ export const ProjectModal = ({
       <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
         <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
-          <div className="md:w-2/5 p-3 md:p-8 lg:p-12 overflow-y-auto w-full">
+          <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
-              <div className="-mb-1 md:mb-0.5">
+              <div className="-mb-1.5 md:mb-0.5">
                 <span className="text-[10px] md:text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider leading-none">
                   {project.category}
                 </span>
@@ -69,7 +69,7 @@ export const ProjectModal = ({
             
             {/* Mini thumbnail navigator - mobile only */}
             {!isMobile ? null : (project.additional_images?.length > 0 && !project.youtube_url) && (
-              <div className="flex gap-1.5 mb-1 overflow-x-auto pb-0.5">
+              <div className="flex gap-1.5 mb-0 overflow-x-auto pb-0">
                 {[project.image_url, ...project.additional_images].map((img: string, index: number) => (
                   <div
                     key={index}
@@ -116,7 +116,7 @@ export const ProjectModal = ({
             </div>
           </div>
 
-          <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col w-full overflow-hidden">
+          <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col w-full overflow-hidden min-h-0 max-h-[40vh] md:max-h-none">
             {project.youtube_url ? (
               <ProjectVideo url={project.youtube_url} title={project.title} />
             ) : project.additional_images?.length > 0 ? (

@@ -249,8 +249,7 @@ const Paradoxxia = () => {
         </svg>
       )}
 
-      {/* Snap sections — 3 viewport-height sections for each phase */}
-      <div className="relative z-10">
+      {/* Sticky title container */}
 
         {/* Sticky title container */}
         <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-20">

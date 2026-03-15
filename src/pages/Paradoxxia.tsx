@@ -6,14 +6,17 @@ import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon } from "@/componen
 import { MoveRight } from "lucide-react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState(0);
-  const [burst, setBurst] = useState(0); // 0-1 glitch burst intensity during transitions
+  const [burst, setBurst] = useState(0);
   const isAnimating = useRef(false);
+  const isMobile = useIsMobile();
+  const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
 
   // Map phase to base glitch intensity + burst overlay
   const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : 1) + burst * 0.5;
@@ -26,19 +29,20 @@ const Paradoxxia = () => {
 
     // Subtle glitch burst with pixelation
     setBurst(0.5);
+    const s = speed;
     const burstSteps = [
-      { delay: 80, value: 0.4 },
-      { delay: 160, value: 0.5 },
-      { delay: 260, value: 0.25 },
-      { delay: 380, value: 0.08 },
-      { delay: 480, value: 0 },
+      { delay: 60 * s, value: 0.4 },
+      { delay: 120 * s, value: 0.5 },
+      { delay: 200 * s, value: 0.25 },
+      { delay: 300 * s, value: 0.08 },
+      { delay: 380 * s, value: 0 },
     ];
     burstSteps.forEach(({ delay, value }) => {
       setTimeout(() => setBurst(value), delay);
     });
 
-    setTimeout(() => setPhase(clamped), 160);
-    setTimeout(() => { isAnimating.current = false; }, 600);
+    setTimeout(() => setPhase(clamped), 120 * s);
+    setTimeout(() => { isAnimating.current = false; }, 480 * s);
   }, [phase]);
 
   // Wheel handler — any scroll snaps to next/prev phase
@@ -100,7 +104,7 @@ const Paradoxxia = () => {
     const rx = (Math.random() - 0.5) * 10 * intensity;
     const ry = (Math.random() - 0.5) * 4 * intensity;
     const sk = (Math.random() - 0.5) * 3 * intensity;
-    const dur = heavy ? 0.25 + Math.random() * 0.1 : 0.12 + Math.random() * 0.1;
+    const dur = (heavy ? 0.2 + Math.random() * 0.08 : 0.09 + Math.random() * 0.07) * speed;
     const peakRedOp = heavy ? 0.7 : 0.5;
     const peakCyanOp = heavy ? 0.6 : 0.45;
     const peakShadow = heavy ? Math.abs(rx) * 0.6 : Math.abs(rx) * 0.4;
@@ -174,7 +178,7 @@ const Paradoxxia = () => {
             'rgba(255,0,0,0.6)', 'rgba(255,0,0,0.5)',
             'rgba(255,0,0,0.35)', 'rgba(255,0,0,0.22)',
           ],
-          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+          transition: { duration: 0.7 * speed, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
         }),
         cyanControls.start({
           x: [-15, 7, -4, 1, -2],
@@ -185,7 +189,7 @@ const Paradoxxia = () => {
             'rgba(0,255,255,0.55)', 'rgba(0,255,255,0.45)',
             'rgba(0,255,255,0.3)', 'rgba(0,255,255,0.18)',
           ],
-          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+          transition: { duration: 0.7 * speed, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
         }),
         mainControls.start({
           opacity: [0, 0.6, 0.85, 1],
@@ -195,11 +199,11 @@ const Paradoxxia = () => {
             '2px 0 0 rgba(255,0,0,0.35), -2px 0 0 rgba(0,255,255,0.35)',
             '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
           ],
-          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] },
+          transition: { duration: 0.7 * speed, ease: [0.25, 0.1, 0.25, 1] },
         }),
         scanControls.start({
           opacity: [0.5, 0.3, 0],
-          transition: { duration: 1, ease: 'easeOut' },
+          transition: { duration: 0.8 * speed, ease: 'easeOut' },
         }),
       ]);
       setIntro(false);

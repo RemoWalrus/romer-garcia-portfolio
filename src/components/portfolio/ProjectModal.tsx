@@ -38,19 +38,19 @@ export const ProjectModal = ({
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-lg md:text-xl lg:text-2xl font-roc font-extralight mb-1 md:mb-2 uppercase leading-tight" itemProp="name">
+              <DialogTitle className="text-lg md:text-xl lg:text-2xl font-roc font-extralight mb-2 md:mb-2 uppercase leading-tight" itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>
 
             
 
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-3 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line leading-snug md:leading-relaxed text-left" itemProp="description">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line leading-snug md:leading-relaxed text-left" itemProp="description">
               {project.description}
             </DialogDescription>
 
             {project.tech_stack && project.tech_stack.length > 0 && (
-              <div className="mb-4 md:mb-24">
+              <div className="mb-3 md:mb-24">
                 <h4 className="text-[10px] md:text-sm font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-2 md:mb-3">
                   Tech Stack & Tools
                 </h4>
@@ -69,7 +69,7 @@ export const ProjectModal = ({
             
             {/* Mini thumbnail navigator - mobile only */}
             {!isMobile ? null : (project.additional_images?.length > 0 && !project.youtube_url) && (
-              <div className="flex gap-1.5 mb-4 overflow-x-auto pb-1">
+              <div className="flex gap-1.5 mb-1 overflow-x-auto pb-0.5">
                 {[project.image_url, ...project.additional_images].map((img: string, index: number) => (
                   <div
                     key={index}

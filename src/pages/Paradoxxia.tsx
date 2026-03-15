@@ -361,11 +361,12 @@ const Paradoxxia = () => {
           <AnimatePresence>
             {phase < 2 && (
               <motion.div
-                className="absolute bottom-20 flex flex-col items-center"
+                className="absolute bottom-20 flex flex-col items-center pointer-events-auto cursor-pointer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => goToPhase(phase + 1)}
               >
                 <motion.div
                   animate={{ y: [0, 8, 0] }}

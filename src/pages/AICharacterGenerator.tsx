@@ -880,8 +880,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         </div>
       </nav>
       
-      <main className={`container mx-auto px-4 relative z-10 flex-1 pb-24 ${generatedImage ? 'pt-0 mt-[2.25rem] sm:pt-2 sm:mt-12' : 'py-16 mt-16'} transition-all duration-500`}>
-        <div className={`max-w-4xl mx-auto ${generatedImage ? 'space-y-0.5 sm:space-y-3' : 'space-y-8'}`}>
+      <main className={`container mx-auto px-4 relative z-10 flex-1 pb-24 ${generatedImage ? 'pt-0 mt-[1.5rem] sm:pt-2 sm:mt-10' : 'py-16 mt-16'} transition-all duration-500`}>
+        <div className={`max-w-4xl mx-auto ${generatedImage ? 'space-y-2 sm:space-y-3' : 'space-y-8'}`}>
           {/* Animated Header */}
           <div className={`text-center ${generatedImage ? 'space-y-2' : 'space-y-6'}`}>
             <div className="relative">
@@ -1028,8 +1028,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           {generatedImage && (
             <div className="space-y-4">
               <Card className="p-0 bg-card border-border overflow-hidden relative" style={{
-                border: '2px solid #00d9ff',
-                boxShadow: '0 0 10px rgba(0, 217, 255, 0.5)'
+                border: '1px solid rgba(0, 217, 255, 0.4)',
+                boxShadow: '0 0 6px rgba(0, 217, 255, 0.2)'
               }}>
                 <div className="relative">
                   <img

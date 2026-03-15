@@ -228,7 +228,7 @@ const Paradoxxia = () => {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
                 } else {
-                  currentFont = { fontWeight: 300, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
+                  currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
                   currentText = 'coming soon';
                 }
 

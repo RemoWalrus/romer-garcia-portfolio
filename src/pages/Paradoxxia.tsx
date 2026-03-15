@@ -5,7 +5,6 @@ import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ParadoxxiaLandingSchema } from "@/components/seo/ParadoxxiaSchemas";
 import { motion, useAnimation, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ChevronDown } from "lucide-react";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 
 const Paradoxxia = () => {

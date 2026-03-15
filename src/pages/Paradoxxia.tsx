@@ -3,25 +3,59 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ParadoxxiaLandingSchema } from "@/components/seo/ParadoxxiaSchemas";
-import { motion, useAnimation, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ChevronDown } from "lucide-react";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll({ container: scrollRef });
-  const [gi, setGi] = useState(0); // glitch intensity from scroll
   const [phase, setPhase] = useState(0);
-  
-  const scrollGlitch = useTransform(scrollY, [0, 500], [0, 1]);
-  useMotionValueEvent(scrollGlitch, "change", (v) => {
-    setGi(v);
-    // Update phase for scroll indicator visibility
-    const newPhase = v >= 0.8 ? 2 : v >= 0.3 ? 1 : 0;
-    setPhase(newPhase);
-  });
+  const isAnimating = useRef(false);
+
+  // Map phase to glitch intensity
+  const gi = phase === 0 ? 0 : phase === 1 ? 0.5 : 1;
+
+  const goToPhase = useCallback((target: number) => {
+    if (isAnimating.current) return;
+    const clamped = Math.max(0, Math.min(2, target));
+    if (clamped === phase) return;
+    isAnimating.current = true;
+    setPhase(clamped);
+    setTimeout(() => { isAnimating.current = false; }, 600);
+  }, [phase]);
+
+  // Wheel handler — any scroll snaps to next/prev phase
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      if (isAnimating.current) return;
+      if (e.deltaY > 0) goToPhase(phase + 1);
+      else if (e.deltaY < 0) goToPhase(phase - 1);
+    };
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
+  }, [phase, goToPhase]);
+
+  // Touch swipe handler for mobile
+  const touchStart = useRef(0);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onStart = (e: TouchEvent) => { touchStart.current = e.touches[0].clientY; };
+    const onEnd = (e: TouchEvent) => {
+      const diff = touchStart.current - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 30) {
+        if (diff > 0) goToPhase(phase + 1);
+        else goToPhase(phase - 1);
+      }
+    };
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchend', onEnd, { passive: true });
+    return () => { el.removeEventListener('touchstart', onStart); el.removeEventListener('touchend', onEnd); };
+  }, [phase, goToPhase]);
   
   const redControls = useAnimation();
   const cyanControls = useAnimation();
@@ -158,7 +192,7 @@ const Paradoxxia = () => {
   }, []);
 
   return (
-      <div ref={scrollRef} className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth">
+      <div ref={scrollRef} className="fixed inset-0 bg-background overflow-hidden">
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
@@ -197,33 +231,20 @@ const Paradoxxia = () => {
 
       {/* Snap sections — 3 viewport-height sections for each phase */}
       <div className="relative z-10">
-        <div className="h-screen snap-start" /> {/* Phase 0: Katakana */}
-        <div className="h-screen snap-start" /> {/* Phase 1: PARADOXXIA */}
-        <div className="h-screen snap-start" /> {/* Phase 2: coming soon */}
 
         {/* Sticky title container */}
         <div className="fixed inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
               {(() => {
-                const switch1 = 0.3;  // katakana → PARADOXXIA
-                const switch2 = 0.8;   // PARADOXXIA → coming soon
+                const currentPhase = phase;
                 
-                // Determine current phase
-                const currentPhase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;
-                
-                // Active switch point
-                const distFromSwitch = currentPhase === 0 
-                  ? Math.abs(gi - switch1) 
-                  : currentPhase === 1 
-                    ? Math.min(Math.abs(gi - switch1), Math.abs(gi - switch2))
-                    : Math.abs(gi - switch2);
-                
-                const burstZone = Math.max(0, 1 - distFromSwitch / 0.12);
-                const preGlitch = currentPhase === 0 ? gi / switch1 : 0;
-                const chromatic = burstZone * 18 + (currentPhase === 0 ? preGlitch * 8 : burstZone * 6);
+                // Glitch burst on phase transitions (brief visual only)
+                const burstZone = 0;
+                const preGlitch = 0;
+                const chromatic = burstZone * 18;
                 const skew = burstZone * 6 * (currentPhase === 1 ? -1 : 1);
-                const scanOp = burstZone * 0.7 + (currentPhase === 0 ? preGlitch * 0.15 : 0);
+                const scanOp = burstZone * 0.7;
 
                 const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
@@ -340,11 +361,12 @@ const Paradoxxia = () => {
           <AnimatePresence>
             {phase < 2 && (
               <motion.div
-                className="absolute bottom-20 flex flex-col items-center"
+                className="absolute bottom-20 flex flex-col items-center pointer-events-auto cursor-pointer"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
+                onClick={() => goToPhase(phase + 1)}
               >
                 <motion.div
                   animate={{ y: [0, 8, 0] }}

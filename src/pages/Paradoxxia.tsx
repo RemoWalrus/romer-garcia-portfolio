@@ -231,9 +231,6 @@ const Paradoxxia = () => {
 
       {/* Snap sections — 3 viewport-height sections for each phase */}
       <div className="relative z-10">
-        <div className="h-screen snap-start" /> {/* Phase 0: Katakana */}
-        <div className="h-screen snap-start" /> {/* Phase 1: PARADOXXIA */}
-        <div className="h-screen snap-start" /> {/* Phase 2: coming soon */}
 
         {/* Sticky title container */}
         <div className="fixed inset-0 flex flex-col items-center justify-center pointer-events-none z-20">

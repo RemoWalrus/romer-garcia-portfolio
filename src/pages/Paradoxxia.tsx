@@ -29,19 +29,20 @@ const Paradoxxia = () => {
 
     // Subtle glitch burst with pixelation
     setBurst(0.5);
+    const s = speed;
     const burstSteps = [
-      { delay: 80, value: 0.4 },
-      { delay: 160, value: 0.5 },
-      { delay: 260, value: 0.25 },
-      { delay: 380, value: 0.08 },
-      { delay: 480, value: 0 },
+      { delay: 60 * s, value: 0.4 },
+      { delay: 120 * s, value: 0.5 },
+      { delay: 200 * s, value: 0.25 },
+      { delay: 300 * s, value: 0.08 },
+      { delay: 380 * s, value: 0 },
     ];
     burstSteps.forEach(({ delay, value }) => {
       setTimeout(() => setBurst(value), delay);
     });
 
-    setTimeout(() => setPhase(clamped), 160);
-    setTimeout(() => { isAnimating.current = false; }, 600);
+    setTimeout(() => setPhase(clamped), 120 * s);
+    setTimeout(() => { isAnimating.current = false; }, 480 * s);
   }, [phase]);
 
   // Wheel handler — any scroll snaps to next/prev phase

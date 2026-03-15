@@ -21,14 +21,14 @@ const Paradoxxia = () => {
   const mainControls = useAnimation();
   const scanControls = useAnimation();
   const meta = usePageMeta('paradoxxia', {
-    title: 'パラドクシア | Paradoxxia Universe',
-    description: 'Explore パラドクシア (Paradoxxia) — an original cinematic sci-fi universe by Romer Garcia. A post-apocalyptic world where technology and poetry collide, featuring AI-powered character generation, immersive worldbuilding, and stories born from the ruins of civilization.',
-    keywords: 'パラドクシア, Paradoxxia, Paradoxxia universe, cinematic sci-fi world, romergarcia, post-apocalyptic worldbuilding, AI character generator, original sci-fi IP, futuristic storytelling',
-    ogTitle: 'パラドクシア | Paradoxxia Universe',
-    ogDescription: 'An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide.',
+    title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
+    keywords: 'Paradoxxia, パラドクシア, AI multimedia artist, AI character generator, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, AI-synthesized music, cinematic sci-fi',
+    ogTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    ogDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     ogUrl: 'https://romergarcia.com/paradoxxia',
-    twitterTitle: 'パラドクシア | Paradoxxia Universe',
-    twitterDescription: 'An original cinematic sci-fi universe by Romer Garcia — post-apocalyptic worldbuilding where technology and poetry collide.',
+    twitterTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    twitterDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
   });
 
   const titleFont = {

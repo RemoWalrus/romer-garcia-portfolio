@@ -196,7 +196,7 @@ const Paradoxxia = () => {
             <span className="relative inline-block">
               {(() => {
                 const switch1 = 0.3;  // katakana → PARADOXXIA
-                const switch2 = 0.75;   // PARADOXXIA → coming soon
+                const switch2 = 0.8;   // PARADOXXIA → coming soon
                 
                 // Determine current phase
                 const phase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;

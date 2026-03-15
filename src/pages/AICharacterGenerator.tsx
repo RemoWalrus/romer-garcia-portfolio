@@ -17,8 +17,8 @@ import { Media } from '@capacitor-community/media';
 import { ActionSheet } from '@capacitor/action-sheet';
 import { Link } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
-// animation-variants no longer used for title - using useAnimation controls instead
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import { CharGenSchema, SpotifyIcon, AppleMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
@@ -35,14 +35,14 @@ const AICharacterGenerator = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [introComplete, setIntroComplete] = useState(false);
   const meta = usePageMeta('chargen', {
-    title: 'パラドクシア | AI Character Generator | Paradoxxia Universe',
-    description: 'Create unique AI-generated characters inside the パラドクシア (Paradoxxia) universe. Describe your vision and watch as AI forges androids, wanderers, and forgotten souls with cinematic portraits, backstories, and stats — a free character design tool by Romer Garcia.',
-    keywords: 'パラドクシア, Paradoxxia, AI character generator, free AI character creator, cinematic sci-fi characters, android creator, futuristic character builder, romergarcia, AI art generator, character design tool, worldbuilding AI, post-apocalyptic character creator',
-    ogTitle: 'パラドクシア | AI Character Generator | Paradoxxia Universe',
-    ogDescription: 'Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia.',
+    title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
+    keywords: 'Paradoxxia, パラドクシア, AI character generator, AI multimedia artist, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, cinematic sci-fi characters, free AI character creator',
+    ogTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    ogDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     ogUrl: 'https://romergarcia.com/char-gen',
-    twitterTitle: 'パラドクシア | AI Character Generator',
-    twitterDescription: 'Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia.',
+    twitterTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    twitterDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
   });
 
   // Animation controls for title glitch effect
@@ -858,6 +858,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
       </Helmet>
+      <CharGenSchema />
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />
       <ThemeToggle />
@@ -1087,14 +1088,28 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                   <span style={{ fontWeight: 300 }}>she's the pulse that echoes through the</span>{" "}
                   <span style={{ fontWeight: 500 }}>ruins.</span>
                 </p>
-                <a 
-                  href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
-                >
-                  Meet Paradoxxia on Spotify <MoveRight className="ml-2 w-4 h-4" />
-                </a>
+                <div className="flex flex-wrap gap-4">
+                  <a 
+                    href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                  >
+                    <SpotifyIcon className="w-5 h-5" />
+                    Meet Paradoxxia on Spotify
+                    <MoveRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="https://music.apple.com/us/artist/paradoxxia/1aborrecord"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                  >
+                    <AppleMusicIcon className="w-5 h-5" />
+                    Apple Music
+                    <MoveRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
               <Button

@@ -192,7 +192,7 @@ const Paradoxxia = () => {
   }, []);
 
   return (
-      <div ref={scrollRef} className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth">
+      <div ref={scrollRef} className="fixed inset-0 bg-background overflow-hidden">
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />

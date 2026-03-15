@@ -254,7 +254,7 @@ const Paradoxxia = () => {
         {/* Sticky title container */}
         <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-20">
           <div className="flex flex-col items-center">
-          <h1 className="flex flex-col items-center">
+          <h1 className="flex flex-col items-center" style={{ minHeight: isMobile ? '4rem' : '9rem' }}>
             <span className="relative inline-block">
               {(() => {
                 const currentPhase = phase;

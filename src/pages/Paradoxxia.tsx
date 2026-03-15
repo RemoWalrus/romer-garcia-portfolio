@@ -24,13 +24,13 @@ const Paradoxxia = () => {
     if (clamped === phase) return;
     isAnimating.current = true;
 
-    // Moderate glitch burst
-    setBurst(0.7);
+    // Subtle glitch burst with pixelation
+    setBurst(0.5);
     const burstSteps = [
-      { delay: 80, value: 0.55 },
-      { delay: 160, value: 0.7 },
-      { delay: 260, value: 0.35 },
-      { delay: 380, value: 0.12 },
+      { delay: 80, value: 0.4 },
+      { delay: 160, value: 0.5 },
+      { delay: 260, value: 0.25 },
+      { delay: 380, value: 0.08 },
       { delay: 480, value: 0 },
     ];
     burstSteps.forEach(({ delay, value }) => {

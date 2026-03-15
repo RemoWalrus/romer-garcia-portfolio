@@ -880,8 +880,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         </div>
       </nav>
       
-      <main className={`container mx-auto px-4 relative z-10 flex-1 pb-24 ${generatedImage ? 'pt-0 mt-[2.25rem] sm:pt-2 sm:mt-12' : 'py-16 mt-16'} transition-all duration-500`}>
-        <div className={`max-w-4xl mx-auto ${generatedImage ? 'space-y-0.5 sm:space-y-3' : 'space-y-8'}`}>
+      <main className={`container mx-auto px-4 relative z-10 flex-1 pb-24 ${generatedImage ? 'pt-0 mt-[1.5rem] sm:pt-2 sm:mt-10' : 'py-16 mt-16'} transition-all duration-500`}>
+        <div className={`max-w-4xl mx-auto ${generatedImage ? 'space-y-2 sm:space-y-3' : 'space-y-8'}`}>
           {/* Animated Header */}
           <div className={`text-center ${generatedImage ? 'space-y-2' : 'space-y-6'}`}>
             <div className="relative">

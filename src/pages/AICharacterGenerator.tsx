@@ -826,7 +826,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
     const chromatic = b * 18;
     const skew = b * 6 * (titleText === 'english' ? -1 : 1);
     const scanOp = b * 0.7;
-    const textSizeClass = generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl';
+    const textSizeClass = generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-7xl lg:text-9xl';
     const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
     return (

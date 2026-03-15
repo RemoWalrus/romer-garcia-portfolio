@@ -195,8 +195,8 @@ const Paradoxxia = () => {
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
               {(() => {
-                const switch1 = 0.35;  // katakana → PARADOXXIA
-                const switch2 = 0.7;   // PARADOXXIA → coming soon
+                const switch1 = 0.3;  // katakana → PARADOXXIA
+                const switch2 = 0.75;   // PARADOXXIA → coming soon
                 
                 // Determine current phase
                 const phase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;
@@ -215,7 +215,7 @@ const Paradoxxia = () => {
                 const skew = burstZone * 6 * (phase === 1 ? -1 : 1);
                 const scanOp = burstZone * 0.7 + (phase === 0 ? preGlitch * 0.15 : 0);
 
-                const textClass = "text-[3.2rem] md:text-9xl";
+                const textClass = phase === 2 ? "text-[2.4rem] md:text-7xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;

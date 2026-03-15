@@ -255,12 +255,12 @@ const Paradoxxia = () => {
               {(() => {
                 const currentPhase = phase;
                 
-                // Glitch burst on phase transitions (brief visual only)
-                const burstZone = 0;
-                const preGlitch = 0;
-                const chromatic = burstZone * 18;
-                const skew = burstZone * 6 * (currentPhase === 1 ? -1 : 1);
-                const scanOp = burstZone * 0.7;
+                // Exaggerated glitch burst during transitions
+                const burstZone = burst;
+                const chromatic = burstZone * 28;
+                const skew = burstZone * 10 * (currentPhase === 1 ? -1 : 1);
+                const scanOp = burstZone * 0.85;
+                const pixelate = burstZone > 0.4;
 
                 const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";

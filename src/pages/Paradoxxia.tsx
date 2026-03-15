@@ -24,13 +24,13 @@ const Paradoxxia = () => {
     if (clamped === phase) return;
     isAnimating.current = true;
 
-    // Moderate glitch burst
-    setBurst(0.7);
+    // Subtle glitch burst with pixelation
+    setBurst(0.5);
     const burstSteps = [
-      { delay: 80, value: 0.55 },
-      { delay: 160, value: 0.7 },
-      { delay: 260, value: 0.35 },
-      { delay: 380, value: 0.12 },
+      { delay: 80, value: 0.4 },
+      { delay: 160, value: 0.5 },
+      { delay: 260, value: 0.25 },
+      { delay: 380, value: 0.08 },
       { delay: 480, value: 0 },
     ];
     burstSteps.forEach(({ delay, value }) => {
@@ -255,12 +255,12 @@ const Paradoxxia = () => {
               {(() => {
                 const currentPhase = phase;
                 
-                // Exaggerated glitch burst during transitions
+                // Subtle glitch burst with pixelation
                 const burstZone = burst;
-                const chromatic = burstZone * 16;
-                const skew = burstZone * 5 * (currentPhase === 1 ? -1 : 1);
-                const scanOp = burstZone * 0.55;
-                const pixelate = burstZone > 0.5;
+                const chromatic = burstZone * 10;
+                const skew = burstZone * 3 * (currentPhase === 1 ? -1 : 1);
+                const scanOp = burstZone * 0.4;
+                const pixelate = burstZone > 0.2;
 
                 const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
@@ -320,7 +320,7 @@ const Paradoxxia = () => {
                       className={`${textClass} ${mainColor} relative z-10`}
                       style={{
                         ...currentFont,
-                        filter: burstZone > 0.3 ? `url(#paradox-pixelate) hue-rotate(${burstZone * 60}deg)` : undefined,
+                        filter: pixelate ? `url(#paradox-pixelate) hue-rotate(${burstZone * 35}deg)` : undefined,
                         transform: `skewX(${skew}deg)`,
                         textShadow: `
                           ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.35 + burstZone * 0.4}),

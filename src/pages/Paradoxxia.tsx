@@ -10,17 +10,52 @@ import circuitBg from "@/assets/paradoxxia-bg.png";
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll({ container: scrollRef });
-  const [gi, setGi] = useState(0); // glitch intensity from scroll
   const [phase, setPhase] = useState(0);
-  
-  const scrollGlitch = useTransform(scrollY, [0, 500], [0, 1]);
-  useMotionValueEvent(scrollGlitch, "change", (v) => {
-    setGi(v);
-    // Update phase for scroll indicator visibility
-    const newPhase = v >= 0.8 ? 2 : v >= 0.3 ? 1 : 0;
-    setPhase(newPhase);
-  });
+  const isAnimating = useRef(false);
+
+  // Map phase to glitch intensity
+  const gi = phase === 0 ? 0 : phase === 1 ? 0.5 : 1;
+
+  const goToPhase = useCallback((target: number) => {
+    if (isAnimating.current) return;
+    const clamped = Math.max(0, Math.min(2, target));
+    if (clamped === phase) return;
+    isAnimating.current = true;
+    setPhase(clamped);
+    setTimeout(() => { isAnimating.current = false; }, 600);
+  }, [phase]);
+
+  // Wheel handler — any scroll snaps to next/prev phase
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      if (isAnimating.current) return;
+      if (e.deltaY > 0) goToPhase(phase + 1);
+      else if (e.deltaY < 0) goToPhase(phase - 1);
+    };
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
+  }, [phase, goToPhase]);
+
+  // Touch swipe handler for mobile
+  const touchStart = useRef(0);
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onStart = (e: TouchEvent) => { touchStart.current = e.touches[0].clientY; };
+    const onEnd = (e: TouchEvent) => {
+      const diff = touchStart.current - e.changedTouches[0].clientY;
+      if (Math.abs(diff) > 30) {
+        if (diff > 0) goToPhase(phase + 1);
+        else goToPhase(phase - 1);
+      }
+    };
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchend', onEnd, { passive: true });
+    return () => { el.removeEventListener('touchstart', onStart); el.removeEventListener('touchend', onEnd); };
+  }, [phase, goToPhase]);
   
   const redControls = useAnimation();
   const cyanControls = useAnimation();

@@ -13,9 +13,15 @@ const Paradoxxia = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll({ container: scrollRef });
   const [gi, setGi] = useState(0); // glitch intensity from scroll
+  const [phase, setPhase] = useState(0);
   
   const scrollGlitch = useTransform(scrollY, [0, 500], [0, 1]);
-  useMotionValueEvent(scrollGlitch, "change", (v) => setGi(v));
+  useMotionValueEvent(scrollGlitch, "change", (v) => {
+    setGi(v);
+    // Update phase for scroll indicator visibility
+    const newPhase = v >= 0.8 ? 2 : v >= 0.3 ? 1 : 0;
+    setPhase(newPhase);
+  });
   
   const redControls = useAnimation();
   const cyanControls = useAnimation();

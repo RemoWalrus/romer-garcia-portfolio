@@ -1028,8 +1028,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           {generatedImage && (
             <div className="space-y-4">
               <Card className="p-0 bg-card border-border overflow-hidden relative" style={{
-                border: '2px solid #00d9ff',
-                boxShadow: '0 0 10px rgba(0, 217, 255, 0.5)'
+                border: '1px solid rgba(0, 217, 255, 0.4)',
+                boxShadow: '0 0 6px rgba(0, 217, 255, 0.2)'
               }}>
                 <div className="relative">
                   <img

@@ -124,22 +124,66 @@ const AICharacterGenerator = () => {
     return () => clearTimeout(timeout);
   }, [introComplete, triggerGlitch]);
 
-  // Random title text switch between katakana and English
+  // Random title text switch with heavy glitch burst + zoom punch
   useEffect(() => {
     if (!introComplete) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
       const delay = 10000 + Math.random() * 20000; // 10-30 seconds
       timeout = setTimeout(async () => {
-        // Trigger a heavy glitch burst during the switch
-        await triggerGlitch(true);
+        // 1-frame zoom punch: random scale in or out
+        const zoomIn = Math.random() > 0.5;
+        const zoomVal = zoomIn ? 1.08 + Math.random() * 0.08 : 0.85 + Math.random() * 0.08;
+        setTitleZoom(zoomVal);
+
+        // Heavy chromatic burst with exaggerated offsets
+        const rx = (Math.random() - 0.5) * 45;
+        const ry = (Math.random() - 0.5) * 15;
+        const sk = (Math.random() - 0.5) * 12;
+        const dur = 0.3 + Math.random() * 0.1;
+
+        await Promise.all([
+          redControls.start({
+            x: [2.5, 2.5 + rx * 1.5, 2.5 - rx, 2.5 + rx * 0.4, 2.5],
+            y: [-0.5, -0.5 + ry * 1.5, -0.5 - ry, -0.5],
+            skewX: [0.3, 0.3 + sk * 1.2, 0.3 - sk * 0.6, 0.3],
+            opacity: [0.38, 0.85, 0.6, 0.45, 0.38],
+            transition: { duration: dur, ease: 'easeInOut' },
+          }),
+          cyanControls.start({
+            x: [-2, -2 - rx * 1.4, -2 + rx * 0.9, -2 - rx * 0.3, -2],
+            y: [0.5, 0.5 - ry * 1.5, 0.5 + ry, 0.5],
+            skewX: [-0.2, -0.2 - sk * 1.2, -0.2 + sk * 0.6, -0.2],
+            opacity: [0.32, 0.8, 0.55, 0.4, 0.32],
+            transition: { duration: dur, ease: 'easeInOut' },
+          }),
+          mainControls.start({
+            skewX: [0, sk * 0.8, -sk * 0.4, sk * 0.15, 0],
+            textShadow: [
+              '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
+              `${Math.abs(rx) * 0.7}px 0 0 rgba(255,0,0,0.7), ${-Math.abs(rx) * 0.7}px 0 0 rgba(0,255,255,0.7)`,
+              `${Math.abs(rx) * 0.3}px 0 0 rgba(255,0,0,0.5), ${-Math.abs(rx) * 0.3}px 0 0 rgba(0,255,255,0.5)`,
+              '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
+            ],
+            transition: { duration: dur, ease: 'easeInOut' },
+          }),
+          scanControls.start({
+            opacity: [0, 0.5, 0.25, 0],
+            transition: { duration: dur * 1.2, ease: 'easeOut' },
+          }),
+        ]);
+
+        // Switch text mid-burst
         setTitleText(prev => prev === 'katakana' ? 'english' : 'katakana');
+        // Snap zoom back after 1 frame
+        requestAnimationFrame(() => setTitleZoom(1));
+
         schedule();
       }, delay);
     };
     schedule();
     return () => clearTimeout(timeout);
-  }, [introComplete, triggerGlitch]);
+  }, [introComplete, triggerGlitch, redControls, cyanControls, mainControls, scanControls]);
 
   // Intro animation sequence
   useEffect(() => {

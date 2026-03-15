@@ -164,6 +164,7 @@ const Paradoxxia = () => {
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
       </Helmet>
+      <ParadoxxiaLandingSchema />
       <GoogleAnalytics />
       <ThemeToggle />
 

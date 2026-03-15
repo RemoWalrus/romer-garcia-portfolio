@@ -1088,14 +1088,28 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                   <span style={{ fontWeight: 300 }}>she's the pulse that echoes through the</span>{" "}
                   <span style={{ fontWeight: 500 }}>ruins.</span>
                 </p>
-                <a 
-                  href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
-                >
-                  Meet Paradoxxia on Spotify <MoveRight className="ml-2 w-4 h-4" />
-                </a>
+                <div className="flex flex-wrap gap-4">
+                  <a 
+                    href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                  >
+                    <SpotifyIcon className="w-5 h-5" />
+                    Meet Paradoxxia on Spotify
+                    <MoveRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="https://music.apple.com/us/artist/paradoxxia/1aborrecord"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                  >
+                    <AppleMusicIcon className="w-5 h-5" />
+                    Apple Music
+                    <MoveRight className="w-4 h-4" />
+                  </a>
+                </div>
               </div>
 
               <Button

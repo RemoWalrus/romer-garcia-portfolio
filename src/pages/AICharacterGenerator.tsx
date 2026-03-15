@@ -858,6 +858,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
       </Helmet>
+      <CharGenSchema />
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />
       <ThemeToggle />

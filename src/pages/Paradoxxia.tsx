@@ -11,18 +11,34 @@ const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState(0);
+  const [burst, setBurst] = useState(0); // 0-1 glitch burst intensity during transitions
   const isAnimating = useRef(false);
 
-  // Map phase to glitch intensity
-  const gi = phase === 0 ? 0 : phase === 1 ? 0.5 : 1;
+  // Map phase to base glitch intensity + burst overlay
+  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : 1) + burst * 0.5;
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;
     const clamped = Math.max(0, Math.min(2, target));
     if (clamped === phase) return;
     isAnimating.current = true;
-    setPhase(clamped);
-    setTimeout(() => { isAnimating.current = false; }, 600);
+
+    // Fire exaggerated glitch burst
+    setBurst(1);
+    const burstSteps = [
+      { delay: 80, value: 0.85 },
+      { delay: 160, value: 1 },
+      { delay: 240, value: 0.6 },
+      { delay: 350, value: 0.3 },
+      { delay: 500, value: 0 },
+    ];
+    burstSteps.forEach(({ delay, value }) => {
+      setTimeout(() => setBurst(value), delay);
+    });
+
+    // Change phase after initial burst peak
+    setTimeout(() => setPhase(clamped), 180);
+    setTimeout(() => { isAnimating.current = false; }, 700);
   }, [phase]);
 
   // Wheel handler — any scroll snaps to next/prev phase

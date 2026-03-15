@@ -249,20 +249,20 @@ const Paradoxxia = () => {
         </svg>
       )}
 
-      {/* Sticky title container */}
+      {/* Snap sections — 3 viewport-height sections for each phase */}
+      <div className="relative z-10">
 
         {/* Sticky title container */}
-        <div className="fixed inset-0 flex items-center justify-center pointer-events-none z-20">
-          <div className="flex flex-col items-center">
-          <h1 className="flex flex-col items-center" style={{ minHeight: isMobile ? '4rem' : '9rem' }}>
+        <div className="fixed inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
+          <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
               {(() => {
                 const currentPhase = phase;
                 
-                // Subtle glitch burst — vertical only, no horizontal jump
+                // Subtle glitch burst with pixelation
                 const burstZone = burst;
-                const chromatic = burstZone * 6;
-                const skew = burstZone * 1.5 * (currentPhase === 1 ? -1 : 1);
+                const chromatic = burstZone * 10;
+                const skew = burstZone * 3 * (currentPhase === 1 ? -1 : 1);
                 const scanOp = burstZone * 0.4;
                 const pixelate = burstZone > 0.2;
 
@@ -285,7 +285,7 @@ const Paradoxxia = () => {
 
                 return (
                   <>
-                    {/* Red channel ghost — vertical offset only */}
+                    {/* Red channel ghost */}
                     <span
                       className={`${textClass} absolute inset-0 pointer-events-none`}
                       aria-hidden
@@ -293,7 +293,7 @@ const Paradoxxia = () => {
                         ...currentFont,
                         mixBlendMode: 'screen',
                         color: `rgba(255,0,0,${0.22 + burstZone * 0.5})`,
-                        transform: `translateY(${burstZone * -2}px) skewX(${skew * 0.5}deg)`,
+                        transform: `translateX(${2.5 + chromatic * 0.7}px) translateY(${burstZone * -3}px) skewX(${skew * 0.8}deg)`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -302,7 +302,7 @@ const Paradoxxia = () => {
                       {currentText}
                     </span>
 
-                    {/* Cyan channel ghost — vertical offset only */}
+                    {/* Cyan channel ghost */}
                     <span
                       className={`${textClass} absolute inset-0 pointer-events-none`}
                       aria-hidden
@@ -310,7 +310,7 @@ const Paradoxxia = () => {
                         ...currentFont,
                         mixBlendMode: 'screen',
                         color: `rgba(0,255,255,${0.18 + burstZone * 0.45})`,
-                        transform: `translateY(${burstZone * 1.5}px) skewX(${-skew * 0.4}deg)`,
+                        transform: `translateX(${-2 - chromatic * 0.6}px) translateY(${burstZone * 2}px) skewX(${-skew * 0.6}deg)`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -325,10 +325,10 @@ const Paradoxxia = () => {
                       style={{
                         ...currentFont,
                         filter: pixelate ? `url(#paradox-pixelate) hue-rotate(${burstZone * 35}deg)` : undefined,
-                        transform: `skewX(${skew * 0.5}deg)`,
+                        transform: `skewX(${skew}deg)`,
                         textShadow: `
-                          0px ${burstZone * 2}px 0 rgba(255,0,0,${0.35 + burstZone * 0.4}),
-                          0px ${burstZone * -1}px 0 rgba(0,255,255,${0.35 + burstZone * 0.4})
+                          ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.35 + burstZone * 0.4}),
+                          ${-chromatic * 0.5}px ${burstZone * -1}px 0 rgba(0,255,255,${0.35 + burstZone * 0.4})
                         `,
                       }}
                       initial={{
@@ -365,7 +365,7 @@ const Paradoxxia = () => {
                           justifyContent: 'center',
                           mixBlendMode: 'difference',
                           clipPath: `inset(${30 + burstZone * 15}% 0 ${35 - burstZone * 10}% 0)`,
-                          transform: `translateX(${burstZone * 8 * (currentPhase % 2 === 0 ? 1 : -1)}px)`,
+                          transform: `translateX(${burstZone * 12 * (currentPhase % 2 === 0 ? 1 : -1)}px)`,
                         }}
                       >
                         {currentText}
@@ -410,7 +410,6 @@ const Paradoxxia = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          </div>
 
           {/* Scroll indicator — hidden on last phase */}
           <AnimatePresence>
@@ -442,6 +441,7 @@ const Paradoxxia = () => {
             )}
           </AnimatePresence>
         </div>
+      </div>
 
       <footer className="fixed bottom-0 left-0 right-0 z-10 py-6 text-center">
         <p className="text-sm text-muted-foreground dark:text-[#00d4ff] font-roc">

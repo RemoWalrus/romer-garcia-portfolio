@@ -23,22 +23,21 @@ const Paradoxxia = () => {
     if (clamped === phase) return;
     isAnimating.current = true;
 
-    // Fire exaggerated glitch burst
-    setBurst(1);
+    // Moderate glitch burst
+    setBurst(0.7);
     const burstSteps = [
-      { delay: 80, value: 0.85 },
-      { delay: 160, value: 1 },
-      { delay: 240, value: 0.6 },
-      { delay: 350, value: 0.3 },
-      { delay: 500, value: 0 },
+      { delay: 80, value: 0.55 },
+      { delay: 160, value: 0.7 },
+      { delay: 260, value: 0.35 },
+      { delay: 380, value: 0.12 },
+      { delay: 480, value: 0 },
     ];
     burstSteps.forEach(({ delay, value }) => {
       setTimeout(() => setBurst(value), delay);
     });
 
-    // Change phase after initial burst peak
-    setTimeout(() => setPhase(clamped), 180);
-    setTimeout(() => { isAnimating.current = false; }, 700);
+    setTimeout(() => setPhase(clamped), 160);
+    setTimeout(() => { isAnimating.current = false; }, 600);
   }, [phase]);
 
   // Wheel handler — any scroll snaps to next/prev phase

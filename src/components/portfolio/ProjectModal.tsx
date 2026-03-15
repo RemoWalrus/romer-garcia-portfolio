@@ -45,7 +45,7 @@ export const ProjectModal = ({
 
             
 
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-4 md:mb-8 text-xs md:text-base whitespace-pre-line leading-relaxed text-left" itemProp="description">
+            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-4 md:mb-8 text-xs md:text-sm lg:text-base whitespace-pre-line leading-relaxed text-left" itemProp="description">
               {project.description}
             </DialogDescription>
 

@@ -125,66 +125,37 @@ const AICharacterGenerator = () => {
     return () => clearTimeout(timeout);
   }, [introComplete, triggerGlitch]);
 
-  // Random title text switch with sharp glitch burst + instant zoom punch
+  // Random title text switch — Paradoxxia-style glitch burst (no bounce, pure glitch)
   useEffect(() => {
     if (!introComplete) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
       const delay = 10000 + Math.random() * 20000;
-      timeout = setTimeout(async () => {
-        // Instant zoom punch — more extreme range
-        const zoomIn = Math.random() > 0.5;
-        const zoomVal = zoomIn ? 1.15 + Math.random() * 0.1 : 0.78 + Math.random() * 0.08;
+      timeout = setTimeout(() => {
+        // Instant zoom punch
+        const zoomVal = Math.random() > 0.5 ? 1.15 + Math.random() * 0.1 : 0.78 + Math.random() * 0.08;
         setTitleZoom(zoomVal);
 
-        // Switch text immediately with the punch
-        setTitleText(prev => prev === 'katakana' ? 'english' : 'katakana');
+        // Ramp burst to 1, hold briefly, then snap off
+        setSwitchBurst(1);
 
-        // Sharp chromatic burst — fast and aggressive
-        const rx = (Math.random() - 0.5) * 55;
-        const ry = (Math.random() - 0.5) * 18;
-        const sk = (Math.random() - 0.5) * 16;
-        const dur = 0.12 + Math.random() * 0.06; // much faster: 120-180ms
+        // Switch text at peak
+        setTimeout(() => {
+          setTitleText(prev => prev === 'katakana' ? 'english' : 'katakana');
+        }, 40);
 
-        await Promise.all([
-          redControls.start({
-            x: [2.5 + rx * 1.8, 2.5 - rx * 0.6, 2.5],
-            y: [-0.5 + ry * 1.8, -0.5 - ry * 0.4, -0.5],
-            skewX: [0.3 + sk * 1.5, 0.3 - sk * 0.4, 0.3],
-            opacity: [0.9, 0.5, 0.38],
-            transition: { duration: dur, ease: [0.16, 1, 0.3, 1] },
-          }),
-          cyanControls.start({
-            x: [-2 - rx * 1.7, -2 + rx * 0.5, -2],
-            y: [0.5 - ry * 1.8, 0.5 + ry * 0.4, 0.5],
-            skewX: [-0.2 - sk * 1.5, -0.2 + sk * 0.4, -0.2],
-            opacity: [0.85, 0.45, 0.32],
-            transition: { duration: dur, ease: [0.16, 1, 0.3, 1] },
-          }),
-          mainControls.start({
-            skewX: [sk * 1.0, -sk * 0.2, 0],
-            textShadow: [
-              `${Math.abs(rx) * 0.8}px 0 0 rgba(255,0,0,0.8), ${-Math.abs(rx) * 0.8}px 0 0 rgba(0,255,255,0.8)`,
-              `${Math.abs(rx) * 0.2}px 0 0 rgba(255,0,0,0.4), ${-Math.abs(rx) * 0.2}px 0 0 rgba(0,255,255,0.4)`,
-              '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
-            ],
-            transition: { duration: dur, ease: [0.16, 1, 0.3, 1] },
-          }),
-          scanControls.start({
-            opacity: [0.6, 0],
-            transition: { duration: dur * 0.8, ease: 'easeOut' },
-          }),
-        ]);
-
-        // Snap zoom back after 1 frame
-        requestAnimationFrame(() => setTitleZoom(1));
+        // Kill burst and zoom after ~120ms
+        setTimeout(() => {
+          setSwitchBurst(0);
+          setTitleZoom(1);
+        }, 120);
 
         schedule();
       }, delay);
     };
     schedule();
     return () => clearTimeout(timeout);
-  }, [introComplete, triggerGlitch, redControls, cyanControls, mainControls, scanControls]);
+  }, [introComplete]);
 
   // Intro animation sequence
   useEffect(() => {

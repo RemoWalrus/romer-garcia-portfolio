@@ -15,20 +15,86 @@ export const ParadoxxiaLandingSchema = () => {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
     "name": "Paradoxxia",
-    "description": "An AI-synthesized multimedia artist and character entity.",
+    "alternateName": "パラドクシア",
+    "description": "Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia. Blending cinematic sci-fi storytelling with AI-generated electronic music available on Spotify and Apple Music.",
     "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL],
+    "url": "https://romergarcia.com/paradoxxia",
     "founder": romerGarciaCreator,
-    "genre": ["Electronic", "AI-Generated", "Cinematic"],
+    "genre": ["Electronic", "AI-Generated", "Cinematic", "Sci-Fi Soundtrack"],
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "https://romergarcia.com/paradoxxia"
     }
   };
 
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Paradoxxia | AI Multimedia Artist & Music",
+    "url": "https://romergarcia.com/paradoxxia",
+    "description": "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Romer Garcia Portfolio",
+      "url": "https://romergarcia.com"
+    },
+    "author": romerGarciaCreator,
+    "about": {
+      "@type": "MusicGroup",
+      "name": "Paradoxxia",
+      "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL]
+    }
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Paradoxxia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Paradoxxia (パラドクシア) is an AI-synthesized multimedia artist and character entity created by Romer Garcia. It combines cinematic sci-fi storytelling with AI-generated electronic music and an interactive character generator."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where can I listen to Paradoxxia's music?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Paradoxxia's AI-synthesized music is available on Spotify and Apple Music. Visit the Paradoxxia page at romergarcia.com/paradoxxia for direct links."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who created Paradoxxia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Paradoxxia was created by Romer Garcia, a Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design and multimedia strategy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Paradoxxia AI Character Generator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Paradoxxia AI Character Generator is a free interactive web tool that lets users create unique cinematic characters set in the Paradoxxia sci-fi universe, complete with AI-generated portraits, backstories, and stats."
+        }
+      }
+    ]
+  };
+
   return (
     <Helmet>
       <script type="application/ld+json">
         {JSON.stringify(musicGroupSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(webPageSchema)}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify(faqSchema)}
       </script>
     </Helmet>
   );

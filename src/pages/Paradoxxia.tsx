@@ -11,18 +11,34 @@ const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState(0);
+  const [burst, setBurst] = useState(0); // 0-1 glitch burst intensity during transitions
   const isAnimating = useRef(false);
 
-  // Map phase to glitch intensity
-  const gi = phase === 0 ? 0 : phase === 1 ? 0.5 : 1;
+  // Map phase to base glitch intensity + burst overlay
+  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : 1) + burst * 0.5;
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;
     const clamped = Math.max(0, Math.min(2, target));
     if (clamped === phase) return;
     isAnimating.current = true;
-    setPhase(clamped);
-    setTimeout(() => { isAnimating.current = false; }, 600);
+
+    // Fire exaggerated glitch burst
+    setBurst(1);
+    const burstSteps = [
+      { delay: 80, value: 0.85 },
+      { delay: 160, value: 1 },
+      { delay: 240, value: 0.6 },
+      { delay: 350, value: 0.3 },
+      { delay: 500, value: 0 },
+    ];
+    burstSteps.forEach(({ delay, value }) => {
+      setTimeout(() => setBurst(value), delay);
+    });
+
+    // Change phase after initial burst peak
+    setTimeout(() => setPhase(clamped), 180);
+    setTimeout(() => { isAnimating.current = false; }, 700);
   }, [phase]);
 
   // Wheel handler — any scroll snaps to next/prev phase
@@ -239,12 +255,12 @@ const Paradoxxia = () => {
               {(() => {
                 const currentPhase = phase;
                 
-                // Glitch burst on phase transitions (brief visual only)
-                const burstZone = 0;
-                const preGlitch = 0;
-                const chromatic = burstZone * 18;
-                const skew = burstZone * 6 * (currentPhase === 1 ? -1 : 1);
-                const scanOp = burstZone * 0.7;
+                // Exaggerated glitch burst during transitions
+                const burstZone = burst;
+                const chromatic = burstZone * 28;
+                const skew = burstZone * 10 * (currentPhase === 1 ? -1 : 1);
+                const scanOp = burstZone * 0.85;
+                const pixelate = burstZone > 0.4;
 
                 const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
@@ -304,7 +320,7 @@ const Paradoxxia = () => {
                       className={`${textClass} ${mainColor} relative z-10`}
                       style={{
                         ...currentFont,
-                        filter: burstZone > 0.3 ? `url(#paradox-pixelate) hue-rotate(${burstZone * 40}deg)` : (preGlitch > 0.3 ? `hue-rotate(${preGlitch * 15}deg)` : undefined),
+                        filter: burstZone > 0.3 ? `url(#paradox-pixelate) hue-rotate(${burstZone * 60}deg)` : undefined,
                         transform: `skewX(${skew}deg)`,
                         textShadow: `
                           ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.35 + burstZone * 0.4}),

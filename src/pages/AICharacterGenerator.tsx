@@ -851,7 +851,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
       : { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
 
     return (
-      <span className="flex flex-col items-center">
+      <span className="flex flex-col items-center" style={{ transform: `scale(${titleZoom})`, transition: titleZoom === 1 ? 'transform 0.15s ease-out' : 'none' }}>
         <span className="relative inline-block">
           {/* Red channel ghost */}
           <motion.span

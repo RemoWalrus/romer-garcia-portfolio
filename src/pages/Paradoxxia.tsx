@@ -13,8 +13,10 @@ const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState(0);
-  const [burst, setBurst] = useState(0); // 0-1 glitch burst intensity during transitions
+  const [burst, setBurst] = useState(0);
   const isAnimating = useRef(false);
+  const isMobile = useIsMobile();
+  const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
 
   // Map phase to base glitch intensity + burst overlay
   const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : 1) + burst * 0.5;

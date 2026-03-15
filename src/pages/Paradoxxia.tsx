@@ -178,7 +178,7 @@ const Paradoxxia = () => {
             'rgba(255,0,0,0.6)', 'rgba(255,0,0,0.5)',
             'rgba(255,0,0,0.35)', 'rgba(255,0,0,0.22)',
           ],
-          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+          transition: { duration: 0.7 * speed, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
         }),
         cyanControls.start({
           x: [-15, 7, -4, 1, -2],
@@ -189,7 +189,7 @@ const Paradoxxia = () => {
             'rgba(0,255,255,0.55)', 'rgba(0,255,255,0.45)',
             'rgba(0,255,255,0.3)', 'rgba(0,255,255,0.18)',
           ],
-          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
+          transition: { duration: 0.7 * speed, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.25, 0.5, 0.75, 1] },
         }),
         mainControls.start({
           opacity: [0, 0.6, 0.85, 1],
@@ -199,11 +199,11 @@ const Paradoxxia = () => {
             '2px 0 0 rgba(255,0,0,0.35), -2px 0 0 rgba(0,255,255,0.35)',
             '1.5px 0 0 rgba(255,0,0,0.35), -1.5px 0 0 rgba(0,255,255,0.35)',
           ],
-          transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] },
+          transition: { duration: 0.7 * speed, ease: [0.25, 0.1, 0.25, 1] },
         }),
         scanControls.start({
           opacity: [0.5, 0.3, 0],
-          transition: { duration: 1, ease: 'easeOut' },
+          transition: { duration: 0.8 * speed, ease: 'easeOut' },
         }),
       ]);
       setIntro(false);

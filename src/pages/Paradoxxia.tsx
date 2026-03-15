@@ -2,7 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { ParadoxxiaLandingSchema } from "@/components/seo/ParadoxxiaSchemas";
+import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
+import { MoveRight } from "lucide-react";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
 import circuitBg from "@/assets/paradoxxia-bg.png";
@@ -371,6 +372,40 @@ const Paradoxxia = () => {
               })()}
             </span>
           </h1>
+
+          {/* Music links — visible on coming soon phase */}
+          <AnimatePresence>
+            {phase === 2 && (
+              <motion.div
+                className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.4, delay: 0.15 }}
+              >
+                <a 
+                  href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                >
+                  <SpotifyIcon className="w-5 h-5" />
+                  Meet Paradoxxia on Spotify
+                  <MoveRight className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://music.apple.com/us/artist/paradoxxia/1803632666"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                >
+                  <AppleMusicIcon className="w-5 h-5" />
+                  Apple Music
+                  <MoveRight className="w-4 h-4" />
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Scroll indicator — hidden on last phase */}
           <AnimatePresence>

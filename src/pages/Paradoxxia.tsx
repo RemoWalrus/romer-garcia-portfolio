@@ -320,7 +320,7 @@ const Paradoxxia = () => {
                       className={`${textClass} ${mainColor} relative z-10`}
                       style={{
                         ...currentFont,
-                        filter: burstZone > 0.3 ? `url(#paradox-pixelate) hue-rotate(${burstZone * 60}deg)` : undefined,
+                        filter: pixelate ? `url(#paradox-pixelate) hue-rotate(${burstZone * 35}deg)` : undefined,
                         transform: `skewX(${skew}deg)`,
                         textShadow: `
                           ${chromatic * 0.5}px ${burstZone * 2}px 0 rgba(255,0,0,${0.35 + burstZone * 0.4}),

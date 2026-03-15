@@ -104,7 +104,7 @@ const Paradoxxia = () => {
     const rx = (Math.random() - 0.5) * 10 * intensity;
     const ry = (Math.random() - 0.5) * 4 * intensity;
     const sk = (Math.random() - 0.5) * 3 * intensity;
-    const dur = heavy ? 0.25 + Math.random() * 0.1 : 0.12 + Math.random() * 0.1;
+    const dur = (heavy ? 0.2 + Math.random() * 0.08 : 0.09 + Math.random() * 0.07) * speed;
     const peakRedOp = heavy ? 0.7 : 0.5;
     const peakCyanOp = heavy ? 0.6 : 0.45;
     const peakShadow = heavy ? Math.abs(rx) * 0.6 : Math.abs(rx) * 0.4;

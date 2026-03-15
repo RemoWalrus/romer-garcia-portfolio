@@ -35,14 +35,14 @@ const AICharacterGenerator = () => {
   const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [introComplete, setIntroComplete] = useState(false);
   const meta = usePageMeta('chargen', {
-    title: 'パラドクシア | AI Character Generator | Paradoxxia Universe',
-    description: 'Create unique AI-generated characters inside the パラドクシア (Paradoxxia) universe. Describe your vision and watch as AI forges androids, wanderers, and forgotten souls with cinematic portraits, backstories, and stats — a free character design tool by Romer Garcia.',
-    keywords: 'パラドクシア, Paradoxxia, AI character generator, free AI character creator, cinematic sci-fi characters, android creator, futuristic character builder, romergarcia, AI art generator, character design tool, worldbuilding AI, post-apocalyptic character creator',
-    ogTitle: 'パラドクシア | AI Character Generator | Paradoxxia Universe',
-    ogDescription: 'Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia.',
+    title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
+    keywords: 'Paradoxxia, パラドクシア, AI character generator, AI multimedia artist, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, cinematic sci-fi characters, free AI character creator',
+    ogTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    ogDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     ogUrl: 'https://romergarcia.com/char-gen',
-    twitterTitle: 'パラドクシア | AI Character Generator',
-    twitterDescription: 'Create unique AI-generated characters with cinematic portraits, backstories, and stats inside the Paradoxxia sci-fi universe. Free tool by Romer Garcia.',
+    twitterTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
+    twitterDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
   });
 
   // Animation controls for title glitch effect

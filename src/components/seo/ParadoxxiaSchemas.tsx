@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 const SPOTIFY_URL = 'https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr';
-const APPLE_MUSIC_URL = 'https://music.apple.com/us/artist/paradoxxia/1aborrecord';
+const APPLE_MUSIC_URL = 'https://music.apple.com/us/artist/paradoxxia/1803632666';
 
 const romerGarciaCreator = {
   "@type": "Person",

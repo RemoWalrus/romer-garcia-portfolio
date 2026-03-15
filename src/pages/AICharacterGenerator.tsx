@@ -1100,7 +1100,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     <MoveRight className="w-4 h-4" />
                   </a>
                   <a 
-                    href="https://music.apple.com/us/artist/paradoxxia/1aborrecord"
+                    href="https://music.apple.com/us/artist/paradoxxia/1803632666"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"

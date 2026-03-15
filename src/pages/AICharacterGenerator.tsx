@@ -34,6 +34,7 @@ const AICharacterGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [introComplete, setIntroComplete] = useState(false);
+  const [titleText, setTitleText] = useState<'katakana' | 'english'>('katakana');
   const meta = usePageMeta('chargen', {
     title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',

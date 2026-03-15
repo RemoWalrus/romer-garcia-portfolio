@@ -195,10 +195,14 @@ const Paradoxxia = () => {
         </svg>
       )}
 
-      {/* Scrollable content — 2x viewport height to allow scroll */}
-      <div className="min-h-[300vh] relative z-10">
+      {/* Snap sections — 3 viewport-height sections for each phase */}
+      <div className="relative z-10">
+        <div className="h-screen snap-start" /> {/* Phase 0: Katakana */}
+        <div className="h-screen snap-start" /> {/* Phase 1: PARADOXXIA */}
+        <div className="h-screen snap-start" /> {/* Phase 2: coming soon */}
+
         {/* Sticky title container */}
-        <div className="sticky top-0 h-screen flex flex-col items-center justify-center">
+        <div className="fixed inset-0 flex flex-col items-center justify-center pointer-events-none z-20">
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
               {(() => {
@@ -206,32 +210,31 @@ const Paradoxxia = () => {
                 const switch2 = 0.8;   // PARADOXXIA → coming soon
                 
                 // Determine current phase
-                const phase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;
+                const currentPhase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;
                 
                 // Active switch point
-                const activeSwitch = phase === 2 ? switch2 : switch1;
-                const distFromSwitch = phase === 0 
+                const distFromSwitch = currentPhase === 0 
                   ? Math.abs(gi - switch1) 
-                  : phase === 1 
+                  : currentPhase === 1 
                     ? Math.min(Math.abs(gi - switch1), Math.abs(gi - switch2))
                     : Math.abs(gi - switch2);
                 
                 const burstZone = Math.max(0, 1 - distFromSwitch / 0.12);
-                const preGlitch = phase === 0 ? gi / switch1 : 0;
-                const chromatic = burstZone * 18 + (phase === 0 ? preGlitch * 8 : burstZone * 6);
-                const skew = burstZone * 6 * (phase === 1 ? -1 : 1);
-                const scanOp = burstZone * 0.7 + (phase === 0 ? preGlitch * 0.15 : 0);
+                const preGlitch = currentPhase === 0 ? gi / switch1 : 0;
+                const chromatic = burstZone * 18 + (currentPhase === 0 ? preGlitch * 8 : burstZone * 6);
+                const skew = burstZone * 6 * (currentPhase === 1 ? -1 : 1);
+                const scanOp = burstZone * 0.7 + (currentPhase === 0 ? preGlitch * 0.15 : 0);
 
-                const textClass = phase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;
                 let currentText: string;
 
-                if (phase === 0) {
+                if (currentPhase === 0) {
                   currentFont = titleFont;
                   currentText = 'パラドクシア';
-                } else if (phase === 1) {
+                } else if (currentPhase === 1) {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
                 } else {
@@ -321,7 +324,7 @@ const Paradoxxia = () => {
                           justifyContent: 'center',
                           mixBlendMode: 'difference',
                           clipPath: `inset(${30 + burstZone * 15}% 0 ${35 - burstZone * 10}% 0)`,
-                          transform: `translateX(${burstZone * 12 * (phase % 2 === 0 ? 1 : -1)}px)`,
+                          transform: `translateX(${burstZone * 12 * (currentPhase % 2 === 0 ? 1 : -1)}px)`,
                         }}
                       >
                         {currentText}
@@ -332,6 +335,29 @@ const Paradoxxia = () => {
               })()}
             </span>
           </h1>
+
+          {/* Scroll indicator — hidden on last phase */}
+          <AnimatePresence>
+            {phase < 2 && (
+              <motion.div
+                className="absolute bottom-20 flex flex-col items-center gap-1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <span className="text-xs font-roc tracking-widest uppercase text-muted-foreground dark:text-[#00d4ff]/60">
+                  Scroll
+                </span>
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <ChevronDown className="w-5 h-5 text-muted-foreground dark:text-[#00d4ff]/60" />
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

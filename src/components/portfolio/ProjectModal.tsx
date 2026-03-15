@@ -116,7 +116,7 @@ export const ProjectModal = ({
             </div>
           </div>
 
-          <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col w-full overflow-hidden">
+          <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col w-full overflow-hidden min-h-0 max-h-[40vh] md:max-h-none">
             {project.youtube_url ? (
               <ProjectVideo url={project.youtube_url} title={project.title} />
             ) : project.additional_images?.length > 0 ? (

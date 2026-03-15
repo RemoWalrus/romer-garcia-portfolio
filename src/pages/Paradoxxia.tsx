@@ -237,24 +237,14 @@ const Paradoxxia = () => {
           <h1 className="flex flex-col items-center">
             <span className="relative inline-block">
               {(() => {
-                const switch1 = 0.3;  // katakana → PARADOXXIA
-                const switch2 = 0.8;   // PARADOXXIA → coming soon
+                const currentPhase = phase;
                 
-                // Determine current phase
-                const currentPhase = gi >= switch2 ? 2 : gi >= switch1 ? 1 : 0;
-                
-                // Active switch point
-                const distFromSwitch = currentPhase === 0 
-                  ? Math.abs(gi - switch1) 
-                  : currentPhase === 1 
-                    ? Math.min(Math.abs(gi - switch1), Math.abs(gi - switch2))
-                    : Math.abs(gi - switch2);
-                
-                const burstZone = Math.max(0, 1 - distFromSwitch / 0.12);
-                const preGlitch = currentPhase === 0 ? gi / switch1 : 0;
-                const chromatic = burstZone * 18 + (currentPhase === 0 ? preGlitch * 8 : burstZone * 6);
+                // Glitch burst on phase transitions (brief visual only)
+                const burstZone = 0;
+                const preGlitch = 0;
+                const chromatic = burstZone * 18;
                 const skew = burstZone * 6 * (currentPhase === 1 ? -1 : 1);
-                const scanOp = burstZone * 0.7 + (currentPhase === 0 ? preGlitch * 0.15 : 0);
+                const scanOp = burstZone * 0.7;
 
                 const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";

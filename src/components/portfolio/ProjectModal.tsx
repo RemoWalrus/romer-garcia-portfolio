@@ -69,7 +69,7 @@ export const ProjectModal = ({
             
             {/* Mini thumbnail navigator - mobile only */}
             {!isMobile ? null : (project.additional_images?.length > 0 && !project.youtube_url) && (
-              <div className="flex gap-1.5 mb-1 overflow-x-auto pb-0.5">
+              <div className="flex gap-1.5 mb-0 overflow-x-auto pb-0">
                 {[project.image_url, ...project.additional_images].map((img: string, index: number) => (
                   <div
                     key={index}

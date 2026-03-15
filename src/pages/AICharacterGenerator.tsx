@@ -34,6 +34,7 @@ const AICharacterGenerator = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [introComplete, setIntroComplete] = useState(false);
+  const [titleText, setTitleText] = useState<'katakana' | 'english'>('katakana');
   const meta = usePageMeta('chargen', {
     title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
@@ -115,6 +116,23 @@ const AICharacterGenerator = () => {
       timeout = setTimeout(async () => {
         const isHeavy = Math.random() < 0.15;
         await triggerGlitch(isHeavy);
+        schedule();
+      }, delay);
+    };
+    schedule();
+    return () => clearTimeout(timeout);
+  }, [introComplete, triggerGlitch]);
+
+  // Random title text switch between katakana and English
+  useEffect(() => {
+    if (!introComplete) return;
+    let timeout: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      const delay = 10000 + Math.random() * 20000; // 10-30 seconds
+      timeout = setTimeout(async () => {
+        // Trigger a heavy glitch burst during the switch
+        await triggerGlitch(true);
+        setTitleText(prev => prev === 'katakana' ? 'english' : 'katakana');
         schedule();
       }, delay);
     };
@@ -782,6 +800,11 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
   };
 
   const renderTitle = () => {
+    const currentText = titleText === 'katakana' ? 'パラドクシア' : 'PARADOXXIA';
+    const currentFont = titleText === 'katakana' 
+      ? titleFont 
+      : { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
+
     return (
       <span className="flex flex-col items-center">
         <span className="relative inline-block">
@@ -789,28 +812,28 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           <motion.span
             className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} absolute inset-0 pointer-events-none transition-all duration-500`}
             aria-hidden
-            style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
+            style={{ ...currentFont, mixBlendMode: 'screen', color: 'rgba(255,0,0,0.6)' }}
             initial={{ x: 18, y: -6, skewX: 4, opacity: 0.65 }}
             animate={redControls}
           >
-            パラドクシア
+            {currentText}
           </motion.span>
 
           {/* Cyan channel ghost */}
           <motion.span
             className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} absolute inset-0 pointer-events-none transition-all duration-500`}
             aria-hidden
-            style={{ ...titleFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
+            style={{ ...currentFont, mixBlendMode: 'screen', color: 'rgba(0,255,255,0.55)' }}
             initial={{ x: -15, y: 5, skewX: -3, opacity: 0.6 }}
             animate={cyanControls}
           >
-            パラドクシア
+            {currentText}
           </motion.span>
 
           {/* Main title */}
           <motion.span
             className={`${generatedImage ? 'text-3xl md:text-5xl' : 'text-5xl md:text-9xl'} text-[#0a1e5c] dark:text-[#00d4ff] relative z-10 transition-all duration-500`}
-            style={{ ...titleFont }}
+            style={{ ...currentFont }}
             initial={{
               opacity: 0,
               skewX: 3,
@@ -818,7 +841,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
             }}
             animate={mainControls}
           >
-            パラドクシア
+            {currentText}
           </motion.span>
 
           {/* Scan line overlay */}

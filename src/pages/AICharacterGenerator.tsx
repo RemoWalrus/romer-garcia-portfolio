@@ -1075,7 +1075,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
               </Card>
               
               <div className="mt-8 p-6 bg-muted/30 rounded-lg space-y-4">
-                <p className="text-sm sm:text-base text-foreground leading-relaxed font-roc">
+                <p className="text-sm sm:text-lg text-foreground leading-relaxed font-roc">
                   <span style={{ fontWeight: 300 }}>Step into the world you've just helped</span>{" "}
                   <span style={{ fontWeight: 500 }}>create.</span>{" "}
                   <span style={{ fontWeight: 300 }}>Paradoxxia's story unfolds in the same shattered future your characters inhabit—a realm</span>{" "}

@@ -215,7 +215,7 @@ const Paradoxxia = () => {
                 const skew = burstZone * 6 * (phase === 1 ? -1 : 1);
                 const scanOp = burstZone * 0.7 + (phase === 0 ? preGlitch * 0.15 : 0);
 
-                const textClass = phase === 2 ? "text-[2.4rem] md:text-7xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = phase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;

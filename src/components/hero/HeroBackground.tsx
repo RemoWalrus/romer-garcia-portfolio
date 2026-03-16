@@ -10,7 +10,7 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [videoUrl] = useState<string>(getProxiedStorageUrl('graphics', 'staticglitchy.mp4'));
+  const [videoUrl] = useState<string>(getProxyUrl('graphics', 'staticglitchy.mp4'));
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');

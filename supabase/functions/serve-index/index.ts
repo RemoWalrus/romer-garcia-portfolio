@@ -44,6 +44,18 @@ const routeMeta: Record<string, {
     twitterDescription: 'Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats.',
     twitterImage: 'https://romergarcia.com/paradoxxia-og.jpg',
   },
+  '/meme': {
+    title: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
+    description: 'Enjoy a random feed of developer memes, coding tips, and fun tech trivia curated by Romer Garcia. A lighthearted break for software engineers, designers, and anyone who speaks code.',
+    keywords: 'developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes',
+    ogTitle: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
+    ogDescription: 'Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.',
+    ogUrl: 'https://romergarcia.com/meme',
+    ogImage: DEFAULT_OG_IMAGE,
+    twitterTitle: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
+    twitterDescription: 'Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.',
+    twitterImage: DEFAULT_OG_IMAGE,
+  },
 };
 
 const defaultMeta = {

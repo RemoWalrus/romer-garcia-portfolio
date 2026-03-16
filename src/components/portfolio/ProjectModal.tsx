@@ -38,7 +38,7 @@ export const ProjectModal = ({
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-roc font-extralight mb-5 md:mb-6 uppercase mt-0" style={{ lineHeight: '1.1' }} itemProp="name">
+              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-roc font-extralight mb-6 md:mb-8 uppercase mt-0" style={{ lineHeight: '0.95' }} itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>

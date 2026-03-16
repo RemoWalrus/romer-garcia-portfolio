@@ -4,6 +4,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
 import { MoveRight } from "lucide-react";
+import { trackEvent } from "@/components/GoogleAnalytics";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";

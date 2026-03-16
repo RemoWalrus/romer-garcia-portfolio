@@ -65,7 +65,10 @@ export const ImageGallery = () => {
         });
         
         if (data) {
-          setImages(data);
+          setImages(data.map((img: GalleryImage) => ({
+            ...img,
+            image_url: toProxyUrl(img.image_url),
+          })));
         }
       } catch (error) {
         console.error('Error fetching gallery images:', error);

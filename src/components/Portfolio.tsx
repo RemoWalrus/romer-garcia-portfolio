@@ -23,7 +23,12 @@ export const Portfolio = () => {
       });
       
       if (data) {
-        setProjects(data);
+        setProjects(data.map((p: any) => ({
+          ...p,
+          hero_image_url: toProxyUrl(p.hero_image_url),
+          image_url: toProxyUrl(p.image_url),
+          additional_images: p.additional_images?.map((url: string) => toProxyUrl(url)) || null,
+        })));
       }
     } catch (error) {
       console.error('Error fetching projects:', error);

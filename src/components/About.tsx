@@ -24,7 +24,7 @@ export const About = () => {
   });
 
   useEffect(() => {
-    setPortraitUrl(getProxiedStorageUrl('profile', 'RomerSelfPortrait.jpg'));
+    setPortraitUrl(getProxyUrl('profile', 'RomerSelfPortrait.jpg'));
   }, []);
 
   useEffect(() => {

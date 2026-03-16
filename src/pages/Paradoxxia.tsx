@@ -386,6 +386,7 @@ const Paradoxxia = () => {
           </h1>
 
           {/* Music links — visible on coming soon phase */}
+          {/* Music links — visible on coming soon phase */}
           <AnimatePresence mode="wait">
             {phase === 2 && (
               <motion.div
@@ -413,6 +414,27 @@ const Paradoxxia = () => {
                 >
                   <AppleMusicIcon className="w-5 h-5" />
                   Apple Music
+                  <MoveRight className="w-4 h-4" />
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* AI Character Generator link — visible on phase 3 */}
+          <AnimatePresence mode="wait">
+            {phase === 3 && (
+              <motion.div
+                className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.15 } }}
+                exit={{ opacity: 0, transition: { duration: 0 } }}
+                style={{ position: 'absolute', top: '54%' }}
+              >
+                <a 
+                  href="/char-gen"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                >
+                  AI Character Generator
                   <MoveRight className="w-4 h-4" />
                 </a>
               </motion.div>

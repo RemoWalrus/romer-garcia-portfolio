@@ -7,24 +7,21 @@ interface PixelTransitionProps {
 }
 
 /** Generates a grid of random-sized pixel blocks that stagger in/out */
-const PixelTransition = ({ active, color = "#facc15" }: PixelTransitionProps) => {
-  // Generate random pixel blocks once
+const PixelTransition = ({ active, color = "#f6c915" }: PixelTransitionProps) => {
   const pixels = useMemo(() => {
     const items: { x: number; y: number; w: number; h: number; delay: number }[] = [];
-    // Fill screen with overlapping random rectangles
-    const count = 120;
+    const count = 220;
     for (let i = 0; i < count; i++) {
-      const w = 4 + Math.random() * 16; // 4-20vw
-      const h = 4 + Math.random() * 16;
+      const w = 2 + Math.random() * 14;
+      const h = 2 + Math.random() * 14;
       items.push({
         x: Math.random() * 100,
         y: Math.random() * 100,
         w,
         h,
-        delay: Math.random() * 0.35,
+        delay: Math.random() * 0.6,
       });
     }
-    // Sort by delay so center-ish ones can appear first if desired
     return items;
   }, []);
 

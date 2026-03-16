@@ -451,7 +451,7 @@ const Paradoxxia = () => {
 
           {/* AI Character Generator link — visible on phase 3 */}
           <AnimatePresence mode="wait">
-            {phase === 3 && (
+            {phase === 4 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
                 initial={{ opacity: 0 }}

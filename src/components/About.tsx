@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
-import { getProxiedData, getProxiedStorageUrl } from "@/utils/proxyHelper";
+import { getProxiedData } from "@/utils/proxyHelper";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -23,7 +24,7 @@ export const About = () => {
   });
 
   useEffect(() => {
-    setPortraitUrl(getProxiedStorageUrl('profile', 'RomerSelfPortrait.jpg'));
+    setPortraitUrl(getProxyUrl('profile', 'RomerSelfPortrait.jpg'));
   }, []);
 
   useEffect(() => {

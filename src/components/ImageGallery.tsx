@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { getProxiedData } from "@/utils/proxyHelper";
+import { toProxyUrl } from "@/utils/supabaseProxy";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -64,7 +65,10 @@ export const ImageGallery = () => {
         });
         
         if (data) {
-          setImages(data);
+          setImages(data.map((img: GalleryImage) => ({
+            ...img,
+            image_url: toProxyUrl(img.image_url),
+          })));
         }
       } catch (error) {
         console.error('Error fetching gallery images:', error);
@@ -102,7 +106,7 @@ export const ImageGallery = () => {
       id="gallery" 
       className="relative py-16 -mt-[1.1rem] -mb-0.5 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-900/90 before:backdrop-blur-sm" 
       style={{
-        backgroundImage: "url('https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg')"
+        backgroundImage: `url('${toProxyUrl("https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects//Hairwars16.jpg")}')`
       }}
     >
       <div className="container mx-auto px-4 relative z-10">

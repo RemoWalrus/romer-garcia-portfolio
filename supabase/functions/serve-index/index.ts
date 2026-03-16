@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const DEFAULT_OG_IMAGE = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg';
+const DEFAULT_OG_IMAGE = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=graphics&file=RomerGarcia-cover.svg';
 
 // Route-specific meta tag overrides for social crawlers
 const routeMeta: Record<string, {
@@ -84,7 +84,7 @@ function buildHTML(meta: typeof defaultMeta, memeComment = '') {
     <meta name="twitter:description" content="${meta.twitterDescription}" />
     <meta name="twitter:image" content="${meta.twitterImage}" />
     
-    <link rel="icon" type="image/x-icon" href="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=graphics&file=favicon.ico" />
 
     <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />

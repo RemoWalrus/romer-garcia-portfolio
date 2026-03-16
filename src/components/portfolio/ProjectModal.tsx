@@ -1,5 +1,4 @@
 
-import { useState, useRef } from 'react';
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
@@ -24,45 +23,12 @@ export const ProjectModal = ({
   onExternalLink 
 }: ProjectModalProps) => {
   const isMobile = useIsMobile();
-  const swipeStartY = useRef<number>(0);
-  const swipeCurrentY = useRef<number>(0);
-  const [swipeOffset, setSwipeOffset] = useState(0);
-  const isSwiping = useRef(false);
-
-  const handleSwipeStart = (e: React.TouchEvent) => {
-    swipeStartY.current = e.touches[0].clientY;
-    swipeCurrentY.current = e.touches[0].clientY;
-    isSwiping.current = false;
-  };
-
-  const handleSwipeMove = (e: React.TouchEvent) => {
-    const currentY = e.touches[0].clientY;
-    const diff = currentY - swipeStartY.current;
-    if (diff > 10) {
-      isSwiping.current = true;
-      setSwipeOffset(Math.min(diff, 300));
-    }
-  };
-
-  const handleSwipeEnd = () => {
-    if (swipeOffset > 100) {
-      onClose();
-    }
-    setSwipeOffset(0);
-    isSwiping.current = false;
-  };
 
   if (!project) return null;
 
   return (
     <Dialog open={!!project} onOpenChange={onClose}>
-      <DialogContent 
-        className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent transition-transform"
-        style={isMobile && swipeOffset > 0 ? { transform: `translateX(-50%) translateY(calc(-50% + ${swipeOffset}px))`, opacity: 1 - swipeOffset / 400 } : undefined}
-        onTouchStart={isMobile ? handleSwipeStart : undefined}
-        onTouchMove={isMobile ? handleSwipeMove : undefined}
-        onTouchEnd={isMobile ? handleSwipeEnd : undefined}
-      >
+      <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
         <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
           <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">

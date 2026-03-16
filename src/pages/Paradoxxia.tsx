@@ -88,8 +88,10 @@ const Paradoxxia = () => {
     ogTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     ogDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     ogUrl: 'https://romergarcia.com/paradoxxia',
+    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/paradoxxia-og.jpg',
     twitterTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     twitterDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
+    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/paradoxxia-og.jpg',
   });
 
   const titleFont = {
@@ -221,9 +223,12 @@ const Paradoxxia = () => {
         <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
         {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
+        <link rel="canonical" href={meta.ogUrl || 'https://romergarcia.com/paradoxxia'} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
+        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
       </Helmet>
       <ParadoxxiaLandingSchema />
       <GoogleAnalytics />

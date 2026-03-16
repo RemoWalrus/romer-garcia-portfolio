@@ -102,20 +102,16 @@ const Meme = () => {
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
         <meta name="keywords" content={meta.keywords} />
-        <link rel="canonical" href={meta.ogUrl || 'https://romergarcia.com/meme'} />
         
         {/* Open Graph */}
         <meta property="og:title" content={meta.ogTitle} />
         <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={meta.ogUrl || 'https://romergarcia.com/meme'} />
-        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
-        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
       </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />

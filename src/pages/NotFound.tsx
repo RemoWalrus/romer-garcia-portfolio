@@ -1,7 +1,6 @@
 
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { getProxiedStorageUrl } from "@/utils/proxyHelper";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -61,20 +60,6 @@ const NotFound = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-neutral-950">
-      <Helmet>
-        <title>Page Not Found | Romer Garcia</title>
-        <meta name="description" content="The page you're looking for doesn't exist. Return to Romer Garcia's portfolio." />
-        <meta property="og:title" content="Page Not Found | Romer Garcia" />
-        <meta property="og:description" content="The page you're looking for doesn't exist. Return to Romer Garcia's portfolio." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://romergarcia.com" />
-        <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Page Not Found | Romer Garcia" />
-        <meta name="twitter:description" content="The page you're looking for doesn't exist. Return to Romer Garcia's portfolio." />
-        <meta name="twitter:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg" />
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
       <GoogleAnalytics />
       <ThemeToggle />
       {/* Background Image with Overlay */}

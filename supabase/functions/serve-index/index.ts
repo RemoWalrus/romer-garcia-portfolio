@@ -44,18 +44,6 @@ const routeMeta: Record<string, {
     twitterDescription: 'Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats.',
     twitterImage: 'https://romergarcia.com/paradoxxia-og.jpg',
   },
-  '/meme': {
-    title: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
-    description: 'Enjoy a random feed of developer memes, coding tips, and fun tech trivia curated by Romer Garcia. A lighthearted break for software engineers, designers, and anyone who speaks code.',
-    keywords: 'developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes',
-    ogTitle: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
-    ogDescription: 'Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.',
-    ogUrl: 'https://romergarcia.com/meme',
-    ogImage: DEFAULT_OG_IMAGE,
-    twitterTitle: 'Romer Garcia | Dev Memes & Coding Wisdom 🚀💻',
-    twitterDescription: 'Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.',
-    twitterImage: DEFAULT_OG_IMAGE,
-  },
 };
 
 const defaultMeta = {
@@ -144,43 +132,35 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? ''
     )
 
-    // Try to fetch dynamic meta from metadata table for any route
-    const prefix = path === '/' ? '' : path.replace(/^\//, '');
-    const likePattern = prefix ? `${prefix}.%` : '%.%'; // homepage keys have no prefix
-    
-    try {
-      let query;
-      if (prefix) {
-        query = supabase.from('metadata').select('meta_key,meta_value').like('meta_key', `${prefix}.%`);
-      } else {
-        // For homepage, fetch keys without a dot prefix
-        query = supabase.from('metadata').select('meta_key,meta_value').in('meta_key', [
-          'title', 'description', 'keywords', 'og_title', 'og_description', 'og_url', 'og_image',
-          'twitter_title', 'twitter_description', 'twitter_image'
-        ]);
-      }
-      
-      const { data } = await query;
-      
-      if (data && data.length > 0) {
-        for (const row of data) {
-          const field = prefix ? row.meta_key.replace(`${prefix}.`, '') : row.meta_key;
-          switch (field) {
-            case 'title': meta.title = row.meta_value; break;
-            case 'description': meta.description = row.meta_value; break;
-            case 'keywords': meta.keywords = row.meta_value; break;
-            case 'og_title': meta.ogTitle = row.meta_value; break;
-            case 'og_description': meta.ogDescription = row.meta_value; break;
-            case 'og_url': meta.ogUrl = row.meta_value; break;
-            case 'og_image': meta.ogImage = row.meta_value; break;
-            case 'twitter_title': meta.twitterTitle = row.meta_value; break;
-            case 'twitter_description': meta.twitterDescription = row.meta_value; break;
-            case 'twitter_image': meta.twitterImage = row.meta_value; break;
+    // Try to fetch dynamic meta from metadata table
+    if (routeMeta[path]) {
+      try {
+        const prefix = path.replace(/^\//, '');
+        const { data } = await supabase
+          .from('metadata')
+          .select('meta_key,meta_value')
+          .like('meta_key', `${prefix}.%`);
+        
+        if (data && data.length > 0) {
+          for (const row of data) {
+            const field = row.meta_key.replace(`${prefix}.`, '');
+            switch (field) {
+              case 'title': meta.title = row.meta_value; break;
+              case 'description': meta.description = row.meta_value; break;
+              case 'keywords': meta.keywords = row.meta_value; break;
+              case 'og_title': meta.ogTitle = row.meta_value; break;
+              case 'og_description': meta.ogDescription = row.meta_value; break;
+              case 'og_url': meta.ogUrl = row.meta_value; break;
+              case 'og_image': meta.ogImage = row.meta_value; break;
+              case 'twitter_title': meta.twitterTitle = row.meta_value; break;
+              case 'twitter_description': meta.twitterDescription = row.meta_value; break;
+              case 'twitter_image': meta.twitterImage = row.meta_value; break;
+            }
           }
         }
+      } catch (e) {
+        console.error('Error fetching route meta:', e);
       }
-    } catch (e) {
-      console.error('Error fetching route meta:', e);
     }
 
     // Get the active meme for the homepage

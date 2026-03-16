@@ -65,51 +65,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Snap scroll: any downward scroll from hero snaps to portfolio
-  useEffect(() => {
-    let snapping = false;
-    let wasAtTop = true;
-
-    const snapToPortfolio = () => {
-      if (snapping) return;
-      snapping = true;
-      const portfolio = document.getElementById('portfolio');
-      if (portfolio) {
-        const offsetPosition = portfolio.getBoundingClientRect().top + window.pageYOffset - 50;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-      }
-      setTimeout(() => { snapping = false; }, 1000);
-    };
-
-    const handleScroll = () => {
-      const heroHeight = window.innerHeight;
-      const scrollY = window.scrollY;
-
-      // If user is in the hero zone (scrolled a little but not past hero)
-      // and was previously at top, snap to portfolio
-      if (wasAtTop && scrollY > 5 && scrollY < heroHeight * 0.8) {
-        snapToPortfolio();
-      }
-
-      wasAtTop = scrollY < 5;
-    };
-
-    // Also handle wheel to prevent partial scrolling
-    const handleWheel = (e: WheelEvent) => {
-      if (window.scrollY < 5 && e.deltaY > 0) {
-        e.preventDefault();
-        snapToPortfolio();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
-
   if (titles.length === 0) {
     return null;
   }

@@ -1,4 +1,5 @@
 
+import { useRef } from 'react';
 import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
@@ -23,12 +24,35 @@ export const ProjectModal = ({
   onExternalLink 
 }: ProjectModalProps) => {
   const isMobile = useIsMobile();
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
+
+  const handleSwipeStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleSwipeMove = (e: React.TouchEvent) => {
+    touchEndY.current = e.touches[0].clientY;
+  };
+
+  const handleSwipeEnd = () => {
+    const diff = Math.abs(touchStartY.current - touchEndY.current);
+    if (diff > 100) {
+      onClose();
+    }
+  };
 
   if (!project) return null;
 
   return (
     <Dialog open={!!project} onOpenChange={onClose}>
-      <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
+      <DialogContent 
+        className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent"
+        onTouchStart={isMobile ? handleSwipeStart : undefined}
+        onTouchMove={isMobile ? handleSwipeMove : undefined}
+        onTouchEnd={isMobile ? handleSwipeEnd : undefined}
+      >
         <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
           <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">

@@ -9,6 +9,7 @@ import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import PixelTransition from "@/components/paradoxxia/PixelTransition";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);

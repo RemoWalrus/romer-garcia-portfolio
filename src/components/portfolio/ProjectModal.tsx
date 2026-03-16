@@ -56,7 +56,13 @@ export const ProjectModal = ({
 
   return (
     <Dialog open={!!project} onOpenChange={onClose}>
-      <DialogContent className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent">
+      <DialogContent 
+        className="w-full max-w-[calc(100vw-1rem)] sm:max-w-[calc(100vw-2rem)] md:max-w-7xl max-h-[85vh] md:h-[90vh] overflow-hidden p-0 [&>button]:border-0 [&>button]:focus:ring-0 [&>button]:focus:outline-none [&>button:hover]:bg-transparent [&>button]:focus:bg-transparent transition-transform"
+        style={isMobile && swipeOffset > 0 ? { transform: `translateX(-50%) translateY(calc(-50% + ${swipeOffset}px))`, opacity: 1 - swipeOffset / 400 } : undefined}
+        onTouchStart={isMobile ? handleSwipeStart : undefined}
+        onTouchMove={isMobile ? handleSwipeMove : undefined}
+        onTouchEnd={isMobile ? handleSwipeEnd : undefined}
+      >
         <ProjectCaseStudySchema project={project} />
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
           <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">

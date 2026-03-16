@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { getProxyUrl } from '@/utils/supabaseProxy';
 
 interface Project {
   title: string;

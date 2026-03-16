@@ -5,11 +5,12 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Proxy Supabase Edge Functions through our domain
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/*"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat"
   status = 200
-  conditions = {Role = ["admin"], Country = ["US"]}
+  force = true
 
 # Handle SPA routing - send all requests to index.html so React Router can handle them
 [[redirects]]

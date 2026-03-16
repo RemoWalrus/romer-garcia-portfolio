@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { getProxiedData } from "@/utils/proxyHelper";
-import { toProxyUrl } from "@/utils/supabaseProxy";
+import { toProxyUrl, getProxyUrl } from "@/utils/supabaseProxy";
 import { ProjectCard } from './portfolio/ProjectCard';
 import { ProjectModal } from './portfolio/ProjectModal';
 import { trackEvent } from './GoogleAnalytics';
@@ -58,7 +58,7 @@ export const Portfolio = () => {
 
   return (
     <section id="portfolio" aria-label="Featured Work by Romer Garcia" className="relative py-32 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-950/90 before:backdrop-blur-sm" style={{
-      backgroundImage: `url('${toProxyUrl("https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/images//romergarciacover.jpg")}')`
+      backgroundImage: `url('${getProxyUrl('images', 'romergarciacover.jpg')}')`
     }}>
       <div className="container mx-auto px-4 relative z-10">
         <ChromaticTitle className="text-3xl md:text-4xl lg:text-5xl font-roc font-extralight text-neutral-900 dark:text-white mb-16 text-center uppercase">

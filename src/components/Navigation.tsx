@@ -1,7 +1,8 @@
 
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { getProxiedData, getProxiedStorageUrl } from "@/utils/proxyHelper";
+import { getProxiedData } from "@/utils/proxyHelper";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 interface NavigationProps {
@@ -49,7 +50,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
   }, []);
 
   const logoFile = scrolled && !isDark ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
-  const logoUrl = getProxiedStorageUrl('graphics', logoFile);
+  const logoUrl = getProxyUrl('graphics', logoFile);
 
   useEffect(() => {
     const fetchSocialLinks = async () => {

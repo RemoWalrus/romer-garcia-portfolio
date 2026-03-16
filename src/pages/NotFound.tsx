@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProxiedStorageUrl } from "@/utils/proxyHelper";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
@@ -44,13 +44,13 @@ const NotFound = () => {
 
         const randomIndex = Math.floor(Math.random() * imageNames.length);
         const randomImageName = imageNames[randomIndex];
-        const imageUrl = getProxiedStorageUrl('images', randomImageName);
+        const imageUrl = getProxyUrl('images', randomImageName);
         console.log('Selected random image for error page:', imageUrl);
         setBackgroundImage(imageUrl);
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
-        const fallbackUrl = getProxiedStorageUrl('images', 'dualshadow.jpg');
+        const fallbackUrl = getProxyUrl('images', 'dualshadow.jpg');
         setBackgroundImage(fallbackUrl);
       }
     };

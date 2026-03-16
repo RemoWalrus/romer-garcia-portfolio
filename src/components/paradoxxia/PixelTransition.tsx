@@ -34,7 +34,7 @@ const PixelTransition = ({ active, color = "#f6c915" }: PixelTransitionProps) =>
             className="fixed inset-0 pointer-events-none z-[1]"
             style={{ backgroundColor: color }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.2 } }}
+            animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.4 } }}
             exit={{ opacity: 0, transition: { duration: 0.15, delay: 0.25 } }}
           />
           {/* Random pixel blocks */}

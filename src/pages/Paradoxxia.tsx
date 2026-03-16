@@ -9,6 +9,7 @@ import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import PixelTransition from "@/components/paradoxxia/PixelTransition";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
@@ -240,7 +241,8 @@ const Paradoxxia = () => {
         className={`fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-opacity duration-500 ${phase === 2 ? 'opacity-0' : 'opacity-40'}`}
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
-      <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${phase === 2 ? 'bg-yellow-400 dark:bg-yellow-400' : 'bg-white/60 dark:bg-transparent'}`} />
+      <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${phase === 2 ? 'bg-transparent' : 'bg-white/60 dark:bg-transparent'}`} />
+      <PixelTransition active={phase === 2} color="#facc15" />
 
       {/* YouTube video — visible on phase 2 (yellow/video phase) */}
       <AnimatePresence>

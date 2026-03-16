@@ -20,7 +20,7 @@ const Paradoxxia = () => {
   const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
 
   // Map phase to base glitch intensity + burst overlay
-  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 1 : 0.7) + burst * 0.5;
+  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 1 : 0.7) + burst * 0.5;
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;

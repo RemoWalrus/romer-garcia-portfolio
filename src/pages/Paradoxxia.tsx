@@ -294,7 +294,7 @@ const Paradoxxia = () => {
                 const scanOp = burstZone * 0.4;
                 const pixelate = burstZone > 0.2;
 
-                const textClass = (currentPhase === 2 || currentPhase === 3) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = (currentPhase === 3 || currentPhase === 4) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;

@@ -88,8 +88,10 @@ const Paradoxxia = () => {
     ogTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     ogDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     ogUrl: 'https://romergarcia.com/paradoxxia',
+    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/paradoxxia-og.jpg',
     twitterTitle: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     twitterDescription: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
+    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/paradoxxia-og.jpg',
   });
 
   const titleFont = {

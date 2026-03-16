@@ -54,9 +54,9 @@ const PixelTransition = ({ active, color = "#f6c915" }: PixelTransitionProps) =>
                 opacity: 1,
                 scale: 1,
                 transition: {
-                  duration: 0.12 + Math.random() * 0.08,
+                  duration: 0.18 + Math.random() * 0.12,
                   delay: p.delay,
-                  ease: "easeOut",
+                  ease: [0.4, 0, 0.2, 1],
                 },
               }}
               exit={{

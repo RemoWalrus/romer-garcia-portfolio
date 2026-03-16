@@ -39,7 +39,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
         // Select a random image from the list
         const randomIndex = Math.floor(Math.random() * imageNames.length);
         const randomImageName = imageNames[randomIndex];
-        const imageUrl = getProxiedStorageUrl('images', randomImageName);
+        const imageUrl = getProxyUrl('images', randomImageName);
         console.log('Selected random image:', imageUrl);
         setBackgroundImage(imageUrl);
 

@@ -65,6 +65,60 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Snap scroll: any scroll while in hero section jumps to portfolio
+  useEffect(() => {
+    let snapping = false;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (snapping) return;
+      const heroHeight = window.innerHeight;
+      // Only intercept when user is within the hero section
+      if (window.scrollY < heroHeight * 0.5 && e.deltaY > 0) {
+        e.preventDefault();
+        snapping = true;
+        const portfolio = document.getElementById('portfolio');
+        if (portfolio) {
+          const offsetPosition = portfolio.getBoundingClientRect().top + window.pageYOffset - 50;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          setTimeout(() => { snapping = false; }, 800);
+        } else {
+          snapping = false;
+        }
+      }
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (snapping) return;
+      const diff = touchStartY - e.changedTouches[0].clientY;
+      const heroHeight = window.innerHeight;
+      if (window.scrollY < heroHeight * 0.5 && diff > 30) {
+        snapping = true;
+        const portfolio = document.getElementById('portfolio');
+        if (portfolio) {
+          const offsetPosition = portfolio.getBoundingClientRect().top + window.pageYOffset - 50;
+          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+          setTimeout(() => { snapping = false; }, 800);
+        } else {
+          snapping = false;
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, []);
+
   if (titles.length === 0) {
     return null;
   }

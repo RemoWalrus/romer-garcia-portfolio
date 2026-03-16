@@ -221,9 +221,12 @@ const Paradoxxia = () => {
         <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
         {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
+        <link rel="canonical" href={meta.ogUrl || 'https://romergarcia.com/paradoxxia'} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
+        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
       </Helmet>
       <ParadoxxiaLandingSchema />
       <GoogleAnalytics />

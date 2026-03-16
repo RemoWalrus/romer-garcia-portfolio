@@ -1,4 +1,7 @@
 # Netlify redirects and rewrites
+# Proxy storage/image masking requests to Supabase Edge Functions
+/api/*  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat  200
+
 # Handle client-side routing - redirect all non-file requests to index.html
 /*    /index.html   200
 

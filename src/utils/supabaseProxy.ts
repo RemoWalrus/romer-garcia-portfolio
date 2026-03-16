@@ -1,4 +1,4 @@
-export const PROXY_BASE = 'https://romergarcia.com/api/download-file';
+export const PROXY_BASE = '/api/download-file';
 const SUPABASE_STORAGE_PREFIX = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/';
 
 /**

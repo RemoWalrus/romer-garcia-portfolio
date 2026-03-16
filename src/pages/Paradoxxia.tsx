@@ -19,11 +19,11 @@ const Paradoxxia = () => {
   const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
 
   // Map phase to base glitch intensity + burst overlay
-  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : 1) + burst * 0.5;
+  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 1 : 0.7) + burst * 0.5;
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;
-    const clamped = Math.max(0, Math.min(2, target));
+    const clamped = Math.max(0, Math.min(3, target));
     if (clamped === phase) return;
     isAnimating.current = true;
 
@@ -271,7 +271,7 @@ const Paradoxxia = () => {
                 const scanOp = burstZone * 0.4;
                 const pixelate = burstZone > 0.2;
 
-                const textClass = currentPhase === 2 ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = (currentPhase === 2 || currentPhase === 3) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;
@@ -283,9 +283,12 @@ const Paradoxxia = () => {
                 } else if (currentPhase === 1) {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
-                } else {
+                } else if (currentPhase === 2) {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
                   currentText = 'coming soon';
+                } else {
+                  currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
+                  currentText = 'create a character';
                 }
 
                 return (
@@ -383,6 +386,7 @@ const Paradoxxia = () => {
           </h1>
 
           {/* Music links — visible on coming soon phase */}
+          {/* Music links — visible on coming soon phase */}
           <AnimatePresence mode="wait">
             {phase === 2 && (
               <motion.div
@@ -416,9 +420,30 @@ const Paradoxxia = () => {
             )}
           </AnimatePresence>
 
+          {/* AI Character Generator link — visible on phase 3 */}
+          <AnimatePresence mode="wait">
+            {phase === 3 && (
+              <motion.div
+                className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.15 } }}
+                exit={{ opacity: 0, transition: { duration: 0 } }}
+                style={{ position: 'absolute', top: '54%' }}
+              >
+                <a 
+                  href="/char-gen"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                >
+                  AI Character Generator
+                  <MoveRight className="w-4 h-4" />
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Scroll indicator — hidden on last phase */}
           <AnimatePresence>
-            {phase < 2 && (
+            {phase < 3 && (
               <motion.div
                 className="absolute bottom-20 flex flex-col items-center pointer-events-auto cursor-pointer"
                 initial={{ opacity: 0 }}

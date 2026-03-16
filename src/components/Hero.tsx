@@ -74,7 +74,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     const getPortfolioTop = () => {
       const el = document.getElementById('portfolio');
       if (!el) return heroHeight;
-      return el.getBoundingClientRect().top + window.scrollY - headerOffset;
+      return el.getBoundingClientRect().top + window.scrollY;
     };
 
     const snapTo = (targetY: number) => {

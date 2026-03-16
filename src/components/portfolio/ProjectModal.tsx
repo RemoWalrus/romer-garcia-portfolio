@@ -99,7 +99,7 @@ export const ProjectModal = ({
               {project.github_url && (
                 <div 
                   onClick={() => onExternalLink(project.github_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
+                  className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
                   View Source Code <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>

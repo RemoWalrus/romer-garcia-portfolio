@@ -237,10 +237,32 @@ const Paradoxxia = () => {
 
       {/* Circuit board background */}
       <div
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
+        className={`fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-opacity duration-500 ${phase === 2 ? 'opacity-0' : 'opacity-40'}`}
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
+      <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${phase === 2 ? 'bg-yellow-400 dark:bg-yellow-400' : 'bg-white/60 dark:bg-transparent'}`} />
+
+      {/* YouTube video — visible on phase 2 (yellow/video phase) */}
+      <AnimatePresence>
+        {phase === 2 && (
+          <motion.div
+            className="fixed inset-0 z-[15] flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
+            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+          >
+            <div className="w-[80vw] max-w-[900px] aspect-video">
+              <iframe
+                src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Paradoxxia video"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* SVG pixelation filter */}
       {gi > 0.05 && (

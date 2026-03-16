@@ -45,9 +45,10 @@ export const About = () => {
     fetchAboutSection();
   }, []);
 
-  const handlePortfolioDownload = async () => {
+  const handlePortfolioDownload = () => {
     if (aboutData.portfolio_url) {
-      await handleDownload(aboutData.portfolio_url);
+      const proxiedUrl = toProxyUrl(aboutData.portfolio_url, true);
+      window.open(proxiedUrl, '_blank');
     }
   };
 

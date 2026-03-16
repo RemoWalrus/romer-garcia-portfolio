@@ -141,7 +141,12 @@ export const ImageGallery = () => {
       </div>
 
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="bg-white dark:bg-neutral-900 max-w-4xl w-[95vw] p-0">
+        <DialogContent 
+          className="bg-white dark:bg-neutral-900 max-w-4xl w-[95vw] p-0"
+          onTouchStart={isMobile ? handleSwipeStart : undefined}
+          onTouchMove={isMobile ? handleSwipeMove : undefined}
+          onTouchEnd={isMobile ? handleSwipeEnd : undefined}
+        >
           <div className="relative aspect-[4/3] bg-neutral-100 dark:bg-neutral-800">
             {selectedImage && (
               <img

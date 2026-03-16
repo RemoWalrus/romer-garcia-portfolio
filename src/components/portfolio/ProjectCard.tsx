@@ -31,9 +31,9 @@ export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
       />
       
       <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
-        <p className="text-xs font-bold text-neutral-400 mb-2 uppercase tracking-wider" itemProp="genre">{project.category}</p>
-        <h2 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4 uppercase" itemProp="name">{project.title}</h2>
-        <p className="text-sm text-neutral-300 mb-6" itemProp="description">{project.description.split('.')[0]}.</p>
+        <p className="text-xs font-bold text-neutral-400 mb-0.5 uppercase tracking-wider" itemProp="genre">{project.category}</p>
+        <h2 className="text-xl md:text-2xl font-roc font-extralight text-white mb-4 md:mb-3 uppercase" itemProp="name">{project.title}</h2>
+        <p className="text-sm text-neutral-400 dark:text-neutral-500 mb-6" itemProp="description">{project.description.split('.')[0]}.</p>
         <span itemProp="creator" itemScope itemType="https://schema.org/Person" className="hidden">
           <meta itemProp="name" content="Romer Garcia" />
         </span>

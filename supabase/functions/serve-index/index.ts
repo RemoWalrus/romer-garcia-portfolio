@@ -5,7 +5,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const DEFAULT_OG_IMAGE = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=graphics&file=RomerGarcia-cover.svg';
+const DEFAULT_OG_IMAGE = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=profile&file=RomerSelfPortrait.jpg';
 
 // Route-specific meta tag overrides for social crawlers
 const routeMeta: Record<string, {

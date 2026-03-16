@@ -20,11 +20,11 @@ const Paradoxxia = () => {
   const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
 
   // Map phase to base glitch intensity + burst overlay
-  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 1 : 0.7) + burst * 0.5;
+  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 1 : 0.7) + burst * 0.5;
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;
-    const clamped = Math.max(0, Math.min(3, target));
+    const clamped = Math.max(0, Math.min(4, target));
     if (clamped === phase) return;
     isAnimating.current = true;
 
@@ -237,10 +237,32 @@ const Paradoxxia = () => {
 
       {/* Circuit board background */}
       <div
-        className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center opacity-40"
+        className={`fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-opacity duration-500 ${phase === 2 ? 'opacity-0' : 'opacity-40'}`}
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
-      <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
+      <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${phase === 2 ? 'bg-yellow-400 dark:bg-yellow-400' : 'bg-white/60 dark:bg-transparent'}`} />
+
+      {/* YouTube video — visible on phase 2 (yellow/video phase) */}
+      <AnimatePresence>
+        {phase === 2 && (
+          <motion.div
+            className="fixed inset-0 z-[15] flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
+            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+          >
+            <div className="w-[80vw] max-w-[900px] aspect-video">
+              <iframe
+                src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Paradoxxia video"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* SVG pixelation filter */}
       {gi > 0.05 && (
@@ -272,7 +294,7 @@ const Paradoxxia = () => {
                 const scanOp = burstZone * 0.4;
                 const pixelate = burstZone > 0.2;
 
-                const textClass = (currentPhase === 2 || currentPhase === 3) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = (currentPhase === 3 || currentPhase === 4) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;
@@ -285,8 +307,12 @@ const Paradoxxia = () => {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
                 } else if (currentPhase === 2) {
+                  // Video phase — no title text
+                  currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
+                  currentText = '';
+                } else if (currentPhase === 3) {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
-                  currentText = 'coming soon';
+                  currentText = 'stay tuned';
                 } else {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
                   currentText = 'create a character';
@@ -389,7 +415,7 @@ const Paradoxxia = () => {
           {/* Music links — visible on coming soon phase */}
           {/* Music links — visible on coming soon phase */}
           <AnimatePresence mode="wait">
-            {phase === 2 && (
+            {phase === 3 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
                 initial={{ opacity: 0 }}
@@ -425,7 +451,7 @@ const Paradoxxia = () => {
 
           {/* AI Character Generator link — visible on phase 3 */}
           <AnimatePresence mode="wait">
-            {phase === 3 && (
+            {phase === 4 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
                 initial={{ opacity: 0 }}
@@ -446,7 +472,7 @@ const Paradoxxia = () => {
 
           {/* Scroll indicator — hidden on last phase */}
           <AnimatePresence>
-            {phase < 3 && (
+            {phase < 4 && (
               <motion.div
                 className="absolute bottom-20 flex flex-col items-center pointer-events-auto cursor-pointer"
                 initial={{ opacity: 0 }}

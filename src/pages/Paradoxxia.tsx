@@ -307,8 +307,12 @@ const Paradoxxia = () => {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
                 } else if (currentPhase === 2) {
+                  // Video phase — no title text
+                  currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
+                  currentText = '';
+                } else if (currentPhase === 3) {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
-                  currentText = 'coming soon';
+                  currentText = 'stay tuned';
                 } else {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
                   currentText = 'create a character';

@@ -50,7 +50,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
   }, []);
 
   const logoFile = scrolled && !isDark ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
-  const logoUrl = getProxiedStorageUrl('graphics', logoFile);
+  const logoUrl = getProxyUrl('graphics', logoFile);
 
   useEffect(() => {
     const fetchSocialLinks = async () => {

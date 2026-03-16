@@ -46,7 +46,7 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
         // Fallback to default image in case of any error
-        const fallbackUrl = getProxiedStorageUrl('images', 'dualshadow.jpg');
+        const fallbackUrl = getProxyUrl('images', 'dualshadow.jpg');
         setBackgroundImage(fallbackUrl);
       }
     };

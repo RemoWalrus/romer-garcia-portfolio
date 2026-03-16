@@ -50,7 +50,7 @@ const NotFound = () => {
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
-        const fallbackUrl = getProxiedStorageUrl('images', 'dualshadow.jpg');
+        const fallbackUrl = getProxyUrl('images', 'dualshadow.jpg');
         setBackgroundImage(fallbackUrl);
       }
     };

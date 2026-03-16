@@ -45,8 +45,8 @@ export const ProjectModal = ({
 
             
 
-            <DialogDescription className="text-neutral-500 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line leading-snug md:leading-relaxed text-left" itemProp="description">
-              {project.description}
+            <DialogDescription className="text-neutral-500 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line leading-snug md:leading-relaxed text-left [&>br+br]:hidden [&]:space-y-0" itemProp="description" style={{ whiteSpace: 'pre-line', lineHeight: '1.5' }}>
+              {project.description.replace(/\n\n+/g, '\n')}
             </DialogDescription>
 
             {project.tech_stack && project.tech_stack.length > 0 && (

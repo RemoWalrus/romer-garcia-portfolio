@@ -1,10 +1,11 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { getProxiedData } from "@/utils/proxyHelper";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface GalleryImage {
   id: number;
@@ -19,6 +20,22 @@ export const ImageGallery = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const imagesPerPage = 6;
+  const isMobile = useIsMobile();
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
+
+  const handleSwipeStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchEndY.current = e.touches[0].clientY;
+  };
+  const handleSwipeMove = (e: React.TouchEvent) => {
+    touchEndY.current = e.touches[0].clientY;
+  };
+  const handleSwipeEnd = () => {
+    if (Math.abs(touchStartY.current - touchEndY.current) > 100) {
+      setSelectedImage(null);
+    }
+  };
 
   useEffect(() => {
     const fetchGalleryImages = async () => {
@@ -124,7 +141,12 @@ export const ImageGallery = () => {
       </div>
 
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="bg-white dark:bg-neutral-900 max-w-4xl w-[95vw] p-0">
+        <DialogContent 
+          className="bg-white dark:bg-neutral-900 max-w-4xl w-[95vw] p-0"
+          onTouchStart={isMobile ? handleSwipeStart : undefined}
+          onTouchMove={isMobile ? handleSwipeMove : undefined}
+          onTouchEnd={isMobile ? handleSwipeEnd : undefined}
+        >
           <div className="relative aspect-[4/3] bg-neutral-100 dark:bg-neutral-800">
             {selectedImage && (
               <img

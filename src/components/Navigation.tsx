@@ -1,7 +1,8 @@
 
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { getProxiedData, getProxiedStorageUrl } from "@/utils/proxyHelper";
+import { getProxiedData } from "@/utils/proxyHelper";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 
 interface NavigationProps {

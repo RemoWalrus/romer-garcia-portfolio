@@ -114,40 +114,6 @@ ${memeComment}  </head>
 </html>`;
 }
 
-// Known social media and SEO crawler user-agent patterns
-const BOT_PATTERNS = [
-  'facebookexternalhit', 'Facebot', 'Twitterbot', 'LinkedInBot',
-  'WhatsApp', 'Slackbot', 'TelegramBot', 'Discordbot',
-  'Googlebot', 'bingbot', 'Baiduspider', 'yandex', 'Pinterestbot',
-  'redditbot', 'Applebot', 'Embedly', 'Quora Link Preview',
-  'Showyoubot', 'outbrain', 'vkShare', 'W3C_Validator',
-  'rogerbot', 'SemrushBot', 'AhrefsBot', 'MJ12bot',
-  'ia_archiver', 'Sogou', 'DuckDuckBot', 'PetalBot',
-  'curl', 'wget', 'python-requests', 'Go-http-client',
-  'opengraph', 'OGP', 'ChatGPT', 'GPTBot', 'Claude',
-];
-
-function isBot(userAgent: string | null): boolean {
-  if (!userAgent) return false;
-  const ua = userAgent.toLowerCase();
-  return BOT_PATTERNS.some(p => ua.includes(p.toLowerCase()));
-}
-
-// The production site origin (Netlify)
-const SITE_ORIGIN = 'https://romergarcia.com';
-
-const htmlHeaders = {
-  ...corsHeaders,
-  'Content-Type': 'text/html; charset=utf-8',
-  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
-  'CDN-Cache-Control': 'no-store',
-  'Vercel-CDN-Cache-Control': 'no-store',
-  'Netlify-CDN-Cache-Control': 'no-store',
-  'Pragma': 'no-cache',
-  'Expires': '0',
-  'Vary': 'User-Agent',
-};
-
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -156,66 +122,45 @@ Deno.serve(async (req) => {
   try {
     const url = new URL(req.url);
     const path = url.searchParams.get('path') || '/';
-    const userAgent = req.headers.get('user-agent');
-
-    // If NOT a bot, fetch the real built index.html from Netlify and return it
-    if (!isBot(userAgent)) {
-      try {
-        const realHtml = await fetch(`${SITE_ORIGIN}/index.html`, {
-          headers: { 'User-Agent': 'serve-index-internal' },
-        });
-        const html = await realHtml.text();
-        return new Response(html, { headers: htmlHeaders });
-      } catch (e) {
-        console.error('Error fetching real index.html, falling back:', e);
-        // Fall through to meta-injected version as fallback
-      }
-    }
     
-    // For bots: serve meta-injected HTML
-    const meta = { ...(routeMeta[path] || defaultMeta) };
+    // Pick route-specific or default meta
+    const meta = routeMeta[path] || defaultMeta;
 
+    // Initialize Supabase client
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? ''
     )
 
     // Try to fetch dynamic meta from metadata table
-    try {
-      const prefix = path === '/' ? '' : path.replace(/^\//, '');
-      const { data } = await supabase
-        .from('metadata')
-        .select('meta_key,meta_value');
-      
-      if (data && data.length > 0) {
-        for (const row of data) {
-          const keyPrefix = prefix ? `${prefix}.` : '';
-          let field: string | null = null;
-          
-          if (prefix && row.meta_key.startsWith(keyPrefix)) {
-            field = row.meta_key.replace(keyPrefix, '');
-          } else if (!prefix && !row.meta_key.includes('.')) {
-            field = row.meta_key;
-          }
-          
-          if (!field) continue;
-          
-          switch (field) {
-            case 'title': meta.title = row.meta_value; break;
-            case 'description': meta.description = row.meta_value; break;
-            case 'keywords': meta.keywords = row.meta_value; break;
-            case 'og_title': meta.ogTitle = row.meta_value; break;
-            case 'og_description': meta.ogDescription = row.meta_value; break;
-            case 'og_url': meta.ogUrl = row.meta_value; break;
-            case 'og_image': meta.ogImage = row.meta_value; break;
-            case 'twitter_title': meta.twitterTitle = row.meta_value; break;
-            case 'twitter_description': meta.twitterDescription = row.meta_value; break;
-            case 'twitter_image': meta.twitterImage = row.meta_value; break;
+    if (routeMeta[path]) {
+      try {
+        const prefix = path.replace(/^\//, '');
+        const { data } = await supabase
+          .from('metadata')
+          .select('meta_key,meta_value')
+          .like('meta_key', `${prefix}.%`);
+        
+        if (data && data.length > 0) {
+          for (const row of data) {
+            const field = row.meta_key.replace(`${prefix}.`, '');
+            switch (field) {
+              case 'title': meta.title = row.meta_value; break;
+              case 'description': meta.description = row.meta_value; break;
+              case 'keywords': meta.keywords = row.meta_value; break;
+              case 'og_title': meta.ogTitle = row.meta_value; break;
+              case 'og_description': meta.ogDescription = row.meta_value; break;
+              case 'og_url': meta.ogUrl = row.meta_value; break;
+              case 'og_image': meta.ogImage = row.meta_value; break;
+              case 'twitter_title': meta.twitterTitle = row.meta_value; break;
+              case 'twitter_description': meta.twitterDescription = row.meta_value; break;
+              case 'twitter_image': meta.twitterImage = row.meta_value; break;
+            }
           }
         }
+      } catch (e) {
+        console.error('Error fetching route meta:', e);
       }
-    } catch (e) {
-      console.error('Error fetching route meta:', e);
     }
 
     // Get the active meme for the homepage
@@ -297,7 +242,7 @@ Deno.serve(async (req) => {
     const html = buildHTML(meta, memeComment);
 
     return new Response(html, {
-      headers: htmlHeaders,
+      headers: { ...corsHeaders, 'Content-Type': 'text/html' },
     });
 
   } catch (error) {
@@ -305,7 +250,7 @@ Deno.serve(async (req) => {
     
     const html = buildHTML(defaultMeta);
     return new Response(html, {
-      headers: htmlHeaders,
+      headers: { ...corsHeaders, 'Content-Type': 'text/html' },
       status: 500,
     });
   }

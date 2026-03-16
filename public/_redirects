@@ -1,12 +1,10 @@
 # Netlify redirects and rewrites
 # Proxy storage/image masking requests to Supabase Edge Functions
-/api/*  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat  200!
-
-# Route pages with custom OG meta through serve-index
-/paradoxxia  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/paradoxxia  200!
-/char-gen  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/char-gen  200!
-/meme  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/meme  200!
-/  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/  200!
+/api/*  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat  200
 
 # Handle client-side routing - redirect all non-file requests to index.html
 /*    /index.html   200
+
+# Optional: Handle specific error codes with custom pages
+# /404.html  404
+# /500.html  500

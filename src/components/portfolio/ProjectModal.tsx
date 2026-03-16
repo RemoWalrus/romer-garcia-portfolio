@@ -33,19 +33,19 @@ export const ProjectModal = ({
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
           <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
-              <div className="-mb-2 md:-mb-1.5 lg:-mb-1">
+              <div className="-mb-2.5 md:-mb-2 lg:-mb-1.5">
                 <span className="text-[10px] md:text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider leading-none">
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-roc font-extralight mb-3 md:mb-4 uppercase leading-tight mt-0" itemProp="name">
+              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-roc font-extralight mb-4 md:mb-5 uppercase leading-tight mt-0" itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>
 
             
 
-            <DialogDescription className="text-neutral-800 dark:text-neutral-100 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line leading-snug md:leading-relaxed text-left" itemProp="description">
+            <DialogDescription className="text-neutral-500 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line leading-snug md:leading-relaxed text-left" itemProp="description">
               {project.description}
             </DialogDescription>
 
@@ -90,7 +90,7 @@ export const ProjectModal = ({
               {project.project_url && (
                 <div 
                   onClick={() => onExternalLink(project.project_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
+                  className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
                   View Live Project <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>
@@ -99,7 +99,7 @@ export const ProjectModal = ({
               {project.github_url && (
                 <div 
                   onClick={() => onExternalLink(project.github_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
+                  className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
                   View Source Code <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>
@@ -108,7 +108,7 @@ export const ProjectModal = ({
               {project.ext_url && !project.project_url && (
                 <div 
                   onClick={() => onExternalLink(project.ext_url)}
-                  className="inline-flex items-center text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
+                  className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
                   View Project <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>

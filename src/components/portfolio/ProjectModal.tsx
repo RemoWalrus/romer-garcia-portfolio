@@ -45,7 +45,7 @@ export const ProjectModal = ({
 
             
 
-            <DialogDescription className="mt-0 lg:mt-5 text-neutral-600 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base text-left flex flex-col gap-[0.55em]" itemProp="description" style={{ lineHeight: '1.35' }}>
+            <DialogDescription className="mt-1.5 md:mt-2 lg:mt-5 text-neutral-600 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base text-left flex flex-col gap-[0.55em]" itemProp="description" style={{ lineHeight: '1.35' }}>
               {project.description.split(/\n\n+/).map((paragraph: string, i: number) => (
                 <span key={i}>{paragraph}</span>
               ))}

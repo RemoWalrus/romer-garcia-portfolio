@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { getProxiedStorageUrl } from "@/utils/proxyHelper";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 
 interface HeroBackgroundProps {
   showVideo: boolean;

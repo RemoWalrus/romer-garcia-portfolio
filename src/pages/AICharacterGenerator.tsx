@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Share2, Download, MoveRight } from "lucide-react";
+import { trackEvent } from "@/components/GoogleAnalytics";
 import { Capacitor } from '@capacitor/core';
 import { Camera, CameraResultType, CameraSource, CameraDirection } from '@capacitor/camera';
 import { Share } from '@capacitor/share';
@@ -377,6 +378,7 @@ const AICharacterGenerator = () => {
   const handleDownload = async () => {
     try {
       if (!generatedImage) return;
+      trackEvent('Character Generator', 'Download Character', displayName || 'unnamed');
 
       const base64Data = generatedImage.split(',')[1];
       const fileName = `${displayName || 'character'}_${Date.now()}.png`;
@@ -463,6 +465,7 @@ const AICharacterGenerator = () => {
     }
 
     setIsGenerating(true);
+    trackEvent('Character Generator', 'Generate Character', `${species}-${gender}-${finalName}`);
     try {
       // Process name through duplicateX first
       let processedName = duplicateX(finalName);
@@ -1179,6 +1182,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                    onClick={() => trackEvent('Music Platform', 'Click Spotify', 'CharGen Page')}
                   >
                     <SpotifyIcon className="w-5 h-5" />
                     Meet Paradoxxia on Spotify
@@ -1189,6 +1193,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                    onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'CharGen Page')}
                   >
                     <AppleMusicIcon className="w-5 h-5" />
                     Apple Music

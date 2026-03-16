@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { trackEvent } from '@/components/GoogleAnalytics';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { getProxiedData } from "@/utils/proxyHelper";
 import { getProxyUrl, toProxyUrl } from "@/utils/supabaseProxy";
@@ -47,6 +48,7 @@ export const About = () => {
 
   const handlePortfolioDownload = () => {
     if (aboutData.portfolio_url) {
+      trackEvent('Download', 'Resume Download', 'Portfolio PDF');
       const proxiedUrl = toProxyUrl(aboutData.portfolio_url, true);
       window.open(proxiedUrl, '_blank');
     }

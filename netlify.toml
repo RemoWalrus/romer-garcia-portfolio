@@ -12,7 +12,33 @@
   status = 200
   force = true
 
-# Handle SPA routing - send all requests to index.html so React Router can handle them
+# Route pages with custom OG meta through serve-index for social crawlers
+[[redirects]]
+  from = "/paradoxxia"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/paradoxxia"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/char-gen"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/char-gen"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/meme"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/meme"
+  status = 200
+  force = true
+
+# Also serve homepage through serve-index for consistent OG tags
+[[redirects]]
+  from = "/"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/"
+  status = 200
+  force = true
+
+# Handle SPA routing - send all other requests to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"

@@ -133,34 +133,44 @@ Deno.serve(async (req) => {
     )
 
     // Try to fetch dynamic meta from metadata table
-    if (routeMeta[path]) {
-      try {
-        const prefix = path.replace(/^\//, '');
-        const { data } = await supabase
-          .from('metadata')
-          .select('meta_key,meta_value')
-          .like('meta_key', `${prefix}.%`);
-        
-        if (data && data.length > 0) {
-          for (const row of data) {
-            const field = row.meta_key.replace(`${prefix}.`, '');
-            switch (field) {
-              case 'title': meta.title = row.meta_value; break;
-              case 'description': meta.description = row.meta_value; break;
-              case 'keywords': meta.keywords = row.meta_value; break;
-              case 'og_title': meta.ogTitle = row.meta_value; break;
-              case 'og_description': meta.ogDescription = row.meta_value; break;
-              case 'og_url': meta.ogUrl = row.meta_value; break;
-              case 'og_image': meta.ogImage = row.meta_value; break;
-              case 'twitter_title': meta.twitterTitle = row.meta_value; break;
-              case 'twitter_description': meta.twitterDescription = row.meta_value; break;
-              case 'twitter_image': meta.twitterImage = row.meta_value; break;
-            }
+    try {
+      const prefix = path === '/' ? '' : path.replace(/^\//, '');
+      const likePattern = prefix ? `${prefix}.%` : '%.%';
+      const { data } = await supabase
+        .from('metadata')
+        .select('meta_key,meta_value');
+      
+      if (data && data.length > 0) {
+        for (const row of data) {
+          // For homepage, match keys without a dot prefix (e.g. "title", "description")
+          // For other routes, match keys with the route prefix (e.g. "paradoxxia.title")
+          const keyPrefix = prefix ? `${prefix}.` : '';
+          let field: string | null = null;
+          
+          if (prefix && row.meta_key.startsWith(keyPrefix)) {
+            field = row.meta_key.replace(keyPrefix, '');
+          } else if (!prefix && !row.meta_key.includes('.')) {
+            field = row.meta_key;
+          }
+          
+          if (!field) continue;
+          
+          switch (field) {
+            case 'title': meta.title = row.meta_value; break;
+            case 'description': meta.description = row.meta_value; break;
+            case 'keywords': meta.keywords = row.meta_value; break;
+            case 'og_title': meta.ogTitle = row.meta_value; break;
+            case 'og_description': meta.ogDescription = row.meta_value; break;
+            case 'og_url': meta.ogUrl = row.meta_value; break;
+            case 'og_image': meta.ogImage = row.meta_value; break;
+            case 'twitter_title': meta.twitterTitle = row.meta_value; break;
+            case 'twitter_description': meta.twitterDescription = row.meta_value; break;
+            case 'twitter_image': meta.twitterImage = row.meta_value; break;
           }
         }
-      } catch (e) {
-        console.error('Error fetching route meta:', e);
       }
+    } catch (e) {
+      console.error('Error fetching route meta:', e);
     }
 
     // Get the active meme for the homepage

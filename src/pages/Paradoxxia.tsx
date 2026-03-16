@@ -413,6 +413,7 @@ const Paradoxxia = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                  onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'Paradoxxia Page')}
                 >
                   <AppleMusicIcon className="w-5 h-5" />
                   Apple Music

@@ -1193,6 +1193,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                    onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'CharGen Page')}
                   >
                     <AppleMusicIcon className="w-5 h-5" />
                     Apple Music

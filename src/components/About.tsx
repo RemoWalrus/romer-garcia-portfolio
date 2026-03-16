@@ -48,6 +48,7 @@ export const About = () => {
 
   const handlePortfolioDownload = () => {
     if (aboutData.portfolio_url) {
+      trackEvent('Download', 'Resume Download', 'Portfolio PDF');
       const proxiedUrl = toProxyUrl(aboutData.portfolio_url, true);
       window.open(proxiedUrl, '_blank');
     }

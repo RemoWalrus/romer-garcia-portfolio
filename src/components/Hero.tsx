@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { getProxiedData } from "@/utils/proxyHelper";
 import type { TitleConfig } from './hero/title-config';
 import { HeroBackground } from './hero/HeroBackground';
@@ -13,6 +13,8 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [showVideo, setShowVideo] = useState(true);
   const [triggerNewBackground, setTriggerNewBackground] = useState(0);
   const [titles, setTitles] = useState<TitleConfig[]>([]);
+  const isSnapping = useRef(false);
+  const snapCooldown = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const fetchTitles = async () => {
@@ -54,7 +56,6 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
       const currentY = window.scrollY;
-      // Only trigger new background when user scrolls back to top (not on initial load or downward scroll)
       if (currentY === 0 && lastScrollY > 50) {
         setTriggerNewBackground(prev => prev + 1);
       }
@@ -63,6 +64,80 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Scroll snap: hero ↔ portfolio
+  useEffect(() => {
+    const heroHeight = window.innerHeight;
+    const headerOffset = 50;
+
+    const getPortfolioTop = () => {
+      const el = document.getElementById('portfolio');
+      if (!el) return heroHeight;
+      return el.getBoundingClientRect().top + window.scrollY - headerOffset;
+    };
+
+    const snapTo = (targetY: number) => {
+      if (isSnapping.current) return;
+      isSnapping.current = true;
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
+      if (snapCooldown.current) clearTimeout(snapCooldown.current);
+      snapCooldown.current = setTimeout(() => {
+        isSnapping.current = false;
+      }, 1000);
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isSnapping.current) {
+        e.preventDefault();
+        return;
+      }
+      const scrollY = window.scrollY;
+      const portfolioTop = getPortfolioTop();
+      // In hero zone scrolling down
+      if (scrollY < portfolioTop * 0.5 && e.deltaY > 0) {
+        e.preventDefault();
+        snapTo(portfolioTop);
+      }
+      // Near portfolio top scrolling up
+      else if (scrollY <= portfolioTop + 100 && scrollY > 0 && e.deltaY < 0) {
+        e.preventDefault();
+        snapTo(0);
+      }
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isSnapping.current) return;
+      const touchEndY = e.changedTouches[0].clientY;
+      const delta = touchStartY - touchEndY;
+      const scrollY = window.scrollY;
+      const portfolioTop = getPortfolioTop();
+
+      // Swipe down (scroll content down) from hero
+      if (delta > 30 && scrollY < portfolioTop * 0.5) {
+        snapTo(portfolioTop);
+      }
+      // Swipe up (scroll content up) near portfolio
+      else if (delta < -30 && scrollY <= portfolioTop + 100 && scrollY > 0) {
+        snapTo(0);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+      if (snapCooldown.current) clearTimeout(snapCooldown.current);
+    };
   }, []);
 
   if (titles.length === 0) {

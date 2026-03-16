@@ -7,24 +7,21 @@ interface PixelTransitionProps {
 }
 
 /** Generates a grid of random-sized pixel blocks that stagger in/out */
-const PixelTransition = ({ active, color = "#facc15" }: PixelTransitionProps) => {
-  // Generate random pixel blocks once
+const PixelTransition = ({ active, color = "#f6c915" }: PixelTransitionProps) => {
   const pixels = useMemo(() => {
     const items: { x: number; y: number; w: number; h: number; delay: number }[] = [];
-    // Fill screen with overlapping random rectangles
-    const count = 120;
+    const count = 220;
     for (let i = 0; i < count; i++) {
-      const w = 4 + Math.random() * 16; // 4-20vw
-      const h = 4 + Math.random() * 16;
+      const w = 2 + Math.random() * 14;
+      const h = 2 + Math.random() * 14;
       items.push({
         x: Math.random() * 100,
         y: Math.random() * 100,
         w,
         h,
-        delay: Math.random() * 0.35,
+        delay: Math.random() * 0.6,
       });
     }
-    // Sort by delay so center-ish ones can appear first if desired
     return items;
   }, []);
 
@@ -37,7 +34,7 @@ const PixelTransition = ({ active, color = "#facc15" }: PixelTransitionProps) =>
             className="fixed inset-0 pointer-events-none z-[1]"
             style={{ backgroundColor: color }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.2 } }}
+            animate={{ opacity: 1, transition: { duration: 0.5, delay: 0.4 } }}
             exit={{ opacity: 0, transition: { duration: 0.15, delay: 0.25 } }}
           />
           {/* Random pixel blocks */}
@@ -57,9 +54,9 @@ const PixelTransition = ({ active, color = "#facc15" }: PixelTransitionProps) =>
                 opacity: 1,
                 scale: 1,
                 transition: {
-                  duration: 0.12 + Math.random() * 0.08,
+                  duration: 0.18 + Math.random() * 0.12,
                   delay: p.delay,
-                  ease: "easeOut",
+                  ease: [0.4, 0, 0.2, 1],
                 },
               }}
               exit={{

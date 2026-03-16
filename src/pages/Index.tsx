@@ -14,6 +14,7 @@ import { GoogleAnalytics, trackEvent } from '@/components/GoogleAnalytics';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PersonSchema } from '@/components/seo/JsonLdSchemas';
 import { getProxiedData } from '@/utils/proxyHelper';
+import { getProxyUrl } from '@/utils/supabaseProxy';
 
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -26,10 +27,10 @@ const Index = () => {
     ogTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     ogDescription: 'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
     ogUrl: 'https://romergarcia.com',
-    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+    ogImage: getProxyUrl('graphics', 'RomerGarcia-cover.svg'),
     twitterTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     twitterDescription: 'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
-    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/RomerGarcia-cover.svg',
+    twitterImage: getProxyUrl('graphics', 'RomerGarcia-cover.svg'),
   });
 
   useEffect(() => {

@@ -136,6 +136,18 @@ function isBot(userAgent: string | null): boolean {
 // The production site origin (Netlify)
 const SITE_ORIGIN = 'https://romergarcia.com';
 
+const htmlHeaders = {
+  ...corsHeaders,
+  'Content-Type': 'text/html; charset=utf-8',
+  'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+  'CDN-Cache-Control': 'no-store',
+  'Vercel-CDN-Cache-Control': 'no-store',
+  'Netlify-CDN-Cache-Control': 'no-store',
+  'Pragma': 'no-cache',
+  'Expires': '0',
+  'Vary': 'User-Agent',
+};
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -149,14 +161,11 @@ Deno.serve(async (req) => {
     // If NOT a bot, fetch the real built index.html from Netlify and return it
     if (!isBot(userAgent)) {
       try {
-        // Fetch the built index.html directly from the dist (bypasses redirects via _redirects precedence)
         const realHtml = await fetch(`${SITE_ORIGIN}/index.html`, {
           headers: { 'User-Agent': 'serve-index-internal' },
         });
         const html = await realHtml.text();
-        return new Response(html, {
-          headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
-        });
+        return new Response(html, { headers: htmlHeaders });
       } catch (e) {
         console.error('Error fetching real index.html, falling back:', e);
         // Fall through to meta-injected version as fallback

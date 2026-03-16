@@ -253,7 +253,7 @@ const Paradoxxia = () => {
           >
             <div className="w-[80vw] max-w-[900px] aspect-video">
               <iframe
-                src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
+                src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -486,7 +486,7 @@ const Paradoxxia = () => {
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
                   {/* Mouse icon */}
-                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className="text-muted-foreground dark:text-[#00d4ff]/60">
+                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className={phase === 2 ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]/60'}>
                     <rect x="1" y="1" width="22" height="34" rx="11" stroke="currentColor" strokeWidth="1.5" />
                     <motion.line
                       x1="12" y1="8" x2="12" y2="14"
@@ -503,7 +503,7 @@ const Paradoxxia = () => {
       </div>
 
       <footer className="fixed bottom-0 left-0 right-0 z-10 py-6 text-center">
-        <p className="text-sm text-muted-foreground dark:text-[#00d4ff] font-roc">
+        <p className={`text-sm font-roc ${phase === 2 ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]'}`}>
           © {new Date().getFullYear()} Romer Garcia. All rights reserved.
         </p>
       </footer>

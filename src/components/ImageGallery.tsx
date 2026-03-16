@@ -20,6 +20,22 @@ export const ImageGallery = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const imagesPerPage = 6;
+  const isMobile = useIsMobile();
+  const touchStartY = useRef<number>(0);
+  const touchEndY = useRef<number>(0);
+
+  const handleSwipeStart = (e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+    touchEndY.current = e.touches[0].clientY;
+  };
+  const handleSwipeMove = (e: React.TouchEvent) => {
+    touchEndY.current = e.touches[0].clientY;
+  };
+  const handleSwipeEnd = () => {
+    if (Math.abs(touchStartY.current - touchEndY.current) > 100) {
+      setSelectedImage(null);
+    }
+  };
 
   useEffect(() => {
     const fetchGalleryImages = async () => {

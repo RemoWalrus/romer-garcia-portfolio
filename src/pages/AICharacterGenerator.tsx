@@ -463,6 +463,7 @@ const AICharacterGenerator = () => {
     }
 
     setIsGenerating(true);
+    trackEvent('Character Generator', 'Generate Character', `${species}-${gender}-${finalName}`);
     try {
       // Process name through duplicateX first
       let processedName = duplicateX(finalName);

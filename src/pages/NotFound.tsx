@@ -1,7 +1,7 @@
 
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProxiedStorageUrl } from "@/utils/proxyHelper";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";

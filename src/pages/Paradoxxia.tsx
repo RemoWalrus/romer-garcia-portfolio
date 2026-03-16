@@ -415,7 +415,7 @@ const Paradoxxia = () => {
           {/* Music links — visible on coming soon phase */}
           {/* Music links — visible on coming soon phase */}
           <AnimatePresence mode="wait">
-            {phase === 2 && (
+            {phase === 3 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
                 initial={{ opacity: 0 }}

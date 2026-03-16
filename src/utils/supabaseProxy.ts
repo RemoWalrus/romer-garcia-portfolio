@@ -31,13 +31,11 @@ export const toProxyUrl = (url: string, download = false): string => {
     return url;
   }
   const path = url.slice(SUPABASE_STORAGE_PREFIX.length);
-  // The path is "bucket/file" or "bucket//file" (double slash for root)
   const slashIndex = path.indexOf('/');
   if (slashIndex === -1) return url;
 
   const bucket = path.slice(0, slashIndex);
   let file = path.slice(slashIndex + 1);
-  // Handle double-slash case (e.g. "projects//Hairwars16.jpg" -> "Hairwars16.jpg" in bucket "projects")
   if (file.startsWith('/')) {
     file = file.slice(1);
   }

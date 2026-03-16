@@ -23,6 +23,33 @@ export const ProjectModal = ({
   onExternalLink 
 }: ProjectModalProps) => {
   const isMobile = useIsMobile();
+  const swipeStartY = useRef<number>(0);
+  const swipeCurrentY = useRef<number>(0);
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const isSwiping = useRef(false);
+
+  const handleSwipeStart = (e: React.TouchEvent) => {
+    swipeStartY.current = e.touches[0].clientY;
+    swipeCurrentY.current = e.touches[0].clientY;
+    isSwiping.current = false;
+  };
+
+  const handleSwipeMove = (e: React.TouchEvent) => {
+    const currentY = e.touches[0].clientY;
+    const diff = currentY - swipeStartY.current;
+    if (diff > 10) {
+      isSwiping.current = true;
+      setSwipeOffset(Math.min(diff, 300));
+    }
+  };
+
+  const handleSwipeEnd = () => {
+    if (swipeOffset > 100) {
+      onClose();
+    }
+    setSwipeOffset(0);
+    isSwiping.current = false;
+  };
 
   if (!project) return null;
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { trackEvent } from '@/components/GoogleAnalytics';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { getProxiedData } from "@/utils/proxyHelper";
 import { getProxyUrl, toProxyUrl } from "@/utils/supabaseProxy";

@@ -45,8 +45,10 @@ export const ProjectModal = ({
 
             
 
-            <DialogDescription className="text-neutral-600 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base whitespace-pre-line text-left [&]:space-y-0" itemProp="description" style={{ whiteSpace: 'pre-line', lineHeight: '1.35', paragraphSpacing: '0' }}>
-              {project.description.replace(/\n\n+/g, '\n\n')}
+            <DialogDescription className="text-neutral-600 dark:text-neutral-400 font-arial mb-2 md:mb-6 text-xs md:text-sm lg:text-base text-left flex flex-col gap-[0.4em]" itemProp="description" style={{ lineHeight: '1.35' }}>
+              {project.description.split(/\n\n+/).map((paragraph: string, i: number) => (
+                <span key={i}>{paragraph}</span>
+              ))}
             </DialogDescription>
 
             {project.tech_stack && project.tech_stack.length > 0 && (

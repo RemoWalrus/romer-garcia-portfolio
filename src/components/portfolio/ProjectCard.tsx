@@ -37,7 +37,7 @@ export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
         <span itemProp="creator" itemScope itemType="https://schema.org/Person" className="hidden">
           <meta itemProp="name" content="Romer Garcia" />
         </span>
-        <div className="flex items-center text-neutral-400 group-hover:text-white transition-colors text-sm font-roc font-bold uppercase">
+        <div className="flex items-center text-white transition-colors text-sm font-roc font-bold uppercase">
           Explore More <MoveRight className="ml-2 w-4 h-4" />
         </div>
       </div>

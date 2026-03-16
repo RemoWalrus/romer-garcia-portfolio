@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { getProxiedData } from "@/utils/proxyHelper";
+import { toProxyUrl } from "@/utils/supabaseProxy";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';

@@ -378,14 +378,14 @@ const Paradoxxia = () => {
           </h1>
 
           {/* Music links — visible on coming soon phase */}
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {phase === 2 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.4, delay: 0.15 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.15 } }}
+                exit={{ opacity: 0, transition: { duration: 0 } }}
+                style={{ position: 'absolute', top: '58%' }}
               >
                 <a 
                   href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"

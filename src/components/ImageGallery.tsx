@@ -21,19 +21,38 @@ export const ImageGallery = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const imagesPerPage = 6;
   const isMobile = useIsMobile();
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
   const touchEndY = useRef<number>(0);
 
   const handleSwipeStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
     touchStartY.current = e.touches[0].clientY;
     touchEndY.current = e.touches[0].clientY;
   };
   const handleSwipeMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
     touchEndY.current = e.touches[0].clientY;
   };
   const handleSwipeEnd = () => {
-    if (Math.abs(touchStartY.current - touchEndY.current) > 100) {
+    const diffX = touchStartX.current - touchEndX.current;
+    const diffY = Math.abs(touchStartY.current - touchEndY.current);
+    const absDiffX = Math.abs(diffX);
+    
+    // Vertical swipe to close
+    if (diffY > 100 && diffY > absDiffX) {
       setSelectedImage(null);
+      return;
+    }
+    // Horizontal swipe to navigate
+    if (absDiffX > 50 && absDiffX > diffY) {
+      if (diffX > 0) {
+        navigateModal('next');
+      } else {
+        navigateModal('prev');
+      }
     }
   };
 

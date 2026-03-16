@@ -65,57 +65,48 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Snap scroll: any scroll while in hero section jumps to portfolio
+  // Snap scroll: any downward scroll from hero snaps to portfolio
   useEffect(() => {
     let snapping = false;
+    let wasAtTop = true;
 
+    const snapToPortfolio = () => {
+      if (snapping) return;
+      snapping = true;
+      const portfolio = document.getElementById('portfolio');
+      if (portfolio) {
+        const offsetPosition = portfolio.getBoundingClientRect().top + window.pageYOffset - 50;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
+      setTimeout(() => { snapping = false; }, 1000);
+    };
+
+    const handleScroll = () => {
+      const heroHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+
+      // If user is in the hero zone (scrolled a little but not past hero)
+      // and was previously at top, snap to portfolio
+      if (wasAtTop && scrollY > 5 && scrollY < heroHeight * 0.8) {
+        snapToPortfolio();
+      }
+
+      wasAtTop = scrollY < 5;
+    };
+
+    // Also handle wheel to prevent partial scrolling
     const handleWheel = (e: WheelEvent) => {
-      if (snapping) return;
-      const heroHeight = window.innerHeight;
-      // Only intercept when user is within the hero section
-      if (window.scrollY < heroHeight * 0.5 && e.deltaY > 0) {
+      if (window.scrollY < 5 && e.deltaY > 0) {
         e.preventDefault();
-        snapping = true;
-        const portfolio = document.getElementById('portfolio');
-        if (portfolio) {
-          const offsetPosition = portfolio.getBoundingClientRect().top + window.pageYOffset - 50;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          setTimeout(() => { snapping = false; }, 800);
-        } else {
-          snapping = false;
-        }
+        snapToPortfolio();
       }
     };
 
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      if (snapping) return;
-      const diff = touchStartY - e.changedTouches[0].clientY;
-      const heroHeight = window.innerHeight;
-      if (window.scrollY < heroHeight * 0.5 && diff > 30) {
-        snapping = true;
-        const portfolio = document.getElementById('portfolio');
-        if (portfolio) {
-          const offsetPosition = portfolio.getBoundingClientRect().top + window.pageYOffset - 50;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          setTimeout(() => { snapping = false; }, 800);
-        } else {
-          snapping = false;
-        }
-      }
-    };
-
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('wheel', handleWheel);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 

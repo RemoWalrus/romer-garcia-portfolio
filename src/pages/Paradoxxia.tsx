@@ -253,7 +253,7 @@ const Paradoxxia = () => {
           >
             <div className="w-[80vw] max-w-[900px] aspect-video">
               <iframe
-                src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
+                src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

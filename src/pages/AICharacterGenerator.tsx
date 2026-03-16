@@ -378,6 +378,7 @@ const AICharacterGenerator = () => {
   const handleDownload = async () => {
     try {
       if (!generatedImage) return;
+      trackEvent('Character Generator', 'Download Character', displayName || 'unnamed');
 
       const base64Data = generatedImage.split(',')[1];
       const fileName = `${displayName || 'character'}_${Date.now()}.png`;

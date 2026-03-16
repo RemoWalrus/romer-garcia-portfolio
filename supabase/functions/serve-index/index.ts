@@ -39,10 +39,10 @@ const routeMeta: Record<string, {
     ogTitle: 'Paradoxxia AI Character Generator | Free Sci-Fi Character Creator',
     ogDescription: 'Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats.',
     ogUrl: 'https://romergarcia.com/char-gen',
-    ogImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/paradoxxia-og.jpg',
+    ogImage: 'https://romergarcia.com/paradoxxia-og.jpg',
     twitterTitle: 'Paradoxxia AI Character Generator',
     twitterDescription: 'Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats.',
-    twitterImage: 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/graphics/paradoxxia-og.jpg',
+    twitterImage: 'https://romergarcia.com/paradoxxia-og.jpg',
   },
 };
 

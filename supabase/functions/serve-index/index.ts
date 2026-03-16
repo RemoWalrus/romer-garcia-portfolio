@@ -114,6 +114,28 @@ ${memeComment}  </head>
 </html>`;
 }
 
+// Known social media and SEO crawler user-agent patterns
+const BOT_PATTERNS = [
+  'facebookexternalhit', 'Facebot', 'Twitterbot', 'LinkedInBot',
+  'WhatsApp', 'Slackbot', 'TelegramBot', 'Discordbot',
+  'Googlebot', 'bingbot', 'Baiduspider', 'yandex', 'Pinterestbot',
+  'redditbot', 'Applebot', 'Embedly', 'Quora Link Preview',
+  'Showyoubot', 'outbrain', 'vkShare', 'W3C_Validator',
+  'rogerbot', 'SemrushBot', 'AhrefsBot', 'MJ12bot',
+  'ia_archiver', 'Sogou', 'DuckDuckBot', 'PetalBot',
+  'curl', 'wget', 'python-requests', 'Go-http-client',
+  'opengraph', 'OGP', 'ChatGPT', 'GPTBot', 'Claude',
+];
+
+function isBot(userAgent: string | null): boolean {
+  if (!userAgent) return false;
+  const ua = userAgent.toLowerCase();
+  return BOT_PATTERNS.some(p => ua.includes(p.toLowerCase()));
+}
+
+// The production site origin (Netlify)
+const SITE_ORIGIN = 'https://romergarcia.com';
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -122,11 +144,28 @@ Deno.serve(async (req) => {
   try {
     const url = new URL(req.url);
     const path = url.searchParams.get('path') || '/';
-    
-    // Pick route-specific or default meta
-    const meta = routeMeta[path] || defaultMeta;
+    const userAgent = req.headers.get('user-agent');
 
-    // Initialize Supabase client
+    // If NOT a bot, fetch the real built index.html from Netlify and return it
+    if (!isBot(userAgent)) {
+      try {
+        // Fetch the built index.html directly from the dist (bypasses redirects via _redirects precedence)
+        const realHtml = await fetch(`${SITE_ORIGIN}/index.html`, {
+          headers: { 'User-Agent': 'serve-index-internal' },
+        });
+        const html = await realHtml.text();
+        return new Response(html, {
+          headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      } catch (e) {
+        console.error('Error fetching real index.html, falling back:', e);
+        // Fall through to meta-injected version as fallback
+      }
+    }
+    
+    // For bots: serve meta-injected HTML
+    const meta = { ...(routeMeta[path] || defaultMeta) };
+
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? ''
@@ -135,15 +174,12 @@ Deno.serve(async (req) => {
     // Try to fetch dynamic meta from metadata table
     try {
       const prefix = path === '/' ? '' : path.replace(/^\//, '');
-      const likePattern = prefix ? `${prefix}.%` : '%.%';
       const { data } = await supabase
         .from('metadata')
         .select('meta_key,meta_value');
       
       if (data && data.length > 0) {
         for (const row of data) {
-          // For homepage, match keys without a dot prefix (e.g. "title", "description")
-          // For other routes, match keys with the route prefix (e.g. "paradoxxia.title")
           const keyPrefix = prefix ? `${prefix}.` : '';
           let field: string | null = null;
           
@@ -252,7 +288,7 @@ Deno.serve(async (req) => {
     const html = buildHTML(meta, memeComment);
 
     return new Response(html, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/html' },
+      headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
     });
 
   } catch (error) {
@@ -260,7 +296,7 @@ Deno.serve(async (req) => {
     
     const html = buildHTML(defaultMeta);
     return new Response(html, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/html' },
+      headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
       status: 500,
     });
   }

@@ -8,11 +8,11 @@ const SUPABASE_STORAGE_PREFIX = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storag
  * @param download - If true, forces download instead of inline display
  */
 export const getProxyUrl = (bucket: string, file: string, download = false): string => {
-  const url = new URL(PROXY_BASE);
-  url.searchParams.set('bucket', bucket);
-  url.searchParams.set('file', file);
-  if (download) url.searchParams.set('download', 'true');
-  return url.toString();
+  const params = new URLSearchParams();
+  params.set('bucket', bucket);
+  params.set('file', file);
+  if (download) params.set('download', 'true');
+  return `${PROXY_BASE}?${params.toString()}`;
 };
 
 /**

@@ -1,4 +1,14 @@
-export const PROXY_BASE = '/api/download-file';
+const SUPABASE_FUNCTIONS_URL = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1';
+
+// Use relative path on Netlify (production) and Vite dev server, absolute URL elsewhere (Lovable preview)
+const isNetlifyOrVite = typeof window !== 'undefined' && (
+  window.location.hostname === 'romergarcia.com' ||
+  window.location.hostname === 'www.romergarcia.com' ||
+  window.location.hostname === 'localhost' ||
+  window.location.hostname.endsWith('.netlify.app')
+);
+
+export const PROXY_BASE = isNetlifyOrVite ? '/api/download-file' : `${SUPABASE_FUNCTIONS_URL}/download-file`;
 const SUPABASE_STORAGE_PREFIX = 'https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/';
 
 /**

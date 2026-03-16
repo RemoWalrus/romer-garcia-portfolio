@@ -385,7 +385,7 @@ const Paradoxxia = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.15 } }}
                 exit={{ opacity: 0, transition: { duration: 0 } }}
-                style={{ position: 'absolute', top: '58%' }}
+                style={{ position: 'absolute', top: '54%' }}
               >
                 <a 
                   href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"

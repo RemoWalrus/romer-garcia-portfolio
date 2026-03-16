@@ -69,25 +69,6 @@ export const ProjectModal = ({
               </div>
             )}
             
-            {/* Mini thumbnail navigator - mobile only */}
-            {!isMobile ? null : (project.additional_images?.length > 0 && !project.youtube_url) && (
-              <div className="flex gap-1.5 mb-0 overflow-x-auto pb-0">
-                {[project.image_url, ...project.additional_images].map((img: string, index: number) => (
-                  <div
-                    key={index}
-                    onClick={() => onImageClick(index)}
-                    className={`flex-shrink-0 w-12 h-12 rounded overflow-hidden cursor-pointer border-2 transition-all ${
-                      index === heroImageIndex 
-                        ? 'border-neutral-900 dark:border-white opacity-100' 
-                        : 'border-transparent opacity-50 hover:opacity-80'
-                    }`}
-                  >
-                    <img src={img} alt={`${project.title} thumbnail ${index + 1}`} className="w-full h-full object-cover" draggable={false} />
-                  </div>
-                ))}
-              </div>
-            )}
-
             <div className="flex flex-col gap-1 md:gap-3">
               {project.project_url && (
                 <div 
@@ -116,6 +97,25 @@ export const ProjectModal = ({
                 </div>
               )}
             </div>
+
+            {/* Mini thumbnail navigator - mobile only */}
+            {!isMobile ? null : (project.additional_images?.length > 0 && !project.youtube_url) && (
+              <div className="flex gap-1.5 mb-0 overflow-x-auto pb-0">
+                {[project.image_url, ...project.additional_images].map((img: string, index: number) => (
+                  <div
+                    key={index}
+                    onClick={() => onImageClick(index)}
+                    className={`flex-shrink-0 w-12 h-12 rounded overflow-hidden cursor-pointer border-2 transition-all ${
+                      index === heroImageIndex 
+                        ? 'border-neutral-900 dark:border-white opacity-100' 
+                        : 'border-transparent opacity-50 hover:opacity-80'
+                    }`}
+                  >
+                    <img src={img} alt={`${project.title} thumbnail ${index + 1}`} className="w-full h-full object-cover" draggable={false} />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="md:w-3/5 bg-white dark:bg-neutral-950 flex-1 md:h-full flex flex-col w-full overflow-hidden min-h-0 max-h-[40vh] md:max-h-none">

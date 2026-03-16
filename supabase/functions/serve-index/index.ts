@@ -297,7 +297,7 @@ Deno.serve(async (req) => {
     const html = buildHTML(meta, memeComment);
 
     return new Response(html, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
+      headers: htmlHeaders,
     });
 
   } catch (error) {
@@ -305,7 +305,7 @@ Deno.serve(async (req) => {
     
     const html = buildHTML(defaultMeta);
     return new Response(html, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' },
+      headers: htmlHeaders,
       status: 500,
     });
   }

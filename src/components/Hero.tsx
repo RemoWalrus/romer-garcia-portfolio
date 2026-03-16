@@ -68,8 +68,8 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   // Scroll snap: hero ↔ portfolio
   useEffect(() => {
-    const heroHeight = window.innerHeight;
-    const headerOffset = 50;
+    const heroEl = document.querySelector('.h-screen');
+    const heroHeight = heroEl ? heroEl.getBoundingClientRect().height : window.innerHeight;
 
     const getPortfolioTop = () => {
       const el = document.getElementById('portfolio');

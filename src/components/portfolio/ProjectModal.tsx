@@ -33,12 +33,12 @@ export const ProjectModal = ({
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden" itemScope itemType="https://schema.org/CreativeWork">
           <div className="md:w-2/5 px-4 py-3 md:p-8 lg:p-12 overflow-y-auto w-full">
             <DialogHeader className="text-left">
-              <div className="-mb-2 md:-mb-1.5 lg:-mb-1">
+              <div className="-mb-2.5 md:-mb-2 lg:-mb-1.5">
                 <span className="text-[10px] md:text-xs font-bold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider leading-none">
                   {project.category}
                 </span>
               </div>
-              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-roc font-extralight mb-3 md:mb-4 uppercase leading-tight mt-0" itemProp="name">
+              <DialogTitle className="text-xl md:text-2xl lg:text-3xl font-roc font-extralight mb-4 md:mb-5 uppercase leading-tight mt-0" itemProp="name">
                 {project.title}
               </DialogTitle>
             </DialogHeader>

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePageMeta } from '@/hooks/use-page-meta';
 import { Navigation } from '@/components/Navigation';
@@ -15,79 +16,109 @@ import { PersonSchema } from '@/components/seo/JsonLdSchemas';
 import { getProxiedData } from '@/utils/proxyHelper';
 import { getProxyUrl } from '@/utils/supabaseProxy';
 
-const deferredSectionStyle = {
-  contentVisibility: 'auto' as const,
-  containIntrinsicSize: '900px',
-};
-
 const Index = () => {
   const [scrolled, setScrolled] = useState(false);
   const [projects, setProjects] = useState<any[]>([]);
   const [socialLinks, setSocialLinks] = useState<any>({});
-  const scrollRaf = useRef<number>(0);
   const meta = usePageMeta(undefined, {
     title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
-    description:
-      'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
-    keywords:
-      'Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI',
+    description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
+    keywords: 'Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI',
     ogTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
-    ogDescription:
-      'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
+    ogDescription: 'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
     ogUrl: 'https://romergarcia.com',
     ogImage: getProxyUrl('graphics', 'RomerGarcia-cover.svg'),
     twitterTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
-    twitterDescription:
-      'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
+    twitterDescription: 'U.S. Army veteran turned Design Lead. Explore high-impact digital campaigns blending AI, strategy, and visual storytelling.',
     twitterImage: getProxyUrl('graphics', 'RomerGarcia-cover.svg'),
   });
 
   useEffect(() => {
-    if (import.meta.env.DEV) {
-      console.log('RomerGarcia.com');
-    }
+    console.log(`
+                                              *                            
+                                @@@-%@@@@@@@@@@  =@@@                         
+                              @@% +@@ @@@@@+%@@@@@@@@@@@                        
+                            %@@@@@@  : @ : @@@ @@@@+  -                            
+                          @ @.*:@@@  @ @@ ##@@@@%@@@@@                              
+                          @-@ # .  #@@@+.%          @@@@                             
+                       @@@@. *@ @@@-   @                 %                             
+                      @@@@ @ :    @ @@@               @@*@@+                            
+                     @@ .@@@ @ @:@@ @#            @@@@@@=#@                             
+                     @ @ #:@ @@ @-@ @  -  =     -@@*#@+  @@@@-@@@                        
+                     @@% -@%@  @@#:@ .  .#     = %%@* @@@* @@   @                          
+                    @@@-=@ @ @  @ @:  %-.   -@@@@@ @  @@@  @   :@                            
+                    @@.@++ * %@+* @:= *.@@@ ..      + :   @@    *                            
+                     @=@%*@%@@ @#@@@@@@@@@        @@@@.  = @  @@@                             
+                     @@%#%%% %#@     @  @              @@@ @@@@                                
+                      @@##@+*- #@@@@@+ + @..     :...   --@@. .:@@                               
+                       @@#%-@@@@  %@@    @ :      .     #* @% @@%@                               
+                        @#%#%%%** %@@ %  -@ @ . . .   ..=    @@*%                                
+                        @@@%%%#@@ .     . .#.+=.@  @. . :%.%@%##@@*                              
+                          @@@%-%@@@@: .%=  +:+*- % *+*%@*@@%##%#%@@                              
+                            @@@@#%#@+@@@@.:@+*#@@@#%#@%@@#+%###:#%@                              
+                              =@@@%@* @@@%*+*@%%##@%#%%%+%%%%#%*%+@                              
+                                 @@@@.. .+@#%#%%%#%%%%%%%%##%%##%@@                              
+                                   @@+++.-=%%%%:%%#%##%=%#%%#%@@@@                               
+                                     %==+--+#%%%%%%%##%%%#####@                                  
+                                     @--=-=-+%#%%####%%%@%%%##@@@@                               
+                                    @@:=:--::+#%%%%#%%#*--#%####%@@@@@@@@@@@@@@@ .               
+                                  @@@.-=-=--+ --##%%%#-+=#%%##################%@@@@@@@@@@@       
+                                 @@%@:=.=::--=-==-+#*+++%%%######%###############%%#%#*-#@@      
+                                @@%%%::-:--=+%%##%+#**%%%########################%#=%+*@#*%@     
+                               @@##%%@::--=+=*++++=:*%%@@@%%%############%%%%%%%%%%*%%%#=%#@@@   
+                            @@@@#####%@@:-+-==+-+==-@@@#*%@@@############%*#####*###%%###%##%@@  
+                          @@@#########%%@+=-==+-=+-+@       @#############%%%#%%######%**#%%#%@@ 
+                      @@@@@#############%%@----====+#-:..   @###############%###%#%###%%#%#%#%#@%
+                     @@%%#################%@@#---::-===--: @@############%#########%#%#%*%##%###*
+                  @@@@######################%%@@@@@%===-=::@###########################%#%######*
+               @@@@%##############################%%@@@+++@%####################################*
+             @@@%#####################################%@#*%#####################################*
+            @@%########################################%%%%#####################################*
+            @###################################################################################*
+           @@###################################################################################*
+           @%###################################################################################*
+           @####################################################################################*
+          @@************************************************************************************+
+                                               RomerGarcia.com
+`);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (scrollRaf.current) return;
-
-      scrollRaf.current = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > 20);
-        scrollRaf.current = 0;
-      });
+      const isScrolled = window.scrollY > 20;
+      setScrolled(isScrolled);
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollRaf.current) cancelAnimationFrame(scrollRaf.current);
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    const fetchPageData = async () => {
+    const fetchProjects = async () => {
       try {
-        const [projectsData, socialData] = await Promise.all([
-          getProxiedData('projects', {
-            order: 'sort_order:asc',
-          }),
-          getProxiedData('sections', {
-            columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
-            filter: 'section_name:eq:social',
-          }),
-        ]);
-
-        if (projectsData) setProjects(projectsData);
-        if (socialData && socialData.length > 0) setSocialLinks(socialData[0]);
+        const data = await getProxiedData('projects', {
+          order: 'sort_order:asc'
+        });
+        if (data) setProjects(data);
       } catch (error) {
-        console.error('Error fetching index page data:', error);
+        console.error('Error fetching projects for schema:', error);
       }
     };
 
-    fetchPageData();
+    const fetchSocialLinks = async () => {
+      try {
+        const data = await getProxiedData('sections', {
+          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
+          filter: 'section_name:eq:social'
+        });
+        if (data && data.length > 0) setSocialLinks(data[0]);
+      } catch (error) {
+        console.error('Error fetching social links for schema:', error);
+      }
+    };
+
+    fetchProjects();
+    fetchSocialLinks();
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -99,7 +130,7 @@ const Index = () => {
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth',
+        behavior: 'smooth'
       });
 
       trackEvent('Navigation', 'Section Visit', sectionId);
@@ -112,19 +143,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden bg-neutral-950">
+    <div className="bg-neutral-950 min-h-screen flex flex-col overflow-x-hidden">
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
         <meta name="keywords" content={meta.keywords} />
         <link rel="canonical" href={meta.ogUrl} />
-
+        
+        {/* Open Graph */}
         <meta property="og:title" content={meta.ogTitle} />
         <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={meta.ogUrl} />
         {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
-
+        
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
@@ -133,37 +166,27 @@ const Index = () => {
       <PersonSchema projects={projects} socialLinks={socialLinks} />
       <ThemeToggle />
       <GoogleAnalytics />
-      <div className="fixed inset-0 z-[1] pointer-events-none mix-blend-overlay opacity-5">
-        <div
-          className="absolute inset-0 animate-scanline"
-          style={{
-            background:
-              'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 2px)',
-            backgroundSize: '100% 4px',
-          }}
-        />
+      <div className="fixed inset-0 pointer-events-none z-[1] mix-blend-overlay opacity-5">
+        <div className="absolute inset-0 animate-scanline" style={{
+          background: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 2px)',
+          backgroundSize: '100% 4px',
+        }} />
       </div>
 
-      <Navigation scrolled={scrolled} scrollToSection={scrollToSection} scrollToTop={scrollToTop} />
-
+      <Navigation 
+        scrolled={scrolled} 
+        scrollToSection={scrollToSection}
+        scrollToTop={scrollToTop}
+      />
+      
       <main>
         <Hero scrollToSection={scrollToSection} />
         <div className="relative z-10 bg-background">
-          <div style={deferredSectionStyle}>
-            <Portfolio />
-          </div>
-          <div style={deferredSectionStyle}>
-            <About />
-          </div>
-          <div style={deferredSectionStyle}>
-            <ImageGallery />
-          </div>
-          <div style={deferredSectionStyle}>
-            <Contact />
-          </div>
-          <div style={deferredSectionStyle}>
-            <Quote />
-          </div>
+          <Portfolio />
+          <About />
+          <ImageGallery />
+          <Contact />
+          <Quote />
         </div>
       </main>
       <Footer />

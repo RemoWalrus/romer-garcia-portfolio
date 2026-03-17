@@ -3,7 +3,7 @@
  * Detects hardware capabilities and network conditions to decide
  * whether to run full or lite animations.
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface PerformanceTier {
   /** 'full' = all effects, 'lite' = reduced animations */
@@ -16,33 +16,28 @@ interface PerformanceTier {
   prefersReducedMotion: boolean;
   /** Device memory in GB (if available) */
   deviceMemory: number | null;
-  /** Network quality hint when available */
-  effectiveType: string | null;
 }
 
 const getPerformanceTier = (): PerformanceTier => {
   const cores = navigator.hardwareConcurrency || 2;
-  const nav = navigator as Navigator & {
-    connection?: {
-      saveData?: boolean;
-      effectiveType?: string;
-    };
-    deviceMemory?: number;
-  };
 
-  const saveData = !!nav.connection?.saveData;
-  const effectiveType = nav.connection?.effectiveType ?? null;
+  // Save-data hint
+  const nav = navigator as any;
+  const saveData = !!(nav.connection?.saveData);
+
+  // Reduced motion preference
   const prefersReducedMotion =
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const deviceMemory = nav.deviceMemory ?? null;
-  const hasSlowNetworkHint = effectiveType === 'slow-2g' || effectiveType === '2g' || effectiveType === '3g';
 
+  // Device memory (Chrome-only API)
+  const deviceMemory: number | null = (nav as any).deviceMemory ?? null;
+
+  // Determine tier
   const isLite =
     cores < 4 ||
     saveData ||
     prefersReducedMotion ||
-    hasSlowNetworkHint ||
     (deviceMemory !== null && deviceMemory < 4);
 
   return {
@@ -51,7 +46,6 @@ const getPerformanceTier = (): PerformanceTier => {
     saveData,
     prefersReducedMotion,
     deviceMemory,
-    effectiveType,
   };
 };
 

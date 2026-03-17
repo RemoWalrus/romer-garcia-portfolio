@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
-import { getProxiedData } from '@/utils/proxyHelper';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import { getProxiedData } from "@/utils/proxyHelper";
 import type { TitleConfig } from './hero/title-config';
 import { HeroBackground } from './hero/HeroBackground';
 import { HeroContent } from './hero/HeroContent';
-import { usePerformanceTier } from '@/hooks/use-performance';
 
 interface HeroProps {
   scrollToSection: (sectionId: string) => void;
 }
 
 export const Hero = ({ scrollToSection }: HeroProps) => {
-  const { tier, prefersReducedMotion } = usePerformanceTier();
   const [titleIndex, setTitleIndex] = useState(0);
   const [showVideo, setShowVideo] = useState(true);
   const [triggerNewBackground, setTriggerNewBackground] = useState(0);
@@ -22,9 +20,9 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     const fetchTitles = async () => {
       try {
         const data = await getProxiedData('hero_titles', {
-          order: 'sort_order:asc',
+          order: 'sort_order:asc'
         });
-
+        
         if (data) {
           setTitles(data);
         }
@@ -48,7 +46,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   useEffect(() => {
     if (titles.length > 0 && titleIndex < titles.length - 1) {
       const timer = setTimeout(() => {
-        setTitleIndex((prev) => prev + 1);
+        setTitleIndex(prev => prev + 1);
       }, 550);
       return () => clearTimeout(timer);
     }
@@ -56,39 +54,22 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    let raf = 0;
-
     const handleScroll = () => {
-      if (raf) return;
-
-      raf = requestAnimationFrame(() => {
-        const currentY = window.scrollY;
-        if (currentY === 0 && lastScrollY > 50) {
-          setTriggerNewBackground((prev) => prev + 1);
-        }
-        lastScrollY = currentY;
-        raf = 0;
-      });
+      const currentY = window.scrollY;
+      if (currentY === 0 && lastScrollY > 50) {
+        setTriggerNewBackground(prev => prev + 1);
+      }
+      lastScrollY = currentY;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Scroll snap: hero ↔ portfolio
   useEffect(() => {
-    const pointerIsFine = window.matchMedia('(pointer: fine)').matches;
-    const enableSnap = tier === 'full' && !prefersReducedMotion && pointerIsFine;
-
-    if (!enableSnap) {
-      return;
-    }
-
-    const heroEl = document.getElementById('hero');
+    const heroEl = document.querySelector('.h-screen');
     const heroHeight = heroEl ? heroEl.getBoundingClientRect().height : window.innerHeight;
-    let settleTimeout: ReturnType<typeof setTimeout> | null = null;
 
     const getPortfolioTop = () => {
       const el = document.getElementById('portfolio');
@@ -103,53 +84,76 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
       if (snapCooldown.current) clearTimeout(snapCooldown.current);
       snapCooldown.current = setTimeout(() => {
         isSnapping.current = false;
-      }, 700);
+      }, 1000);
     };
 
-    const handleScrollEnd = () => {
-      if (settleTimeout) clearTimeout(settleTimeout);
-
-      settleTimeout = setTimeout(() => {
-        if (isSnapping.current) return;
-
-        const scrollY = window.scrollY;
-        const portfolioTop = getPortfolioTop();
-
-        if (scrollY > 120 && scrollY < portfolioTop * 0.4) {
-          snapTo(portfolioTop);
-          return;
-        }
-
-        if (scrollY > 0 && scrollY < 48) {
-          snapTo(0);
-          return;
-        }
-
-        if (scrollY > portfolioTop - 120 && scrollY < portfolioTop + 80) {
-          snapTo(portfolioTop);
-        }
-      }, 120);
+    const handleWheel = (e: WheelEvent) => {
+      if (isSnapping.current) {
+        e.preventDefault();
+        return;
+      }
+      const scrollY = window.scrollY;
+      const portfolioTop = getPortfolioTop();
+      // In hero zone scrolling down
+      if (scrollY < portfolioTop * 0.5 && e.deltaY > 0) {
+        e.preventDefault();
+        snapTo(portfolioTop);
+      }
+      // Near portfolio top scrolling up
+      else if (scrollY <= portfolioTop + 100 && scrollY > 0 && e.deltaY < 0) {
+        e.preventDefault();
+        snapTo(0);
+      }
     };
 
-    window.addEventListener('scroll', handleScrollEnd, { passive: true });
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isSnapping.current) return;
+      const touchEndY = e.changedTouches[0].clientY;
+      const delta = touchStartY - touchEndY;
+      const scrollY = window.scrollY;
+      const portfolioTop = getPortfolioTop();
+
+      // Swipe down (scroll content down) from hero
+      if (delta > 30 && scrollY < portfolioTop * 0.5) {
+        snapTo(portfolioTop);
+      }
+      // Swipe up (scroll content up) near portfolio
+      else if (delta < -30 && scrollY <= portfolioTop + 100 && scrollY > 0) {
+        snapTo(0);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScrollEnd);
-      if (settleTimeout) clearTimeout(settleTimeout);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
       if (snapCooldown.current) clearTimeout(snapCooldown.current);
     };
-  }, [prefersReducedMotion, tier]);
+  }, []);
 
   if (titles.length === 0) {
-    return <div className="h-screen" aria-hidden="true" />;
+    return null;
   }
 
   return (
-    <div className="relative h-screen cursor-default">
-      <section id="hero" className="fixed inset-0 flex h-screen items-center justify-center overflow-hidden">
+    <div className="h-screen relative cursor-default">
+      <section id="hero" className="fixed inset-0 h-screen flex items-center justify-center overflow-hidden">
         <HeroBackground showVideo={showVideo} triggerNewBackground={triggerNewBackground} />
-        <div className="pointer-events-none absolute inset-0 z-10 h-1/2 bg-gradient-to-b from-black/[0.03] via-transparent to-transparent mix-blend-multiply" />
-        <HeroContent titles={titles} titleIndex={titleIndex} scrollToSection={scrollToSection} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/[0.03] to-transparent via-transparent h-1/2 mix-blend-multiply pointer-events-none z-10" />
+        <HeroContent
+          titles={titles}
+          titleIndex={titleIndex}
+          scrollToSection={scrollToSection}
+        />
       </section>
     </div>
   );

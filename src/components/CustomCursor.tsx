@@ -9,6 +9,8 @@ const SIZE_DEFAULT = 36;
 const SIZE_HOVER = 64;
 const DOT_DEFAULT = 6;
 const DOT_HOVER = 8;
+const IDLE_MS = 2000;
+const SETTLE_THRESHOLD = 0.5; // px – stop loop when ring is close enough
 
 interface CustomCursorProps {
   color?: string;
@@ -31,7 +33,78 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
   const prevHovering = useRef(false);
   const visible = useRef(false);
   const raf = useRef<number>(0);
+  const running = useRef(false);
   const lite = useRef(isLiteMode());
+
+  // Extracted so onMouseMove can reference it
+  const animateRef = useRef<() => void>(() => {});
+
+  const startLoop = useCallback(() => {
+    if (!running.current) {
+      running.current = true;
+      raf.current = requestAnimationFrame(animateRef.current);
+    }
+  }, []);
+
+  // Build the animation function once
+  useEffect(() => {
+    animateRef.current = () => {
+      const mx = mouse.current.x;
+      const my = mouse.current.y;
+
+      // Ring interpolation
+      ringPos.current.x += (mx - ringPos.current.x) * RING_LERP;
+      ringPos.current.y += (my - ringPos.current.y) * RING_LERP;
+
+      const isHover = hovering.current;
+      const size = isHover ? SIZE_HOVER : SIZE_DEFAULT;
+      const half = size / 2;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
+        const inner = ringRef.current.firstElementChild as HTMLElement | null;
+        if (inner) {
+          inner.style.width = `${size}px`;
+          inner.style.height = `${size}px`;
+          inner.style.marginLeft = `${-half}px`;
+          inner.style.marginTop = `${-half}px`;
+        }
+      }
+
+      // Ghost interpolation — skip in lite mode
+      if (!lite.current && ghostRef.current) {
+        ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
+        ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
+        ghostRef.current.style.transform = `translate3d(${ghostPos.current.x}px, ${ghostPos.current.y}px, 0)`;
+        ghostRef.current.style.opacity = (isHover || prevHovering.current) ? '0.3' : '0';
+        const inner = ghostRef.current.firstElementChild as HTMLElement | null;
+        if (inner) {
+          inner.style.width = `${size}px`;
+          inner.style.height = `${size}px`;
+          inner.style.marginLeft = `${-half}px`;
+          inner.style.marginTop = `${-half}px`;
+        }
+      }
+
+      prevHovering.current = isHover;
+
+      // Check if ring has settled – if so, pause the loop to save CPU
+      const dx = mx - ringPos.current.x;
+      const dy = my - ringPos.current.y;
+      const settled = dx * dx + dy * dy < SETTLE_THRESHOLD * SETTLE_THRESHOLD;
+
+      if (settled && !isHover && !prevHovering.current) {
+        // Snap exactly and stop
+        ringPos.current.x = mx;
+        ringPos.current.y = my;
+        ghostPos.current.x = mx;
+        ghostPos.current.y = my;
+        running.current = false;
+      } else {
+        raf.current = requestAnimationFrame(animateRef.current);
+      }
+    };
+  }, []);
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     mouse.current.x = e.clientX;
@@ -44,7 +117,8 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
     if (dotRef.current) {
       dotRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
     }
-  }, []);
+    startLoop();
+  }, [startLoop]);
 
   const onMouseOver = useCallback((e: MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -83,55 +157,13 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
     document.addEventListener('mouseleave', onMouseLeave);
     document.addEventListener('mouseenter', onMouseEnter);
 
-    const animate = () => {
-      const mx = mouse.current.x;
-      const my = mouse.current.y;
-
-      // Ring interpolation
-      ringPos.current.x += (mx - ringPos.current.x) * RING_LERP;
-      ringPos.current.y += (my - ringPos.current.y) * RING_LERP;
-
-      const isHover = hovering.current;
-      const size = isHover ? SIZE_HOVER : SIZE_DEFAULT;
-      const half = size / 2;
-
-      if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0)`;
-        const inner = ringRef.current.firstElementChild as HTMLElement;
-        if (inner) {
-          inner.style.width = `${size}px`;
-          inner.style.height = `${size}px`;
-          inner.style.marginLeft = `${-half}px`;
-          inner.style.marginTop = `${-half}px`;
-        }
-      }
-
-      // Ghost interpolation — skip in lite mode for fewer composited layers
-      if (!lite.current && ghostRef.current) {
-        ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
-        ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
-        ghostRef.current.style.transform = `translate3d(${ghostPos.current.x}px, ${ghostPos.current.y}px, 0)`;
-        ghostRef.current.style.opacity = (isHover || prevHovering.current) ? '0.3' : '0';
-        const inner = ghostRef.current.firstElementChild as HTMLElement;
-        if (inner) {
-          inner.style.width = `${size}px`;
-          inner.style.height = `${size}px`;
-          inner.style.marginLeft = `${-half}px`;
-          inner.style.marginTop = `${-half}px`;
-        }
-      }
-
-      prevHovering.current = isHover;
-      raf.current = requestAnimationFrame(animate);
-    };
-    raf.current = requestAnimationFrame(animate);
-
     return () => {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseover', onMouseOver);
       document.removeEventListener('mouseleave', onMouseLeave);
       document.removeEventListener('mouseenter', onMouseEnter);
       cancelAnimationFrame(raf.current);
+      running.current = false;
     };
   }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter]);
 

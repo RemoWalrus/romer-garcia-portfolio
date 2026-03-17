@@ -115,7 +115,7 @@ All content is database-driven — no code changes needed for updates.
 | `quotes` | Inspirational quotes (randomly selected via `get_random_quote` function) |
 | `daily_memes` | Developer memes with coding tips and fun facts |
 | `metadata` | Page-level SEO meta tags |
-| `config` | Site configuration key-value pairs |
+| `config` | Site configuration key-value pairs (includes `paradoxxia_lore_text` for the Paradoxxia yellow-phase typewriter lore) |
 | `profile` | Profile information |
 
 ### Alt Text for Images

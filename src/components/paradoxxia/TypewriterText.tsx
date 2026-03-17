@@ -44,25 +44,22 @@ const TypewriterText = ({ text, active, speed = 30 }: TypewriterTextProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.3 } }}
           exit={{ opacity: 0, transition: { duration: 0.25 } }}
-          className="w-full max-w-[900px] px-6 relative"
+          className="w-full max-w-[900px] px-6"
         >
-          {/* Invisible full text to reserve space */}
-          <p
-            className="text-xs md:text-sm leading-relaxed font-mono"
-            style={{ visibility: "hidden", position: "absolute" }}
-            aria-hidden
-          >
-            {text}
-          </p>
-          {/* Visible typed text */}
-          <p
-            className="text-black/80 text-xs md:text-sm leading-relaxed font-mono"
-          >
-            {text.slice(0, displayedCount)}
-            {displayedCount < text.length && (
-              <span className="inline-block w-[2px] h-[1em] bg-black/70 ml-[1px] animate-pulse align-text-bottom" />
-            )}
-          </p>
+          <div className="relative min-h-[11rem] md:min-h-[9rem]">
+            <p
+              className="text-[10px] md:text-xs leading-relaxed font-mono opacity-0 pointer-events-none select-none"
+              aria-hidden
+            >
+              {text}
+            </p>
+            <p className="absolute inset-0 text-black/80 text-[10px] md:text-xs leading-relaxed font-mono">
+              {text.slice(0, displayedCount)}
+              {displayedCount < text.length && (
+                <span className="inline-block w-[2px] h-[1em] bg-black/70 ml-[1px] animate-pulse align-text-bottom" />
+              )}
+            </p>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

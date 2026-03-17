@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import Index from "./pages/Index";
 import Meme from "./pages/Meme";
@@ -25,14 +25,30 @@ const queryClient = new QueryClient({
 
 const NEON_BLUE = 'hsl(192, 100%, 50%)';
 const NEON_BLUE_GHOST = 'hsla(192, 100%, 50%, 0.3)';
+const BLACK_CURSOR = 'hsl(0, 0%, 0%)';
+const BLACK_CURSOR_GHOST = 'hsla(0, 0%, 0%, 0.28)';
 
 const RoutedCursor = () => {
   const location = useLocation();
+  const [isYellowPhase, setIsYellowPhase] = useState(false);
+
+  useEffect(() => {
+    const handlePhaseChange = (event: Event) => {
+      const customEvent = event as CustomEvent<number>;
+      setIsYellowPhase(customEvent.detail === 2);
+    };
+
+    window.addEventListener('paradoxxia-phase-change', handlePhaseChange as EventListener);
+    return () => window.removeEventListener('paradoxxia-phase-change', handlePhaseChange as EventListener);
+  }, []);
+
   const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia';
+  const useBlackCursor = location.pathname === '/paradoxxia' && isYellowPhase;
+
   return (
     <CustomCursor
-      color={useNeonCursor ? NEON_BLUE : undefined}
-      ghostColor={useNeonCursor ? NEON_BLUE_GHOST : undefined}
+      color={useBlackCursor ? BLACK_CURSOR : useNeonCursor ? NEON_BLUE : undefined}
+      ghostColor={useBlackCursor ? BLACK_CURSOR_GHOST : useNeonCursor ? NEON_BLUE_GHOST : undefined}
     />
   );
 };

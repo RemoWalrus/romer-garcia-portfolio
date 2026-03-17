@@ -44,7 +44,7 @@ const TypewriterText = ({ text, active, speed = 30 }: TypewriterTextProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.4, delay: 0.3 } }}
           exit={{ opacity: 0, transition: { duration: 0.25 } }}
-          className="w-full max-w-[900px] px-6"
+          className="w-full max-w-[900px] px-6 relative"
         >
           {/* Invisible full text to reserve space */}
           <p

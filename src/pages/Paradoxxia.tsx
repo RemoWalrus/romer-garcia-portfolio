@@ -47,23 +47,28 @@ const Paradoxxia = () => {
     if (clamped === phase) return;
     isAnimating.current = true;
 
-    // Subtle glitch burst with pixelation
+    // Subtle glitch burst with pixelation — fewer steps in lite mode
     setBurst(0.5);
     const s = speed;
-    const burstSteps = [
-      { delay: 60 * s, value: 0.4 },
-      { delay: 120 * s, value: 0.5 },
-      { delay: 200 * s, value: 0.25 },
-      { delay: 300 * s, value: 0.08 },
-      { delay: 380 * s, value: 0 },
-    ];
+    const burstSteps = tier === 'lite'
+      ? [
+          { delay: 100 * s, value: 0.25 },
+          { delay: 250 * s, value: 0 },
+        ]
+      : [
+          { delay: 60 * s, value: 0.4 },
+          { delay: 120 * s, value: 0.5 },
+          { delay: 200 * s, value: 0.25 },
+          { delay: 300 * s, value: 0.08 },
+          { delay: 380 * s, value: 0 },
+        ];
     burstSteps.forEach(({ delay, value }) => {
       setTimeout(() => setBurst(value), delay);
     });
 
     setTimeout(() => setPhase(clamped), 120 * s);
     setTimeout(() => { isAnimating.current = false; }, 480 * s);
-  }, [phase]);
+  }, [phase, tier]);
 
   useEffect(() => {
     window.dispatchEvent(new CustomEvent('paradoxxia-phase-change', { detail: phase }));

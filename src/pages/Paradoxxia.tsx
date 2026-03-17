@@ -264,7 +264,7 @@ const Paradoxxia = () => {
       <AnimatePresence>
         {phase === 2 && (
           <motion.div
-            className="fixed inset-0 z-[15] flex flex-col items-center justify-center gap-4 overflow-y-auto py-16"
+            className="fixed inset-0 z-[15] flex flex-col items-center justify-start pt-[8vh] gap-4 overflow-hidden"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
             exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}

@@ -22,6 +22,13 @@ export const ThemeColor = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Reset phase when leaving Paradoxxia
+  useEffect(() => {
+    if (location.pathname !== '/paradoxxia') {
+      setParadoxxiaPhase(0);
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     const handler = (e: Event) => {
       setParadoxxiaPhase((e as CustomEvent<number>).detail);

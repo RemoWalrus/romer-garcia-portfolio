@@ -48,7 +48,7 @@ const TypewriterText = ({ text, active, speed = 30 }: TypewriterTextProps) => {
         >
           <div className="relative min-h-[11rem] md:min-h-[9rem]">
             <p
-              className="text-[10px] md:text-xs leading-relaxed font-mono opacity-0 pointer-events-none select-none"
+              className="text-xs md:text-sm leading-relaxed font-mono opacity-0 pointer-events-none select-none"
               aria-hidden
             >
               {text}

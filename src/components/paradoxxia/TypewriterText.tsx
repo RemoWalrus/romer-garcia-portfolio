@@ -53,7 +53,7 @@ const TypewriterText = ({ text, active, speed = 30 }: TypewriterTextProps) => {
             >
               {text}
             </p>
-            <p className="absolute inset-0 text-black/80 text-[10px] md:text-xs leading-relaxed font-mono">
+            <p className="absolute inset-0 text-black/80 text-xs md:text-sm leading-relaxed font-mono">
               {text.slice(0, displayedCount)}
               {displayedCount < text.length && (
                 <span className="inline-block w-[2px] h-[1em] bg-black/70 ml-[1px] animate-pulse align-text-bottom" />

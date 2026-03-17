@@ -184,16 +184,19 @@ const Paradoxxia = () => {
     if (intro) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
-      const delay = 2000 + Math.random() * 5000;
+      // Longer intervals on lite mode to reduce main-thread work
+      const baseDelay = tier === 'lite' ? 5000 : 2000;
+      const jitter = tier === 'lite' ? 8000 : 5000;
+      const delay = baseDelay + Math.random() * jitter;
       timeout = setTimeout(async () => {
-        const isHeavy = Math.random() < 0.15;
+        const isHeavy = tier === 'lite' ? false : Math.random() < 0.15;
         await triggerGlitch(isHeavy);
         schedule();
       }, delay);
     };
     schedule();
     return () => clearTimeout(timeout);
-  }, [intro, triggerGlitch]);
+  }, [intro, triggerGlitch, tier]);
 
   // Intro animation sequence — smooth continuous
   useEffect(() => {

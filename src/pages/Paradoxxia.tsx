@@ -21,6 +21,7 @@ const Paradoxxia = () => {
   const [burst, setBurst] = useState(0);
   const isAnimating = useRef(false);
   const isMobile = useIsMobile();
+  const { tier } = usePerformanceTier();
   const speed = isMobile ? 0.65 : 0.8;
   const [loreText, setLoreText] = useState("");
 

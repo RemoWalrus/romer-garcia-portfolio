@@ -20,7 +20,21 @@ const Paradoxxia = () => {
   const [burst, setBurst] = useState(0);
   const isAnimating = useRef(false);
   const isMobile = useIsMobile();
-  const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
+  const speed = isMobile ? 0.65 : 0.8;
+  const [loreText, setLoreText] = useState("");
+
+  // Fetch lore text from Supabase
+  useEffect(() => {
+    const fetchLore = async () => {
+      const { data } = await supabase
+        .from("config")
+        .select("value")
+        .eq("key", "paradoxxia_lore_text")
+        .single();
+      if (data?.value) setLoreText(data.value);
+    };
+    fetchLore();
+  }, []);
 
   // Map phase to base glitch intensity + burst overlay
   const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 1 : 0.7) + burst * 0.5;

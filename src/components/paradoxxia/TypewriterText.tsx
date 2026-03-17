@@ -46,9 +46,17 @@ const TypewriterText = ({ text, active, speed = 30 }: TypewriterTextProps) => {
           exit={{ opacity: 0, transition: { duration: 0.25 } }}
           className="w-full max-w-[900px] px-6"
         >
+          {/* Invisible full text to reserve space */}
+          <p
+            className="text-xs md:text-sm leading-relaxed font-mono"
+            style={{ visibility: "hidden", position: "absolute" }}
+            aria-hidden
+          >
+            {text}
+          </p>
+          {/* Visible typed text */}
           <p
             className="text-black/80 text-xs md:text-sm leading-relaxed font-mono"
-            style={{ minHeight: "4em" }}
           >
             {text.slice(0, displayedCount)}
             {displayedCount < text.length && (

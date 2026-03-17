@@ -10,6 +10,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import PixelTransition from "@/components/paradoxxia/PixelTransition";
+import TypewriterText from "@/components/paradoxxia/TypewriterText";
+import { supabase } from "@/integrations/supabase/client";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);
@@ -18,7 +20,21 @@ const Paradoxxia = () => {
   const [burst, setBurst] = useState(0);
   const isAnimating = useRef(false);
   const isMobile = useIsMobile();
-  const speed = isMobile ? 0.65 : 0.8; // multiplier for all timings
+  const speed = isMobile ? 0.65 : 0.8;
+  const [loreText, setLoreText] = useState("");
+
+  // Fetch lore text from Supabase
+  useEffect(() => {
+    const fetchLore = async () => {
+      const { data } = await supabase
+        .from("config")
+        .select("value")
+        .eq("key", "paradoxxia_lore_text")
+        .single();
+      if (data?.value) setLoreText(data.value);
+    };
+    fetchLore();
+  }, []);
 
   // Map phase to base glitch intensity + burst overlay
   const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 1 : 0.7) + burst * 0.5;
@@ -248,12 +264,12 @@ const Paradoxxia = () => {
       <AnimatePresence>
         {phase === 2 && (
           <motion.div
-            className="fixed inset-0 z-[15] flex items-center justify-center"
+            className="fixed inset-0 z-[15] flex flex-col items-center justify-center gap-4 overflow-y-auto py-16"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
             exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
           >
-            <div className="w-[80vw] max-w-[900px] aspect-video">
+            <div className="w-[80vw] max-w-[900px] aspect-video flex-shrink-0">
               <iframe
                 src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
                 className="w-full h-full border-0"
@@ -262,6 +278,7 @@ const Paradoxxia = () => {
                 title="Paradoxxia video"
               />
             </div>
+            <TypewriterText text={loreText} active={phase === 2} speed={25} />
           </motion.div>
         )}
       </AnimatePresence>

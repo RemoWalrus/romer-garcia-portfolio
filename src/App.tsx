@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import { CustomCursor } from "./components/CustomCursor";
+import { ThemeColor } from "./components/ThemeColor";
 import Index from "./pages/Index";
 import Meme from "./pages/Meme";
 import AICharacterGenerator from "./pages/AICharacterGenerator";

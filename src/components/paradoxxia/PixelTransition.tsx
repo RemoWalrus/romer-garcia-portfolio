@@ -7,7 +7,7 @@ interface PixelTransitionProps {
 }
 
 /** Generates a grid of random-sized pixel blocks that stagger in/out */
-const PixelTransition = ({ active, color = "#ffd800" }: PixelTransitionProps) => {
+const PixelTransition = ({ active, color = "#ffcc00" }: PixelTransitionProps) => {
   const pixels = useMemo(() => {
     const items: { x: number; y: number; w: number; h: number; delay: number }[] = [];
     const count = 220;

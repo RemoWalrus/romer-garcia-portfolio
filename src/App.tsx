@@ -76,15 +76,17 @@ const App = () => {
           <BrowserRouter>
             <ThemeColor />
             <RoutedCursor />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/meme" element={<Meme />} />
-              <Route path="/char-gen" element={<AICharacterGenerator />} />
-              <Route path="/contact" element={<ContactRedirect />} />
-              <Route path="/paradoxxia" element={<Paradoxxia />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={null}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/meme" element={<Meme />} />
+                <Route path="/char-gen" element={<AICharacterGenerator />} />
+                <Route path="/contact" element={<ContactRedirect />} />
+                <Route path="/paradoxxia" element={<Paradoxxia />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>

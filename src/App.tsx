@@ -5,15 +5,17 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import Index from "./pages/Index";
-import Meme from "./pages/Meme";
-import AICharacterGenerator from "./pages/AICharacterGenerator";
-import ContactRedirect from "./pages/ContactRedirect";
 import NotFound from "./pages/NotFound";
-import Paradoxxia from "./pages/Paradoxxia";
+
+// Lazy-load heavy routes so initial paint is fast
+const Meme = lazy(() => import("./pages/Meme"));
+const AICharacterGenerator = lazy(() => import("./pages/AICharacterGenerator"));
+const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
+const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -74,15 +76,17 @@ const App = () => {
           <BrowserRouter>
             <ThemeColor />
             <RoutedCursor />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/meme" element={<Meme />} />
-              <Route path="/char-gen" element={<AICharacterGenerator />} />
-              <Route path="/contact" element={<ContactRedirect />} />
-              <Route path="/paradoxxia" element={<Paradoxxia />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <Suspense fallback={null}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/meme" element={<Meme />} />
+                <Route path="/char-gen" element={<AICharacterGenerator />} />
+                <Route path="/contact" element={<ContactRedirect />} />
+                <Route path="/paradoxxia" element={<Paradoxxia />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>

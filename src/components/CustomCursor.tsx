@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { isLiteMode } from '@/hooks/use-performance';
 
 const DEFAULT_COLOR = 'hsl(43, 60%, 55%)';
 const DEFAULT_GHOST_COLOR = 'hsl(43, 60%, 55%, 0.3)';
@@ -30,6 +31,7 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
   const prevHovering = useRef(false);
   const visible = useRef(false);
   const raf = useRef<number>(0);
+  const lite = useRef(isLiteMode());
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     mouse.current.x = e.clientX;
@@ -49,7 +51,6 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
     const isClickable = !!target.closest('a, button, [role="button"], input, textarea, select, [onclick], .cursor-pointer, [data-clickable]');
     if (isClickable !== hovering.current) {
       hovering.current = isClickable;
-      // Update dot size via CSS transition
       const dot = dotRef.current?.firstElementChild as HTMLElement | null;
       if (dot) {
         const s = isClickable ? DOT_HOVER : DOT_DEFAULT;
@@ -105,11 +106,10 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
         }
       }
 
-      // Ghost interpolation
-      ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
-      ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
-
-      if (ghostRef.current) {
+      // Ghost interpolation — skip in lite mode for fewer composited layers
+      if (!lite.current && ghostRef.current) {
+        ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
+        ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
         ghostRef.current.style.transform = `translate3d(${ghostPos.current.x}px, ${ghostPos.current.y}px, 0)`;
         ghostRef.current.style.opacity = (isHover || prevHovering.current) ? '0.3' : '0';
         const inner = ghostRef.current.firstElementChild as HTMLElement;
@@ -138,6 +138,7 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
   if (isTouchDevice()) return null;
 
   const sizeTransition = 'width 0.45s cubic-bezier(0.25,1,0.5,1), height 0.45s cubic-bezier(0.25,1,0.5,1), margin 0.45s cubic-bezier(0.25,1,0.5,1)';
+  const isLite = lite.current;
 
   return (
     <>
@@ -159,24 +160,26 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
           }}
         />
       </div>
-      {/* Ghost ring */}
-      <div
-        ref={ghostRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9997]"
-        style={{ opacity: 0, transition: 'opacity 0.4s ease-out', willChange: 'transform' }}
-      >
+      {/* Ghost ring — hidden in lite mode */}
+      {!isLite && (
         <div
-          className="rounded-full"
-          style={{
-            width: SIZE_DEFAULT,
-            height: SIZE_DEFAULT,
-            marginLeft: -SIZE_DEFAULT / 2,
-            marginTop: -SIZE_DEFAULT / 2,
-            border: `1px solid ${cursorGhostColor}`,
-            transition: sizeTransition,
-          }}
-        />
-      </div>
+          ref={ghostRef}
+          className="fixed top-0 left-0 pointer-events-none z-[9997]"
+          style={{ opacity: 0, transition: 'opacity 0.4s ease-out', willChange: 'transform' }}
+        >
+          <div
+            className="rounded-full"
+            style={{
+              width: SIZE_DEFAULT,
+              height: SIZE_DEFAULT,
+              marginLeft: -SIZE_DEFAULT / 2,
+              marginTop: -SIZE_DEFAULT / 2,
+              border: `1px solid ${cursorGhostColor}`,
+              transition: sizeTransition,
+            }}
+          />
+        </div>
+      )}
       {/* Main ring */}
       <div
         ref={ringRef}

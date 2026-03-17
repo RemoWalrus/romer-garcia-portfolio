@@ -1,35 +1,56 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useMemo } from "react";
+import { usePerformanceTier } from "@/hooks/use-performance";
 
 interface PixelTransitionProps {
   active: boolean;
   color?: string;
 }
 
-/** Generates a grid of random-sized pixel blocks that stagger in/out */
+/** Generates a grid of random-sized pixel blocks that stagger in/out.
+ *  Adapts pixel count based on device capability. */
 const PixelTransition = ({ active, color = "#ffcc00" }: PixelTransitionProps) => {
+  const { tier } = usePerformanceTier();
+  const count = tier === 'lite' ? 60 : 220;
+
   const pixels = useMemo(() => {
     const items: { x: number; y: number; w: number; h: number; delay: number }[] = [];
-    const count = 220;
     for (let i = 0; i < count; i++) {
-      const w = 2 + Math.random() * 14;
-      const h = 2 + Math.random() * 14;
+      const w = tier === 'lite' ? 4 + Math.random() * 20 : 2 + Math.random() * 14;
+      const h = tier === 'lite' ? 4 + Math.random() * 20 : 2 + Math.random() * 14;
       items.push({
         x: Math.random() * 100,
         y: Math.random() * 100,
         w,
         h,
-        delay: Math.random() * 0.6,
+        delay: Math.random() * (tier === 'lite' ? 0.3 : 0.6),
       });
     }
     return items;
-  }, []);
+  }, [count, tier]);
+
+  // In lite mode with reduced motion, just do a solid color fade
+  if (tier === 'lite') {
+    return (
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            className="fixed inset-0 pointer-events-none z-[2]"
+            style={{ backgroundColor: color }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.3 } }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          />
+        )}
+      </AnimatePresence>
+    );
+  }
 
   return (
     <AnimatePresence>
       {active && (
         <>
-          {/* Solid yellow underneath to fill gaps */}
+          {/* Solid color underneath to fill gaps */}
           <motion.div
             className="fixed inset-0 pointer-events-none z-[1]"
             style={{ backgroundColor: color }}
@@ -48,6 +69,7 @@ const PixelTransition = ({ active, color = "#ffcc00" }: PixelTransitionProps) =>
                 width: `${p.w}vw`,
                 height: `${p.h}vh`,
                 backgroundColor: color,
+                willChange: 'transform, opacity',
               }}
               initial={{ opacity: 0, scale: 0 }}
               animate={{

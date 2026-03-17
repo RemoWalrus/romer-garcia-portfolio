@@ -7,6 +7,7 @@ import { MoveRight } from "lucide-react";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef } from "react";
+import { usePerformanceTier } from "@/hooks/use-performance";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import PixelTransition from "@/components/paradoxxia/PixelTransition";
@@ -20,6 +21,7 @@ const Paradoxxia = () => {
   const [burst, setBurst] = useState(0);
   const isAnimating = useRef(false);
   const isMobile = useIsMobile();
+  const { tier } = usePerformanceTier();
   const speed = isMobile ? 0.65 : 0.8;
   const [loreText, setLoreText] = useState("");
 
@@ -45,23 +47,28 @@ const Paradoxxia = () => {
     if (clamped === phase) return;
     isAnimating.current = true;
 
-    // Subtle glitch burst with pixelation
+    // Subtle glitch burst with pixelation — fewer steps in lite mode
     setBurst(0.5);
     const s = speed;
-    const burstSteps = [
-      { delay: 60 * s, value: 0.4 },
-      { delay: 120 * s, value: 0.5 },
-      { delay: 200 * s, value: 0.25 },
-      { delay: 300 * s, value: 0.08 },
-      { delay: 380 * s, value: 0 },
-    ];
+    const burstSteps = tier === 'lite'
+      ? [
+          { delay: 100 * s, value: 0.25 },
+          { delay: 250 * s, value: 0 },
+        ]
+      : [
+          { delay: 60 * s, value: 0.4 },
+          { delay: 120 * s, value: 0.5 },
+          { delay: 200 * s, value: 0.25 },
+          { delay: 300 * s, value: 0.08 },
+          { delay: 380 * s, value: 0 },
+        ];
     burstSteps.forEach(({ delay, value }) => {
       setTimeout(() => setBurst(value), delay);
     });
 
     setTimeout(() => setPhase(clamped), 120 * s);
     setTimeout(() => { isAnimating.current = false; }, 480 * s);
-  }, [phase]);
+  }, [phase, tier]);
 
   useEffect(() => {
     window.dispatchEvent(new CustomEvent('paradoxxia-phase-change', { detail: phase }));
@@ -177,16 +184,19 @@ const Paradoxxia = () => {
     if (intro) return;
     let timeout: ReturnType<typeof setTimeout>;
     const schedule = () => {
-      const delay = 2000 + Math.random() * 5000;
+      // Longer intervals on lite mode to reduce main-thread work
+      const baseDelay = tier === 'lite' ? 5000 : 2000;
+      const jitter = tier === 'lite' ? 8000 : 5000;
+      const delay = baseDelay + Math.random() * jitter;
       timeout = setTimeout(async () => {
-        const isHeavy = Math.random() < 0.15;
+        const isHeavy = tier === 'lite' ? false : Math.random() < 0.15;
         await triggerGlitch(isHeavy);
         schedule();
       }, delay);
     };
     schedule();
     return () => clearTimeout(timeout);
-  }, [intro, triggerGlitch]);
+  }, [intro, triggerGlitch, tier]);
 
   // Intro animation sequence — smooth continuous
   useEffect(() => {
@@ -279,6 +289,7 @@ const Paradoxxia = () => {
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                loading="lazy"
                 title="Paradoxxia video"
               />
             </div>

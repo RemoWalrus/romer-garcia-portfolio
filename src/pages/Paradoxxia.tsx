@@ -63,6 +63,10 @@ const Paradoxxia = () => {
     setTimeout(() => { isAnimating.current = false; }, 480 * s);
   }, [phase]);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('paradoxxia-phase-change', { detail: phase }));
+  }, [phase]);
+
   // Wheel handler — any scroll snaps to next/prev phase
   useEffect(() => {
     const el = scrollRef.current;

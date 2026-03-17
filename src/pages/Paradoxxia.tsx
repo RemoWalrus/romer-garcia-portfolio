@@ -10,6 +10,8 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import PixelTransition from "@/components/paradoxxia/PixelTransition";
+import TypewriterText from "@/components/paradoxxia/TypewriterText";
+import { supabase } from "@/integrations/supabase/client";
 
 const Paradoxxia = () => {
   const [intro, setIntro] = useState(true);

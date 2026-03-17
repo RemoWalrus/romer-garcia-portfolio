@@ -242,7 +242,7 @@ const Paradoxxia = () => {
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
       <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${phase === 2 ? 'bg-transparent' : 'bg-white/60 dark:bg-transparent'}`} />
-      <PixelTransition active={phase === 2} color="#ffd800" />
+      <PixelTransition active={phase === 2} color="#ffcc00" />
 
       {/* YouTube video — visible on phase 2 (yellow/video phase) */}
       <AnimatePresence>

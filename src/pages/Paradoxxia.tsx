@@ -264,12 +264,12 @@ const Paradoxxia = () => {
       <AnimatePresence>
         {phase === 2 && (
           <motion.div
-            className="fixed inset-0 z-[15] flex items-center justify-center"
+            className="fixed inset-0 z-[15] flex flex-col items-center justify-center gap-4 overflow-y-auto py-16"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
             exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
           >
-            <div className="w-[80vw] max-w-[900px] aspect-video">
+            <div className="w-[80vw] max-w-[900px] aspect-video flex-shrink-0">
               <iframe
                 src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
                 className="w-full h-full border-0"
@@ -278,6 +278,7 @@ const Paradoxxia = () => {
                 title="Paradoxxia video"
               />
             </div>
+            <TypewriterText text={loreText} active={phase === 2} speed={25} />
           </motion.div>
         )}
       </AnimatePresence>

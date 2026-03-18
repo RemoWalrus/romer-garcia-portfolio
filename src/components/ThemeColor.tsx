@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const COLORS = {
   light: '#ffffff',
-  dark: '#020817',
+  dark: '#0a0a0a',
   paradoxxiaYellow: '#ffcc00',
   charGenLight: '#ffffff',
   charGenDark: '#020817',

@@ -54,15 +54,21 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let ticking = false;
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY === 0 && lastScrollY > 50) {
-        setTriggerNewBackground(prev => prev + 1);
-      }
-      lastScrollY = currentY;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const currentY = window.scrollY;
+        if (currentY === 0 && lastScrollY > 50) {
+          setTriggerNewBackground(prev => prev + 1);
+        }
+        lastScrollY = currentY;
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -88,20 +94,16 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (isSnapping.current) {
-        e.preventDefault();
-        return;
-      }
+      if (isSnapping.current) return;
       const scrollY = window.scrollY;
       const portfolioTop = getPortfolioTop();
-      // In hero zone scrolling down
-      if (scrollY < portfolioTop * 0.5 && e.deltaY > 0) {
-        e.preventDefault();
+      // Only snap at very specific thresholds — don't block native scroll
+      // Snap down: user is near top and scrolling down with intent
+      if (scrollY < 10 && e.deltaY > 40) {
         snapTo(portfolioTop);
       }
-      // Near portfolio top scrolling up
-      else if (scrollY <= portfolioTop + 100 && scrollY > 0 && e.deltaY < 0) {
-        e.preventDefault();
+      // Snap up: user is near portfolio top and scrolling up with intent
+      else if (Math.abs(scrollY - portfolioTop) < 50 && e.deltaY < -40) {
         snapTo(0);
       }
     };
@@ -128,7 +130,7 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
       }
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('wheel', handleWheel, { passive: true });
     window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('touchend', handleTouchEnd, { passive: true });
 

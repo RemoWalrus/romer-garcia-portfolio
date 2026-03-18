@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent, useAnimation } from 'framer-motion';
 import type { TitleConfig } from './title-config';
 
@@ -9,11 +9,13 @@ interface HeroTitleProps {
 
 export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   const { scrollY } = useScroll();
-  const [gi, setGi] = useState(0);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const redControls = useAnimation();
   const cyanControls = useAnimation();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const giRef = useRef(0);
+  const rafId = useRef(0);
 
   useEffect(() => {
     const onResize = () => setViewportHeight(window.innerHeight);
@@ -22,7 +24,71 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   }, []);
 
   const intensity = useTransform(scrollY, [0, viewportHeight * 0.7], [0, 1]);
-  useMotionValueEvent(intensity, "change", (v) => setGi(v));
+
+  // Use RAF-based DOM updates instead of React state for scroll-driven values
+  const applyScrollEffects = useCallback((gi: number) => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const preGlitch = Math.min(1, gi / 0.5);
+    const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2);
+    const titleOpacity = gi < 0.4 ? 1 : gi < 0.55 ? Math.max(0, 1 - (gi - 0.4) / 0.15) : 0;
+
+    if (gi >= 0.55 && burstZone === 0) {
+      el.style.display = 'none';
+      return;
+    }
+    el.style.display = '';
+    el.style.opacity = String(titleOpacity);
+
+    const chromatic = burstZone * 8 + preGlitch * 3;
+    const scrollSkew = burstZone * 4;
+    const scanOp = burstZone * 0.7 + preGlitch * 0.12;
+
+    // Update main h1
+    const h1 = el.querySelector('[data-hero-h1]') as HTMLElement | null;
+    if (h1) {
+      h1.style.transform = `skewX(${scrollSkew}deg)`;
+      h1.style.textShadow = `
+        ${1.5 + chromatic * 1.2}px ${burstZone * 3}px 0 rgba(255,20,20,${0.45 + preGlitch * 0.2 + burstZone * 0.35}),
+        ${-1.5 - chromatic * 1.2}px ${burstZone * -2}px 0 rgba(0,255,255,${0.4 + preGlitch * 0.18 + burstZone * 0.35})
+      `;
+      h1.style.filter = preGlitch > 0.3 ? `hue-rotate(${preGlitch * 12 + burstZone * 30}deg)` : '';
+    }
+
+    // Update scan lines
+    const scan = el.querySelector('[data-scan]') as HTMLElement | null;
+    if (scan) {
+      if (scanOp > 0.05) {
+        scan.style.display = '';
+        scan.style.backgroundImage = `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${scanOp * 0.35}) 2px, rgba(0,0,0,${scanOp * 0.35}) 4px)`;
+      } else {
+        scan.style.display = 'none';
+      }
+    }
+
+    // Update ghost layers (only when NOT transitioning)
+    if (!isTransitioning) {
+      const scrollRedX = 1.5 + chromatic * 1.2;
+      const scrollCyanX = -1.5 - chromatic * 1.2;
+      const red = el.querySelector('[data-ghost-red]') as HTMLElement | null;
+      const cyan = el.querySelector('[data-ghost-cyan]') as HTMLElement | null;
+      if (red) {
+        red.style.color = `rgba(255,20,20,${0.25 + preGlitch * 0.2 + burstZone * 0.4})`;
+        red.style.transform = `translateX(${scrollRedX}px) translateY(${burstZone * 3}px)`;
+      }
+      if (cyan) {
+        cyan.style.color = `rgba(0,255,255,${0.2 + preGlitch * 0.18 + burstZone * 0.35})`;
+        cyan.style.transform = `translateX(${scrollCyanX}px) translateY(${burstZone * -2}px)`;
+      }
+    }
+  }, [isTransitioning]);
+
+  useMotionValueEvent(intensity, "change", (v) => {
+    giRef.current = v;
+    cancelAnimationFrame(rafId.current);
+    rafId.current = requestAnimationFrame(() => applyScrollEffects(v));
+  });
 
   // Random zoom punch on each word switch
   const [zoomPunch, setZoomPunch] = useState(1);
@@ -30,11 +96,9 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
   // Transition burst: animate ghost layers in then settle
   useEffect(() => {
     setIsTransitioning(true);
-    // Random zoom: either punch in (1.06-1.12) or out (0.88-0.94)
     const zoomIn = Math.random() > 0.5;
     const magnitude = zoomIn ? 1.06 + Math.random() * 0.06 : 0.88 + Math.random() * 0.06;
     setZoomPunch(magnitude);
-    // Snap back after one frame
     requestAnimationFrame(() => setZoomPunch(1));
 
     const run = async () => {
@@ -57,16 +121,6 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
     };
     run();
   }, [title.text]);
-
-  // Scroll-driven chromatic aberration (Paradoxxia style)
-  const preGlitch = Math.min(1, gi / 0.5);
-  const burstZone = Math.max(0, 1 - Math.abs(gi - 0.5) / 0.2);
-  const chromatic = burstZone * 8 + preGlitch * 3;
-  const scrollSkew = burstZone * 4; // only for scroll-out
-  const scanOp = burstZone * 0.7 + preGlitch * 0.12;
-  const titleOpacity = gi < 0.4 ? 1 : gi < 0.55 ? Math.max(0, 1 - (gi - 0.4) / 0.15) : 0;
-
-  if (gi >= 0.55 && burstZone === 0) return null;
 
   const renderTitle = (text: string, weights: string[]) => {
     if (text === "romergarcia") {
@@ -99,21 +153,17 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
   const textClass = "text-6xl md:text-7xl lg:text-9xl font-roc py-2 tracking-tighter mb-8";
 
-  // Ghost layer base offsets when scroll is involved
-  const scrollRedX = 1.5 + chromatic * 1.2;
-  const scrollCyanX = -1.5 - chromatic * 1.2;
-
   return (
-    <div className="relative" style={{ opacity: titleOpacity, transform: `scale(${zoomPunch})` }}>
+    <div ref={containerRef} className="relative" style={{ transform: `scale(${zoomPunch})` }}>
       {/* Red ghost layer */}
       <motion.span
+        data-ghost-red
         className={`${textClass} absolute inset-0 pointer-events-none text-center whitespace-nowrap`}
         aria-hidden
         animate={redControls}
         style={{
-          color: `rgba(255,20,20,${isTransitioning ? 1 : (0.25 + preGlitch * 0.2 + burstZone * 0.4)})`,
+          color: isTransitioning ? 'rgba(255,20,20,1)' : 'rgba(255,20,20,0.25)',
           mixBlendMode: 'screen',
-          transform: isTransitioning ? undefined : `translateX(${scrollRedX}px) translateY(${burstZone * 3}px)`,
           fontFeatureSettings: '"ss01"',
         }}
       >
@@ -122,13 +172,13 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
       {/* Cyan ghost layer */}
       <motion.span
+        data-ghost-cyan
         className={`${textClass} absolute inset-0 pointer-events-none text-center whitespace-nowrap`}
         aria-hidden
         animate={cyanControls}
         style={{
-          color: `rgba(0,255,255,${isTransitioning ? 1 : (0.2 + preGlitch * 0.18 + burstZone * 0.35)})`,
+          color: isTransitioning ? 'rgba(0,255,255,1)' : 'rgba(0,255,255,0.2)',
           mixBlendMode: 'screen',
-          transform: isTransitioning ? undefined : `translateX(${scrollCyanX}px) translateY(${burstZone * -2}px)`,
           fontFeatureSettings: '"ss01"',
         }}
       >
@@ -137,35 +187,27 @@ export const HeroTitle: React.FC<HeroTitleProps> = ({ title }) => {
 
       {/* Main title */}
       <motion.h1
+        data-hero-h1
         className={`${textClass} text-white mb-8 relative text-center z-10`}
-        style={{
-          fontFeatureSettings: '"ss01"',
-          transform: `skewX(${scrollSkew}deg)`,
-          textShadow: `
-            ${1.5 + chromatic * 1.2}px ${burstZone * 3}px 0 rgba(255,20,20,${0.45 + preGlitch * 0.2 + burstZone * 0.35}),
-            ${-1.5 - chromatic * 1.2}px ${burstZone * -2}px 0 rgba(0,255,255,${0.4 + preGlitch * 0.18 + burstZone * 0.35})
-          `,
-          filter: preGlitch > 0.3 ? `hue-rotate(${preGlitch * 12 + burstZone * 30}deg)` : undefined,
-        }}
+        style={{ fontFeatureSettings: '"ss01"' }}
       >
         {renderTitle(title.text, title.weights)}
 
         {/* Scan lines on scroll */}
-        {scanOp > 0.05 && (
-          <span
-            className="absolute inset-0 pointer-events-none"
-            aria-hidden
-            style={{
-              backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,${scanOp * 0.35}) 2px, rgba(0,0,0,${scanOp * 0.35}) 4px)`,
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              color: 'transparent',
-            }}
-          >
-            {renderTitle(title.text, title.weights)}
-          </span>
-        )}
+        <span
+          data-scan
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden
+          style={{
+            display: 'none',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            color: 'transparent',
+          }}
+        >
+          {renderTitle(title.text, title.weights)}
+        </span>
       </motion.h1>
 
       {/* Horizontal glitch slice during transition burst */}

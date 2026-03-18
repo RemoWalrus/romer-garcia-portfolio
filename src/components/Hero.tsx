@@ -54,15 +54,21 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let ticking = false;
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (currentY === 0 && lastScrollY > 50) {
-        setTriggerNewBackground(prev => prev + 1);
-      }
-      lastScrollY = currentY;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const currentY = window.scrollY;
+        if (currentY === 0 && lastScrollY > 50) {
+          setTriggerNewBackground(prev => prev + 1);
+        }
+        lastScrollY = currentY;
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 

@@ -90,15 +90,19 @@ const Paradoxxia = () => {
   }, [phase, goToPhase]);
 
   // Touch swipe handler for mobile
-  const touchStart = useRef(0);
+  const touchStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const onStart = (e: TouchEvent) => { touchStart.current = e.touches[0].clientY; };
+    const onStart = (e: TouchEvent) => {
+      touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
     const onEnd = (e: TouchEvent) => {
-      const diff = touchStart.current - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 30) {
-        if (diff > 0) goToPhase(phase + 1);
+      const dx = Math.abs(e.changedTouches[0].clientX - touchStartRef.current.x);
+      const dy = touchStartRef.current.y - e.changedTouches[0].clientY;
+      // Only navigate phases on dominant vertical swipe (not horizontal carousel swipes)
+      if (Math.abs(dy) > 30 && Math.abs(dy) > dx) {
+        if (dy > 0) goToPhase(phase + 1);
         else goToPhase(phase - 1);
       }
     };

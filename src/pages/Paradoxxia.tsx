@@ -43,7 +43,7 @@ const Paradoxxia = () => {
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;
-    const clamped = Math.max(0, Math.min(4, target));
+    const clamped = Math.max(0, Math.min(5, target));
     if (clamped === phase) return;
     isAnimating.current = true;
 

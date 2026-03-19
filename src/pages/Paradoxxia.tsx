@@ -329,7 +329,7 @@ const Paradoxxia = () => {
                 const scanOp = burstZone * 0.4;
                 const pixelate = burstZone > 0.2;
 
-                const textClass = (currentPhase === 3 || currentPhase === 4) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = (currentPhase === 4 || currentPhase === 5) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;
@@ -341,11 +341,11 @@ const Paradoxxia = () => {
                 } else if (currentPhase === 1) {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
-                } else if (currentPhase === 2) {
-                  // Video phase — no title text
+                } else if (currentPhase === 2 || currentPhase === 3) {
+                  // Video and carousel phases — no title text
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = '';
-                } else if (currentPhase === 3) {
+                } else if (currentPhase === 4) {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
                   currentText = 'stay tuned';
                 } else {

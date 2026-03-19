@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
+import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon, YouTubeMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
 import { MoveRight } from "lucide-react";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";
@@ -496,6 +496,17 @@ const Paradoxxia = () => {
                 >
                   <AppleMusicIcon className="w-5 h-5" />
                   Apple Music
+                  <MoveRight className="w-4 h-4" />
+                </a>
+                <a 
+                  href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                  onClick={() => trackEvent('Music Platform', 'Click YouTube Music', 'Paradoxxia Page')}
+                >
+                  <YouTubeMusicIcon className="w-5 h-5" />
+                  YouTube Music
                   <MoveRight className="w-4 h-4" />
                 </a>
               </motion.div>

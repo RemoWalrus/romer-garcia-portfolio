@@ -521,7 +521,7 @@ const Paradoxxia = () => {
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
                   {/* Mouse icon */}
-                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className={phase === 2 ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]/60'}>
+                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className={(phase === 2 || phase === 3) ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]/60'}>
                     <rect x="1" y="1" width="22" height="34" rx="11" stroke="currentColor" strokeWidth="1.5" />
                     <motion.line
                       x1="12" y1="8" x2="12" y2="14"

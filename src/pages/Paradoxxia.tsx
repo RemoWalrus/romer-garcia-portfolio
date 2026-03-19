@@ -507,7 +507,7 @@ const Paradoxxia = () => {
 
           {/* Scroll indicator — hidden on last phase */}
           <AnimatePresence>
-            {phase < 4 && (
+            {phase < 5 && (
               <motion.div
                 className="absolute bottom-20 flex flex-col items-center pointer-events-auto cursor-pointer"
                 initial={{ opacity: 0 }}

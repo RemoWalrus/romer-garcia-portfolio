@@ -11,6 +11,7 @@ import { usePerformanceTier } from "@/hooks/use-performance";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import PixelTransition from "@/components/paradoxxia/PixelTransition";
+import ParadoxxiaCarousel from "@/components/paradoxxia/ParadoxxiaCarousel";
 import TypewriterText from "@/components/paradoxxia/TypewriterText";
 import { supabase } from "@/integrations/supabase/client";
 

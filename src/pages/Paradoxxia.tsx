@@ -300,7 +300,20 @@ const Paradoxxia = () => {
         )}
       </AnimatePresence>
 
-      {/* SVG pixelation filter */}
+      {/* Carousel — visible on phase 3 */}
+      <AnimatePresence>
+        {phase === 3 && (
+          <motion.div
+            className="fixed inset-0 z-[15] flex items-center justify-center px-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
+            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+          >
+            <ParadoxxiaCarousel active={phase === 3} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {gi > 0.05 && (
         <svg className="absolute w-0 h-0" aria-hidden>
           <filter id="paradox-pixelate">

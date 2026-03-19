@@ -11,6 +11,7 @@ import { usePerformanceTier } from "@/hooks/use-performance";
 import { useIsMobile } from "@/hooks/use-mobile";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import PixelTransition from "@/components/paradoxxia/PixelTransition";
+import ParadoxxiaCarousel from "@/components/paradoxxia/ParadoxxiaCarousel";
 import TypewriterText from "@/components/paradoxxia/TypewriterText";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -39,11 +40,11 @@ const Paradoxxia = () => {
   }, []);
 
   // Map phase to base glitch intensity + burst overlay
-  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 1 : 0.7) + burst * 0.5;
+  const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 0.1 : phase === 4 ? 1 : 0.7) + burst * 0.5;
 
   const goToPhase = useCallback((target: number) => {
     if (isAnimating.current) return;
-    const clamped = Math.max(0, Math.min(4, target));
+    const clamped = Math.max(0, Math.min(5, target));
     if (clamped === phase) return;
     isAnimating.current = true;
 
@@ -89,15 +90,19 @@ const Paradoxxia = () => {
   }, [phase, goToPhase]);
 
   // Touch swipe handler for mobile
-  const touchStart = useRef(0);
+  const touchStartRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const onStart = (e: TouchEvent) => { touchStart.current = e.touches[0].clientY; };
+    const onStart = (e: TouchEvent) => {
+      touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    };
     const onEnd = (e: TouchEvent) => {
-      const diff = touchStart.current - e.changedTouches[0].clientY;
-      if (Math.abs(diff) > 30) {
-        if (diff > 0) goToPhase(phase + 1);
+      const dx = Math.abs(e.changedTouches[0].clientX - touchStartRef.current.x);
+      const dy = touchStartRef.current.y - e.changedTouches[0].clientY;
+      // Only navigate phases on dominant vertical swipe (not horizontal carousel swipes)
+      if (Math.abs(dy) > 30 && Math.abs(dy) > dx) {
+        if (dy > 0) goToPhase(phase + 1);
         else goToPhase(phase - 1);
       }
     };
@@ -268,11 +273,11 @@ const Paradoxxia = () => {
 
       {/* Circuit board background */}
       <div
-        className={`fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-opacity duration-500 ${phase === 2 ? 'opacity-0' : 'opacity-40'}`}
+        className={`fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-opacity duration-500 ${(phase === 2 || phase === 3) ? 'opacity-0' : 'opacity-40'}`}
         style={{ backgroundImage: `url(${circuitBg})` }}
       />
-      <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${phase === 2 ? 'bg-transparent' : 'bg-white/60 dark:bg-transparent'}`} />
-      <PixelTransition active={phase === 2} color="#ffcc00" />
+      <div className={`fixed inset-0 pointer-events-none z-0 transition-colors duration-500 ${(phase === 2 || phase === 3) ? 'bg-transparent' : 'bg-white/60 dark:bg-transparent'}`} />
+      <PixelTransition active={phase === 2 || phase === 3} color="#ffcc00" />
 
       {/* YouTube video — visible on phase 2 (yellow/video phase) */}
       <AnimatePresence>
@@ -286,7 +291,8 @@ const Paradoxxia = () => {
             <div className="w-[80vw] max-w-[900px] aspect-video flex-shrink-0">
               <iframe
                 src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"
-                className="w-full h-full border-0"
+                className="w-full h-full border-0 outline-none focus:outline-none"
+                style={{ outline: 'none' }}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 loading="lazy"
@@ -298,7 +304,20 @@ const Paradoxxia = () => {
         )}
       </AnimatePresence>
 
-      {/* SVG pixelation filter */}
+      {/* Carousel — visible on phase 3 */}
+      <AnimatePresence>
+        {phase === 3 && (
+          <motion.div
+            className="fixed inset-0 z-[15] flex items-center justify-center px-4"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
+            exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
+          >
+            <ParadoxxiaCarousel active={phase === 3} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {gi > 0.05 && (
         <svg className="absolute w-0 h-0" aria-hidden>
           <filter id="paradox-pixelate">
@@ -328,7 +347,7 @@ const Paradoxxia = () => {
                 const scanOp = burstZone * 0.4;
                 const pixelate = burstZone > 0.2;
 
-                const textClass = (currentPhase === 3 || currentPhase === 4) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
+                const textClass = (currentPhase === 4 || currentPhase === 5) ? "text-[2rem] md:text-6xl" : "text-[3.2rem] md:text-9xl";
                 const mainColor = "text-[#0a1e5c] dark:text-[#00d4ff]";
 
                 let currentFont: React.CSSProperties;
@@ -340,11 +359,11 @@ const Paradoxxia = () => {
                 } else if (currentPhase === 1) {
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = 'PARADOXXIA';
-                } else if (currentPhase === 2) {
-                  // Video phase — no title text
+                } else if (currentPhase === 2 || currentPhase === 3) {
+                  // Video and carousel phases — no title text
                   currentFont = { fontWeight: 800, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.05em' };
                   currentText = '';
-                } else if (currentPhase === 3) {
+                } else if (currentPhase === 4) {
                   currentFont = { fontWeight: 500, fontFamily: '"roc-grotesk", sans-serif', letterSpacing: '-0.02em' };
                   currentText = 'stay tuned';
                 } else {
@@ -449,7 +468,7 @@ const Paradoxxia = () => {
           {/* Music links — visible on coming soon phase */}
           {/* Music links — visible on coming soon phase */}
           <AnimatePresence mode="wait">
-            {phase === 3 && (
+            {phase === 4 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
                 initial={{ opacity: 0 }}
@@ -485,7 +504,7 @@ const Paradoxxia = () => {
 
           {/* AI Character Generator link — visible on phase 3 */}
           <AnimatePresence mode="wait">
-            {phase === 4 && (
+            {phase === 5 && (
               <motion.div
                 className="flex flex-wrap justify-center gap-4 mt-6 pointer-events-auto"
                 initial={{ opacity: 0 }}
@@ -506,7 +525,7 @@ const Paradoxxia = () => {
 
           {/* Scroll indicator — hidden on last phase */}
           <AnimatePresence>
-            {phase < 4 && (
+            {phase < 5 && (
               <motion.div
                 className="absolute bottom-20 flex flex-col items-center pointer-events-auto cursor-pointer"
                 initial={{ opacity: 0 }}
@@ -520,7 +539,7 @@ const Paradoxxia = () => {
                   transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
                 >
                   {/* Mouse icon */}
-                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className={phase === 2 ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]/60'}>
+                  <svg width="24" height="36" viewBox="0 0 24 36" fill="none" className={(phase === 2 || phase === 3) ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]/60'}>
                     <rect x="1" y="1" width="22" height="34" rx="11" stroke="currentColor" strokeWidth="1.5" />
                     <motion.line
                       x1="12" y1="8" x2="12" y2="14"
@@ -537,7 +556,7 @@ const Paradoxxia = () => {
       </div>
 
       <footer className="fixed bottom-0 left-0 right-0 z-10 py-6 text-center">
-        <p className={`text-sm font-roc ${phase === 2 ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]'}`}>
+        <p className={`text-sm font-roc ${(phase === 2 || phase === 3) ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]'}`}>
           © {new Date().getFullYear()} Romer Garcia. All rights reserved.
         </p>
       </footer>

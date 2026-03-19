@@ -155,6 +155,39 @@ export type Database = {
         }
         Relationships: []
       }
+      paradoxxia_carousel: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          image_url: string
+          link_url: string | null
+          sort_order: number | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          image_url: string
+          link_url?: string | null
+          sort_order?: number | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          image_url?: string
+          link_url?: string | null
+          sort_order?: number | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profile: {
         Row: {
           bio: string | null

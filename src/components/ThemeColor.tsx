@@ -40,7 +40,7 @@ export const ThemeColor = () => {
   useEffect(() => {
     let color: string;
 
-    if (location.pathname === '/paradoxxia' && paradoxxiaPhase === 2) {
+    if (location.pathname === '/paradoxxia' && (paradoxxiaPhase === 2 || paradoxxiaPhase === 3)) {
       color = COLORS.paradoxxiaYellow;
     } else {
       color = isDark ? COLORS.dark : COLORS.light;

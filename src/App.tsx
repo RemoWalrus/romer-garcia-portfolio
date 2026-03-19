@@ -38,7 +38,7 @@ const RoutedCursor = () => {
   useEffect(() => {
     const handlePhaseChange = (event: Event) => {
       const customEvent = event as CustomEvent<number>;
-      setIsYellowPhase(customEvent.detail === 2);
+      setIsYellowPhase(customEvent.detail === 2 || customEvent.detail === 3);
     };
 
     window.addEventListener('paradoxxia-phase-change', handlePhaseChange as EventListener);

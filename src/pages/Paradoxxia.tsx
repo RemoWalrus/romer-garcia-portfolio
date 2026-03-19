@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { usePageMeta } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
+import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon, YouTubeMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
 import { MoveRight } from "lucide-react";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { motion, useAnimation, AnimatePresence } from "framer-motion";

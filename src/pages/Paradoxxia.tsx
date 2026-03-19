@@ -538,7 +538,7 @@ const Paradoxxia = () => {
       </div>
 
       <footer className="fixed bottom-0 left-0 right-0 z-10 py-6 text-center">
-        <p className={`text-sm font-roc ${phase === 2 ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]'}`}>
+        <p className={`text-sm font-roc ${(phase === 2 || phase === 3) ? 'text-black' : 'text-muted-foreground dark:text-[#00d4ff]'}`}>
           © {new Date().getFullYear()} Romer Garcia. All rights reserved.
         </p>
       </footer>

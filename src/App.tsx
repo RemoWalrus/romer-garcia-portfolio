@@ -46,7 +46,7 @@ const RoutedCursor = () => {
   }, []);
 
   const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia';
-  const useBlackCursor = location.pathname === '/paradoxxia' && isYellowPhase;
+  const useBlackCursor = location.pathname === '/paradoxxia' && (isYellowPhase || paradoxxiaPhase === 3);
 
   return (
     <CustomCursor

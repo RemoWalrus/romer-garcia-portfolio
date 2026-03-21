@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import placeholderImage from "@/assets/paradoxxia-carousel-placeholder.png";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CarouselItem {
   id: number;
@@ -18,9 +18,13 @@ interface ParadoxxiaCarouselProps {
 
 const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
   const [items, setItems] = useState<CarouselItem[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [scrollIndex, setScrollIndex] = useState(0);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
+
+  const visibleCount = isMobile ? 1 : 3;
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -32,21 +36,40 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
       if (data && data.length > 0) {
         setItems(data);
       } else {
-        // Placeholder items when table is empty
         setItems([
           { id: 1, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 0 },
           { id: 2, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 1 },
           { id: 3, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 2 },
+          { id: 4, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 3 },
+          { id: 5, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 4 },
         ]);
       }
     };
     fetchItems();
   }, []);
 
-  const goTo = (index: number) => {
-    const clamped = Math.max(0, Math.min(items.length - 1, index));
-    setCurrentIndex(clamped);
-  };
+  const maxIndex = Math.max(0, items.length - visibleCount);
+
+  const goTo = useCallback((index: number) => {
+    setScrollIndex(Math.max(0, Math.min(maxIndex, index)));
+  }, [maxIndex]);
+
+  // Mouse wheel horizontal scroll
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      // Use deltaX for horizontal scroll wheels, or deltaY if no horizontal movement
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) < 5) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (delta > 0) goTo(scrollIndex + 1);
+      else goTo(scrollIndex - 1);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [scrollIndex, goTo]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -61,42 +84,51 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
     e.stopPropagation();
     const diff = touchStartX.current - touchEndX.current;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) goTo(currentIndex + 1);
-      else goTo(currentIndex - 1);
+      if (diff > 0) goTo(scrollIndex + 1);
+      else goTo(scrollIndex - 1);
     }
   };
 
   if (items.length === 0) return null;
 
+  const translateX = -(scrollIndex * (100 / visibleCount));
+
   return (
     <div
-      className="w-full max-w-[900px] mx-auto flex flex-col items-center gap-4 pointer-events-auto"
+      ref={containerRef}
+      className="w-full max-w-[1200px] mx-auto flex flex-col items-center gap-4 pointer-events-auto"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {/* Image display */}
-      <div className="relative w-full aspect-square max-h-[60vh] overflow-hidden rounded-md">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentIndex}
-            src={items[currentIndex].image_url}
-            alt={items[currentIndex].title || "Paradoxxia artwork"}
-            className="w-full h-full object-contain"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.25 }}
-            draggable={false}
-          />
-        </AnimatePresence>
+      {/* Panels display */}
+      <div className="relative w-full overflow-hidden" style={{ aspectRatio: isMobile ? '1' : '3/1.05' }}>
+        <div
+          className="flex h-full transition-transform duration-300 ease-out"
+          style={{ width: `${(items.length / visibleCount) * 100}%`, transform: `translateX(${translateX}%)` }}
+        >
+          {items.map((item) => (
+            <div
+              key={item.id}
+              className="h-full flex-shrink-0"
+              style={{ width: `${100 / items.length}%` }}
+            >
+              <img
+                src={item.image_url}
+                alt={item.title || "Paradoxxia artwork"}
+                className="w-full h-full object-cover"
+                draggable={false}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Desktop arrow buttons */}
-      <div className="hidden md:flex items-center gap-6">
+      {/* Navigation */}
+      <div className="flex items-center gap-4">
         <button
-          onClick={() => goTo(currentIndex - 1)}
-          disabled={currentIndex === 0}
+          onClick={() => goTo(scrollIndex - 1)}
+          disabled={scrollIndex === 0}
           className="text-black disabled:opacity-30 transition-opacity hover:opacity-70"
           aria-label="Previous"
         >
@@ -105,14 +137,15 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
           </svg>
         </button>
 
-        {/* Dot indicators */}
         <div className="flex gap-2">
           {items.map((_, index) => (
             <button
               key={index}
               onClick={() => goTo(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? "bg-black scale-125" : "bg-black/30"
+                index >= scrollIndex && index < scrollIndex + visibleCount
+                  ? "bg-black scale-125"
+                  : "bg-black/30"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -120,8 +153,8 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
         </div>
 
         <button
-          onClick={() => goTo(currentIndex + 1)}
-          disabled={currentIndex === items.length - 1}
+          onClick={() => goTo(scrollIndex + 1)}
+          disabled={scrollIndex >= maxIndex}
           className="text-black disabled:opacity-30 transition-opacity hover:opacity-70"
           aria-label="Next"
         >
@@ -129,20 +162,6 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>
-      </div>
-
-      {/* Mobile dot indicators */}
-      <div className="flex md:hidden gap-2">
-        {items.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goTo(index)}
-            className={`w-2 h-2 rounded-full transition-all ${
-              index === currentIndex ? "bg-black scale-125" : "bg-black/30"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
       </div>
     </div>
   );

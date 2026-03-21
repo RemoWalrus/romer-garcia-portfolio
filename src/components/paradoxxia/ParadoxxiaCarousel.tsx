@@ -71,22 +71,29 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
     return () => el.removeEventListener("wheel", onWheel);
   }, [scrollIndex, goTo]);
 
+  const isSwiping = useRef(false);
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+    isSwiping.current = false;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    e.stopPropagation();
     touchEndX.current = e.touches[0].clientX;
+    const diff = Math.abs(touchStartX.current - touchEndX.current);
+    if (diff > 10) {
+      isSwiping.current = true;
+      e.stopPropagation();
+    }
   };
 
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    e.stopPropagation();
+  const handleTouchEnd = () => {
+    if (!isSwiping.current) return;
     const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) goTo(scrollIndex + 1);
-      else goTo(scrollIndex - 1);
-    }
+    if (diff > 50) goTo(scrollIndex + 1);
+    else if (diff < -50) goTo(scrollIndex - 1);
+    isSwiping.current = false;
   };
 
   if (items.length === 0) return null;

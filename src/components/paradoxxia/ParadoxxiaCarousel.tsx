@@ -100,7 +100,9 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
 
   if (items.length === 0) return null;
 
-  const translateX = -(scrollIndex * (100 / visibleCount));
+  // On desktop, each step moves by visibleCount items worth of width
+  const desktopItemWidth = 100 / items.length; // percentage of container
+  const translateX = -(scrollIndex * visibleCount * desktopItemWidth);
 
   return (
     <div

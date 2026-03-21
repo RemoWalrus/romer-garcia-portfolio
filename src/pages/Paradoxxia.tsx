@@ -288,6 +288,9 @@ const Paradoxxia = () => {
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
             exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
           >
+            <h2 className="font-roc font-black uppercase text-foreground tracking-tight text-base sm:text-lg mb-3">
+              Chapter One: Cyber Boondocks
+            </h2>
             <div className="w-[80vw] max-w-[900px] aspect-video flex-shrink-0">
               <iframe
                 src="https://www.youtube.com/embed/_lbW0u4UL8M?autoplay=1&mute=0&controls=0&showinfo=0&rel=0&modestbranding=1&loop=1&playlist=_lbW0u4UL8M&playsinline=1"

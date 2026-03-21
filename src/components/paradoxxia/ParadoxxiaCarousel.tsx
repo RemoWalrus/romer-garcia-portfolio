@@ -154,12 +154,12 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
         </button>
 
         <div className="flex gap-2">
-          {items.map((_, index) => (
+          {Array.from({ length: totalGroups }).map((_, index) => (
             <button
               key={index}
               onClick={() => goTo(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                index >= scrollIndex && index < scrollIndex + visibleCount
+                index === scrollIndex
                   ? "bg-black scale-125"
                   : "bg-black/30"
               }`}

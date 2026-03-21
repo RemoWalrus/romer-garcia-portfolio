@@ -112,7 +112,6 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
               : `translateX(${translateX}%)`
           }}
         >
-        >
           {items.map((item) => (
             <div
               key={item.id}

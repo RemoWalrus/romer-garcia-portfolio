@@ -48,7 +48,9 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
     fetchItems();
   }, []);
 
-  const maxIndex = Math.max(0, items.length - visibleCount);
+  // On desktop, navigate in groups of visibleCount so 3 panels always show
+  const totalGroups = isMobile ? items.length : Math.ceil(items.length / visibleCount);
+  const maxIndex = Math.max(0, totalGroups - 1);
 
   const goTo = useCallback((index: number) => {
     setScrollIndex(Math.max(0, Math.min(maxIndex, index)));

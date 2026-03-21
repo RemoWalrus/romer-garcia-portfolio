@@ -288,7 +288,7 @@ const Paradoxxia = () => {
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
             exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.3 } }}
           >
-            <h2 className="font-roc font-black uppercase text-black tracking-tight text-2xl sm:text-3xl mb-4">
+            <h2 className="font-roc font-black uppercase text-black tracking-tight text-xl sm:text-3xl mb-2 sm:mb-4">
               Chapter One: Cyber Boondocks
             </h2>
             <div className="w-[80vw] max-w-[900px] aspect-video flex-shrink-0">

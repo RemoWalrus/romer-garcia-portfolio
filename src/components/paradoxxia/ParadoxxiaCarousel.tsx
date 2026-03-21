@@ -105,7 +105,13 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
       <div className="relative w-full overflow-hidden" style={{ aspectRatio: isMobile ? '1' : '3/1.05' }}>
         <div
           className="flex h-full transition-transform duration-300 ease-out"
-          style={{ width: `${(items.length / visibleCount) * 100}%`, transform: `translateX(${translateX}%)` }}
+          style={{
+            width: isMobile ? `${items.length * 100}%` : `${(items.length / visibleCount) * 100}%`,
+            transform: isMobile
+              ? `translateX(${-(scrollIndex * (100 / items.length))}%)`
+              : `translateX(${translateX}%)`
+          }}
+        >
         >
           {items.map((item) => (
             <div

@@ -98,7 +98,7 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
 
   if (items.length === 0) return null;
 
-  const translateX = -(scrollIndex * (100 / visibleCount));
+  const translateX = -(scrollIndex * (100 / items.length));
 
   return (
     <div

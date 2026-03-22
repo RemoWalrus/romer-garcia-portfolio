@@ -1,44 +1,25 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { useToast } from "@/components/ui/use-toast";
-import { getProxiedData } from "@/utils/proxyHelper";
+import { useSection } from '@/hooks/use-home-data';
 
 export const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [contactData, setContactData] = useState({
-    title: 'GET IN TOUCH',
-    description: '',
-    get_in_touch_text: 'Interested in collaborating? Let\'s discuss your next project.'
-  });
+  const sectionData = useSection('contact');
+
+  const contactData = {
+    title: sectionData?.title || 'GET IN TOUCH',
+    description: sectionData?.description || '',
+    get_in_touch_text: sectionData?.get_in_touch_text || 'Interested in collaborating? Let\'s discuss your next project.',
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
-
-  useEffect(() => {
-    const fetchContactSection = async () => {
-      try {
-        const data = await getProxiedData('sections', {
-          columns: 'title,description,get_in_touch_text',
-          filter: 'section_name:eq:contact'
-        });
-        
-        if (data && data.length > 0) {
-          setContactData(prev => ({
-            ...prev,
-            ...data[0]
-          }));
-        }
-      } catch (error) {
-        console.error('Error fetching contact section:', error);
-      }
-    };
-
-    fetchContactSection();
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

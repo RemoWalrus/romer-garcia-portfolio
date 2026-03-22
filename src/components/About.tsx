@@ -1,11 +1,12 @@
+
 import { useEffect, useState } from 'react';
 import { trackEvent } from '@/components/GoogleAnalytics';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
-import { getProxiedData } from "@/utils/proxyHelper";
 import { getProxyUrl, toProxyUrl } from "@/utils/supabaseProxy";
 import { DownloadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { useSection } from '@/hooks/use-home-data';
 
 interface AboutSection {
   title: string;
@@ -16,34 +17,17 @@ interface AboutSection {
 
 export const About = () => {
   const [portraitUrl, setPortraitUrl] = useState('');
-  const [aboutData, setAboutData] = useState<AboutSection>({
-    title: 'ABOUT ME',
-    description: '',
-    portfolio_url: null,
-    button_text: 'Download Portfolio'
-  });
+  const sectionData = useSection('about');
+  
+  const aboutData: AboutSection = {
+    title: sectionData?.title || 'ABOUT ME',
+    description: sectionData?.description || '',
+    portfolio_url: sectionData?.portfolio_url || null,
+    button_text: sectionData?.button_text || 'Download Portfolio',
+  };
 
   useEffect(() => {
     setPortraitUrl(getProxyUrl('profile', 'RomerSelfPortrait.jpg'));
-  }, []);
-
-  useEffect(() => {
-    const fetchAboutSection = async () => {
-      try {
-        const data = await getProxiedData('sections', {
-          columns: 'title,description,portfolio_url,button_text',
-          filter: 'section_name:eq:about'
-        });
-        
-        if (data && data.length > 0) {
-          setAboutData(data[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching about section:', error);
-      }
-    };
-
-    fetchAboutSection();
   }, []);
 
   const handlePortfolioDownload = () => {

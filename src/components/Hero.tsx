@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
-import { getProxiedData } from "@/utils/proxyHelper";
 import type { TitleConfig } from './hero/title-config';
 import { HeroBackground } from './hero/HeroBackground';
 import { HeroContent } from './hero/HeroContent';
+import { useHomeData } from '@/hooks/use-home-data';
 
 interface HeroProps {
   scrollToSection: (sectionId: string) => void;
@@ -12,27 +12,9 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
   const [titleIndex, setTitleIndex] = useState(0);
   const [showVideo, setShowVideo] = useState(true);
   const [triggerNewBackground, setTriggerNewBackground] = useState(0);
-  const [titles, setTitles] = useState<TitleConfig[]>([]);
+  const { heroTitles: titles } = useHomeData();
   const isSnapping = useRef(false);
   const snapCooldown = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const fetchTitles = async () => {
-      try {
-        const data = await getProxiedData('hero_titles', {
-          order: 'sort_order:asc'
-        });
-        
-        if (data) {
-          setTitles(data);
-        }
-      } catch (error) {
-        console.error('Error fetching hero titles:', error);
-      }
-    };
-
-    fetchTitles();
-  }, []);
 
   useEffect(() => {
     if (titles.length > 0 && titleIndex === titles.length - 1) {
@@ -97,12 +79,9 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
       if (isSnapping.current) return;
       const scrollY = window.scrollY;
       const portfolioTop = getPortfolioTop();
-      // Only snap at very specific thresholds — don't block native scroll
-      // Snap down: user is near top and scrolling down with intent
       if (scrollY < 10 && e.deltaY > 40) {
         snapTo(portfolioTop);
       }
-      // Snap up: user is near portfolio top and scrolling up with intent
       else if (Math.abs(scrollY - portfolioTop) < 50 && e.deltaY < -40) {
         snapTo(0);
       }
@@ -120,11 +99,9 @@ export const Hero = ({ scrollToSection }: HeroProps) => {
       const scrollY = window.scrollY;
       const portfolioTop = getPortfolioTop();
 
-      // Swipe down (scroll content down) from hero
       if (delta > 30 && scrollY < portfolioTop * 0.5) {
         snapTo(portfolioTop);
       }
-      // Swipe up (scroll content up) near portfolio
       else if (delta < -30 && scrollY <= portfolioTop + 100 && scrollY > 0) {
         snapTo(0);
       }

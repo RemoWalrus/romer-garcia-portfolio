@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { usePageMeta } from '@/hooks/use-page-meta';
+import { usePageMetaFromData } from '@/hooks/use-page-meta';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { Portfolio } from '@/components/Portfolio';
@@ -13,14 +13,16 @@ import { ImageGallery } from '@/components/ImageGallery';
 import { GoogleAnalytics, trackEvent } from '@/components/GoogleAnalytics';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PersonSchema } from '@/components/seo/JsonLdSchemas';
-import { getProxiedData } from '@/utils/proxyHelper';
 import { getProxyUrl } from '@/utils/supabaseProxy';
+import { HomeDataProvider, useHomeData } from '@/hooks/use-home-data';
 
-const Index = () => {
+const IndexInner = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [projects, setProjects] = useState<any[]>([]);
-  const [socialLinks, setSocialLinks] = useState<any>({});
-  const meta = usePageMeta(undefined, {
+  const { projects, sections, metadata } = useHomeData();
+
+  const socialLinks = sections.find((s: any) => s.section_name === 'social') || {};
+
+  const meta = usePageMetaFromData(undefined, metadata, {
     title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
     keywords: 'Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI',
@@ -91,34 +93,6 @@ const Index = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const data = await getProxiedData('projects', {
-          order: 'sort_order:asc'
-        });
-        if (data) setProjects(data);
-      } catch (error) {
-        console.error('Error fetching projects for schema:', error);
-      }
-    };
-
-    const fetchSocialLinks = async () => {
-      try {
-        const data = await getProxiedData('sections', {
-          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
-          filter: 'section_name:eq:social'
-        });
-        if (data && data.length > 0) setSocialLinks(data[0]);
-      } catch (error) {
-        console.error('Error fetching social links for schema:', error);
-      }
-    };
-
-    fetchProjects();
-    fetchSocialLinks();
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -193,5 +167,11 @@ const Index = () => {
     </div>
   );
 };
+
+const Index = () => (
+  <HomeDataProvider>
+    <IndexInner />
+  </HomeDataProvider>
+);
 
 export default Index;

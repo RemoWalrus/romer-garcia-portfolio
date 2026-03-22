@@ -1,43 +1,17 @@
 
-import { useEffect, useState } from 'react';
-import { getProxiedData } from "@/utils/proxyHelper";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
-
-interface SocialLinks {
-  facebook_url: string;
-  twitter_url: string;
-  linkedin_url: string;
-  instagram_url: string;
-  youtube_url: string;
-}
+import { useSection } from '@/hooks/use-home-data';
 
 export const Footer = () => {
-  const [socialLinks, setSocialLinks] = useState<SocialLinks>({
-    facebook_url: '',
-    twitter_url: '',
-    linkedin_url: '',
-    instagram_url: '',
-    youtube_url: ''
-  });
+  const socialSection = useSection('social');
 
-  useEffect(() => {
-    const fetchSocialLinks = async () => {
-      try {
-        const data = await getProxiedData('sections', {
-          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
-          filter: 'section_name:eq:social'
-        });
-        
-        if (data && data.length > 0) {
-          setSocialLinks(data[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching social links:', error);
-      }
-    };
-
-    fetchSocialLinks();
-  }, []);
+  const socialLinks = {
+    facebook_url: socialSection?.facebook_url || '',
+    twitter_url: socialSection?.twitter_url || '',
+    linkedin_url: socialSection?.linkedin_url || '',
+    instagram_url: socialSection?.instagram_url || '',
+    youtube_url: socialSection?.youtube_url || '',
+  };
 
   const SocialIcon = ({ url, icon: Icon, label }: { url: string; icon: typeof Facebook; label: string }) => {
     if (!url) return null;
@@ -90,4 +64,3 @@ export const Footer = () => {
     </footer>
   );
 };
-

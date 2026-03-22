@@ -1,9 +1,9 @@
 
 import { Menu, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { getProxiedData } from "@/utils/proxyHelper";
 import { getProxyUrl } from "@/utils/supabaseProxy";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
+import { useSection } from '@/hooks/use-home-data';
 
 interface NavigationProps {
   scrolled: boolean;
@@ -11,23 +11,18 @@ interface NavigationProps {
   scrollToTop: () => void;
 }
 
-interface SocialLinks {
-  facebook_url: string;
-  twitter_url: string;
-  linkedin_url: string;
-  instagram_url: string;
-  youtube_url: string;
-}
-
 export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: NavigationProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [socialLinks, setSocialLinks] = useState<SocialLinks>({
-    facebook_url: '',
-    twitter_url: '',
-    linkedin_url: '',
-    instagram_url: '',
-    youtube_url: ''
-  });
+  const socialSection = useSection('social');
+
+  const socialLinks = {
+    facebook_url: socialSection?.facebook_url || '',
+    twitter_url: socialSection?.twitter_url || '',
+    linkedin_url: socialSection?.linkedin_url || '',
+    instagram_url: socialSection?.instagram_url || '',
+    youtube_url: socialSection?.youtube_url || '',
+  };
+
   const [isDark, setIsDark] = useState(() => 
     document.documentElement.classList.contains('dark') || 
     window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -51,25 +46,6 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
 
   const logoFile = scrolled && !isDark ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
   const logoUrl = getProxyUrl('graphics', logoFile);
-
-  useEffect(() => {
-    const fetchSocialLinks = async () => {
-      try {
-        const data = await getProxiedData('sections', {
-          columns: 'facebook_url,twitter_url,linkedin_url,instagram_url,youtube_url',
-          filter: 'section_name:eq:social'
-        });
-        
-        if (data && data.length > 0) {
-          setSocialLinks(data[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching social links:', error);
-      }
-    };
-
-    fetchSocialLinks();
-  }, []);
 
   const SocialIcon = ({ url, icon: Icon, label }: { url: string; icon: typeof Facebook; label: string }) => {
     if (!url) return null;
@@ -216,4 +192,3 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     </nav>
   );
 };
-

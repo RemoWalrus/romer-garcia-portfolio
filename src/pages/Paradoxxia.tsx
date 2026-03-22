@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { usePageMeta } from "@/hooks/use-page-meta";
+import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { ParadoxxiaLandingSchema, SpotifyIcon, AppleMusicIcon, YouTubeMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
@@ -13,9 +13,9 @@ import circuitBg from "@/assets/paradoxxia-bg.png";
 import PixelTransition from "@/components/paradoxxia/PixelTransition";
 import ParadoxxiaCarousel from "@/components/paradoxxia/ParadoxxiaCarousel";
 import TypewriterText from "@/components/paradoxxia/TypewriterText";
-import { supabase } from "@/integrations/supabase/client";
+import { ParadoxxiaDataProvider, useParadoxxiaData } from "@/hooks/use-paradoxxia-data";
 
-const Paradoxxia = () => {
+const ParadoxxiaInner = () => {
   const [intro, setIntro] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState(0);
@@ -24,20 +24,7 @@ const Paradoxxia = () => {
   const isMobile = useIsMobile();
   const { tier } = usePerformanceTier();
   const speed = isMobile ? 0.65 : 0.8;
-  const [loreText, setLoreText] = useState("");
-
-  // Fetch lore text from Supabase
-  useEffect(() => {
-    const fetchLore = async () => {
-      const { data } = await supabase
-        .from("config")
-        .select("value")
-        .eq("key", "paradoxxia_lore_text")
-        .single();
-      if (data?.value) setLoreText(data.value);
-    };
-    fetchLore();
-  }, []);
+  const { loreText, metadata } = useParadoxxiaData();
 
   // Map phase to base glitch intensity + burst overlay
   const gi = (phase === 0 ? 0 : phase === 1 ? 0.5 : phase === 2 ? 0.1 : phase === 3 ? 0.1 : phase === 4 ? 1 : 0.7) + burst * 0.5;
@@ -115,7 +102,7 @@ const Paradoxxia = () => {
   const cyanControls = useAnimation();
   const mainControls = useAnimation();
   const scanControls = useAnimation();
-  const meta = usePageMeta('paradoxxia', {
+  const meta = usePageMetaFromData('paradoxxia', metadata, {
     title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     keywords: 'Paradoxxia, パラドクシア, AI multimedia artist, AI character generator, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, AI-synthesized music, cinematic sci-fi',
@@ -577,5 +564,11 @@ const Paradoxxia = () => {
     </div>
   );
 };
+
+const Paradoxxia = () => (
+  <ParadoxxiaDataProvider>
+    <ParadoxxiaInner />
+  </ParadoxxiaDataProvider>
+);
 
 export default Paradoxxia;

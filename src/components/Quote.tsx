@@ -1,7 +1,6 @@
 
-import { useEffect, useState } from 'react';
-import { callProxiedRpc } from "@/utils/proxyHelper";
 import { motion } from 'framer-motion';
+import { useHomeData } from '@/hooks/use-home-data';
 
 interface QuoteSection {
   quote: string;
@@ -9,26 +8,12 @@ interface QuoteSection {
 }
 
 export const Quote = () => {
-  const [quoteData, setQuoteData] = useState<QuoteSection>({
-    quote: "Design is intelligence made visible",
-    author: "Alina Wheeler"
-  });
+  const { quote } = useHomeData();
 
-  useEffect(() => {
-    const fetchRandomQuote = async () => {
-      try {
-        const data = await callProxiedRpc('get_random_quote');
-        
-        if (data && data.length > 0) {
-          setQuoteData(data[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching random quote:', error);
-      }
-    };
-
-    fetchRandomQuote();
-  }, []);
+  const quoteData: QuoteSection = {
+    quote: quote?.quote || "Design is intelligence made visible",
+    author: quote?.author || "Alina Wheeler"
+  };
 
   return (
     <section className="relative bg-neutral-100 dark:bg-neutral-900 py-24 overflow-hidden isolate">

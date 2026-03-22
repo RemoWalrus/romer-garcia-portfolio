@@ -1,39 +1,23 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
-import { getProxiedData } from "@/utils/proxyHelper";
 import { toProxyUrl, getProxyUrl } from "@/utils/supabaseProxy";
 import { ProjectCard } from './portfolio/ProjectCard';
 import { ProjectModal } from './portfolio/ProjectModal';
 import { trackEvent } from './GoogleAnalytics';
+import { useHomeData } from '@/hooks/use-home-data';
 
 export const Portfolio = () => {
   const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [projects, setProjects] = useState<any[]>([]);
   const [heroImageIndex, setHeroImageIndex] = useState(0);
+  const { projects: rawProjects } = useHomeData();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const data = await getProxiedData('projects', {
-        order: 'sort_order:asc'
-      });
-      
-      if (data) {
-        setProjects(data.map((p: any) => ({
-          ...p,
-          hero_image_url: toProxyUrl(p.hero_image_url),
-          image_url: toProxyUrl(p.image_url),
-          additional_images: p.additional_images?.map((url: string) => toProxyUrl(url)) || null,
-        })));
-      }
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-    }
-  };
+  const projects = rawProjects.map((p: any) => ({
+    ...p,
+    hero_image_url: toProxyUrl(p.hero_image_url),
+    image_url: toProxyUrl(p.image_url),
+    additional_images: p.additional_images?.map((url: string) => toProxyUrl(url)) || null,
+  }));
 
   const handleImageClick = (index: number) => {
     setHeroImageIndex(index);
@@ -66,7 +50,7 @@ export const Portfolio = () => {
         </ChromaticTitle>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-          {projects.map((project) => (
+          {projects.map((project: any) => (
             <ProjectCard
               key={project.id}
               project={project}

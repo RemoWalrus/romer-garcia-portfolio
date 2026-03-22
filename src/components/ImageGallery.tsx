@@ -1,12 +1,12 @@
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { getProxiedData } from "@/utils/proxyHelper";
 import { toProxyUrl, getProxyUrl } from "@/utils/supabaseProxy";
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useHomeData } from '@/hooks/use-home-data';
 
 interface GalleryImage {
   id: number;
@@ -17,7 +17,12 @@ interface GalleryImage {
 }
 
 export const ImageGallery = () => {
-  const [images, setImages] = useState<GalleryImage[]>([]);
+  const { gallery: rawImages } = useHomeData();
+  const images: GalleryImage[] = rawImages.map((img: any) => ({
+    ...img,
+    image_url: toProxyUrl(img.image_url),
+  }));
+
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const imagesPerPage = 6;
@@ -42,12 +47,10 @@ export const ImageGallery = () => {
     const diffY = Math.abs(touchStartY.current - touchEndY.current);
     const absDiffX = Math.abs(diffX);
     
-    // Vertical swipe to close
     if (diffY > 100 && diffY > absDiffX) {
       setSelectedImage(null);
       return;
     }
-    // Horizontal swipe to navigate
     if (absDiffX > 50 && absDiffX > diffY) {
       if (diffX > 0) {
         navigateModal('next');
@@ -56,27 +59,6 @@ export const ImageGallery = () => {
       }
     }
   };
-
-  useEffect(() => {
-    const fetchGalleryImages = async () => {
-      try {
-        const data = await getProxiedData('gallery', {
-          order: 'sort_order:asc'
-        });
-        
-        if (data) {
-          setImages(data.map((img: GalleryImage) => ({
-            ...img,
-            image_url: toProxyUrl(img.image_url),
-          })));
-        }
-      } catch (error) {
-        console.error('Error fetching gallery images:', error);
-      }
-    };
-
-    fetchGalleryImages();
-  }, []);
 
   const totalPages = Math.ceil(images.length / imagesPerPage);
   const currentImages = images.slice(

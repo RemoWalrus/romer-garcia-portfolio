@@ -6,7 +6,7 @@ import { HeroTitle } from './HeroTitle';
 import { TitleConfig } from './title-config';
 import { glitchVariants } from './animation-variants';
 import { useEffect, useState } from 'react';
-import { getProxiedData } from "@/utils/proxyHelper";
+import { useHomeData, useSection } from '@/hooks/use-home-data';
 
 interface HeroContentProps {
   titles: TitleConfig[];
@@ -15,27 +15,15 @@ interface HeroContentProps {
 }
 
 export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContentProps) => {
+  const heroSection = useSection('hero');
   const [subtitle, setSubtitle] = useState("I create immersive digital experiences that blend storytelling with cutting-edge technology");
   const [showSubtitle, setShowSubtitle] = useState(false);
 
   useEffect(() => {
-    const fetchHeroSection = async () => {
-      try {
-        const data = await getProxiedData('sections', {
-          columns: 'description',
-          filter: 'section_name:eq:hero'
-        });
-        
-        if (data && data.length > 0) {
-          setSubtitle(data[0].description || subtitle);
-        }
-      } catch (error) {
-        console.error('Error fetching hero section:', error);
-      }
-    };
-
-    fetchHeroSection();
-  }, []);
+    if (heroSection?.description) {
+      setSubtitle(heroSection.description);
+    }
+  }, [heroSection]);
 
   useEffect(() => {
     setShowSubtitle(false);
@@ -66,7 +54,7 @@ export const HeroContent = ({ titles, titleIndex, scrollToSection }: HeroContent
           </motion.div>
         </AnimatePresence>
         
-        <div className="h-24 mb-8"> {/* Fixed height container for subtitle */}
+        <div className="h-24 mb-8">
           <AnimatePresence mode="wait">
             {showSubtitle && (
               <motion.p 

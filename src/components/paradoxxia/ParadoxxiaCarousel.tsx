@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import placeholderImage from "@/assets/paradoxxia-carousel-placeholder.png";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useParadoxxiaData } from "@/hooks/use-paradoxxia-data";
 
 interface CarouselItem {
   id: number;
@@ -17,6 +17,7 @@ interface ParadoxxiaCarouselProps {
 }
 
 const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
+  const { carousel } = useParadoxxiaData();
   const [items, setItems] = useState<CarouselItem[]>([]);
   const [scrollIndex, setScrollIndex] = useState(0);
   const touchStartX = useRef(0);
@@ -27,26 +28,18 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
   const visibleCount = isMobile ? 1 : 3;
 
   useEffect(() => {
-    const fetchItems = async () => {
-      const { data } = await (supabase as any)
-        .from("paradoxxia_carousel")
-        .select("*")
-        .order("sort_order", { ascending: true });
-
-      if (data && data.length > 0) {
-        setItems(data);
-      } else {
-        setItems([
-          { id: 1, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 0 },
-          { id: 2, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 1 },
-          { id: 3, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 2 },
-          { id: 4, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 3 },
-          { id: 5, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 4 },
-        ]);
-      }
-    };
-    fetchItems();
-  }, []);
+    if (carousel && carousel.length > 0) {
+      setItems(carousel);
+    } else if (carousel && carousel.length === 0) {
+      setItems([
+        { id: 1, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 0 },
+        { id: 2, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 1 },
+        { id: 3, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 2 },
+        { id: 4, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 3 },
+        { id: 5, image_url: placeholderImage, title: null, description: null, link_url: null, sort_order: 4 },
+      ]);
+    }
+  }, [carousel]);
 
   const maxIndex = Math.max(0, items.length - visibleCount);
 
@@ -59,7 +52,6 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
     const el = containerRef.current;
     if (!el) return;
     const onWheel = (e: WheelEvent) => {
-      // Use deltaX for horizontal scroll wheels, or deltaY if no horizontal movement
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
       if (Math.abs(delta) < 5) return;
       e.preventDefault();

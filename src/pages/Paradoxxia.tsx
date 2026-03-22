@@ -102,7 +102,7 @@ const ParadoxxiaInner = () => {
   const cyanControls = useAnimation();
   const mainControls = useAnimation();
   const scanControls = useAnimation();
-  const meta = usePageMeta('paradoxxia', {
+  const meta = usePageMetaFromData('paradoxxia', metadata, {
     title: 'Paradoxxia | AI Character Generator & Multimedia Artist',
     description: 'Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.',
     keywords: 'Paradoxxia, パラドクシア, AI multimedia artist, AI character generator, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, AI-synthesized music, cinematic sci-fi',

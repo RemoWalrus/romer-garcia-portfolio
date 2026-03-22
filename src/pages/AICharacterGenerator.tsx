@@ -19,7 +19,7 @@ import { ActionSheet } from '@capacitor/action-sheet';
 import { Link } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
 import circuitBg from "@/assets/paradoxxia-bg.png";
-import { CharGenSchema, SpotifyIcon, AppleMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
+import { CharGenSchema, SpotifyIcon, AppleMusicIcon, YouTubeMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
@@ -1197,6 +1197,17 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                   >
                     <AppleMusicIcon className="w-5 h-5" />
                     Apple Music
+                    <MoveRight className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
+                    onClick={() => trackEvent('Music Platform', 'Click YouTube Music', 'CharGen Page')}
+                  >
+                    <YouTubeMusicIcon className="w-5 h-5" />
+                    YouTube Music
                     <MoveRight className="w-4 h-4" />
                   </a>
                 </div>

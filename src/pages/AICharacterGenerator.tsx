@@ -1116,100 +1116,95 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           {/* Output Section */}
           {generatedImage && (
             <div className="space-y-4">
-              <Card className="p-0 bg-card border-border overflow-hidden relative" style={{
-                border: '1px solid rgba(0, 217, 255, 0.4)',
-                boxShadow: '0 0 6px rgba(0, 217, 255, 0.2)'
-              }}>
-                <div className="relative">
-                  <img
-                    src={generatedImage}
-                    alt={displayName}
-                    className="w-full z-10"
-                  />
-                  {/* Actions button on mobile (native menu), download button on desktop */}
-                  {Capacitor.isNativePlatform() ? (
+              <div className="relative">
+                <Card className="p-0 bg-card border-border overflow-hidden relative" style={{
+                  border: '1px solid rgba(0, 217, 255, 0.4)',
+                  boxShadow: '0 0 6px rgba(0, 217, 255, 0.2)'
+                }}>
+                  <div className="relative">
+                    <img
+                      src={generatedImage}
+                      alt={displayName}
+                      className="w-full z-10"
+                    />
+                    {/* Download button */}
                     <Button
-                      onClick={handleNativeActions}
+                      onClick={Capacitor.isNativePlatform() ? handleNativeActions : handleDownload}
                       size="icon"
                       variant="ghost"
                       className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
                     >
                       <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
                     </Button>
-                  ) : (
-                    <Button
-                      onClick={handleDownload}
-                      size="icon"
-                      variant="ghost"
-                      className="absolute top-4 right-4 z-50 bg-transparent hover:bg-transparent p-2"
-                    >
-                      <Download className="h-8 w-8" style={{ color: '#00d9ff', filter: 'drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))' }} />
-                    </Button>
-                  )}
-                  {/* Trading card overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-20">
-                    <h2 className="text-3xl font-bold text-white mb-1" style={{ 
-                      fontFamily: 'var(--font-roc)',
-                      textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
-                    }}>
-                      {displayName}
-                    </h2>
-                    <p className="text-lg text-white/90 capitalize font-medium" style={{ 
-                      textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
-                    }}>
-                      {species === "other" && Math.random() > 0.7 ? "classified" : actualSpecies}
-                    </p>
                   </div>
-                </div>
-              </Card>
-              
-              <div className="mt-8 p-6 bg-muted/30 rounded-lg space-y-4">
-                <p className="text-sm sm:text-lg text-foreground leading-relaxed font-roc">
-                  <span style={{ fontWeight: 300 }}>Step into the world you've just helped</span>{" "}
-                  <span style={{ fontWeight: 500 }}>create.</span>{" "}
-                  <span style={{ fontWeight: 300 }}>Paradoxxia's story unfolds in the same shattered future your characters inhabit—a realm</span>{" "}
-                  <span style={{ fontWeight: 500 }}>of memory,</span>{" "}
-                  <span style={{ fontWeight: 500 }}>music,</span>{" "}
-                  <span style={{ fontWeight: 500 }}>and machine</span>{" "}
-                  <span style={{ fontWeight: 300 }}>evolution. She's more than</span>{" "}
-                  <span style={{ fontWeight: 500 }}>legend;</span>{" "}
-                  <span style={{ fontWeight: 300 }}>she's the pulse that echoes through the</span>{" "}
-                  <span style={{ fontWeight: 500 }}>ruins.</span>
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a 
-                    href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
-                    onClick={() => trackEvent('Music Platform', 'Click Spotify', 'CharGen Page')}
-                  >
-                    <SpotifyIcon className="w-5 h-5" />
-                    Meet Paradoxxia on Spotify
-                    <MoveRight className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href="https://music.apple.com/us/artist/paradoxxia/1803632666"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
-                    onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'CharGen Page')}
-                  >
-                    <AppleMusicIcon className="w-5 h-5" />
-                    Apple Music
-                    <MoveRight className="w-4 h-4" />
-                  </a>
-                  <a 
-                    href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-roc font-bold uppercase"
-                    onClick={() => trackEvent('Music Platform', 'Click YouTube Music', 'CharGen Page')}
-                  >
-                    <YouTubeMusicIcon className="w-5 h-5" />
-                    YouTube Music
-                    <MoveRight className="w-4 h-4" />
-                  </a>
+                </Card>
+
+                {/* Overlapping info panel - overlaps bottom of image on desktop, below on mobile */}
+                <div className="relative md:absolute md:bottom-0 md:left-0 md:right-0 md:z-20">
+                  <div className="p-5 sm:p-6 space-y-3 bg-muted/30 md:bg-gradient-to-t md:from-black/95 md:via-black/80 md:to-transparent md:pt-20">
+                    <div>
+                      <h2 className="text-2xl sm:text-3xl font-bold text-foreground md:text-white mb-0.5" style={{ 
+                        fontFamily: 'var(--font-roc)',
+                        textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+                      }}>
+                        {displayName}
+                      </h2>
+                      <p className="text-base sm:text-lg text-muted-foreground md:text-white/90 capitalize font-medium" style={{ 
+                        textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+                      }}>
+                        {species === "other" && Math.random() > 0.7 ? "classified" : actualSpecies}
+                      </p>
+                    </div>
+
+                    <p className="text-sm sm:text-base text-foreground md:text-white/90 leading-relaxed font-roc" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>
+                      <span style={{ fontWeight: 300 }}>Step into the world you've just helped</span>{" "}
+                      <span style={{ fontWeight: 500 }}>create.</span>{" "}
+                      <span style={{ fontWeight: 300 }}>Paradoxxia's story unfolds in the same shattered future your characters inhabit—a realm</span>{" "}
+                      <span style={{ fontWeight: 500 }}>of memory,</span>{" "}
+                      <span style={{ fontWeight: 500 }}>music,</span>{" "}
+                      <span style={{ fontWeight: 500 }}>and machine</span>{" "}
+                      <span style={{ fontWeight: 300 }}>evolution. She's more than</span>{" "}
+                      <span style={{ fontWeight: 500 }}>legend;</span>{" "}
+                      <span style={{ fontWeight: 300 }}>she's the pulse that echoes through the</span>{" "}
+                      <span style={{ fontWeight: 500 }}>ruins.</span>
+                    </p>
+
+                    <div className="flex flex-wrap gap-4">
+                      <a 
+                        href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
+                        onClick={() => trackEvent('Music Platform', 'Click Spotify', 'CharGen Page')}
+                      >
+                        <SpotifyIcon className="w-5 h-5" />
+                        Meet Paradoxxia on Spotify
+                        <MoveRight className="w-4 h-4" />
+                      </a>
+                      <a 
+                        href="https://music.apple.com/us/artist/paradoxxia/1803632666"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
+                        onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'CharGen Page')}
+                      >
+                        <AppleMusicIcon className="w-5 h-5" />
+                        Apple Music
+                        <MoveRight className="w-4 h-4" />
+                      </a>
+                      <a 
+                        href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
+                        onClick={() => trackEvent('Music Platform', 'Click YouTube Music', 'CharGen Page')}
+                      >
+                        <YouTubeMusicIcon className="w-5 h-5" />
+                        YouTube Music
+                        <MoveRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
 

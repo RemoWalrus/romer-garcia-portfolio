@@ -48,9 +48,7 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
     fetchItems();
   }, []);
 
-  // On desktop, navigate in groups of visibleCount so 3 panels always show
-  const totalGroups = isMobile ? items.length : Math.ceil(items.length / visibleCount);
-  const maxIndex = Math.max(0, totalGroups - 1);
+  const maxIndex = Math.max(0, items.length - visibleCount);
 
   const goTo = useCallback((index: number) => {
     setScrollIndex(Math.max(0, Math.min(maxIndex, index)));
@@ -100,9 +98,7 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
 
   if (items.length === 0) return null;
 
-  // On desktop, each step moves by visibleCount items worth of width
-  const desktopItemWidth = 100 / items.length; // percentage of container
-  const translateX = -(scrollIndex * visibleCount * desktopItemWidth);
+  const translateX = -(scrollIndex * (100 / visibleCount));
 
   return (
     <div
@@ -154,12 +150,12 @@ const ParadoxxiaCarousel = ({ active }: ParadoxxiaCarouselProps) => {
         </button>
 
         <div className="flex gap-2">
-          {Array.from({ length: totalGroups }).map((_, index) => (
+          {items.map((_, index) => (
             <button
               key={index}
               onClick={() => goTo(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                index === scrollIndex
+                index >= scrollIndex && index < scrollIndex + visibleCount
                   ? "bg-black scale-125"
                   : "bg-black/30"
               }`}

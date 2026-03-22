@@ -565,4 +565,10 @@ const ParadoxxiaInner = () => {
   );
 };
 
+const Paradoxxia = () => (
+  <ParadoxxiaDataProvider>
+    <ParadoxxiaInner />
+  </ParadoxxiaDataProvider>
+);
+
 export default Paradoxxia;

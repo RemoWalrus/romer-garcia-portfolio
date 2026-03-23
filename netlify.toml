@@ -15,24 +15,21 @@
 # Route-specific SSR for social meta tags — 301 redirect so crawlers follow to serve-index
 [[redirects]]
   from = "/paradoxxia"
-  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/paradoxxia"
-  status = 301
+  to = "/api/serve-index?path=/paradoxxia"
+  status = 200
   force = true
-  conditions = {Role = ["bot"]}
 
 [[redirects]]
   from = "/char-gen"
-  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/char-gen"
-  status = 301
+  to = "/api/serve-index?path=/char-gen"
+  status = 200
   force = true
-  conditions = {Role = ["bot"]}
 
 [[redirects]]
   from = "/meme"
-  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/meme"
-  status = 301
+  to = "/api/serve-index?path=/meme"
+  status = 200
   force = true
-  conditions = {Role = ["bot"]}
 
 # SPA fallback
 [[redirects]]

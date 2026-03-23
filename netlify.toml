@@ -13,23 +13,17 @@
   force = true
 
 # Route-specific SSR for social meta tags
-[[redirects]]
-  from = "/paradoxxia"
-  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/paradoxxia"
-  status = 200
-  force = true
+[[edge_functions]]
+  path = "/paradoxxia"
+  function = "og-meta"
 
-[[redirects]]
-  from = "/char-gen"
-  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/char-gen"
-  status = 200
-  force = true
+[[edge_functions]]
+  path = "/char-gen"
+  function = "og-meta"
 
-[[redirects]]
-  from = "/meme"
-  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/meme"
-  status = 200
-  force = true
+[[edge_functions]]
+  path = "/meme"
+  function = "og-meta"
 
 # Handle SPA routing - send all requests to index.html so React Router can handle them
 [[redirects]]

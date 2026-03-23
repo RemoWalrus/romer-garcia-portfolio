@@ -84,7 +84,7 @@ These requirements are NON-NEGOTIABLE. The image must be square 1:1 ratio and ph
     });
   } catch (error) {
     console.error("Error in generate-character-image function:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: "Image generation failed. Please try again later." }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

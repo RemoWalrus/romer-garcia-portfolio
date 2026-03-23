@@ -25,6 +25,12 @@
   status = 200
   force = true
 
+[[redirects]]
+  from = "/meme"
+  to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/meme"
+  status = 200
+  force = true
+
 # Handle SPA routing - send all requests to index.html so React Router can handle them
 [[redirects]]
   from = "/*"

@@ -12,32 +12,34 @@
   status = 200
   force = true
 
-# Route-specific SSR for social meta tags
+# Route-specific SSR for social meta tags — 301 redirect so crawlers follow to serve-index
 [[redirects]]
   from = "/paradoxxia"
   to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/paradoxxia"
-  status = 200
+  status = 301
   force = true
+  conditions = {Role = ["bot"]}
 
 [[redirects]]
   from = "/char-gen"
   to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/char-gen"
-  status = 200
+  status = 301
   force = true
+  conditions = {Role = ["bot"]}
 
 [[redirects]]
   from = "/meme"
   to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/serve-index?path=/meme"
-  status = 200
+  status = 301
   force = true
+  conditions = {Role = ["bot"]}
 
-# Handle SPA routing - send all requests to index.html so React Router can handle them
+# SPA fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Optional: Custom headers for security
 [[headers]]
   for = "/*"
   [headers.values]

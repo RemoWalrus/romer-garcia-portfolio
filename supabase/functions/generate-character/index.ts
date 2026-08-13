@@ -21,7 +21,7 @@ serve(async (req) => {
   try {
     // Abuse protection: cap anonymous text generations per IP.
     const ip = getClientIp(req);
-    const retryAfter = checkRateLimit(`character:${ip}`, { limit: 20, windowMs: 60 * 60 * 1000 });
+    const retryAfter = checkRateLimit(`character:${ip}`, { limit: 60, windowMs: 60 * 60 * 1000 });
     if (retryAfter !== null) return rateLimitResponse(retryAfter, corsHeaders);
 
     const body = await req.json().catch(() => null);

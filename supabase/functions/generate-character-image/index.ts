@@ -21,7 +21,7 @@ serve(async (req) => {
   try {
     // Abuse protection: image generation is the most expensive call.
     const ip = getClientIp(req);
-    const retryAfter = checkRateLimit(`image:${ip}`, { limit: 6, windowMs: 60 * 60 * 1000 });
+    const retryAfter = checkRateLimit(`image:${ip}`, { limit: 40, windowMs: 60 * 60 * 1000 });
     if (retryAfter !== null) return rateLimitResponse(retryAfter, corsHeaders);
 
     const body = await req.json().catch(() => null);

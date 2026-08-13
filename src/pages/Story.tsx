@@ -84,21 +84,21 @@ const Story = () => {
     }
   };
 
-  const generateSceneImage = async (sceneText: string, index: number) => {
+  const generateSceneImage = async (sceneText: string, msgId: string) => {
     setMessages((prev) =>
-      prev.map((m, i) => (i === index ? { ...m, imageLoading: true } : m)),
+      prev.map((m) => (m.id === msgId ? { ...m, imageLoading: true } : m)),
     );
     try {
       const url = await generateImage(
         `An atmospheric cinematic sci-fi scene illustrating this moment in a scorched dystopian frontier called the Cyber Boondocks: "${sceneText.replace(/[*"]/g, "").slice(0, 700)}". Include PARADOXXIA where relevant — an android with a porcelain-white synthetic face, long dark hair, glowing cyan eyes and battered chrome armor over an exposed robotic endoskeleton. Rust, dust, neon, static, volumetric light. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
       );
       setMessages((prev) =>
-        prev.map((m, i) => (i === index ? { ...m, image: url, imageLoading: false } : m)),
+        prev.map((m) => (m.id === msgId ? { ...m, image: url, imageLoading: false } : m)),
       );
     } catch (error) {
       console.error("scene image error:", error);
       setMessages((prev) =>
-        prev.map((m, i) => (i === index ? { ...m, imageLoading: false } : m)),
+        prev.map((m) => (m.id === msgId ? { ...m, imageLoading: false } : m)),
       );
     }
   };

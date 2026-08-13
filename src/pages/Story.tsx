@@ -364,9 +364,36 @@ const Story = () => {
                   ref={scrollRef}
                   className="h-[55vh] sm:h-[60vh] overflow-y-auto px-4 py-4 space-y-4"
                 >
+                  {(cardImage || cardLoading) && (
+                    <div className="flex justify-center">
+                      <div className="w-40 sm:w-48 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
+                        {cardImage ? (
+                          <img
+                            src={cardImage}
+                            alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
+                            className="w-full aspect-square object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full aspect-square flex items-center justify-center">
+                            <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                          </div>
+                        )}
+                        <div className="px-2 py-1 text-center">
+                          <span className="block text-[11px] font-roc font-medium text-foreground truncate">
+                            {name}
+                          </span>
+                          <span className="block text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
+                            {gender} {species}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {messages.map((m, i) => (
                     <div
-                      key={i}
+                      key={m.id ?? i}
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
@@ -382,6 +409,19 @@ const Story = () => {
                           </span>
                         )}
                         {m.content}
+                        {m.image && (
+                          <img
+                            src={m.image}
+                            alt="Scene from the encounter with Paradoxxia"
+                            className="mt-2 w-full max-w-sm rounded-md border border-border dark:border-[#00d4ff]/30"
+                            loading="lazy"
+                          />
+                        )}
+                        {m.imageLoading && !m.image && (
+                          <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
+                            <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))}

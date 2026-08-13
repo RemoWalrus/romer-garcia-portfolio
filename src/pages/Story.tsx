@@ -539,12 +539,18 @@ const Story = () => {
                     <div className="flex justify-center">
                       <div className="w-40 sm:w-48 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
                         {cardImage ? (
-                          <img
-                            src={cardImage}
-                            alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
-                            className="w-full aspect-square object-cover"
-                            loading="lazy"
-                          />
+                          <div className="relative">
+                            <img
+                              src={cardImage}
+                              alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
+                              className="w-full aspect-square object-cover"
+                              loading="lazy"
+                            />
+                            <DownloadOverlayButton
+                              src={cardImage}
+                              fileName={`${name || "character"}_${Date.now()}.png`}
+                            />
+                          </div>
                         ) : (
                           <div className="w-full aspect-square flex items-center justify-center">
                             <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
@@ -561,6 +567,7 @@ const Story = () => {
                       </div>
                     </div>
                   )}
+
 
                   {messages.map((m, i) => (
                     <div

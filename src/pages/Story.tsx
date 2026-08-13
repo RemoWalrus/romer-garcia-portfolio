@@ -107,11 +107,23 @@ const Story = () => {
     return data.imageUrl as string;
   };
 
-  const generateCard = async (finalName: string) => {
+  const generateCard = async (finalName: string, startSpecies?: string, startGender?: string) => {
+    // reuse the portrait generated on the character generator page when available
+    try {
+      const handoff = sessionStorage.getItem("paradoxxia_story_character_image");
+      if (handoff) {
+        setCardImage(handoff);
+        setCardLoading(false);
+        return;
+      }
+    } catch {
+      // ignore storage access issues and fall through to generating a card
+    }
+
     setCardLoading(true);
     try {
       const url = await generateImage(
-        `A cinematic full-body character card portrait of ${finalName}, a ${gender} ${species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+        `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
       );
       setCardImage(url);
     } catch (error) {
@@ -219,7 +231,7 @@ const Story = () => {
     setStarted(true);
     trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
-    void generateCard(finalName);
+    void generateCard(finalName, startSpecies, startGender);
     const opening: ChatMessage[] = [
       {
         role: "user",

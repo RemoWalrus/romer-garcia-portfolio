@@ -1217,6 +1217,14 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                             gender,
                             autostart: true,
                           }));
+                          // carry the generated portrait over as the story profile image
+                          try {
+                            if (generatedImage) {
+                              sessionStorage.setItem('paradoxxia_story_character_image', generatedImage);
+                            }
+                          } catch {
+                            // image too large for storage — story will generate its own card
+                          }
                           trackEvent('Character Generator', 'Continue to Story', displayName || 'unnamed');
                         }}
                       >

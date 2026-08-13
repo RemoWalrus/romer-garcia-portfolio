@@ -137,10 +137,16 @@ const Story = () => {
     setMessages((prev) =>
       prev.map((m) => (m.id === msgId ? { ...m, imageLoading: true } : m)),
     );
+    const clean = sceneText.replace(/[*"]/g, "").slice(0, 700);
+    const mentionsParadoxxia = /paradoxxia/i.test(clean);
+    const androidClause = mentionsParadoxxia
+      ? "If a white-faced android figure appears, she is distant, half-hidden or barely glimpsed — never posed, never centered, never facing the camera directly: a domestic android with a porcelain-white synthetic face, long dark hair, faint glowing cyan eyes and battered chrome plating, seen far off through dust, doorways or wreckage."
+      : "Do NOT include any white-faced android character in this image. Show only the world and whatever the described moment contains — scavengers in small wary groups, collective-minded androids moving in eerie unison, or a lone feral robot or mutant.";
     try {
       const url = await generateImage(
-        `A first-person point-of-view cinematic film still, as seen through the eyes of the observer standing in the scene, illustrating this moment in a scorched dystopian frontier called the Cyber Boondocks: "${sceneText.replace(/[*"]/g, "").slice(0, 700)}". The camera is the observer's own eyes: environment and surroundings dominate the frame, with PARADOXXIA in the middle or background rather than posed for portrait — a domestic android with a porcelain-white synthetic face, long dark hair, glowing cyan eyes and battered chrome plating over an exposed robotic endoskeleton. Emphasize the setting and the interaction happening: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery. Ultra photorealistic cinematic film still, natural handheld framing, no text or captions other than the required watermark.`,
+        `A first-person point-of-view cinematic film still, as seen through the eyes of the traveler standing in the scene, illustrating this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". The camera is the traveler's own eyes, sometimes their own hands or gear at the edge of frame: the environment and the interaction dominate the image. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. Ultra photorealistic cinematic film still, natural handheld framing, no text or captions other than the required watermark.`,
       );
+
       setMessages((prev) =>
         prev.map((m) => (m.id === msgId ? { ...m, image: url, imageLoading: false } : m)),
       );

@@ -617,7 +617,34 @@ const Story = () => {
                   )}
                 </div>
 
+                {(options.length > 0 || optionsLoading) && !isStreaming && (
+                  <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 space-y-2">
+                    <span className="block text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                      choose an action
+                    </span>
+                    {optionsLoading ? (
+                      <span className="flex items-center gap-2 text-[10px] text-muted-foreground font-mono">
+                        <Loader2 className="w-3 h-3 animate-spin" /> weighing your options...
+                      </span>
+                    ) : (
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        {options.map((option) => (
+                          <Button
+                            key={option}
+                            variant="outline"
+                            onClick={() => void send(option)}
+                            className="flex-1 h-auto py-2 whitespace-normal text-left justify-start text-xs font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
+                          >
+                            {option}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="border-t border-border dark:border-[#00d4ff]/20 p-3 flex gap-2 items-end">
+
                   <Textarea
                     value={input}
                     onChange={(e) => setInput(e.target.value)}

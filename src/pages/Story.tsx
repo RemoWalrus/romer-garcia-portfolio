@@ -139,7 +139,7 @@ const Story = () => {
     );
     try {
       const url = await generateImage(
-        `An atmospheric cinematic sci-fi scene illustrating this moment in a scorched dystopian frontier called the Cyber Boondocks: "${sceneText.replace(/[*"]/g, "").slice(0, 700)}". Include PARADOXXIA where relevant — an android with a porcelain-white synthetic face, long dark hair, glowing cyan eyes and battered chrome armor over an exposed robotic endoskeleton. Rust, dust, neon, static, volumetric light. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
+        `A first-person point-of-view cinematic film still, as seen through the eyes of the observer standing in the scene, illustrating this moment in a scorched dystopian frontier called the Cyber Boondocks: "${sceneText.replace(/[*"]/g, "").slice(0, 700)}". The camera is the observer's own eyes: environment and surroundings dominate the frame, with PARADOXXIA in the middle or background rather than posed for portrait — a domestic android with a porcelain-white synthetic face, long dark hair, glowing cyan eyes and battered chrome plating over an exposed robotic endoskeleton. Emphasize the setting and the interaction happening: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery. Ultra photorealistic cinematic film still, natural handheld framing, no text or captions other than the required watermark.`,
       );
       setMessages((prev) =>
         prev.map((m) => (m.id === msgId ? { ...m, image: url, imageLoading: false } : m)),

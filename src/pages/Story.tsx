@@ -670,9 +670,45 @@ const Story = () => {
             )}
           </div>
         </main>
+
+        {(introStatus === "rendering" || introStatus === "playing") && (
+          <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center gap-4 px-4">
+            {introStatus === "playing" && introVideo ? (
+              <video
+                src={introVideo}
+                autoPlay
+                muted
+                playsInline
+                onEnded={() => setIntroStatus("done")}
+                className="w-full max-w-2xl rounded-lg border border-[#00d4ff]/40"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-3">
+                {cardImage && (
+                  <img
+                    src={cardImage}
+                    alt={`${name} intro frame`}
+                    className="w-40 rounded-lg border border-[#00d4ff]/40 opacity-70"
+                  />
+                )}
+                <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#00d4ff]">
+                  <Loader2 className="w-3 h-3 animate-spin" /> rendering intro sequence...
+                </span>
+              </div>
+            )}
+            <Button
+              variant="ghost"
+              onClick={() => setIntroStatus("done")}
+              className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+            >
+              skip intro →
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
 
 export default Story;

@@ -44,6 +44,7 @@ const randomName = () => {
 };
 
 const Story = () => {
+  const [searchParams] = useSearchParams();
   const [step, setStep] = useState(1);
   const [species, setSpecies] = useState("");
   const [gender, setGender] = useState("");
@@ -56,6 +57,7 @@ const Story = () => {
   const [cardLoading, setCardLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const replyCount = useRef(0);
+  const autoStarted = useRef(false);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });

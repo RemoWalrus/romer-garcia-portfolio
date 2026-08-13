@@ -72,9 +72,15 @@ const Story = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [cardImage, setCardImage] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
+  const [options, setOptions] = useState<string[]>([]);
+  const [optionsLoading, setOptionsLoading] = useState(false);
+  const [introVideo, setIntroVideo] = useState("");
+  const [introStatus, setIntroStatus] = useState<"idle" | "rendering" | "playing" | "done">("idle");
   const scrollRef = useRef<HTMLDivElement>(null);
   const replyCount = useRef(0);
   const autoStarted = useRef(false);
+  const introRequested = useRef(false);
+
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });

@@ -12,14 +12,21 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import { supabase } from "@/integrations/supabase/client";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4aWd0YnhxZ2JkY2ZwbW5yenZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQyNjUsImV4cCI6MjA1NDY1MDI2NX0.N9TKpkYmeitE3kthByFOnmR0gKBvBrMshEXez6D5IU8";
 
+// how many assistant replies between scene illustrations
+const SCENE_EVERY = 3;
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+  id?: string;
+  image?: string;
+  imageLoading?: boolean;
 }
 
 const OPTION_CLASSES =
@@ -45,11 +52,56 @@ const Story = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [cardImage, setCardImage] = useState("");
+  const [cardLoading, setCardLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const replyCount = useRef(0);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
+
+  const generateImage = async (prompt: string) => {
+    const { data, error } = await supabase.functions.invoke("generate-character-image", {
+      body: { prompt, timestamp: Date.now() },
+    });
+    if (error) throw error;
+    if (!data?.imageUrl) throw new Error("No image returned");
+    return data.imageUrl as string;
+  };
+
+  const generateCard = async (finalName: string) => {
+    setCardLoading(true);
+    try {
+      const url = await generateImage(
+        `A cinematic full-body character card portrait of ${finalName}, a ${gender} ${species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+      );
+      setCardImage(url);
+    } catch (error) {
+      console.error("card image error:", error);
+    } finally {
+      setCardLoading(false);
+    }
+  };
+
+  const generateSceneImage = async (sceneText: string, msgId: string) => {
+    setMessages((prev) =>
+      prev.map((m) => (m.id === msgId ? { ...m, imageLoading: true } : m)),
+    );
+    try {
+      const url = await generateImage(
+        `An atmospheric cinematic sci-fi scene illustrating this moment in a scorched dystopian frontier called the Cyber Boondocks: "${sceneText.replace(/[*"]/g, "").slice(0, 700)}". Include PARADOXXIA where relevant — an android with a porcelain-white synthetic face, long dark hair, glowing cyan eyes and battered chrome armor over an exposed robotic endoskeleton. Rust, dust, neon, static, volumetric light. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
+      );
+      setMessages((prev) =>
+        prev.map((m) => (m.id === msgId ? { ...m, image: url, imageLoading: false } : m)),
+      );
+    } catch (error) {
+      console.error("scene image error:", error);
+      setMessages((prev) =>
+        prev.map((m) => (m.id === msgId ? { ...m, imageLoading: false } : m)),
+      );
+    }
+  };
 
   const streamReply = async (history: ChatMessage[]) => {
     setIsStreaming(true);
@@ -74,6 +126,8 @@ const Story = () => {
       let buffer = "";
       let assistantText = "";
       let placed = false;
+      const msgId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
 
       while (true) {
         const { done, value } = await reader.read();
@@ -92,13 +146,11 @@ const Story = () => {
             assistantText += delta;
             if (!placed) {
               placed = true;
-              setMessages((prev) => [...prev, { role: "assistant", content: assistantText }]);
+              setMessages((prev) => [...prev, { role: "assistant", content: assistantText, id: msgId }]);
             } else {
-              setMessages((prev) => {
-                const next = [...prev];
-                next[next.length - 1] = { role: "assistant", content: assistantText };
-                return next;
-              });
+              setMessages((prev) =>
+                prev.map((m) => (m.id === msgId ? { ...m, content: assistantText } : m)),
+              );
             }
           } catch {
             // partial JSON chunk — ignore
@@ -107,6 +159,12 @@ const Story = () => {
       }
 
       if (!assistantText) throw new Error("No response from Paradoxxia.");
+
+      // illustrate the scene every few replies to keep the story visual
+      replyCount.current += 1;
+      if (replyCount.current % SCENE_EVERY === 1) {
+        void generateSceneImage(assistantText, msgId);
+      }
     } catch (error) {
       console.error("story chat error:", error);
       toast.error((error as Error).message || "Signal lost");
@@ -123,6 +181,8 @@ const Story = () => {
     }
     setStarted(true);
     trackEvent("Story", "Begin Encounter", `${species}-${gender}-${finalName}`);
+    replyCount.current = 0;
+    void generateCard(finalName);
     const opening: ChatMessage[] = [
       {
         role: "user",
@@ -149,6 +209,9 @@ const Story = () => {
     setSpecies("");
     setGender("");
     setName("");
+    setCardImage("");
+    setCardLoading(false);
+    replyCount.current = 0;
   };
 
   const handleNext = () => {
@@ -301,9 +364,36 @@ const Story = () => {
                   ref={scrollRef}
                   className="h-[55vh] sm:h-[60vh] overflow-y-auto px-4 py-4 space-y-4"
                 >
+                  {(cardImage || cardLoading) && (
+                    <div className="flex justify-center">
+                      <div className="w-40 sm:w-48 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
+                        {cardImage ? (
+                          <img
+                            src={cardImage}
+                            alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
+                            className="w-full aspect-square object-cover"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full aspect-square flex items-center justify-center">
+                            <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                          </div>
+                        )}
+                        <div className="px-2 py-1 text-center">
+                          <span className="block text-[11px] font-roc font-medium text-foreground truncate">
+                            {name}
+                          </span>
+                          <span className="block text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
+                            {gender} {species}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {messages.map((m, i) => (
                     <div
-                      key={i}
+                      key={m.id ?? i}
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
@@ -319,6 +409,19 @@ const Story = () => {
                           </span>
                         )}
                         {m.content}
+                        {m.image && (
+                          <img
+                            src={m.image}
+                            alt="Scene from the encounter with Paradoxxia"
+                            className="mt-2 w-full max-w-sm rounded-md border border-border dark:border-[#00d4ff]/30"
+                            loading="lazy"
+                          />
+                        )}
+                        {m.imageLoading && !m.image && (
+                          <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
+                            <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...
+                          </span>
+                        )}
                       </div>
                     </div>
                   ))}

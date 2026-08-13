@@ -126,6 +126,8 @@ const Story = () => {
       let buffer = "";
       let assistantText = "";
       let placed = false;
+      const msgId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
 
       while (true) {
         const { done, value } = await reader.read();

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Loader2, Send, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,6 +44,7 @@ const randomName = () => {
 };
 
 const Story = () => {
+  const [searchParams] = useSearchParams();
   const [step, setStep] = useState(1);
   const [species, setSpecies] = useState("");
   const [gender, setGender] = useState("");
@@ -56,10 +57,27 @@ const Story = () => {
   const [cardLoading, setCardLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const replyCount = useRef(0);
+  const autoStarted = useRef(false);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
+
+  // Auto-start from char-gen link with query params
+  useEffect(() => {
+    if (autoStarted.current || started) return;
+    const autoStart = searchParams.get("autostart");
+    const autoName = searchParams.get("name")?.trim();
+    const autoSpecies = searchParams.get("species")?.trim();
+    const autoGender = searchParams.get("gender")?.trim();
+    if (autoStart && autoName && autoSpecies && autoGender) {
+      autoStarted.current = true;
+      setName(autoName);
+      setSpecies(autoSpecies);
+      setGender(autoGender);
+      void beginEncounter(autoName, autoSpecies, autoGender);
+    }
+  }, [searchParams]);
 
   const generateImage = async (prompt: string) => {
     const { data, error } = await supabase.functions.invoke("generate-character-image", {
@@ -173,20 +191,20 @@ const Story = () => {
     }
   };
 
-  const beginEncounter = async () => {
-    const finalName = name.trim() || randomName();
-    if (!name.trim()) {
+  const beginEncounter = async (startName?: string, startSpecies?: string, startGender?: string) => {
+    const finalName = (startName ?? name).trim() || randomName();
+    if (!startName && !name.trim()) {
       setName(finalName);
       toast.success("Generated random name");
     }
     setStarted(true);
-    trackEvent("Story", "Begin Encounter", `${species}-${gender}-${finalName}`);
+    trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
     void generateCard(finalName);
     const opening: ChatMessage[] = [
       {
         role: "user",
-        content: `I am ${finalName}, a ${gender} ${species}. Begin the encounter: describe the moment we meet in the Cyber Boondocks and speak your first words to me.`,
+        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Begin the encounter: describe the moment we meet in the Cyber Boondocks and speak your first words to me.`,
       },
     ];
     await streamReply(opening);

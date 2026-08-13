@@ -50,14 +50,33 @@ serve(async (req) => {
   }
 
   try {
+    // Abuse protection: cap anonymous roleplay turns per IP.
+    const ip = getClientIp(req);
+    const retryAfter = checkRateLimit(`story:${ip}`, { limit: 60, windowMs: 60 * 60 * 1000 });
+    if (retryAfter !== null) return rateLimitResponse(retryAfter, corsHeaders);
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const { messages, character } = (await req.json()) as {
-      messages: ChatMessage[];
-      character: { name?: string; species?: string; gender?: string };
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== "object") return badRequest("Invalid request body.", corsHeaders);
+
+    const { messages: rawMessages, character: rawCharacter } = body as {
+      messages?: unknown;
+      character?: unknown;
+    };
+
+    const messagesError = validateChatMessages(rawMessages);
+    if (messagesError) return badRequest(messagesError, corsHeaders);
+    const messages = rawMessages as ChatMessage[];
+
+    const characterInput = (rawCharacter ?? {}) as Record<string, unknown>;
+    const character = {
+      name: sanitizeShortText(characterInput.name, 40),
+      species: sanitizeShortText(characterInput.species, 30),
+      gender: sanitizeShortText(characterInput.gender, 30),
     };
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -70,8 +89,8 @@ serve(async (req) => {
         model: "google/gemini-2.5-flash",
         stream: true,
         messages: [
-          { role: "system", content: buildSystemPrompt(character || {}) },
-          ...(messages || []).slice(-24),
+          { role: "system", content: buildSystemPrompt(character) },
+          ...messages.slice(-24),
         ],
       }),
     });

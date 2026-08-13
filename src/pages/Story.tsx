@@ -143,13 +143,11 @@ const Story = () => {
             assistantText += delta;
             if (!placed) {
               placed = true;
-              setMessages((prev) => [...prev, { role: "assistant", content: assistantText }]);
+              setMessages((prev) => [...prev, { role: "assistant", content: assistantText, id: msgId }]);
             } else {
-              setMessages((prev) => {
-                const next = [...prev];
-                next[next.length - 1] = { role: "assistant", content: assistantText };
-                return next;
-              });
+              setMessages((prev) =>
+                prev.map((m) => (m.id === msgId ? { ...m, content: assistantText } : m)),
+              );
             }
           } catch {
             // partial JSON chunk — ignore
@@ -158,6 +156,12 @@ const Story = () => {
       }
 
       if (!assistantText) throw new Error("No response from Paradoxxia.");
+
+      // illustrate the scene every few replies to keep the story visual
+      replyCount.current += 1;
+      if (replyCount.current % SCENE_EVERY === 1) {
+        void generateSceneImage(assistantText, msgId);
+      }
     } catch (error) {
       console.error("story chat error:", error);
       toast.error((error as Error).message || "Signal lost");

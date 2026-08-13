@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Loader2, Send, RotateCcw } from "lucide-react";
+import { Loader2, Send, RotateCcw, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import { supabase } from "@/integrations/supabase/client";
+import { downloadImage } from "@/utils/imageDownload";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
@@ -28,6 +29,22 @@ interface ChatMessage {
   image?: string;
   imageLoading?: boolean;
 }
+
+const DownloadOverlayButton = ({ src, fileName }: { src: string; fileName: string }) => (
+  <Button
+    onClick={() => downloadImage(src, fileName)}
+    size="icon"
+    variant="ghost"
+    aria-label="download image"
+    className="absolute top-2 right-2 z-30 bg-transparent hover:bg-transparent p-1"
+  >
+    <Download
+      className="h-6 w-6"
+      style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
+    />
+  </Button>
+);
+
 
 const OPTION_CLASSES =
   "flex-1 min-w-[100px] font-roc font-medium dark:border-[#00d4ff]/30 dark:text-neutral-300";
@@ -55,9 +72,15 @@ const Story = () => {
   const [isStreaming, setIsStreaming] = useState(false);
   const [cardImage, setCardImage] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
+  const [options, setOptions] = useState<string[]>([]);
+  const [optionsLoading, setOptionsLoading] = useState(false);
+  const [introVideo, setIntroVideo] = useState("");
+  const [introStatus, setIntroStatus] = useState<"idle" | "rendering" | "playing" | "done">("idle");
   const scrollRef = useRef<HTMLDivElement>(null);
   const replyCount = useRef(0);
   const autoStarted = useRef(false);
+  const introRequested = useRef(false);
+
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -107,14 +130,18 @@ const Story = () => {
     return data.imageUrl as string;
   };
 
-  const generateCard = async (finalName: string, startSpecies?: string, startGender?: string) => {
+  const generateCard = async (
+    finalName: string,
+    startSpecies?: string,
+    startGender?: string,
+  ): Promise<string | undefined> => {
     // reuse the portrait generated on the character generator page when available
     try {
       const handoff = sessionStorage.getItem("paradoxxia_story_character_image");
       if (handoff) {
         setCardImage(handoff);
         setCardLoading(false);
-        return;
+        return handoff;
       }
     } catch {
       // ignore storage access issues and fall through to generating a card
@@ -126,12 +153,85 @@ const Story = () => {
         `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
       );
       setCardImage(url);
+      return url;
     } catch (error) {
       console.error("card image error:", error);
+      return undefined;
     } finally {
       setCardLoading(false);
     }
   };
+
+  // 4-5 second cinematic intro animated from the character portrait
+  const playIntroVideo = async (
+    portrait: string,
+    finalName: string,
+    startSpecies?: string,
+    startGender?: string,
+  ) => {
+    if (introRequested.current || !portrait) return;
+    introRequested.current = true;
+    setIntroStatus("rendering");
+    try {
+      const { data, error } = await supabase.functions.invoke("story-video", {
+        body: {
+          action: "create",
+          imageDataUrl: portrait.startsWith("data:") ? portrait : undefined,
+          prompt: `Cinematic 5 second intro of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor, standing in the scorched Cyber Boondocks. Slow camera push-in, drifting dust, flickering failing neon, wind moving hair and battered clothing, a slow turn of the head toward camera. Ultra photorealistic, moody cool cyan rim light, no text.`,
+        },
+      });
+      if (error) throw error;
+      const jobId = data?.id as string | undefined;
+      if (!jobId) throw new Error("no job");
+
+      for (let i = 0; i < 30; i++) {
+        await new Promise((r) => setTimeout(r, 7000));
+        const { data: status, error: statusError } = await supabase.functions.invoke("story-video", {
+          body: { action: "status", id: jobId },
+        });
+        if (statusError) throw statusError;
+        if (status?.status === "completed" && status.videoUrl) {
+          setIntroVideo(status.videoUrl as string);
+          setIntroStatus("playing");
+          trackEvent("Story", "Intro Video", finalName);
+          return;
+        }
+        if (status?.status === "failed") throw new Error(status.error || "render failed");
+      }
+      throw new Error("timed out");
+    } catch (error) {
+      console.error("intro video error:", error);
+      setIntroStatus("done");
+    }
+  };
+
+  const fetchOptions = async (history: ChatMessage[]) => {
+    setOptionsLoading(true);
+    try {
+      const response = await fetch(CHAT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify({
+          mode: "options",
+          messages: history,
+          character: { name, species, gender },
+        }),
+      });
+      if (!response.ok) throw new Error("options failed");
+      const data = await response.json();
+      setOptions(Array.isArray(data?.options) ? data.options.slice(0, 3) : []);
+    } catch (error) {
+      console.error("options error:", error);
+      setOptions([]);
+    } finally {
+      setOptionsLoading(false);
+    }
+  };
+
 
   const generateSceneImage = async (sceneText: string, msgId: string) => {
     setMessages((prev) =>
@@ -220,6 +320,7 @@ const Story = () => {
       if (replyCount.current % SCENE_EVERY === 1) {
         void generateSceneImage(assistantText, msgId);
       }
+      void fetchOptions([...history, { role: "assistant", content: assistantText }]);
     } catch (error) {
       console.error("story chat error:", error);
       toast.error((error as Error).message || "Signal lost");
@@ -237,7 +338,10 @@ const Story = () => {
     setStarted(true);
     trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
-    void generateCard(finalName, startSpecies, startGender);
+    setOptions([]);
+    void generateCard(finalName, startSpecies, startGender).then((portrait) => {
+      if (portrait) void playIntroVideo(portrait, finalName, startSpecies, startGender);
+    });
     const opening: ChatMessage[] = [
       {
         role: "user",
@@ -248,13 +352,20 @@ const Story = () => {
     setMessages((prev) => prev.filter((m) => m.role === "assistant"));
   };
 
+  const send = async (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed || isStreaming) return;
+    setOptions([]);
+    const history: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
+    setMessages(history);
+    await streamReply(history);
+  };
+
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || isStreaming) return;
     setInput("");
-    const history: ChatMessage[] = [...messages, { role: "user", content: text }];
-    setMessages(history);
-    await streamReply(history);
+    await send(text);
   };
 
   const restart = () => {
@@ -266,8 +377,13 @@ const Story = () => {
     setName("");
     setCardImage("");
     setCardLoading(false);
+    setOptions([]);
+    setIntroVideo("");
+    setIntroStatus("idle");
+    introRequested.current = false;
     replyCount.current = 0;
   };
+
 
   const handleNext = () => {
     if (step === 1 && !species) return toast.error("choose a species");
@@ -423,12 +539,18 @@ const Story = () => {
                     <div className="flex justify-center">
                       <div className="w-40 sm:w-48 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
                         {cardImage ? (
-                          <img
-                            src={cardImage}
-                            alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
-                            className="w-full aspect-square object-cover"
-                            loading="lazy"
-                          />
+                          <div className="relative">
+                            <img
+                              src={cardImage}
+                              alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
+                              className="w-full aspect-square object-cover"
+                              loading="lazy"
+                            />
+                            <DownloadOverlayButton
+                              src={cardImage}
+                              fileName={`${name || "character"}_${Date.now()}.png`}
+                            />
+                          </div>
                         ) : (
                           <div className="w-full aspect-square flex items-center justify-center">
                             <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
@@ -445,6 +567,7 @@ const Story = () => {
                       </div>
                     </div>
                   )}
+
 
                   {messages.map((m, i) => (
                     <div
@@ -465,13 +588,20 @@ const Story = () => {
                         )}
                         {m.content}
                         {m.image && (
-                          <img
-                            src={m.image}
-                            alt="Scene from the encounter with Paradoxxia"
-                            className="mt-2 w-full max-w-sm rounded-md border border-border dark:border-[#00d4ff]/30"
-                            loading="lazy"
-                          />
+                          <div className="relative mt-2 w-full max-w-sm">
+                            <img
+                              src={m.image}
+                              alt="Scene from the encounter with Paradoxxia"
+                              className="w-full rounded-md border border-border dark:border-[#00d4ff]/30"
+                              loading="lazy"
+                            />
+                            <DownloadOverlayButton
+                              src={m.image}
+                              fileName={`${name || "scene"}_scene_${Date.now()}.png`}
+                            />
+                          </div>
                         )}
+
                         {m.imageLoading && !m.image && (
                           <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
                             <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...
@@ -487,7 +617,34 @@ const Story = () => {
                   )}
                 </div>
 
+                {(options.length > 0 || optionsLoading) && !isStreaming && (
+                  <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 space-y-2">
+                    <span className="block text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                      choose an action
+                    </span>
+                    {optionsLoading ? (
+                      <span className="flex items-center gap-2 text-[10px] text-muted-foreground font-mono">
+                        <Loader2 className="w-3 h-3 animate-spin" /> weighing your options...
+                      </span>
+                    ) : (
+                      <div className="flex flex-col sm:flex-row gap-2">
+                        {options.map((option) => (
+                          <Button
+                            key={option}
+                            variant="outline"
+                            onClick={() => void send(option)}
+                            className="flex-1 h-auto py-2 whitespace-normal text-left justify-start text-xs font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
+                          >
+                            {option}
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="border-t border-border dark:border-[#00d4ff]/20 p-3 flex gap-2 items-end">
+
                   <Textarea
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -513,9 +670,45 @@ const Story = () => {
             )}
           </div>
         </main>
+
+        {(introStatus === "rendering" || introStatus === "playing") && (
+          <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center gap-4 px-4">
+            {introStatus === "playing" && introVideo ? (
+              <video
+                src={introVideo}
+                autoPlay
+                muted
+                playsInline
+                onEnded={() => setIntroStatus("done")}
+                className="w-full max-w-2xl rounded-lg border border-[#00d4ff]/40"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-3">
+                {cardImage && (
+                  <img
+                    src={cardImage}
+                    alt={`${name} intro frame`}
+                    className="w-40 rounded-lg border border-[#00d4ff]/40 opacity-70"
+                  />
+                )}
+                <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#00d4ff]">
+                  <Loader2 className="w-3 h-3 animate-spin" /> rendering intro sequence...
+                </span>
+              </div>
+            )}
+            <Button
+              variant="ghost"
+              onClick={() => setIntroStatus("done")}
+              className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+            >
+              skip intro →
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
 
 export default Story;

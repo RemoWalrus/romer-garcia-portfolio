@@ -16,3 +16,6 @@ verify_jwt = false
 verify_jwt = false
 [functions.story-chat]
 verify_jwt = false
+
+[functions.story-video]
+verify_jwt = false

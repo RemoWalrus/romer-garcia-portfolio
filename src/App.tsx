@@ -16,6 +16,7 @@ const Meme = lazy(() => import("./pages/Meme"));
 const AICharacterGenerator = lazy(() => import("./pages/AICharacterGenerator"));
 const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
 const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
+const Story = lazy(() => import("./pages/Story"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -83,6 +84,7 @@ const App = () => {
                 <Route path="/char-gen" element={<AICharacterGenerator />} />
                 <Route path="/contact" element={<ContactRedirect />} />
                 <Route path="/paradoxxia" element={<Paradoxxia />} />
+                <Route path="/story" element={<Story />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Loader2, Send, RotateCcw } from "lucide-react";
+import { Loader2, Send, RotateCcw, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import { supabase } from "@/integrations/supabase/client";
+import { downloadImage } from "@/utils/imageDownload";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
@@ -28,6 +29,22 @@ interface ChatMessage {
   image?: string;
   imageLoading?: boolean;
 }
+
+const DownloadOverlayButton = ({ src, fileName }: { src: string; fileName: string }) => (
+  <Button
+    onClick={() => downloadImage(src, fileName)}
+    size="icon"
+    variant="ghost"
+    aria-label="download image"
+    className="absolute top-2 right-2 z-30 bg-transparent hover:bg-transparent p-1"
+  >
+    <Download
+      className="h-6 w-6"
+      style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
+    />
+  </Button>
+);
+
 
 const OPTION_CLASSES =
   "flex-1 min-w-[100px] font-roc font-medium dark:border-[#00d4ff]/30 dark:text-neutral-300";

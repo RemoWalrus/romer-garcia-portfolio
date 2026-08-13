@@ -63,19 +63,38 @@ const Story = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
 
-  // Auto-start from char-gen link with query params
+  // Auto-start from query params or persisted character data
   useEffect(() => {
     if (autoStarted.current || started) return;
+
     const autoStart = searchParams.get("autostart");
     const autoName = searchParams.get("name")?.trim();
     const autoSpecies = searchParams.get("species")?.trim();
     const autoGender = searchParams.get("gender")?.trim();
+
+    let source: { name: string; species: string; gender: string } | null = null;
     if (autoStart && autoName && autoSpecies && autoGender) {
+      source = { name: autoName, species: autoSpecies, gender: autoGender };
+    } else {
+      try {
+        const saved = localStorage.getItem("paradoxxia_story_character");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (parsed?.autostart && parsed.name?.trim() && parsed.species?.trim() && parsed.gender?.trim()) {
+            source = { name: parsed.name.trim(), species: parsed.species.trim(), gender: parsed.gender.trim() };
+          }
+        }
+      } catch {
+        // ignore malformed storage
+      }
+    }
+
+    if (source) {
       autoStarted.current = true;
-      setName(autoName);
-      setSpecies(autoSpecies);
-      setGender(autoGender);
-      void beginEncounter(autoName, autoSpecies, autoGender);
+      setName(source.name);
+      setSpecies(source.species);
+      setGender(source.gender);
+      void beginEncounter(source.name, source.species, source.gender);
     }
   }, [searchParams]);
 

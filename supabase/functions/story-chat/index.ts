@@ -100,7 +100,56 @@ serve(async (req) => {
       gender: sanitizeShortText(characterInput.gender, 30),
     };
 
+    // Suggested-action mode: return 3 short things the player could do next.
+    const wantsOptions = (body as { mode?: unknown }).mode === "options";
+    if (wantsOptions) {
+      const optRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            {
+              role: "system",
+              content:
+                `You suggest what the player could do next in a dark sci-fi story set in the Cyber Boondocks. Given the story so far, reply with ONLY a JSON array of exactly 3 strings. Each string is a short second-person action or line of dialogue the player could choose, max 8 words, lowercase, no numbering, no quotes inside. They must be distinct in intent (e.g. cautious, bold, curious).`,
+            },
+            ...messages.slice(-6),
+          ],
+        }),
+      });
+      if (!optRes.ok) {
+        return new Response(JSON.stringify({ options: [] }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      const optJson = await optRes.json();
+      const raw = optJson?.choices?.[0]?.message?.content ?? "";
+      let options: string[] = [];
+      try {
+        const match = String(raw).match(/\[[\s\S]*\]/);
+        if (match) {
+          const parsed = JSON.parse(match[0]);
+          if (Array.isArray(parsed)) {
+            options = parsed
+              .filter((o: unknown) => typeof o === "string")
+              .map((o: string) => o.trim().slice(0, 80))
+              .slice(0, 3);
+          }
+        }
+      } catch {
+        options = [];
+      }
+      return new Response(JSON.stringify({ options }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+
       method: "POST",
       headers: {
         Authorization: `Bearer ${LOVABLE_API_KEY}`,

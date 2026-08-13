@@ -51,11 +51,56 @@ const Story = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [cardImage, setCardImage] = useState("");
+  const [cardLoading, setCardLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const replyCount = useRef(0);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
+
+  const generateImage = async (prompt: string) => {
+    const { data, error } = await supabase.functions.invoke("generate-character-image", {
+      body: { prompt, timestamp: Date.now() },
+    });
+    if (error) throw error;
+    if (!data?.imageUrl) throw new Error("No image returned");
+    return data.imageUrl as string;
+  };
+
+  const generateCard = async (finalName: string) => {
+    setCardLoading(true);
+    try {
+      const url = await generateImage(
+        `A cinematic full-body character card portrait of ${finalName}, a ${gender} ${species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+      );
+      setCardImage(url);
+    } catch (error) {
+      console.error("card image error:", error);
+    } finally {
+      setCardLoading(false);
+    }
+  };
+
+  const generateSceneImage = async (sceneText: string, index: number) => {
+    setMessages((prev) =>
+      prev.map((m, i) => (i === index ? { ...m, imageLoading: true } : m)),
+    );
+    try {
+      const url = await generateImage(
+        `An atmospheric cinematic sci-fi scene illustrating this moment in a scorched dystopian frontier called the Cyber Boondocks: "${sceneText.replace(/[*"]/g, "").slice(0, 700)}". Include PARADOXXIA where relevant — an android with a porcelain-white synthetic face, long dark hair, glowing cyan eyes and battered chrome armor over an exposed robotic endoskeleton. Rust, dust, neon, static, volumetric light. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
+      );
+      setMessages((prev) =>
+        prev.map((m, i) => (i === index ? { ...m, image: url, imageLoading: false } : m)),
+      );
+    } catch (error) {
+      console.error("scene image error:", error);
+      setMessages((prev) =>
+        prev.map((m, i) => (i === index ? { ...m, imageLoading: false } : m)),
+      );
+    }
+  };
 
   const streamReply = async (history: ChatMessage[]) => {
     setIsStreaming(true);

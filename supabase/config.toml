@@ -9,9 +9,6 @@ verify_jwt = false
 [functions.proxy-storage]
 verify_jwt = false
 
-[functions.proxy-data]
-verify_jwt = false
-
 [functions.page-data]
 verify_jwt = false
 

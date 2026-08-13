@@ -63,6 +63,22 @@ const Story = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
 
+  // Auto-start from char-gen link with query params
+  useEffect(() => {
+    if (autoStarted.current || started) return;
+    const autoStart = searchParams.get("autostart");
+    const autoName = searchParams.get("name")?.trim();
+    const autoSpecies = searchParams.get("species")?.trim();
+    const autoGender = searchParams.get("gender")?.trim();
+    if (autoStart && autoName && autoSpecies && autoGender) {
+      autoStarted.current = true;
+      setName(autoName);
+      setSpecies(autoSpecies);
+      setGender(autoGender);
+      void beginEncounter(autoName, autoSpecies, autoGender);
+    }
+  }, [searchParams]);
+
   const generateImage = async (prompt: string) => {
     const { data, error } = await supabase.functions.invoke("generate-character-image", {
       body: { prompt, timestamp: Date.now() },

@@ -27,13 +27,19 @@ serve(async (req) => {
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== "object") return badRequest("Invalid request body.", corsHeaders);
 
-    const { prompt, imageUrl } = body as { prompt?: unknown; imageUrl?: unknown };
+    const { prompt: rawPrompt, imageUrl: rawImageUrl } = body as {
+      prompt?: unknown;
+      imageUrl?: unknown;
+    };
 
-    const promptError = validatePrompt(prompt);
+    const promptError = validatePrompt(rawPrompt);
     if (promptError) return badRequest(promptError, corsHeaders);
 
-    const imageUrlError = validateImageUrl(imageUrl);
+    const imageUrlError = validateImageUrl(rawImageUrl);
     if (imageUrlError) return badRequest(imageUrlError, corsHeaders);
+
+    const prompt = String(rawPrompt).trim();
+    const imageUrl = typeof rawImageUrl === "string" && rawImageUrl ? rawImageUrl : "";
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 

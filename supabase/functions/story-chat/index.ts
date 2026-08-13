@@ -1,4 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import {
+  badRequest,
+  checkRateLimit,
+  getClientIp,
+  rateLimitResponse,
+  sanitizeShortText,
+  validateChatMessages,
+} from "../_shared/ai-guard.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",

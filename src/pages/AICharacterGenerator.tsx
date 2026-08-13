@@ -1207,9 +1207,17 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
                     <div className="pt-3 border-t border-border/50">
                       <Link
-                        to={`/story?autostart=true&name=${encodeURIComponent(displayName)}&species=${encodeURIComponent(species)}&gender=${encodeURIComponent(gender)}`}
+                        to="/story"
                         className="text-[10px] sm:text-xs text-muted-foreground/50 hover:text-[#00d4ff] transition-colors font-roc uppercase tracking-widest"
-                        onClick={() => trackEvent('Character Generator', 'Continue to Story', displayName || 'unnamed')}
+                        onClick={() => {
+                          localStorage.setItem('paradoxxia_story_character', JSON.stringify({
+                            name: displayName,
+                            species,
+                            gender,
+                            autostart: true,
+                          }));
+                          trackEvent('Character Generator', 'Continue to Story', displayName || 'unnamed');
+                        }}
                       >
                         continue to story mode →
                       </Link>

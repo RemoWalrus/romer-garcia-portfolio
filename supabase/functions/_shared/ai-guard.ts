@@ -5,7 +5,7 @@
  * functions as an SSRF proxy.
  */
 
-export const MAX_PROMPT_LENGTH = 6000;
+export const MAX_PROMPT_LENGTH = 24000;
 export const MAX_IMAGE_DATA_URL_BYTES = 8 * 1024 * 1024; // ~8MB base64 payload
 
 interface Bucket {

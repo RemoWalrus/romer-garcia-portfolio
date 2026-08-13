@@ -12,14 +12,20 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import { supabase } from "@/integrations/supabase/client";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4aWd0YnhxZ2JkY2ZwbW5yenZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQyNjUsImV4cCI6MjA1NDY1MDI2NX0.N9TKpkYmeitE3kthByFOnmR0gKBvBrMshEXez6D5IU8";
 
+// how many assistant replies between scene illustrations
+const SCENE_EVERY = 3;
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+  image?: string;
+  imageLoading?: boolean;
 }
 
 const OPTION_CLASSES =

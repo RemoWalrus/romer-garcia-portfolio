@@ -320,6 +320,7 @@ const Story = () => {
       if (replyCount.current % SCENE_EVERY === 1) {
         void generateSceneImage(assistantText, msgId);
       }
+      void fetchOptions([...history, { role: "assistant", content: assistantText }]);
     } catch (error) {
       console.error("story chat error:", error);
       toast.error((error as Error).message || "Signal lost");
@@ -337,7 +338,10 @@ const Story = () => {
     setStarted(true);
     trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
-    void generateCard(finalName, startSpecies, startGender);
+    setOptions([]);
+    void generateCard(finalName, startSpecies, startGender).then((portrait) => {
+      if (portrait) void playIntroVideo(portrait, finalName, startSpecies, startGender);
+    });
     const opening: ChatMessage[] = [
       {
         role: "user",
@@ -348,13 +352,20 @@ const Story = () => {
     setMessages((prev) => prev.filter((m) => m.role === "assistant"));
   };
 
+  const send = async (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed || isStreaming) return;
+    setOptions([]);
+    const history: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
+    setMessages(history);
+    await streamReply(history);
+  };
+
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || isStreaming) return;
     setInput("");
-    const history: ChatMessage[] = [...messages, { role: "user", content: text }];
-    setMessages(history);
-    await streamReply(history);
+    await send(text);
   };
 
   const restart = () => {
@@ -366,8 +377,13 @@ const Story = () => {
     setName("");
     setCardImage("");
     setCardLoading(false);
+    setOptions([]);
+    setIntroVideo("");
+    setIntroStatus("idle");
+    introRequested.current = false;
     replyCount.current = 0;
   };
+
 
   const handleNext = () => {
     if (step === 1 && !species) return toast.error("choose a species");

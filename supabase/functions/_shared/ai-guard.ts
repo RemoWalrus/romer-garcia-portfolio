@@ -88,6 +88,8 @@ const ALLOWED_IMAGE_HOSTS = [
   "romergarcia.com",
   "www.romergarcia.com",
   "romer-garcia-portfolio.lovable.app",
+  "lovable.app",
+  "lovableproject.com",
   "xxigtbxqgbdcfpmnrzvp.supabase.co",
   "localhost",
 ];

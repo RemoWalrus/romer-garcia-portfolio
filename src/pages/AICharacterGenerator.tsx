@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import { edgeErrorMessage } from "@/lib/edgeError";
 import { toast } from "sonner";
 import { Loader2, Share2, Download, MoveRight } from "lucide-react";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -499,7 +500,7 @@ const AICharacterGenerator = () => {
         },
       });
 
-        if (error) throw error;
+        if (error) throw new Error(await edgeErrorMessage(error, "Failed to generate character"));
 
         if (data.imageUrl) {
           setGeneratedImage(data.imageUrl);
@@ -795,7 +796,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
         },
       });
 
-      if (error) throw error;
+      if (error) throw new Error(await edgeErrorMessage(error, "Failed to generate character"));
 
       if (data.imageUrl) {
         setGeneratedImage(data.imageUrl);

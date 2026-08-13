@@ -588,13 +588,20 @@ const Story = () => {
                         )}
                         {m.content}
                         {m.image && (
-                          <img
-                            src={m.image}
-                            alt="Scene from the encounter with Paradoxxia"
-                            className="mt-2 w-full max-w-sm rounded-md border border-border dark:border-[#00d4ff]/30"
-                            loading="lazy"
-                          />
+                          <div className="relative mt-2 w-full max-w-sm">
+                            <img
+                              src={m.image}
+                              alt="Scene from the encounter with Paradoxxia"
+                              className="w-full rounded-md border border-border dark:border-[#00d4ff]/30"
+                              loading="lazy"
+                            />
+                            <DownloadOverlayButton
+                              src={m.image}
+                              fileName={`${name || "scene"}_scene_${Date.now()}.png`}
+                            />
+                          </div>
                         )}
+
                         {m.imageLoading && !m.image && (
                           <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
                             <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...

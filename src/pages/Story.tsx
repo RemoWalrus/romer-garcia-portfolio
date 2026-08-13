@@ -130,14 +130,18 @@ const Story = () => {
     return data.imageUrl as string;
   };
 
-  const generateCard = async (finalName: string, startSpecies?: string, startGender?: string) => {
+  const generateCard = async (
+    finalName: string,
+    startSpecies?: string,
+    startGender?: string,
+  ): Promise<string | undefined> => {
     // reuse the portrait generated on the character generator page when available
     try {
       const handoff = sessionStorage.getItem("paradoxxia_story_character_image");
       if (handoff) {
         setCardImage(handoff);
         setCardLoading(false);
-        return;
+        return handoff;
       }
     } catch {
       // ignore storage access issues and fall through to generating a card
@@ -149,12 +153,85 @@ const Story = () => {
         `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
       );
       setCardImage(url);
+      return url;
     } catch (error) {
       console.error("card image error:", error);
+      return undefined;
     } finally {
       setCardLoading(false);
     }
   };
+
+  // 4-5 second cinematic intro animated from the character portrait
+  const playIntroVideo = async (
+    portrait: string,
+    finalName: string,
+    startSpecies?: string,
+    startGender?: string,
+  ) => {
+    if (introRequested.current || !portrait) return;
+    introRequested.current = true;
+    setIntroStatus("rendering");
+    try {
+      const { data, error } = await supabase.functions.invoke("story-video", {
+        body: {
+          action: "create",
+          imageDataUrl: portrait.startsWith("data:") ? portrait : undefined,
+          prompt: `Cinematic 5 second intro of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor, standing in the scorched Cyber Boondocks. Slow camera push-in, drifting dust, flickering failing neon, wind moving hair and battered clothing, a slow turn of the head toward camera. Ultra photorealistic, moody cool cyan rim light, no text.`,
+        },
+      });
+      if (error) throw error;
+      const jobId = data?.id as string | undefined;
+      if (!jobId) throw new Error("no job");
+
+      for (let i = 0; i < 30; i++) {
+        await new Promise((r) => setTimeout(r, 7000));
+        const { data: status, error: statusError } = await supabase.functions.invoke("story-video", {
+          body: { action: "status", id: jobId },
+        });
+        if (statusError) throw statusError;
+        if (status?.status === "completed" && status.videoUrl) {
+          setIntroVideo(status.videoUrl as string);
+          setIntroStatus("playing");
+          trackEvent("Story", "Intro Video", finalName);
+          return;
+        }
+        if (status?.status === "failed") throw new Error(status.error || "render failed");
+      }
+      throw new Error("timed out");
+    } catch (error) {
+      console.error("intro video error:", error);
+      setIntroStatus("done");
+    }
+  };
+
+  const fetchOptions = async (history: ChatMessage[]) => {
+    setOptionsLoading(true);
+    try {
+      const response = await fetch(CHAT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+          apikey: SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify({
+          mode: "options",
+          messages: history,
+          character: { name, species, gender },
+        }),
+      });
+      if (!response.ok) throw new Error("options failed");
+      const data = await response.json();
+      setOptions(Array.isArray(data?.options) ? data.options.slice(0, 3) : []);
+    } catch (error) {
+      console.error("options error:", error);
+      setOptions([]);
+    } finally {
+      setOptionsLoading(false);
+    }
+  };
+
 
   const generateSceneImage = async (sceneText: string, msgId: string) => {
     setMessages((prev) =>

@@ -24,6 +24,7 @@ const SCENE_EVERY = 3;
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+  id?: string;
   image?: string;
   imageLoading?: boolean;
 }

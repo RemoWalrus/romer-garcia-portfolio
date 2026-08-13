@@ -191,20 +191,20 @@ const Story = () => {
     }
   };
 
-  const beginEncounter = async () => {
-    const finalName = name.trim() || randomName();
-    if (!name.trim()) {
+  const beginEncounter = async (startName?: string, startSpecies?: string, startGender?: string) => {
+    const finalName = (startName ?? name).trim() || randomName();
+    if (!startName && !name.trim()) {
       setName(finalName);
       toast.success("Generated random name");
     }
     setStarted(true);
-    trackEvent("Story", "Begin Encounter", `${species}-${gender}-${finalName}`);
+    trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
     void generateCard(finalName);
     const opening: ChatMessage[] = [
       {
         role: "user",
-        content: `I am ${finalName}, a ${gender} ${species}. Begin the encounter: describe the moment we meet in the Cyber Boondocks and speak your first words to me.`,
+        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Begin the encounter: describe the moment we meet in the Cyber Boondocks and speak your first words to me.`,
       },
     ];
     await streamReply(opening);

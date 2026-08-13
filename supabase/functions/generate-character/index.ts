@@ -1,5 +1,12 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import {
+  badRequest,
+  checkRateLimit,
+  getClientIp,
+  rateLimitResponse,
+  validatePrompt,
+} from "../_shared/ai-guard.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,12 +19,24 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt } = await req.json();
+    // Abuse protection: cap anonymous text generations per IP.
+    const ip = getClientIp(req);
+    const retryAfter = checkRateLimit(`character:${ip}`, { limit: 20, windowMs: 60 * 60 * 1000 });
+    if (retryAfter !== null) return rateLimitResponse(retryAfter, corsHeaders);
+
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== "object") return badRequest("Invalid request body.", corsHeaders);
+
+    const { prompt } = body as { prompt?: unknown };
+    const promptError = validatePrompt(prompt);
+    if (promptError) return badRequest(promptError, corsHeaders);
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
+
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
+
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

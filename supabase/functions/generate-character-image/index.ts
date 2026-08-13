@@ -1,4 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import {
+  badRequest,
+  checkRateLimit,
+  getClientIp,
+  rateLimitResponse,
+  validateImageUrl,
+  validatePrompt,
+} from "../_shared/ai-guard.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -11,15 +19,35 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, imageUrl } = await req.json();
+    // Abuse protection: image generation is the most expensive call.
+    const ip = getClientIp(req);
+    const retryAfter = checkRateLimit(`image:${ip}`, { limit: 6, windowMs: 60 * 60 * 1000 });
+    if (retryAfter !== null) return rateLimitResponse(retryAfter, corsHeaders);
+
+    const body = await req.json().catch(() => null);
+    if (!body || typeof body !== "object") return badRequest("Invalid request body.", corsHeaders);
+
+    const { prompt: rawPrompt, imageUrl: rawImageUrl } = body as {
+      prompt?: unknown;
+      imageUrl?: unknown;
+    };
+
+    const promptError = validatePrompt(rawPrompt);
+    if (promptError) return badRequest(promptError, corsHeaders);
+
+    const imageUrlError = validateImageUrl(rawImageUrl);
+    if (imageUrlError) return badRequest(imageUrlError, corsHeaders);
+
+    const prompt = String(rawPrompt).trim();
+    const imageUrl = typeof rawImageUrl === "string" && rawImageUrl ? rawImageUrl : "";
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
+
     if (!LOVABLE_API_KEY) {
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    console.log("Generating image with prompt:", prompt);
-    console.log("Image URL provided:", imageUrl ? "Yes" : "No");
+    console.log("Generating image. Reference image provided:", imageUrl ? "Yes" : "No");
 
     // Add watermark and square aspect ratio instruction to the prompt
     const enhancedPrompt = `${prompt} 

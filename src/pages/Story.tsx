@@ -181,6 +181,8 @@ const Story = () => {
     }
     setStarted(true);
     trackEvent("Story", "Begin Encounter", `${species}-${gender}-${finalName}`);
+    replyCount.current = 0;
+    void generateCard(finalName);
     const opening: ChatMessage[] = [
       {
         role: "user",
@@ -207,6 +209,9 @@ const Story = () => {
     setSpecies("");
     setGender("");
     setName("");
+    setCardImage("");
+    setCardLoading(false);
+    replyCount.current = 0;
   };
 
   const handleNext = () => {

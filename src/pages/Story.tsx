@@ -697,7 +697,7 @@ const Story = () => {
                             }}
                           />
                         </Button>
-                      </div>
+                      </TiltCard>
                       <span className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
                         intro sequence
                       </span>

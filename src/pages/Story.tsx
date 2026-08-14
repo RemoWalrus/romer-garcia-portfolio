@@ -26,6 +26,12 @@ const SUPABASE_PUBLISHABLE_KEY =
 // how many assistant replies between scene illustrations
 const SCENE_EVERY = 3;
 
+// the narrator ends a fatal reply with this marker
+const DEATH_MARKER = /\[\s*you\s+died\s*\]/i;
+const stripDeathMarker = (text: string) =>
+  text.replace(/\[\s*you\s+died\s*\]/gi, "").replace(/\s+$/, "");
+
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -100,6 +106,8 @@ const Story = () => {
   const [introStatus, setIntroStatus] = useState<"idle" | "rendering" | "playing" | "ended" | "done">("idle");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [lightboxAlt, setLightboxAlt] = useState("");
+  const [isDead, setIsDead] = useState(false);
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const replyCount = useRef(0);
@@ -429,12 +437,13 @@ const Story = () => {
             const delta = JSON.parse(data)?.choices?.[0]?.delta?.content;
             if (!delta) continue;
             assistantText += delta;
+            const visible = stripDeathMarker(assistantText);
             if (!placed) {
               placed = true;
-              setMessages((prev) => [...prev, { role: "assistant", content: assistantText, id: msgId }]);
+              setMessages((prev) => [...prev, { role: "assistant", content: visible, id: msgId }]);
             } else {
               setMessages((prev) =>
-                prev.map((m) => (m.id === msgId ? { ...m, content: assistantText } : m)),
+                prev.map((m) => (m.id === msgId ? { ...m, content: visible } : m)),
               );
             }
           } catch {
@@ -445,12 +454,22 @@ const Story = () => {
 
       if (!assistantText) throw new Error("No response from Paradoxxia.");
 
+      const died = DEATH_MARKER.test(assistantText);
+      const finalText = stripDeathMarker(assistantText);
+
       // illustrate the scene every few replies to keep the story visual
       replyCount.current += 1;
-      if (replyCount.current % SCENE_EVERY === 1) {
-        void generateSceneImage(assistantText, msgId);
+      if (died || replyCount.current % SCENE_EVERY === 1) {
+        void generateSceneImage(finalText, msgId);
       }
-      void fetchOptions([...history, { role: "assistant", content: assistantText }]);
+      if (died) {
+        setIsDead(true);
+        setOptions([]);
+        trackEvent("Story", "Death", name);
+      } else {
+        void fetchOptions([...history, { role: "assistant", content: finalText }]);
+      }
+
     } catch (error) {
       console.error("story chat error:", error);
       toast.error((error as Error).message || "Signal lost");
@@ -466,9 +485,11 @@ const Story = () => {
       toast.success("Generated random name");
     }
     setStarted(true);
+    setIsDead(false);
     trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
     setOptions([]);
+
     void generateCard(finalName, startSpecies, startGender).then((portrait) => {
       if (portrait) void playIntroVideo(portrait, finalName, startSpecies, startGender);
     });
@@ -485,7 +506,7 @@ const Story = () => {
 
   const send = async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || isStreaming) return;
+    if (!trimmed || isStreaming || isDead) return;
     setOptions([]);
     const history: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
     setMessages(history);
@@ -515,7 +536,27 @@ const Story = () => {
     setIntroStatus("idle");
     introRequested.current = false;
     replyCount.current = 0;
+    setIsDead(false);
+    setTypedIds({});
+    setSkipKey(null);
   };
+
+  // die and go again with the exact same character — portrait, dossier and intro are kept
+  const tryAgain = () => {
+    setIsDead(false);
+    setMessages([]);
+    setTypedIds({});
+    setSkipKey(null);
+    setOptions([]);
+    setInput("");
+    replyCount.current = 0;
+    introRequested.current = true;
+    setIntroStatus("done");
+    trackEvent("Story", "Try Again", name);
+    void beginEncounter(name, species, gender);
+  };
+
+
 
 
   // the setup screen IS the character generator page — it hands the character over here
@@ -830,6 +871,19 @@ const Story = () => {
                       </div>
                     )}
 
+                    {isDead ? (
+                      <div className="p-3 lg:p-4 xl:px-6 xl:py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <span className="font-mono uppercase tracking-widest text-sm sm:text-base lg:text-lg text-red-500">
+                          {name} is dead
+                        </span>
+                        <Button
+                          onClick={tryAgain}
+                          className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 font-mono uppercase tracking-widest"
+                        >
+                          <RotateCcw className="w-4 h-4 mr-2" /> try again
+                        </Button>
+                      </div>
+                    ) : (
                     <div className="p-3 lg:p-4 xl:px-6 xl:py-5 flex gap-2 lg:gap-3 xl:gap-4 items-end">
                       <Textarea
                         value={input}
@@ -852,6 +906,8 @@ const Story = () => {
                         {isStreaming ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 animate-spin" /> : <Send className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />}
                       </Button>
                     </div>
+                    )}
+
                   </div>
                 </div>
               </Card>
@@ -926,6 +982,43 @@ const Story = () => {
             )}
           </div>
         )}
+
+        {isDead && !scrollLocked && !lightboxImage && (
+          <div className="fixed inset-0 z-[60] bg-black/95 flex flex-col items-center justify-center px-6 text-center">
+            {cardImage && (
+              <img
+                src={cardImage}
+                alt={`${name} in the Cyber Boondocks`}
+                className="w-28 sm:w-32 lg:w-40 rounded-lg border border-red-500/40 grayscale opacity-50 mb-6"
+              />
+            )}
+            <h2
+              className="font-roc font-bold uppercase tracking-[0.2em] text-3xl sm:text-5xl lg:text-6xl text-red-500"
+              style={{ textShadow: "0 0 24px rgba(239,68,68,0.5)" }}
+            >
+              you died
+            </h2>
+            <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
+              the cyber boondocks keeps what it takes. {name}'s run ends here.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+              <Button
+                onClick={tryAgain}
+                className="bg-[#00d4ff] text-neutral-950 hover:bg-[#00d4ff]/90 font-mono uppercase tracking-widest"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" /> try again as {name}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={restart}
+                className="font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+              >
+                new character →
+              </Button>
+            </div>
+          </div>
+        )}
+
         {lightboxImage && (
           <div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"

@@ -82,6 +82,12 @@ const Story = () => {
   const introRequested = useRef(false);
   const cardImageRef = useRef("");
 
+  const setCardImageAndRef = (url: string) => {
+    cardImageRef.current = url;
+    setCardImage(url);
+  };
+
+
 
 
   useEffect(() => {

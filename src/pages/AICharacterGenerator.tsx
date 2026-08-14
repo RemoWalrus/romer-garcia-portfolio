@@ -25,7 +25,20 @@ import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
-const AICharacterGenerator = () => {
+interface AICharacterGeneratorProps {
+  /** when true the page is embedded as the story-mode setup screen */
+  storyMode?: boolean;
+  /** called when the player continues into the story with the generated character */
+  onContinueToStory?: (character: {
+    name: string;
+    species: string;
+    gender: string;
+    image: string;
+    photo: string;
+  }) => void;
+}
+
+const AICharacterGenerator = ({ storyMode = false, onContinueToStory }: AICharacterGeneratorProps = {}) => {
   const [step, setStep] = useState(1);
   const [species, setSpecies] = useState("");
   const [actualSpecies, setActualSpecies] = useState("");

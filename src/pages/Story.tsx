@@ -506,7 +506,7 @@ const Story = () => {
 
   const send = async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || isStreaming) return;
+    if (!trimmed || isStreaming || isDead) return;
     setOptions([]);
     const history: ChatMessage[] = [...messages, { role: "user", content: trimmed }];
     setMessages(history);

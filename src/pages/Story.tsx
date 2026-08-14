@@ -672,7 +672,7 @@ const Story = () => {
 
                   {introVideo && introStatus === "done" && (
                     <div className="flex flex-col items-center gap-2">
-                      <div className="relative w-52 sm:w-64">
+                      <TiltCard className="relative w-52 sm:w-64" maxTilt={8} depth={12}>
                         <video
                           src={introVideo}
                           controls

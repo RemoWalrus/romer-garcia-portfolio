@@ -821,8 +821,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
             ? "LIKENESS: modelled on a real reference photo the player supplied — their face, ethnicity, hair and body type carry over."
             : "LIKENESS: no reference photo — appearance generated from scratch.",
         ]
+          .map((line) => line.replace(/\s+/g, " ").trim())
           .join("\n")
-          .replace(/\s+/g, " ")
           .slice(0, 3500),
       );
 

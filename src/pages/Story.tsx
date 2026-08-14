@@ -106,6 +106,8 @@ const Story = () => {
   const [introStatus, setIntroStatus] = useState<"idle" | "rendering" | "playing" | "ended" | "done">("idle");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [lightboxAlt, setLightboxAlt] = useState("");
+  const [isDead, setIsDead] = useState(false);
+
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const replyCount = useRef(0);

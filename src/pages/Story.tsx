@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
+import { TiltCard } from "@/components/TiltCard";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import { Capacitor } from "@capacitor/core";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";

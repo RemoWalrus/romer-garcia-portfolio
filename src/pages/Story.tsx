@@ -26,6 +26,12 @@ const SUPABASE_PUBLISHABLE_KEY =
 // how many assistant replies between scene illustrations
 const SCENE_EVERY = 3;
 
+// the narrator ends a fatal reply with this marker
+const DEATH_MARKER = /\[\s*you\s+died\s*\]/i;
+const stripDeathMarker = (text: string) =>
+  text.replace(/\[\s*you\s+died\s*\]/gi, "").replace(/\s+$/, "");
+
+
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;

@@ -1108,23 +1108,60 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
         )}
 
         {isDead && !scrollLocked && !lightboxImage && (
-          <div className="fixed inset-0 z-[60] bg-black/95 flex flex-col items-center justify-center px-6 text-center">
-            {cardImage && (
-              <img
-                src={cardImage}
-                alt={`${name} in the Cyber Boondocks`}
-                className="w-28 sm:w-32 lg:w-40 rounded-lg border border-red-500/40 grayscale opacity-50 mb-6"
-              />
+          <div className="fixed inset-0 z-[60] bg-black flex flex-col items-center justify-center px-6 py-10 text-center overflow-y-auto">
+            {/* the death itself, rendered as a survival-horror game over still */}
+            {deathImage && (
+              <div className="absolute inset-0">
+                <img
+                  src={deathImage}
+                  alt={`${name} dying in the Cyber Boondocks`}
+                  className="w-full h-full object-cover opacity-60 contrast-125 saturate-50"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/95" />
+                <div className="absolute inset-0 bg-red-900/20 mix-blend-multiply" />
+              </div>
             )}
-            <h2
-              className="font-roc font-bold uppercase tracking-[0.2em] text-3xl sm:text-5xl lg:text-6xl text-red-500"
-              style={{ textShadow: "0 0 24px rgba(239,68,68,0.5)" }}
-            >
-              you died
-            </h2>
-            <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
-              the cyber boondocks keeps what it takes. {name}'s run ends here.
-            </p>
+
+            <div className="relative z-10 flex flex-col items-center">
+              {deathImage ? (
+                <div className="relative mb-6">
+                  <img
+                    src={deathImage}
+                    alt={`${name} dying in the Cyber Boondocks`}
+                    className="w-56 sm:w-72 lg:w-80 rounded-lg border border-red-500/40 shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                  />
+                  <ExpandButton
+                    onClick={() => {
+                      setLightboxAlt(`${name} dying in the Cyber Boondocks`);
+                      setLightboxImage(deathImage);
+                    }}
+                    label="expand death scene"
+                  />
+                  <DownloadOverlayButton src={deathImage} fileName={`${name || "character"}_game_over.png`} />
+                </div>
+              ) : deathImageLoading ? (
+                <div className="mb-6 flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-red-400/70">
+                  <Loader2 className="w-4 h-4 animate-spin" /> recovering the last frame…
+                </div>
+              ) : (
+                cardImage && (
+                  <img
+                    src={cardImage}
+                    alt={`${name} in the Cyber Boondocks`}
+                    className="w-28 sm:w-32 lg:w-40 rounded-lg border border-red-500/40 grayscale opacity-50 mb-6"
+                  />
+                )
+              )}
+              <h2
+                className="font-roc font-bold uppercase tracking-[0.2em] text-3xl sm:text-5xl lg:text-6xl text-red-500"
+                style={{ textShadow: "0 0 24px rgba(239,68,68,0.5)" }}
+              >
+                you died
+              </h2>
+              <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
+                the cyber boondocks keeps what it takes. {name}'s run ends here.
+              </p>
+
             {deathRecap && (
               <div className="mt-6 w-full max-w-lg text-left border border-red-500/30 bg-red-500/5 rounded-lg p-4 sm:p-5">
                 <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-red-400/80">

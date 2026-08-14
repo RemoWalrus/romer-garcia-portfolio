@@ -429,12 +429,13 @@ const Story = () => {
             const delta = JSON.parse(data)?.choices?.[0]?.delta?.content;
             if (!delta) continue;
             assistantText += delta;
+            const visible = stripDeathMarker(assistantText);
             if (!placed) {
               placed = true;
-              setMessages((prev) => [...prev, { role: "assistant", content: assistantText, id: msgId }]);
+              setMessages((prev) => [...prev, { role: "assistant", content: visible, id: msgId }]);
             } else {
               setMessages((prev) =>
-                prev.map((m) => (m.id === msgId ? { ...m, content: assistantText } : m)),
+                prev.map((m) => (m.id === msgId ? { ...m, content: visible } : m)),
               );
             }
           } catch {
@@ -445,12 +446,22 @@ const Story = () => {
 
       if (!assistantText) throw new Error("No response from Paradoxxia.");
 
+      const died = DEATH_MARKER.test(assistantText);
+      const finalText = stripDeathMarker(assistantText);
+
       // illustrate the scene every few replies to keep the story visual
       replyCount.current += 1;
-      if (replyCount.current % SCENE_EVERY === 1) {
-        void generateSceneImage(assistantText, msgId);
+      if (died || replyCount.current % SCENE_EVERY === 1) {
+        void generateSceneImage(finalText, msgId);
       }
-      void fetchOptions([...history, { role: "assistant", content: assistantText }]);
+      if (died) {
+        setIsDead(true);
+        setOptions([]);
+        trackEvent("Story", "Death", name);
+      } else {
+        void fetchOptions([...history, { role: "assistant", content: finalText }]);
+      }
+
     } catch (error) {
       console.error("story chat error:", error);
       toast.error((error as Error).message || "Signal lost");

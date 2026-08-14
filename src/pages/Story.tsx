@@ -31,6 +31,12 @@ const DEATH_MARKER = /\[\s*you\s+died\s*\]/i;
 const stripDeathMarker = (text: string) =>
   text.replace(/\[\s*you\s+died\s*\]/gi, "").replace(/\s+$/, "");
 
+// graceful copy when the generator did not hand over a species or gender
+const describeChar = (g?: string, s?: string) =>
+  [(g ?? "").trim(), (s ?? "").trim() || "wasteland survivor"].filter(Boolean).join(" ");
+
+
+
 
 interface ChatMessage {
   role: "user" | "assistant";

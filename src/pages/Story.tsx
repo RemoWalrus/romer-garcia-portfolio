@@ -11,7 +11,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
-import { TiltCard } from "@/components/TiltCard";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import { Capacitor } from "@capacitor/core";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
@@ -672,7 +671,7 @@ const Story = () => {
 
                   {introVideo && introStatus === "done" && (
                     <div className="flex flex-col items-center gap-2">
-                      <TiltCard className="relative w-52 sm:w-64" maxTilt={8} depth={12}>
+                      <div className="relative w-52 sm:w-64">
                         <video
                           src={introVideo}
                           controls
@@ -697,7 +696,7 @@ const Story = () => {
                             }}
                           />
                         </Button>
-                      </TiltCard>
+                      </div>
                       <span className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
                         intro sequence
                       </span>
@@ -726,7 +725,7 @@ const Story = () => {
                         )}
                         {m.content}
                         {m.image && (
-                          <TiltCard className="relative mt-2 w-full max-w-sm">
+                          <div className="relative mt-2 w-full max-w-sm">
                             <img
                               src={m.image}
                               alt="Scene from the encounter with Paradoxxia"
@@ -737,7 +736,7 @@ const Story = () => {
                               src={m.image}
                               fileName={`${name || "scene"}_scene_${Date.now()}.png`}
                             />
-                          </TiltCard>
+                          </div>
                         )}
 
                         {m.imageLoading && !m.image && (

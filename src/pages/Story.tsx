@@ -808,32 +808,9 @@ const Story = () => {
           </div>
         </main>
 
-        {(introStatus === "rendering" || introStatus === "playing") && (
-          <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center gap-4 px-4">
-            {introStatus === "playing" && introVideo ? (
-              <div className="relative w-full max-w-2xl">
-                <video
-                  src={introVideo}
-                  autoPlay
-                  muted
-                  playsInline
-                  onEnded={() => setIntroStatus("done")}
-                  className="w-full rounded-lg border border-[#00d4ff]/40"
-                />
-                <Button
-                  onClick={() => downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)}
-                  size="icon"
-                  variant="ghost"
-                  aria-label="download intro video"
-                  className="absolute top-2 right-2 z-30 bg-transparent hover:bg-transparent p-1"
-                >
-                  <Download
-                    className="h-6 w-6"
-                    style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
-                  />
-                </Button>
-              </div>
-            ) : (
+        {(introStatus === "rendering" || introStatus === "playing" || introStatus === "ended") && (
+          <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+            {introStatus === "rendering" && (
               <div className="flex flex-col items-center gap-3">
                 {cardImage && (
                   <img
@@ -847,14 +824,55 @@ const Story = () => {
                 </span>
               </div>
             )}
-            <Button
-              variant="ghost"
-              onClick={() => setIntroStatus("done")}
-              className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
-            >
-              skip intro →
-            </Button>
 
+            {(introStatus === "playing" || introStatus === "ended") && introVideo && (
+              <div className="relative w-full h-full">
+                <video
+                  src={introVideo}
+                  autoPlay={introStatus === "playing"}
+                  muted
+                  playsInline
+                  onEnded={() => setIntroStatus("ended")}
+                  className="w-full h-full object-cover"
+                />
+                {introStatus === "ended" ? (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60">
+                    <button
+                      onClick={() =>
+                        downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
+                      }
+                      className="group flex flex-col items-center gap-3 p-6 rounded-lg transition-colors hover:bg-black/40"
+                    >
+                      <Download
+                        className="h-12 w-12"
+                        style={{
+                          color: "#00d9ff",
+                          filter: "drop-shadow(0 0 12px rgba(0, 217, 255, 0.8))",
+                        }}
+                      />
+                      <span className="text-sm font-roc font-medium text-[#00d9ff] uppercase tracking-widest">
+                        click to download intro sequence
+                      </span>
+                    </button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => setIntroStatus("done")}
+                      className="mt-8 text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+                    >
+                      continue to story →
+                    </Button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    onClick={() => setIntroStatus("done")}
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+                  >
+                    skip intro →
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>

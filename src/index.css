@@ -168,3 +168,41 @@ nav button {
 [data-radix-collection-item] {
   @apply border-0 scale-150 opacity-75 hover:opacity-100 transition-opacity focus:outline-none focus:ring-0 focus:border-0;
 }
+
+/* Story mode: terminal typewriter + scanlines */
+.story-caret {
+  display: inline-block;
+  margin-left: 1px;
+  animation: story-blink 1s steps(1, end) infinite;
+}
+
+@keyframes story-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.story-scanlines {
+  position: relative;
+  display: inline;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.16) 0px,
+    rgba(0, 0, 0, 0.16) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 0 0 3px currentColor;
+}
+
+.dark .story-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0px,
+    rgba(0, 0, 0, 0.45) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  text-shadow: 0 0 4px rgba(0, 212, 255, 0.45);
+}

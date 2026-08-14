@@ -95,7 +95,10 @@ const Story = () => {
   const [optionsLoading, setOptionsLoading] = useState(false);
   const [introVideo, setIntroVideo] = useState("");
   const [introStatus, setIntroStatus] = useState<"idle" | "rendering" | "playing" | "ended" | "done">("idle");
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const replyCount = useRef(0);
   const autoStarted = useRef(false);
   const introRequested = useRef(false);

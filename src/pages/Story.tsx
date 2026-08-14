@@ -142,7 +142,7 @@ const Story = () => {
     try {
       const handoff = sessionStorage.getItem("paradoxxia_story_character_image");
       if (handoff) {
-        setCardImage(handoff);
+        setCardImageAndRef(handoff);
         setCardLoading(false);
         return handoff;
       }
@@ -155,7 +155,7 @@ const Story = () => {
       const url = await generateImage(
         `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
       );
-      setCardImage(url);
+      setCardImageAndRef(url);
       return url;
     } catch (error) {
       console.error("card image error:", error);
@@ -381,7 +381,7 @@ const Story = () => {
     setSpecies("");
     setGender("");
     setName("");
-    setCardImage("");
+    setCardImageAndRef("");
     setCardLoading(false);
     setOptions([]);
     setIntroVideo("");

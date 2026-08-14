@@ -792,7 +792,7 @@ const Story = () => {
                   )}
                   </div>
 
-                  <div className="sticky bottom-0 z-20 bg-card/95 backdrop-blur-sm border-t border-border dark:border-[#00d4ff]/20 pb-safe">
+                  <div className="sticky bottom-0 z-40 bg-card/95 backdrop-blur-sm border-t border-border dark:border-[#00d4ff]/20 pb-safe shadow-[0_-8px_24px_-12px_rgba(0,0,0,0.3)] dark:shadow-[0_-8px_24px_-12px_rgba(0,217,255,0.1)]">
                     {(options.length > 0 || optionsLoading) && !scrollLocked && (
                       <div className="px-3 pt-3 lg:px-4 lg:pt-4 xl:px-6 xl:pt-6 space-y-2 lg:space-y-3 xl:space-y-4">
                         <span className="block text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground">

@@ -571,11 +571,11 @@ const Story = () => {
         </nav>
 
         <main
-          className={`container mx-auto px-4 relative z-10 flex-1 pb-10 ${
+          className={`container mx-auto px-4 lg:px-8 xl:px-12 relative z-10 flex-1 pb-10 ${
             started ? "pt-20 sm:pt-24" : "py-16 mt-16"
           } transition-all duration-500`}
         >
-          <div className={`max-w-3xl mx-auto ${started ? "space-y-4" : "space-y-8"}`}>
+          <div className={`max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto ${started ? "space-y-4 lg:space-y-6" : "space-y-8"}`}>
             <div className={`text-center ${started ? "space-y-2" : "space-y-6"}`}>
               <h1
                 className={`hero-title font-bold text-foreground px-4 ${
@@ -612,11 +612,11 @@ const Story = () => {
 
                 <div
                   ref={scrollRef}
-                  className="h-[55vh] sm:h-[60vh] overflow-y-auto px-4 py-4 space-y-4"
+                  className="h-[60vh] md:h-[65vh] lg:h-[70vh] overflow-y-auto px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6"
                 >
                   {(cardImage || cardLoading) && (
                     <div className="flex justify-center">
-                      <div className="w-40 sm:w-48 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
+                      <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
                         {cardImage ? (
                           <div className="relative">
                             <img
@@ -642,11 +642,11 @@ const Story = () => {
                             <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
                           </div>
                         )}
-                        <div className="px-2 py-1 text-center">
-                          <span className="block text-[11px] font-roc font-medium text-foreground truncate">
+                        <div className="px-2 py-1.5 lg:px-3 lg:py-2 text-center">
+                          <span className="block text-[11px] sm:text-xs lg:text-sm font-roc font-medium text-foreground truncate">
                             {name}
                           </span>
-                          <span className="block text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
+                          <span className="block text-[9px] sm:text-[10px] lg:text-xs font-mono uppercase tracking-widest text-muted-foreground">
                             {gender} {species}
                           </span>
                         </div>
@@ -684,10 +684,10 @@ const Story = () => {
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
+                        className={`max-w-[85%] md:max-w-[75%] lg:max-w-[70%] rounded-lg px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
-                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc"
-                            : "bg-muted text-foreground font-roc text-[15px]"
+                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-sm sm:text-base lg:text-lg"
+                            : "bg-muted text-foreground font-roc text-sm sm:text-base lg:text-lg xl:text-xl"
                         }`}
                       >
                         {m.role === "assistant" && (
@@ -738,13 +738,13 @@ const Story = () => {
                 </div>
 
                 {(options.length > 0 || optionsLoading) && !isStreaming && (
-                  <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 space-y-2">
-                    <span className="block text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                  <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
+                    <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
                       choose an action
                     </span>
                     {optionsLoading ? (
-                      <span className="flex items-center gap-2 text-[10px] text-muted-foreground font-mono">
-                        <Loader2 className="w-3 h-3 animate-spin" /> weighing your options...
+                      <span className="flex items-center gap-2 text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-mono">
+                        <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" /> weighing your options...
                       </span>
                     ) : (
                       <div className="flex flex-col sm:flex-row gap-2">
@@ -753,7 +753,7 @@ const Story = () => {
                             key={option}
                             variant="outline"
                             onClick={() => void send(option)}
-                            className="flex-1 h-auto py-2 whitespace-normal text-left justify-start text-xs font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
+                            className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 whitespace-normal text-left justify-start text-xs sm:text-sm lg:text-base font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
                           >
                             {option}
                           </Button>
@@ -763,7 +763,7 @@ const Story = () => {
                   </div>
                 )}
 
-                <div className="border-t border-border dark:border-[#00d4ff]/20 p-3 flex gap-2 items-end">
+                <div className="border-t border-border dark:border-[#00d4ff]/20 p-3 lg:p-4 flex gap-2 lg:gap-3 items-end">
 
                   <Textarea
                     value={input}
@@ -776,14 +776,14 @@ const Story = () => {
                     }}
                     placeholder="say or do something..."
                     rows={1}
-                    className="bg-background resize-none min-h-[42px] max-h-32 text-sm"
+                    className="bg-background resize-none min-h-[42px] lg:min-h-[48px] max-h-32 text-sm sm:text-base lg:text-lg"
                   />
                   <Button
                     onClick={sendMessage}
                     disabled={isStreaming || !input.trim()}
-                    className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90"
+                    className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 lg:px-4"
                   >
-                    {isStreaming ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                    {isStreaming ? <Loader2 className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" /> : <Send className="w-4 h-4 lg:w-5 lg:h-5" />}
                   </Button>
                 </div>
               </Card>

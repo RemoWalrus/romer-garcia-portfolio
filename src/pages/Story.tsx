@@ -764,22 +764,22 @@ const Story = () => {
 
                   <div className="sticky bottom-0 z-20 bg-card/95 backdrop-blur-sm border-t border-border dark:border-[#00d4ff]/20 pb-safe">
                     {(options.length > 0 || optionsLoading) && !scrollLocked && (
-                      <div className="px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
-                        <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
+                      <div className="px-3 pt-3 lg:px-4 lg:pt-4 xl:px-6 xl:pt-6 space-y-2 lg:space-y-3 xl:space-y-4">
+                        <span className="block text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground">
                           choose an action
                         </span>
                         {optionsLoading ? (
-                          <span className="flex items-center gap-2 text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-mono">
-                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" /> weighing your options...
+                          <span className="flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground font-mono">
+                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> weighing your options...
                           </span>
                         ) : (
-                          <div className="flex flex-col sm:flex-row gap-2">
+                          <div className="flex flex-col sm:flex-row gap-2 lg:gap-3 xl:gap-4">
                             {options.map((option) => (
                               <Button
                                 key={option}
                                 variant="outline"
                                 onClick={() => void send(option)}
-                                className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 whitespace-normal text-left justify-start text-xs sm:text-sm lg:text-base font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
+                                className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 xl:py-4 whitespace-normal text-left justify-start text-sm sm:text-base lg:text-lg xl:text-xl font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
                               >
                                 {option}
                               </Button>
@@ -789,7 +789,7 @@ const Story = () => {
                       </div>
                     )}
 
-                    <div className="p-3 lg:p-4 flex gap-2 lg:gap-3 items-end">
+                    <div className="p-3 lg:p-4 xl:px-6 xl:py-5 flex gap-2 lg:gap-3 xl:gap-4 items-end">
                       <Textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
@@ -801,14 +801,14 @@ const Story = () => {
                         }}
                         placeholder="say or do something..."
                         rows={1}
-                        className="bg-background resize-none min-h-[42px] lg:min-h-[48px] max-h-32 text-sm sm:text-base lg:text-lg"
+                        className="bg-background resize-none min-h-[44px] sm:min-h-[48px] lg:min-h-[56px] xl:min-h-[64px] max-h-32 text-base sm:text-lg lg:text-xl xl:text-2xl"
                       />
                       <Button
                         onClick={sendMessage}
                         disabled={isStreaming || !input.trim()}
-                        className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 lg:px-4"
+                        className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 sm:px-4 lg:px-5 xl:px-6"
                       >
-                        {isStreaming ? <Loader2 className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" /> : <Send className="w-4 h-4 lg:w-5 lg:h-5" />}
+                        {isStreaming ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 animate-spin" /> : <Send className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />}
                       </Button>
                     </div>
                   </div>

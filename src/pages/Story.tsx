@@ -545,7 +545,7 @@ const Story = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
+    <div className="h-screen flex flex-col bg-background overflow-hidden">
       <Helmet>
         <title>Paradoxxia Story | Roleplay an Encounter with Paradoxxia</title>
         <meta
@@ -567,7 +567,7 @@ const Story = () => {
         />
       </Helmet>
 
-      <div className="min-h-full flex flex-col pb-safe">
+      <div className="flex-1 flex flex-col min-h-0">
         <GoogleAnalytics />
         <ThemeToggle />
 
@@ -590,36 +590,22 @@ const Story = () => {
         </nav>
 
         <main
-          className={`container mx-auto px-4 lg:px-8 xl:px-12 relative z-10 flex-1 pb-10 ${
-            started ? "pt-20 sm:pt-24" : "py-16 mt-16"
-          } transition-all duration-500`}
+          className="container mx-auto px-4 lg:px-8 xl:px-12 relative z-10 flex-1 flex flex-col min-h-0 pt-20 sm:pt-24 transition-all duration-500"
         >
-          <div className={`max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto ${started ? "space-y-4 lg:space-y-6" : "space-y-8"}`}>
-            <div className={`text-center ${started ? "space-y-2" : "space-y-6"}`}>
+          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto w-full flex-1 flex flex-col min-h-0 space-y-4 lg:space-y-6">
+            <div className="text-center space-y-2">
               <h1
-                className={`hero-title font-bold text-foreground px-4 ${
-                  started ? "text-xl sm:text-2xl" : "text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
-                } transition-all duration-500`}
+                className="hero-title font-bold text-foreground px-4 text-xl sm:text-2xl transition-all duration-500"
               >
                 <GlitchTitle
-                  subtitleWords={started ? ["story", "mode"] : ["character", "generator"]}
-                  compact={started}
+                  subtitleWords={["story", "mode"]}
+                  compact={true}
                 />
               </h1>
-              {!started && (
-                <p className="text-foreground max-w-2xl mx-auto font-roc text-base sm:text-xl">
-                  <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
-                  <span className="font-medium">of the</span>{" "}
-                  <span style={{ fontWeight: 300 }}>paradoxxia universe</span>
-                </p>
-              )}
-
             </div>
 
-
-
             {started && (
-              <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 overflow-hidden">
+              <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
                 <div className="flex items-center justify-between px-4 py-2 border-b border-border dark:border-[#00d4ff]/20">
                   <span className="text-xs font-mono text-muted-foreground">
                     {name} · {gender} {species}
@@ -631,71 +617,68 @@ const Story = () => {
 
                 <div
                   ref={scrollRef}
-                  className={`h-[60vh] md:h-[65vh] lg:h-[70vh] px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6 ${
-                    scrollLocked ? "overflow-hidden" : "overflow-y-auto"
-                  }`}
+                  className="flex-1 overflow-y-auto flex flex-col px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6"
                 >
-
-
-                  {(cardImage || cardLoading) && (
-                    <div className="flex justify-center">
-                      <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
-                        {cardImage ? (
-                          <div className="relative">
-                            <img
-                              src={cardImage}
-                              alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
-                              className="w-full aspect-square object-cover"
-                              loading="lazy"
-                            />
-                            <ExpandButton
-                              onClick={() => {
-                                setLightboxImage(cardImage);
-                                setLightboxAlt(`${name}, a ${gender} ${species} in the Cyber Boondocks`);
-                              }}
-                              label="expand character profile"
-                            />
-                            <DownloadOverlayButton
-                              src={cardImage}
-                              fileName={`${name || "character"}_${Date.now()}.png`}
-                            />
+                  <div className="flex-1 space-y-4 lg:space-y-6">
+                    {(cardImage || cardLoading) && (
+                      <div className="flex justify-center">
+                        <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
+                          {cardImage ? (
+                            <div className="relative">
+                              <img
+                                src={cardImage}
+                                alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
+                                className="w-full aspect-square object-cover"
+                                loading="lazy"
+                              />
+                              <ExpandButton
+                                onClick={() => {
+                                  setLightboxImage(cardImage);
+                                  setLightboxAlt(`${name}, a ${gender} ${species} in the Cyber Boondocks`);
+                                }}
+                                label="expand character profile"
+                              />
+                              <DownloadOverlayButton
+                                src={cardImage}
+                                fileName={`${name || "character"}_${Date.now()}.png`}
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-full aspect-square flex items-center justify-center">
+                              <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                            </div>
+                          )}
+                          <div className="px-2 py-1.5 lg:px-3 lg:py-2 text-center">
+                            <span className="block text-[11px] sm:text-xs lg:text-sm font-roc font-medium text-foreground truncate">
+                              {name}
+                            </span>
+                            <span className="block text-[9px] sm:text-[10px] lg:text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                              {gender} {species}
+                            </span>
                           </div>
-                        ) : (
-                          <div className="w-full aspect-square flex items-center justify-center">
-                            <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
-                          </div>
-                        )}
-                        <div className="px-2 py-1.5 lg:px-3 lg:py-2 text-center">
-                          <span className="block text-[11px] sm:text-xs lg:text-sm font-roc font-medium text-foreground truncate">
-                            {name}
-                          </span>
-                          <span className="block text-[9px] sm:text-[10px] lg:text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                            {gender} {species}
-                          </span>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  {introVideo && introStatus === "done" && (
-                    <div className="flex justify-center">
-                      <button
-                        onClick={() =>
-                          downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
-                        }
-                        className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        <Download
-                          className="h-4 w-4"
-                          style={{
-                            color: "#00d9ff",
-                            filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
-                          }}
-                        />
-                        download intro sequence
-                      </button>
-                    </div>
-                  )}
+                    {introVideo && introStatus === "done" && (
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() =>
+                            downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
+                          }
+                          className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          <Download
+                            className="h-4 w-4"
+                            style={{
+                              color: "#00d9ff",
+                              filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
+                            }}
+                          />
+                          download intro sequence
+                        </button>
+                      </div>
+                    )}
 
 
 

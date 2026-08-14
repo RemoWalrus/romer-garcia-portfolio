@@ -578,14 +578,47 @@ const Story = () => {
                   </div>
                 )}
 
+                {step === 4 && (
+                  <div className="space-y-3">
+                    <Label className="text-base font-medium text-foreground font-roc">
+                      upload photo (optional):
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Upload a photo to use as reference for your character
+                    </p>
+                    {uploadedPhoto ? (
+                      <div className="relative h-[20vh] overflow-hidden flex items-center justify-center bg-black/10 rounded-lg">
+                        <img
+                          src={uploadedPhoto}
+                          alt="Uploaded reference"
+                          className="max-h-full max-w-full object-contain rounded-lg"
+                        />
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setUploadedPhoto("")}
+                          className="absolute top-2 right-2"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button onClick={handlePhotoUpload} variant="outline" className="w-full">
+                        Take Photo or Choose from Gallery
+                      </Button>
+                    )}
+                  </div>
+                )}
+
                 <Button
                   onClick={handleNext}
                   className="w-full font-roc font-medium bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90"
                 >
-                  {step < 3 ? "next" : "begin the encounter"}
+                  {step < 4 ? "next" : "begin the encounter"}
                 </Button>
               </Card>
             )}
+
 
             {started && (
               <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 overflow-hidden">

@@ -760,56 +760,58 @@ const Story = () => {
                       <Loader2 className="w-3 h-3 animate-spin" /> transmitting...
                     </div>
                   )}
-                </div>
+                  </div>
 
-                {(options.length > 0 || optionsLoading) && !scrollLocked && (
-                  <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
-                    <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
-                      choose an action
-                    </span>
-                    {optionsLoading ? (
-                      <span className="flex items-center gap-2 text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-mono">
-                        <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" /> weighing your options...
-                      </span>
-                    ) : (
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        {options.map((option) => (
-                          <Button
-                            key={option}
-                            variant="outline"
-                            onClick={() => void send(option)}
-                            className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 whitespace-normal text-left justify-start text-xs sm:text-sm lg:text-base font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
-                          >
-                            {option}
-                          </Button>
-                        ))}
+                  <div className="sticky bottom-0 z-20 bg-card/95 backdrop-blur-sm border-t border-border dark:border-[#00d4ff]/20 pb-safe">
+                    {(options.length > 0 || optionsLoading) && !scrollLocked && (
+                      <div className="px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
+                        <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
+                          choose an action
+                        </span>
+                        {optionsLoading ? (
+                          <span className="flex items-center gap-2 text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-mono">
+                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" /> weighing your options...
+                          </span>
+                        ) : (
+                          <div className="flex flex-col sm:flex-row gap-2">
+                            {options.map((option) => (
+                              <Button
+                                key={option}
+                                variant="outline"
+                                onClick={() => void send(option)}
+                                className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 whitespace-normal text-left justify-start text-xs sm:text-sm lg:text-base font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
+                              >
+                                {option}
+                              </Button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
+
+                    <div className="p-3 lg:p-4 flex gap-2 lg:gap-3 items-end">
+                      <Textarea
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                          }
+                        }}
+                        placeholder="say or do something..."
+                        rows={1}
+                        className="bg-background resize-none min-h-[42px] lg:min-h-[48px] max-h-32 text-sm sm:text-base lg:text-lg"
+                      />
+                      <Button
+                        onClick={sendMessage}
+                        disabled={isStreaming || !input.trim()}
+                        className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 lg:px-4"
+                      >
+                        {isStreaming ? <Loader2 className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" /> : <Send className="w-4 h-4 lg:w-5 lg:h-5" />}
+                      </Button>
+                    </div>
                   </div>
-                )}
-
-                <div className="border-t border-border dark:border-[#00d4ff]/20 p-3 lg:p-4 flex gap-2 lg:gap-3 items-end">
-
-                  <Textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault();
-                        sendMessage();
-                      }
-                    }}
-                    placeholder="say or do something..."
-                    rows={1}
-                    className="bg-background resize-none min-h-[42px] lg:min-h-[48px] max-h-32 text-sm sm:text-base lg:text-lg"
-                  />
-                  <Button
-                    onClick={sendMessage}
-                    disabled={isStreaming || !input.trim()}
-                    className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 lg:px-4"
-                  >
-                    {isStreaming ? <Loader2 className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" /> : <Send className="w-4 h-4 lg:w-5 lg:h-5" />}
-                  </Button>
                 </div>
               </Card>
             )}

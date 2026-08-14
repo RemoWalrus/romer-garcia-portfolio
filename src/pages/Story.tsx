@@ -592,7 +592,7 @@ const Story = () => {
         <main
           className="container mx-auto px-4 lg:px-8 xl:px-12 relative z-10 flex-1 flex flex-col min-h-0 pt-20 sm:pt-24 transition-all duration-500"
         >
-          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto w-full flex-1 flex flex-col min-h-0 space-y-4 lg:space-y-6">
+          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[85vw] mx-auto w-full flex-1 flex flex-col min-h-0 space-y-4 lg:space-y-6">
             <div className="text-center space-y-2">
               <h1
                 className="hero-title font-bold text-foreground px-4 text-xl sm:text-2xl transition-all duration-500"
@@ -606,12 +606,12 @@ const Story = () => {
 
             {started && (
               <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
-                <div className="flex items-center justify-between px-4 py-2 border-b border-border dark:border-[#00d4ff]/20">
-                  <span className="text-xs font-mono text-muted-foreground">
+                <div className="flex items-center justify-between px-4 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-4 border-b border-border dark:border-[#00d4ff]/20">
+                  <span className="text-xs sm:text-sm lg:text-base xl:text-lg font-mono text-muted-foreground">
                     {name} · {gender} {species}
                   </span>
-                  <Button variant="ghost" size="sm" onClick={restart} className="text-xs">
-                    <RotateCcw className="w-3 h-3 mr-1" /> restart
+                  <Button variant="ghost" size="sm" onClick={restart} className="text-xs sm:text-sm lg:text-base">
+                    <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 mr-1" /> restart
                   </Button>
                 </div>
 
@@ -622,7 +622,7 @@ const Story = () => {
                   <div className="flex-1 space-y-4 lg:space-y-6">
                     {(cardImage || cardLoading) && (
                       <div className="flex justify-center">
-                        <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
+                        <div className="w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72 2xl:w-80 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
                           {cardImage ? (
                             <div className="relative">
                               <img
@@ -645,14 +645,14 @@ const Story = () => {
                             </div>
                           ) : (
                             <div className="w-full aspect-square flex items-center justify-center">
-                              <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                              <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 animate-spin text-muted-foreground" />
                             </div>
                           )}
-                          <div className="px-2 py-1.5 lg:px-3 lg:py-2 text-center">
-                            <span className="block text-[11px] sm:text-xs lg:text-sm font-roc font-medium text-foreground truncate">
+                          <div className="px-2 py-1.5 lg:px-3 lg:py-2 xl:px-4 xl:py-3 text-center">
+                            <span className="block text-sm sm:text-base lg:text-lg xl:text-xl font-roc font-medium text-foreground truncate">
                               {name}
                             </span>
-                            <span className="block text-[9px] sm:text-[10px] lg:text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                            <span className="block text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground">
                               {gender} {species}
                             </span>
                           </div>
@@ -661,23 +661,23 @@ const Story = () => {
                     )}
 
                     {introVideo && introStatus === "done" && (
-                      <div className="flex justify-center">
-                        <button
-                          onClick={() =>
-                            downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
-                          }
-                          className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          <Download
-                            className="h-4 w-4"
-                            style={{
-                              color: "#00d9ff",
-                              filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
-                            }}
-                          />
-                          download intro sequence
-                        </button>
-                      </div>
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() =>
+                          downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
+                        }
+                        className="inline-flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Download
+                          className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6"
+                          style={{
+                            color: "#00d9ff",
+                            filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
+                          }}
+                        />
+                        download intro sequence
+                      </button>
+                    </div>
                     )}
 
 
@@ -693,14 +693,14 @@ const Story = () => {
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[85%] md:max-w-[75%] lg:max-w-[70%] rounded-lg px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 leading-relaxed whitespace-pre-wrap ${
+                        className={`max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] rounded-lg px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-5 leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
-                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-sm sm:text-base lg:text-lg"
-                            : "bg-muted text-foreground font-roc text-sm sm:text-base lg:text-lg xl:text-xl"
+                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
+                            : "bg-muted text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
                         }`}
                       >
                         {m.role === "assistant" && (
-                          <span className="block text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+                          <span className="block text-xs sm:text-sm lg:text-base xl:text-lg uppercase tracking-widest text-muted-foreground mb-1">
                             パラドクシア
                           </span>
                         )}
@@ -724,7 +724,7 @@ const Story = () => {
                           m.content
                         )}
                         {m.image && typed && (
-                          <div className="relative mt-2 w-full max-w-sm">
+                          <div className="relative mt-2 w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
                             <img
                               src={m.image}
                               alt="Scene from the encounter with Paradoxxia"
@@ -746,8 +746,8 @@ const Story = () => {
                         )}
 
                         {m.imageLoading && !m.image && typed && (
-                          <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
-                            <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...
+                          <span className="mt-2 flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground">
+                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> rendering scene...
                           </span>
                         )}
                       </div>
@@ -756,30 +756,30 @@ const Story = () => {
                   })}
 
                   {isStreaming && (
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                      <Loader2 className="w-3 h-3 animate-spin" /> transmitting...
+                    <div className="flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground font-mono">
+                      <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> transmitting...
                     </div>
                   )}
                   </div>
 
                   <div className="sticky bottom-0 z-20 bg-card/95 backdrop-blur-sm border-t border-border dark:border-[#00d4ff]/20 pb-safe">
                     {(options.length > 0 || optionsLoading) && !scrollLocked && (
-                      <div className="px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
-                        <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
+                      <div className="px-3 pt-3 lg:px-4 lg:pt-4 xl:px-6 xl:pt-6 space-y-2 lg:space-y-3 xl:space-y-4">
+                        <span className="block text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground">
                           choose an action
                         </span>
                         {optionsLoading ? (
-                          <span className="flex items-center gap-2 text-[10px] sm:text-xs lg:text-sm text-muted-foreground font-mono">
-                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 animate-spin" /> weighing your options...
+                          <span className="flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground font-mono">
+                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> weighing your options...
                           </span>
                         ) : (
-                          <div className="flex flex-col sm:flex-row gap-2">
+                          <div className="flex flex-col sm:flex-row gap-2 lg:gap-3 xl:gap-4">
                             {options.map((option) => (
                               <Button
                                 key={option}
                                 variant="outline"
                                 onClick={() => void send(option)}
-                                className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 whitespace-normal text-left justify-start text-xs sm:text-sm lg:text-base font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
+                                className="flex-1 h-auto py-2 sm:py-2.5 lg:py-3 xl:py-4 whitespace-normal text-left justify-start text-sm sm:text-base lg:text-lg xl:text-xl font-roc dark:border-[#00d4ff]/30 dark:text-neutral-300"
                               >
                                 {option}
                               </Button>
@@ -789,7 +789,7 @@ const Story = () => {
                       </div>
                     )}
 
-                    <div className="p-3 lg:p-4 flex gap-2 lg:gap-3 items-end">
+                    <div className="p-3 lg:p-4 xl:px-6 xl:py-5 flex gap-2 lg:gap-3 xl:gap-4 items-end">
                       <Textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
@@ -801,14 +801,14 @@ const Story = () => {
                         }}
                         placeholder="say or do something..."
                         rows={1}
-                        className="bg-background resize-none min-h-[42px] lg:min-h-[48px] max-h-32 text-sm sm:text-base lg:text-lg"
+                        className="bg-background resize-none min-h-[44px] sm:min-h-[48px] lg:min-h-[56px] xl:min-h-[64px] max-h-32 text-base sm:text-lg lg:text-xl xl:text-2xl"
                       />
                       <Button
                         onClick={sendMessage}
                         disabled={isStreaming || !input.trim()}
-                        className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 lg:px-4"
+                        className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 px-3 sm:px-4 lg:px-5 xl:px-6"
                       >
-                        {isStreaming ? <Loader2 className="w-4 h-4 lg:w-5 lg:h-5 animate-spin" /> : <Send className="w-4 h-4 lg:w-5 lg:h-5" />}
+                        {isStreaming ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 animate-spin" /> : <Send className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />}
                       </Button>
                     </div>
                   </div>
@@ -829,8 +829,8 @@ const Story = () => {
                     className="w-40 rounded-lg border border-[#00d4ff]/40 opacity-70"
                   />
                 )}
-                <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#00d4ff]">
-                  <Loader2 className="w-3 h-3 animate-spin" /> rendering intro sequence...
+                <span className="flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-[#00d4ff]">
+                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> rendering intro sequence...
                 </span>
               </div>
             )}
@@ -854,20 +854,20 @@ const Story = () => {
                       className="group flex flex-col items-center gap-3 p-6 rounded-lg transition-colors hover:bg-black/40"
                     >
                       <Download
-                        className="h-12 w-12"
+                        className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
                         style={{
                           color: "#00d9ff",
                           filter: "drop-shadow(0 0 12px rgba(0, 217, 255, 0.8))",
                         }}
                       />
-                      <span className="text-sm font-roc font-medium text-[#00d9ff] uppercase tracking-widest">
+                      <span className="text-sm sm:text-base lg:text-lg xl:text-xl font-roc font-medium text-[#00d9ff] uppercase tracking-widest">
                         click to download intro sequence
                       </span>
                     </button>
                     <Button
                       variant="ghost"
                       onClick={() => setIntroStatus("done")}
-                      className="mt-8 text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+                      className="mt-8 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
                     >
                       continue to story →
                     </Button>
@@ -876,7 +876,7 @@ const Story = () => {
                   <Button
                     variant="ghost"
                     onClick={() => setIntroStatus("done")}
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
                   >
                     skip intro →
                   </Button>
@@ -908,7 +908,7 @@ const Story = () => {
                   aria-label="close lightbox"
                   className="bg-black/40 hover:bg-black/60 p-1 rounded-md"
                 >
-                  <span className="text-[#00d9ff] text-xs font-bold leading-none">✕</span>
+                  <span className="text-[#00d9ff] text-sm sm:text-base lg:text-lg xl:text-xl font-bold leading-none">✕</span>
                 </Button>
               </div>
               <div className="absolute top-2 left-2">

@@ -13,7 +13,7 @@ import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import { supabase } from "@/integrations/supabase/client";
-import { downloadImage } from "@/utils/imageDownload";
+import { downloadImage, downloadVideo } from "@/utils/imageDownload";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
@@ -345,9 +345,10 @@ const Story = () => {
     const opening: ChatMessage[] = [
       {
         role: "user",
-        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Begin the encounter: describe the moment we meet in the Cyber Boondocks and speak your first words to me.`,
+        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Open the story: first, in one short paragraph, describe me — how I look, what I carry, what I have survived — then describe exactly where I am right now and the situation I am caught in at this moment: what I can see, hear and smell, what I need, and what is pressing in on me. Do not introduce Paradoxxia yet. End with an opening that lets me act.`,
       },
     ];
+
     await streamReply(opening);
     setMessages((prev) => prev.filter((m) => m.role === "assistant"));
   };
@@ -568,6 +569,42 @@ const Story = () => {
                     </div>
                   )}
 
+                  {introVideo && introStatus === "done" && (
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="relative w-52 sm:w-64">
+                        <video
+                          src={introVideo}
+                          controls
+                          muted
+                          playsInline
+                          className="w-full rounded-md border border-border dark:border-[#00d4ff]/30"
+                        />
+                        <Button
+                          onClick={() =>
+                            downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
+                          }
+                          size="icon"
+                          variant="ghost"
+                          aria-label="download intro video"
+                          className="absolute top-2 right-2 z-30 bg-transparent hover:bg-transparent p-1"
+                        >
+                          <Download
+                            className="h-6 w-6"
+                            style={{
+                              color: "#00d9ff",
+                              filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
+                            }}
+                          />
+                        </Button>
+                      </div>
+                      <span className="text-[9px] font-mono uppercase tracking-widest text-muted-foreground">
+                        intro sequence
+                      </span>
+                    </div>
+                  )}
+
+
+
 
                   {messages.map((m, i) => (
                     <div
@@ -674,14 +711,28 @@ const Story = () => {
         {(introStatus === "rendering" || introStatus === "playing") && (
           <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center gap-4 px-4">
             {introStatus === "playing" && introVideo ? (
-              <video
-                src={introVideo}
-                autoPlay
-                muted
-                playsInline
-                onEnded={() => setIntroStatus("done")}
-                className="w-full max-w-2xl rounded-lg border border-[#00d4ff]/40"
-              />
+              <div className="relative w-full max-w-2xl">
+                <video
+                  src={introVideo}
+                  autoPlay
+                  muted
+                  playsInline
+                  onEnded={() => setIntroStatus("done")}
+                  className="w-full rounded-lg border border-[#00d4ff]/40"
+                />
+                <Button
+                  onClick={() => downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)}
+                  size="icon"
+                  variant="ghost"
+                  aria-label="download intro video"
+                  className="absolute top-2 right-2 z-30 bg-transparent hover:bg-transparent p-1"
+                >
+                  <Download
+                    className="h-6 w-6"
+                    style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
+                  />
+                </Button>
+              </div>
             ) : (
               <div className="flex flex-col items-center gap-3">
                 {cardImage && (
@@ -703,6 +754,7 @@ const Story = () => {
             >
               skip intro →
             </Button>
+
           </div>
         )}
       </div>

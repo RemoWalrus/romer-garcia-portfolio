@@ -44,3 +44,35 @@ export const downloadImage = async (src: string, fileName: string) => {
     toast.error("Failed to save image");
   }
 };
+
+/** Saves a video to Photos on native, or triggers a browser download on web. */
+export const downloadVideo = async (src: string, fileName: string) => {
+  try {
+    if (!src) return;
+
+    if (Capacitor.isNativePlatform()) {
+      const savedFile = await Filesystem.writeFile({
+        path: fileName,
+        data: await toBase64(src),
+        directory: Directory.Cache,
+      });
+      await Media.saveVideo({ path: savedFile.uri });
+      toast.success("Saved to Photos");
+      return;
+    }
+
+    const href = src.startsWith("data:") ? src : URL.createObjectURL(await (await fetch(src)).blob());
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    if (!src.startsWith("data:")) URL.revokeObjectURL(href);
+    toast.success("Downloaded!");
+  } catch (error) {
+    console.error("Video download error:", error);
+    toast.error("Failed to save video");
+  }
+};
+

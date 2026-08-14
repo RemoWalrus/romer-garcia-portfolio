@@ -627,8 +627,10 @@ const Story = () => {
 
                 <div
                   ref={scrollRef}
-                  className="h-[60vh] md:h-[65vh] lg:h-[70vh] overflow-y-auto px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6"
-                >
+                  className={`h-[60vh] md:h-[65vh] lg:h-[70vh] px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6 ${
+                    scrollLocked ? "overflow-hidden" : "overflow-y-auto"
+                  }`}
+
                   {(cardImage || cardLoading) && (
                     <div className="flex justify-center">
                       <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">

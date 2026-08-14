@@ -622,7 +622,7 @@ const Story = () => {
                   <div className="flex-1 space-y-4 lg:space-y-6">
                     {(cardImage || cardLoading) && (
                       <div className="flex justify-center">
-                        <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
+                        <div className="w-40 sm:w-48 md:w-56 lg:w-64 xl:w-72 2xl:w-80 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
                           {cardImage ? (
                             <div className="relative">
                               <img
@@ -645,14 +645,14 @@ const Story = () => {
                             </div>
                           ) : (
                             <div className="w-full aspect-square flex items-center justify-center">
-                              <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+                              <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 animate-spin text-muted-foreground" />
                             </div>
                           )}
-                          <div className="px-2 py-1.5 lg:px-3 lg:py-2 text-center">
-                            <span className="block text-[11px] sm:text-xs lg:text-sm font-roc font-medium text-foreground truncate">
+                          <div className="px-2 py-1.5 lg:px-3 lg:py-2 xl:px-4 xl:py-3 text-center">
+                            <span className="block text-sm sm:text-base lg:text-lg xl:text-xl font-roc font-medium text-foreground truncate">
                               {name}
                             </span>
-                            <span className="block text-[9px] sm:text-[10px] lg:text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                            <span className="block text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground">
                               {gender} {species}
                             </span>
                           </div>

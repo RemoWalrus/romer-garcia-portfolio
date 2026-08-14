@@ -1164,8 +1164,6 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
 
             {deathRecap && (
               <div className="mt-6 w-full max-w-lg text-left border border-red-500/30 bg-black/60 backdrop-blur-sm rounded-lg p-4 sm:p-5">
-
-              <div className="mt-6 w-full max-w-lg text-left border border-red-500/30 bg-red-500/5 rounded-lg p-4 sm:p-5">
                 <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-red-400/80">
                   how you died
                 </p>

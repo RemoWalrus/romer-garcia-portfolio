@@ -675,14 +675,28 @@ const Story = () => {
         {(introStatus === "rendering" || introStatus === "playing") && (
           <div className="fixed inset-0 z-50 bg-black/95 flex flex-col items-center justify-center gap-4 px-4">
             {introStatus === "playing" && introVideo ? (
-              <video
-                src={introVideo}
-                autoPlay
-                muted
-                playsInline
-                onEnded={() => setIntroStatus("done")}
-                className="w-full max-w-2xl rounded-lg border border-[#00d4ff]/40"
-              />
+              <div className="relative w-full max-w-2xl">
+                <video
+                  src={introVideo}
+                  autoPlay
+                  muted
+                  playsInline
+                  onEnded={() => setIntroStatus("done")}
+                  className="w-full rounded-lg border border-[#00d4ff]/40"
+                />
+                <Button
+                  onClick={() => downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)}
+                  size="icon"
+                  variant="ghost"
+                  aria-label="download intro video"
+                  className="absolute top-2 right-2 z-30 bg-transparent hover:bg-transparent p-1"
+                >
+                  <Download
+                    className="h-6 w-6"
+                    style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
+                  />
+                </Button>
+              </div>
             ) : (
               <div className="flex flex-col items-center gap-3">
                 {cardImage && (
@@ -704,6 +718,7 @@ const Story = () => {
             >
               skip intro →
             </Button>
+
           </div>
         )}
       </div>

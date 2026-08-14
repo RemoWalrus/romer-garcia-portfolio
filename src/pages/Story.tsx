@@ -119,7 +119,11 @@ const Story = () => {
   const msgKey = (m: ChatMessage, i: number) => String(m.id ?? i);
   const lastMessage = messages[messages.length - 1];
   const lastKey = lastMessage ? msgKey(lastMessage, messages.length - 1) : "";
-  const isTyping = !!lastMessage && lastMessage.role === "assistant" && !typedIds[lastKey];
+  const isTyping =
+    !!lastMessage &&
+    lastMessage.role === "assistant" &&
+    lastMessage.content.length > 0 &&
+    !typedIds[lastKey];
   // scroll is locked (and follows the typewriter) until the reply finishes typing
   const scrollLocked = isStreaming || isTyping;
 

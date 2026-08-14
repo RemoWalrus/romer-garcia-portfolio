@@ -916,15 +916,16 @@ const Story = () => {
                 className="max-w-full max-h-[90vh] object-contain rounded-lg border border-[#00d4ff]/40"
                 onClick={(e) => e.stopPropagation()}
               />
-              <div className="absolute top-2 right-2 flex gap-2">
-                <ExpandButton
-                  onClick={() => {
-                    setLightboxImage(null);
-                  }}
-                  label="close lightbox"
+              <div className="absolute top-2 right-2">
+                <Button
+                  onClick={() => setLightboxImage(null)}
+                  size="icon"
+                  variant="ghost"
+                  aria-label="close lightbox"
+                  className="bg-black/40 hover:bg-black/60 p-1 rounded-md"
                 >
-                  <span className="sr-only">close</span>
-                </ExpandButton>
+                  <span className="text-[#00d9ff] text-xs font-bold leading-none">✕</span>
+                </Button>
               </div>
               <div className="absolute top-2 left-2">
                 <DownloadOverlayButton

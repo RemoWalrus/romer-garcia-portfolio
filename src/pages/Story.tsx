@@ -114,9 +114,24 @@ const Story = () => {
 
 
 
+  const [typedIds, setTypedIds] = useState<Record<string, boolean>>({});
+
+  const msgKey = (m: ChatMessage, i: number) => String(m.id ?? i);
+  const lastMessage = messages[messages.length - 1];
+  const lastKey = lastMessage ? msgKey(lastMessage, messages.length - 1) : "";
+  const isTyping = !!lastMessage && lastMessage.role === "assistant" && !typedIds[lastKey];
+  // scroll is locked (and follows the typewriter) until the reply finishes typing
+  const scrollLocked = isStreaming || isTyping;
+
+  const followScroll = () => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  };
+
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
+
 
   // Auto-start from query params or persisted character data
   useEffect(() => {

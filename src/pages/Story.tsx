@@ -42,6 +42,21 @@ const fatalConsequence = (text: string) => {
   return tail.length > 320 ? `${tail.slice(0, 317).trimEnd()}…` : tail;
 };
 
+// the concrete action beat of a reply — the sentences that actually depict something happening
+const actionBeat = (text: string) => {
+  const sentences = text
+    .replace(/\*/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .filter((s) => s.trim().length > 0);
+  if (sentences.length === 0) return text.slice(0, 400);
+  const scored = sentences.filter((s) => !/^["“]/.test(s.trim()));
+  const pool = scored.length ? scored : sentences;
+  return pool.slice(-3).join(" ").slice(0, 500);
+};
+
+
 // intro video cache — keyed per character, short TTL because the URL is a signed link
 const INTRO_CACHE_PREFIX = "paradoxxia_story_intro_video:";
 const INTRO_CACHE_TTL = 40 * 60 * 1000;

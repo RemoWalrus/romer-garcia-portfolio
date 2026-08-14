@@ -562,7 +562,7 @@ const Story = () => {
     const opening: ChatMessage[] = [
       {
         role: "user",
-        content: `I am ${finalName}, a ${describeChar(startGender ?? gender, startSpecies ?? species)}. Open the story: first, in one short paragraph, describe me — how I look, what I carry, what I have survived — then describe exactly where I am right now and the situation I am caught in at this moment: what I can see, hear and smell, what I need, and what is pressing in on me. Do not introduce Paradoxxia yet. End with an opening that lets me act.`,
+        content: `I am ${finalName}, a ${describeChar(startGender ?? gender, startSpecies ?? species)}. Open the story: first, in one short paragraph, introduce me through what I carry, what I wear, my condition and what I have survived — never my physical features, skin, hair or ethnicity, since my portrait is already shown — then describe exactly where I am right now and the situation I am caught in at this moment: what I can see, hear and smell, what I need, and what is pressing in on me. Do not introduce Paradoxxia yet. End with an opening that lets me act.`,
       },
     ];
 

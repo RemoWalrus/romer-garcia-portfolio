@@ -853,8 +853,8 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
           dossierField("PRESENTATION", nameDisplay, "no visible name marker on them"),
           dossierField("NAME MEANING / MOTIF", nameTheme, "no known meaning — the name is simply what they answer to"),
           uploadedPhoto
-            ? "LIKENESS: modelled on a real reference photo the player supplied — their face, ethnicity, hair and body type carry over."
-            : "LIKENESS: no reference photo — appearance generated from scratch; keep it consistent once established.",
+            ? "LIKENESS: a reference photo the player supplied is attached as their portrait — the picture carries their likeness, so never describe their physical features, skin, hair or ethnicity in prose."
+            : "LIKENESS: no reference photo — the generated portrait stands in for their likeness; never describe their physical features, skin, hair or ethnicity in prose.",
         ]
           .map((line) => line.replace(/\s+/g, " ").trim())
           .join("\n")

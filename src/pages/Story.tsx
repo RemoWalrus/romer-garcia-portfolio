@@ -345,9 +345,10 @@ const Story = () => {
     const opening: ChatMessage[] = [
       {
         role: "user",
-        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Begin the encounter: describe the moment we meet in the Cyber Boondocks and speak your first words to me.`,
+        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Open the story: first, in one short paragraph, describe me — how I look, what I carry, what I have survived — then describe exactly where I am right now and the situation I am caught in at this moment: what I can see, hear and smell, what I need, and what is pressing in on me. Do not introduce Paradoxxia yet. End with an opening that lets me act.`,
       },
     ];
+
     await streamReply(opening);
     setMessages((prev) => prev.filter((m) => m.role === "assistant"));
   };

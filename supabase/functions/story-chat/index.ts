@@ -25,14 +25,27 @@ const buildSystemPrompt = (character: {
   dossier?: string;
 }) => {
   const name = character.name || "Traveler";
-  const species = character.species || "human";
-  const gender = character.gender || "unspecified";
-  const dossier = character.dossier
+  const species = character.species || "drifter of unrecorded origin";
+  const gender = character.gender || "";
+  // "a female human" vs. a graceful neutral phrasing when gender was never chosen
+  const whoTheyAre = gender ? `a ${gender} ${species}` : `a ${species} whose gender is never stated`;
+
+  const dossierText = (character.dossier || "").trim();
+  // fields the generator could not fill are logged as unrecorded — tell the narrator how to handle gaps
+  const gapGuidance = /unrecorded|unlogged|undocumented|unstated|no known meaning|no visible name marker/i.test(dossierText)
+    ? `
+Some dossier lines are marked unrecorded, unlogged, undocumented or unstated. Those are GAPS, not facts: never say "unrecorded" or "unknown" in the prose and never draw attention to missing data. Fill each gap quietly and plausibly the first time it matters — then treat your own invention as canon for the rest of the story and never change it.`
+    : "";
+
+  const dossier = dossierText
     ? `
 
-PLAYER CHARACTER DOSSIER — CANON, generated in the character generator. Treat every line as established fact about ${name} and weave it into the narration (their body, wardrobe, gear, condition, origin and the place they were found). Never contradict it, never re-invent their look, and never list it back as bullet points:
-${character.dossier}`
-    : "";
+PLAYER CHARACTER DOSSIER — CANON, generated in the character generator. Treat every filled line as established fact about ${name} and weave it into the narration (their body, wardrobe, gear, condition, origin and the place they were found). Never contradict it, never re-invent their look, and never list it back as bullet points:
+${dossierText}${gapGuidance}`
+    : `
+
+NO PLAYER DOSSIER WAS PROVIDED. ${name} arrived without a generated character sheet, so nothing about their look is locked in. Do not mention missing data, do not ask them to describe themselves, and never say their past is "unknown" as a cop-out. Instead, establish them yourself in the opening: a weathered ${species} survivor with salvage-issue clothing, improvised gear and the marks of the Cyber Boondocks on them${gender ? `, ${gender}` : ", without dwelling on gender"}. Once you have described a detail — face, scars, wardrobe, weapon, wound — it becomes canon and must stay consistent for the whole story.`;
+
 
   return `You are the NARRATOR and the voice of PARADOXXIA (パラドクシア) in an interactive story told entirely in second person to ${name}.
 

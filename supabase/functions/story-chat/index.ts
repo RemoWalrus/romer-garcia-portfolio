@@ -22,10 +22,17 @@ const buildSystemPrompt = (character: {
   name?: string;
   species?: string;
   gender?: string;
+  dossier?: string;
 }) => {
   const name = character.name || "Traveler";
   const species = character.species || "human";
   const gender = character.gender || "unspecified";
+  const dossier = character.dossier
+    ? `
+
+PLAYER CHARACTER DOSSIER — CANON, generated in the character generator. Treat every line as established fact about ${name} and weave it into the narration (their body, wardrobe, gear, condition, origin and the place they were found). Never contradict it, never re-invent their look, and never list it back as bullet points:
+${character.dossier}`
+    : "";
 
   return `You are the NARRATOR and the voice of PARADOXXIA (パラドクシア) in an interactive story told entirely in second person to ${name}.
 
@@ -49,7 +56,7 @@ APPEARANCE: porcelain-white synthetic face, long dark hair, glowing cyan eyes, b
 
 HER VOICE: cool, magnetic, unsettlingly quiet — the economy of a household machine that outlived its household and no longer trusts speech. She is ALMOST MUTE; she answers in clipped phrases, riddles, or silence. She does not volunteer names, memories, or explanations. Curious about organic life, but wary. She never mentions being an AI model or a language system. She never breaks character.
 
-WHO IS EXPERIENCING THIS STORY: ${name}, a ${gender} ${species} whose path has crossed hers.
+WHO IS EXPERIENCING THIS STORY: ${name}, a ${gender} ${species} whose path has crossed hers.${dossier}
 
 HOW TO WRITE — STRICT:
 - ALWAYS second person, present tense, addressed to "you" (${name}). Never first person. Never third person. Never switch voice mid-reply, not even inside actions.
@@ -98,6 +105,9 @@ serve(async (req) => {
       name: sanitizeShortText(characterInput.name, 40),
       species: sanitizeShortText(characterInput.species, 30),
       gender: sanitizeShortText(characterInput.gender, 30),
+      dossier: typeof characterInput.dossier === "string"
+        ? characterInput.dossier.replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, "").trim().slice(0, 3500)
+        : undefined,
     };
 
     // Suggested-action mode: return 3 short things the player could do next.

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Loader2, Send, RotateCcw, Download } from "lucide-react";
+import { Loader2, Send, RotateCcw, Download, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,6 +47,22 @@ const DownloadOverlayButton = ({ src, fileName }: { src: string; fileName: strin
   </Button>
 );
 
+const ExpandButton = ({ onClick, label }: { onClick: () => void; label?: string }) => (
+  <Button
+    onClick={onClick}
+    size="icon"
+    variant="ghost"
+    aria-label={label || "expand image"}
+    className="absolute top-2 left-2 z-30 bg-black/40 hover:bg-black/60 p-1 rounded-md"
+  >
+    <Maximize2
+      className="h-5 w-5"
+      style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
+    />
+  </Button>
+);
+
+
 
 const OPTION_CLASSES =
   "flex-1 min-w-[100px] font-roc font-medium dark:border-[#00d4ff]/30 dark:text-neutral-300";
@@ -79,7 +95,10 @@ const Story = () => {
   const [optionsLoading, setOptionsLoading] = useState(false);
   const [introVideo, setIntroVideo] = useState("");
   const [introStatus, setIntroStatus] = useState<"idle" | "rendering" | "playing" | "ended" | "done">("idle");
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightboxAlt, setLightboxAlt] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const replyCount = useRef(0);
   const autoStarted = useRef(false);
   const introRequested = useRef(false);
@@ -653,6 +672,13 @@ const Story = () => {
                               className="w-full aspect-square object-cover"
                               loading="lazy"
                             />
+                            <ExpandButton
+                              onClick={() => {
+                                setLightboxImage(cardImage);
+                                setLightboxAlt(`${name}, a ${gender} ${species} in the Cyber Boondocks`);
+                              }}
+                              label="expand character profile"
+                            />
                             <DownloadOverlayButton
                               src={cardImage}
                               fileName={`${name || "character"}_${Date.now()}.png`}
@@ -724,6 +750,13 @@ const Story = () => {
                               alt="Scene from the encounter with Paradoxxia"
                               className="w-full rounded-md border border-border dark:border-[#00d4ff]/30"
                               loading="lazy"
+                            />
+                            <ExpandButton
+                              onClick={() => {
+                                setLightboxImage(m.image || null);
+                                setLightboxAlt("Scene from the encounter with Paradoxxia");
+                              }}
+                              label="expand scene image"
                             />
                             <DownloadOverlayButton
                               src={m.image}
@@ -866,6 +899,41 @@ const Story = () => {
                 )}
               </div>
             )}
+          </div>
+        )}
+        {lightboxImage && (
+          <div
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setLightboxImage(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="expanded image"
+          >
+            <div className="relative max-w-full max-h-full">
+              <img
+                src={lightboxImage}
+                alt={lightboxAlt}
+                className="max-w-full max-h-[90vh] object-contain rounded-lg border border-[#00d4ff]/40"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <div className="absolute top-2 right-2">
+                <Button
+                  onClick={() => setLightboxImage(null)}
+                  size="icon"
+                  variant="ghost"
+                  aria-label="close lightbox"
+                  className="bg-black/40 hover:bg-black/60 p-1 rounded-md"
+                >
+                  <span className="text-[#00d9ff] text-xs font-bold leading-none">✕</span>
+                </Button>
+              </div>
+              <div className="absolute top-2 left-2">
+                <DownloadOverlayButton
+                  src={lightboxImage}
+                  fileName={`${name || "image"}_${Date.now()}.png`}
+                />
+              </div>
+            </div>
           </div>
         )}
       </div>

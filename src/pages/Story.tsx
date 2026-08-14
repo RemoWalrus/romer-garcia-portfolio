@@ -982,6 +982,43 @@ const Story = () => {
             )}
           </div>
         )}
+
+        {isDead && !scrollLocked && !lightboxImage && (
+          <div className="fixed inset-0 z-[60] bg-black/95 flex flex-col items-center justify-center px-6 text-center">
+            {cardImage && (
+              <img
+                src={cardImage}
+                alt={`${name} in the Cyber Boondocks`}
+                className="w-28 sm:w-32 lg:w-40 rounded-lg border border-red-500/40 grayscale opacity-50 mb-6"
+              />
+            )}
+            <h2
+              className="font-roc font-bold uppercase tracking-[0.2em] text-3xl sm:text-5xl lg:text-6xl text-red-500"
+              style={{ textShadow: "0 0 24px rgba(239,68,68,0.5)" }}
+            >
+              you died
+            </h2>
+            <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
+              the cyber boondocks keeps what it takes. {name}'s run ends here.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
+              <Button
+                onClick={tryAgain}
+                className="bg-[#00d4ff] text-neutral-950 hover:bg-[#00d4ff]/90 font-mono uppercase tracking-widest"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" /> try again as {name}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={restart}
+                className="font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+              >
+                new character →
+              </Button>
+            </div>
+          </div>
+        )}
+
         {lightboxImage && (
           <div
             className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"

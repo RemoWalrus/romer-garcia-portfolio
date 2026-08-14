@@ -171,6 +171,9 @@ const Story = () => {
   const [isDead, setIsDead] = useState(false);
   // the exact action that got them killed, and the fatal consequence it triggered
   const [deathRecap, setDeathRecap] = useState<{ choice: string; consequence: string } | null>(null);
+  // resident-evil style game over still of how they died
+  const [deathImage, setDeathImage] = useState("");
+  const [deathImageLoading, setDeathImageLoading] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 

@@ -735,7 +735,7 @@ const Story = () => {
                         className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
                             ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc"
-                            : "bg-muted text-foreground font-digital text-[15px] tracking-wide"
+                            : "bg-muted text-foreground font-roc text-[15px]"
                         }`}
                       >
                         {m.role === "assistant" && (

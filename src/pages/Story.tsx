@@ -68,6 +68,7 @@ const Story = () => {
   const [species, setSpecies] = useState("");
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
+  const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [started, setStarted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");

@@ -42,6 +42,21 @@ const fatalConsequence = (text: string) => {
   return tail.length > 320 ? `${tail.slice(0, 317).trimEnd()}…` : tail;
 };
 
+// the concrete action beat of a reply — the sentences that actually depict something happening
+const actionBeat = (text: string) => {
+  const sentences = text
+    .replace(/\*/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .filter((s) => s.trim().length > 0);
+  if (sentences.length === 0) return text.slice(0, 400);
+  const scored = sentences.filter((s) => !/^["“]/.test(s.trim()));
+  const pool = scored.length ? scored : sentences;
+  return pool.slice(-3).join(" ").slice(0, 500);
+};
+
+
 // intro video cache — keyed per character, short TTL because the URL is a signed link
 const INTRO_CACHE_PREFIX = "paradoxxia_story_intro_video:";
 const INTRO_CACHE_TTL = 40 * 60 * 1000;
@@ -156,6 +171,9 @@ const Story = () => {
   const [isDead, setIsDead] = useState(false);
   // the exact action that got them killed, and the fatal consequence it triggered
   const [deathRecap, setDeathRecap] = useState<{ choice: string; consequence: string } | null>(null);
+  // resident-evil style game over still of how they died
+  const [deathImage, setDeathImage] = useState("");
+  const [deathImageLoading, setDeathImageLoading] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -433,14 +451,21 @@ const Story = () => {
       await new Promise((r) => setTimeout(r, 1000));
     }
     const reference = cardImageRef.current || uploadedPhoto || "";
-    const clean = sceneText.replace(/[*"]/g, "").slice(0, 700);
+    const clean = sceneText.replace(/[*"]/g, "").slice(0, 900);
+    const beat = actionBeat(sceneText);
     const mentionsParadoxxia = /paradoxxia/i.test(clean);
     const androidClause = mentionsParadoxxia
       ? "If a white-faced android figure appears, she is distant, half-hidden or barely glimpsed — never posed, never centered, never facing the camera directly: a domestic android with a porcelain-white synthetic face, long dark hair, faint glowing cyan eyes and battered chrome plating, seen far off through dust, doorways or wreckage."
       : "Do NOT include any white-faced android character in this image. Show only the world and whatever the described moment contains — scavengers in small wary groups, collective-minded androids moving in eerie unison, or a lone feral robot or mutant.";
     try {
       const url = await generateImage(
-        `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into a new scene. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. If any detail is unclear in the reference, keep it as close to the reference as possible rather than inventing something new. ` : ""}Scene to depict: a cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, caught in the middle of this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". The camera watches from outside, showing the character interacting with the world rather than looking through their eyes. Dramatic rim lighting with cool cyan and deep blue accents. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. The character should be clearly visible and recognisable as the reference person, but part of the scene, not posed for a portrait. Ultra photorealistic cinematic film still, natural framing, no text or captions other than the required watermark.`,
+        `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into the scene described below. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. ` : ""}THE MOMENT TO ILLUSTRATE — LITERALLY, exactly as written, nothing invented and nothing left out: "${beat}"
+
+FULL PASSAGE FOR CONTEXT: "${clean}"
+
+Depict the specific ACTION in that moment, not a mood shot: show ${name}'s exact posture and gesture from the text (running, crouching, reaching, striking, falling, hiding, climbing, aiming, bleeding, dragging, being grabbed), the exact objects, creatures, machines and people named in it, and the exact location, time of day and weather it describes. Every element named in the moment must be visible in frame and doing what the text says it is doing. If the text names a threat, show that threat in the shot with the character. Freeze the peak instant of the action with motion blur, flying debris, dust and light streaks so it reads as mid-action.
+
+Framing: cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, in the Cyber Boondocks — a lawless scorched no man's land. Camera watches from outside at an angle that best shows the action, wide or medium as the moment demands. ${androidClause} Dramatic rim lighting with cool cyan and deep blue accents, rust, failing neon, static, volumetric light, ruined architecture, dead machinery. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
         reference || undefined,
       );
 
@@ -456,6 +481,32 @@ const Story = () => {
       );
     }
   };
+
+  // Resident Evil style game-over still — the exact way this run ended
+  const generateDeathImage = async (fatalText: string, choice: string) => {
+    setDeathImageLoading(true);
+    const reference = cardImageRef.current || uploadedPhoto || "";
+    const clean = fatalText.replace(/[*"]/g, "").slice(0, 900);
+    const beat = actionBeat(fatalText);
+    try {
+      const url = await generateImage(
+        `${reference ? `TASK: take the attached reference image of ${name} and show THAT EXACT SAME CHARACTER dying in the scene described below. Keep their face, hair, body type, outfit, armour and gear identical to the reference — only the pose, damage, camera angle, lighting and background change. ` : ""}GAME OVER SCENE — depict the character's death exactly as it happened, literally: "${beat}"
+
+FULL FATAL PASSAGE: "${clean}"${choice ? `\n\nTHE ACTION THAT KILLED THEM: "${choice.slice(0, 200)}"` : ""}
+
+Show the precise cause of death named in the text — the creature, machine, fall, blade, gunfire, fire, drowning, collapse or wound — in frame, in the act. ${name} is dead or in the final instant of dying: collapsed, limp, pinned, falling, or overwhelmed, with the wound and the aftermath visible. Do not sanitise it and do not turn it into a heroic pose.
+
+Style: a survival-horror game-over cinematic in the spirit of classic Resident Evil game over screens — grim, low-key, desaturated with sickly red and cold cyan accents, heavy grain, deep shadows crushing the edges of the frame, dust and smoke, a single harsh practical light, dutch-angled or low camera looking at the body, blood and debris on scorched concrete. Ruined Cyber Boondocks setting. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
+        reference || undefined,
+      );
+      setDeathImage(url);
+    } catch (error) {
+      console.error("death image error:", error);
+    } finally {
+      setDeathImageLoading(false);
+    }
+  };
+
 
   const streamReply = async (history: ChatMessage[]) => {
     setIsStreaming(true);
@@ -520,21 +571,22 @@ const Story = () => {
 
       // illustrate the scene every few replies to keep the story visual
       replyCount.current += 1;
-      if (died || replyCount.current % SCENE_EVERY === 1) {
+      if (!died && replyCount.current % SCENE_EVERY === 1) {
         void generateSceneImage(finalText, msgId);
       }
       if (died) {
         const lastChoice = [...history].reverse().find((m) => m.role === "user")?.content?.trim() || "";
-        setDeathRecap({
-          choice: lastChoice && !/^I am /i.test(lastChoice) ? lastChoice : "you walked in without a plan",
-          consequence: fatalConsequence(finalText),
-        });
+        const choice = lastChoice && !/^I am /i.test(lastChoice) ? lastChoice : "you walked in without a plan";
+        setDeathRecap({ choice, consequence: fatalConsequence(finalText) });
+        setDeathImage("");
         setIsDead(true);
         setOptions([]);
+        void generateDeathImage(finalText, choice);
         trackEvent("Story", "Death", name);
       } else {
         void fetchOptions([...history, { role: "assistant", content: finalText }]);
       }
+
 
     } catch (error) {
       console.error("story chat error:", error);
@@ -604,6 +656,8 @@ const Story = () => {
     replyCount.current = 0;
     setIsDead(false);
     setDeathRecap(null);
+    setDeathImage("");
+    setDeathImageLoading(false);
     setTypedIds({});
     setSkipKey(null);
   };
@@ -612,6 +666,8 @@ const Story = () => {
   const tryAgain = () => {
     setIsDead(false);
     setDeathRecap(null);
+    setDeathImage("");
+    setDeathImageLoading(false);
     setMessages([]);
     setTypedIds({});
     setSkipKey(null);
@@ -1052,25 +1108,62 @@ const Story = () => {
         )}
 
         {isDead && !scrollLocked && !lightboxImage && (
-          <div className="fixed inset-0 z-[60] bg-black/95 flex flex-col items-center justify-center px-6 text-center">
-            {cardImage && (
-              <img
-                src={cardImage}
-                alt={`${name} in the Cyber Boondocks`}
-                className="w-28 sm:w-32 lg:w-40 rounded-lg border border-red-500/40 grayscale opacity-50 mb-6"
-              />
+          <div className="fixed inset-0 z-[60] bg-black flex flex-col items-center justify-center px-6 py-10 text-center overflow-y-auto">
+            {/* the death itself, rendered as a survival-horror game over still */}
+            {deathImage && (
+              <div className="absolute inset-0">
+                <img
+                  src={deathImage}
+                  alt={`${name} dying in the Cyber Boondocks`}
+                  className="w-full h-full object-cover opacity-60 contrast-125 saturate-50"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/95" />
+                <div className="absolute inset-0 bg-red-900/20 mix-blend-multiply" />
+              </div>
             )}
-            <h2
-              className="font-roc font-bold uppercase tracking-[0.2em] text-3xl sm:text-5xl lg:text-6xl text-red-500"
-              style={{ textShadow: "0 0 24px rgba(239,68,68,0.5)" }}
-            >
-              you died
-            </h2>
-            <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
-              the cyber boondocks keeps what it takes. {name}'s run ends here.
-            </p>
+
+            <div className="relative z-10 flex flex-col items-center">
+              {deathImage ? (
+                <div className="relative mb-6">
+                  <img
+                    src={deathImage}
+                    alt={`${name} dying in the Cyber Boondocks`}
+                    className="w-56 sm:w-72 lg:w-80 rounded-lg border border-red-500/40 shadow-[0_0_40px_rgba(0,0,0,0.9)]"
+                  />
+                  <ExpandButton
+                    onClick={() => {
+                      setLightboxAlt(`${name} dying in the Cyber Boondocks`);
+                      setLightboxImage(deathImage);
+                    }}
+                    label="expand death scene"
+                  />
+                  <DownloadOverlayButton src={deathImage} fileName={`${name || "character"}_game_over.png`} />
+                </div>
+              ) : deathImageLoading ? (
+                <div className="mb-6 flex items-center gap-2 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-red-400/70">
+                  <Loader2 className="w-4 h-4 animate-spin" /> recovering the last frame…
+                </div>
+              ) : (
+                cardImage && (
+                  <img
+                    src={cardImage}
+                    alt={`${name} in the Cyber Boondocks`}
+                    className="w-28 sm:w-32 lg:w-40 rounded-lg border border-red-500/40 grayscale opacity-50 mb-6"
+                  />
+                )
+              )}
+              <h2
+                className="font-roc font-bold uppercase tracking-[0.2em] text-3xl sm:text-5xl lg:text-6xl text-red-500"
+                style={{ textShadow: "0 0 24px rgba(239,68,68,0.5)" }}
+              >
+                you died
+              </h2>
+              <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
+                the cyber boondocks keeps what it takes. {name}'s run ends here.
+              </p>
+
             {deathRecap && (
-              <div className="mt-6 w-full max-w-lg text-left border border-red-500/30 bg-red-500/5 rounded-lg p-4 sm:p-5">
+              <div className="mt-6 w-full max-w-lg text-left border border-red-500/30 bg-black/60 backdrop-blur-sm rounded-lg p-4 sm:p-5">
                 <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-red-400/80">
                   how you died
                 </p>
@@ -1103,7 +1196,9 @@ const Story = () => {
                 new character →
               </Button>
             </div>
+            </div>
           </div>
+
         )}
 
         {lightboxImage && (

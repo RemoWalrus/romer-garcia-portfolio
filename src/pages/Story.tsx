@@ -437,6 +437,7 @@ const Story = () => {
     setSpecies("");
     setGender("");
     setName("");
+    setUploadedPhoto("");
     setCardImageAndRef("");
     setCardLoading(false);
     setOptions([]);

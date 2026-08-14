@@ -87,6 +87,7 @@ const Story = () => {
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
   const [uploadedPhoto, setUploadedPhoto] = useState("");
+  const [dossier, setDossier] = useState("");
   const [started, setStarted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -105,6 +106,12 @@ const Story = () => {
   const autoStarted = useRef(false);
   const introRequested = useRef(false);
   const cardImageRef = useRef("");
+  const dossierRef = useRef("");
+
+  const setDossierAndRef = (text: string) => {
+    dossierRef.current = text;
+    setDossier(text);
+  };
 
   const setCardImageAndRef = (url: string) => {
     cardImageRef.current = url;
@@ -156,7 +163,7 @@ const Story = () => {
     const autoSpecies = searchParams.get("species")?.trim();
     const autoGender = searchParams.get("gender")?.trim();
 
-    let source: { name: string; species: string; gender: string } | null = null;
+    let source: { name: string; species: string; gender: string; dossier?: string } | null = null;
     if (autoStart && autoName && autoSpecies && autoGender) {
       source = { name: autoName, species: autoSpecies, gender: autoGender };
     } else {
@@ -165,7 +172,7 @@ const Story = () => {
         if (saved) {
           const parsed = JSON.parse(saved);
           if (parsed?.autostart && parsed.name?.trim() && parsed.species?.trim() && parsed.gender?.trim()) {
-            source = { name: parsed.name.trim(), species: parsed.species.trim(), gender: parsed.gender.trim() };
+            source = { name: parsed.name.trim(), species: parsed.species.trim(), gender: parsed.gender.trim(), dossier: typeof parsed.dossier === "string" ? parsed.dossier : "" };
           }
         }
       } catch {
@@ -175,6 +182,7 @@ const Story = () => {
 
     if (source) {
       autoStarted.current = true;
+      if (source.dossier) setDossierAndRef(source.dossier);
       setName(source.name);
       setSpecies(source.species);
       setGender(source.gender);
@@ -332,7 +340,7 @@ const Story = () => {
         body: JSON.stringify({
           mode: "options",
           messages: history,
-          character: { name, species, gender },
+          character: { name, species, gender, dossier: dossierRef.current },
         }),
       });
       if (!response.ok) throw new Error("options failed");
@@ -390,7 +398,7 @@ const Story = () => {
           Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
           apikey: SUPABASE_PUBLISHABLE_KEY,
         },
-        body: JSON.stringify({ messages: history, character: { name, species, gender } }),
+        body: JSON.stringify({ messages: history, character: { name, species, gender, dossier: dossierRef.current } }),
       });
 
       if (!response.ok || !response.body) {
@@ -499,6 +507,7 @@ const Story = () => {
     setGender("");
     setName("");
     setUploadedPhoto("");
+    setDossierAndRef("");
     setCardImageAndRef("");
     setCardLoading(false);
     setOptions([]);
@@ -516,12 +525,14 @@ const Story = () => {
     gender: string;
     image: string;
     photo: string;
+    dossier: string;
   }) => {
     const finalName = character.name.trim() || randomName();
     setName(finalName);
     setSpecies(character.species);
     setGender(character.gender);
     setUploadedPhoto(character.photo || "");
+    setDossierAndRef(character.dossier || "");
     if (character.image) setCardImageAndRef(character.image);
     void beginEncounter(finalName, character.species, character.gender);
   };

@@ -1185,7 +1185,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       <span style={{ fontWeight: 500 }}>ruins.</span>
                     </p>
 
-                    {!storyMode && (
+                    {(
                       <div className="flex flex-wrap gap-4">
                         <a 
                           href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"

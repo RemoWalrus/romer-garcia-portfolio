@@ -56,6 +56,28 @@ const actionBeat = (text: string) => {
   return pool.slice(-3).join(" ").slice(0, 500);
 };
 
+// does the beat depict violence/motion? action beats get a harder, faster camera
+const ACTION_WORDS =
+  /\b(run|runs|running|sprint|charge|lunge|leap|jump|dive|dodge|strike|strikes|swing|slam|hit|punch|kick|stab|slash|shoot|shot|fire|fires|blast|explode|explosion|grab|grabs|drag|throw|thrown|fall|falls|falling|collapse|crash|smash|chase|flee|scramble|climb|claw|bite|roar|scream|blood|bleed|wound|snap|rip|tear|shove|wrestle|pin|swarm|attack|ambush|recoil|stagger)\b/i;
+
+// a distinct cinematic grammar per shot so consecutive scenes don't look identical
+const CAMERA_SETUPS_ACTION = [
+  "low-angle wide on a 24mm anamorphic lens, camera tilted into a dutch angle, subject filling the lower third",
+  "handheld medium shot on a 35mm lens, whip-pan energy, frame slightly off-balance",
+  "over-the-shoulder tracking shot on a 50mm lens, foreground silhouette blurred, subject mid-stride",
+  "wide establishing action shot on a 28mm lens, deep focus, subject small against enormous ruin",
+];
+const CAMERA_SETUPS_QUIET = [
+  "medium-wide on a 40mm lens, subject framed by a doorway or wreckage, shallow depth of field",
+  "slow-push medium shot on a 50mm lens, subject off-centre, negative space heavy with haze",
+  "high-angle wide on a 32mm lens looking down, subject dwarfed by the landscape",
+];
+
+const cinematicSetup = (beat: string) => {
+  const pool = ACTION_WORDS.test(beat) ? CAMERA_SETUPS_ACTION : CAMERA_SETUPS_QUIET;
+  return pool[Math.floor(Math.random() * pool.length)];
+};
+
 
 // intro video cache — keyed per character, short TTL because the URL is a signed link
 const INTRO_CACHE_PREFIX = "paradoxxia_story_intro_video:";
@@ -457,15 +479,23 @@ const Story = () => {
     const androidClause = mentionsParadoxxia
       ? "If a white-faced android figure appears, she is distant, half-hidden or barely glimpsed — never posed, never centered, never facing the camera directly: a domestic android with a porcelain-white synthetic face, long dark hair, faint glowing cyan eyes and battered chrome plating, seen far off through dust, doorways or wreckage."
       : "Do NOT include any white-faced android character in this image. Show only the world and whatever the described moment contains — scavengers in small wary groups, collective-minded androids moving in eerie unison, or a lone feral robot or mutant.";
+    const isAction = ACTION_WORDS.test(beat);
+    const setup = cinematicSetup(beat);
     try {
       const url = await generateImage(
         `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into the scene described below. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. ` : ""}THE MOMENT TO ILLUSTRATE — LITERALLY, exactly as written, nothing invented and nothing left out: "${beat}"
 
 FULL PASSAGE FOR CONTEXT: "${clean}"
 
-Depict the specific ACTION in that moment, not a mood shot: show ${name}'s exact posture and gesture from the text (running, crouching, reaching, striking, falling, hiding, climbing, aiming, bleeding, dragging, being grabbed), the exact objects, creatures, machines and people named in it, and the exact location, time of day and weather it describes. Every element named in the moment must be visible in frame and doing what the text says it is doing. If the text names a threat, show that threat in the shot with the character. Freeze the peak instant of the action with motion blur, flying debris, dust and light streaks so it reads as mid-action.
+Depict the specific ACTION in that moment, not a mood shot: show ${name}'s exact posture and gesture from the text (running, crouching, reaching, striking, falling, hiding, climbing, aiming, bleeding, dragging, being grabbed), the exact objects, creatures, machines and people named in it, and the exact location, time of day and weather it describes. Every element named in the moment must be visible in frame and doing what the text says it is doing. If the text names a threat, show that threat in the shot with the character, mid-attack and close enough to be dangerous.
 
-Framing: cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, in the Cyber Boondocks — a lawless scorched no man's land. Camera watches from outside at an angle that best shows the action, wide or medium as the moment demands. ${androidClause} Dramatic rim lighting with cool cyan and deep blue accents, rust, failing neon, static, volumetric light, ruined architecture, dead machinery. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
+${isAction
+  ? `ACTION SHOT — this is the money frame of the sequence. Freeze the PEAK instant of the action: limbs extended, body weight committed and off-balance, feet leaving the ground or skidding, impact visible. Sell the violence and speed with directional motion blur on the fast-moving parts while the face stays sharp, flying debris, sparks, kicked-up dust, spraying grit or water, muzzle flash or blade glint, shockwave haze, cloth and hair whipping. Strong diagonal composition and forced perspective so the action drives toward the camera.`
+  : `TENSION SHOT — no action verb in this beat, so build cinematic dread instead: held breath, coiled body language, eyes reading the dark, one telling detail (a hand on a weapon, a wound, a listening posture). Atmosphere does the work — drifting dust, haze, distant sparks.`}
+
+CINEMATOGRAPHY — treat this as a frame from a big-budget sci-fi film: ${setup}. Anamorphic widescreen composition with rule-of-thirds staging and layered foreground / midground / background depth. Motivated dramatic lighting: hard key from a practical source (failing neon, flare, burning wreck, floodlight), strong cyan and deep-blue rim light separating the subject from the dark, deep crushed shadows, volumetric god rays through dust and smoke, subtle anamorphic lens flare, shallow depth of field with natural bokeh, fine 35mm film grain, high dynamic range, slight chromatic aberration at the frame edges, cinematic teal-and-amber grade kept gritty and desaturated.
+
+Framing: cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, in the Cyber Boondocks — a lawless scorched no man's land. Camera always observes from outside the character, never their POV. ${androidClause} Rust, failing neon, static, ruined architecture, dead machinery. Ultra photorealistic cinematic film still, sharp and professionally lit — no illustration, no cartoon, no text or captions other than the required watermark.`,
         reference || undefined,
       );
 

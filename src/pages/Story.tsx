@@ -746,8 +746,8 @@ const Story = () => {
                         )}
 
                         {m.imageLoading && !m.image && typed && (
-                          <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
-                            <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...
+                          <span className="mt-2 flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground">
+                            <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> rendering scene...
                           </span>
                         )}
                       </div>
@@ -756,8 +756,8 @@ const Story = () => {
                   })}
 
                   {isStreaming && (
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
-                      <Loader2 className="w-3 h-3 animate-spin" /> transmitting...
+                    <div className="flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg text-muted-foreground font-mono">
+                      <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> transmitting...
                     </div>
                   )}
                   </div>

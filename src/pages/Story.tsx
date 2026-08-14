@@ -693,14 +693,14 @@ const Story = () => {
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[85%] md:max-w-[75%] lg:max-w-[70%] rounded-lg px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 leading-relaxed whitespace-pre-wrap ${
+                        className={`max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] rounded-lg px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-5 leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
-                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-sm sm:text-base lg:text-lg"
-                            : "bg-muted text-foreground font-roc text-sm sm:text-base lg:text-lg xl:text-xl"
+                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
+                            : "bg-muted text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
                         }`}
                       >
                         {m.role === "assistant" && (
-                          <span className="block text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
+                          <span className="block text-xs sm:text-sm lg:text-base xl:text-lg uppercase tracking-widest text-muted-foreground mb-1">
                             パラドクシア
                           </span>
                         )}
@@ -724,7 +724,7 @@ const Story = () => {
                           m.content
                         )}
                         {m.image && typed && (
-                          <div className="relative mt-2 w-full max-w-sm">
+                          <div className="relative mt-2 w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
                             <img
                               src={m.image}
                               alt="Scene from the encounter with Paradoxxia"

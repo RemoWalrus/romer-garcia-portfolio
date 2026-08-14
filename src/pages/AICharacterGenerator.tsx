@@ -506,6 +506,19 @@ const AICharacterGenerator = ({ storyMode = false, onContinueToStory }: AICharac
       if (processedName.toLowerCase() === "paradoxxia") {
         setActualSpecies("android"); // Paradoxxia is always an android
         setDisplayName(processedName);
+        setCharacterDossier(
+          [
+            "NAME: Paradoxxia",
+            "SPECIES: android — the domestic-model android herself",
+            `GENDER: ${gender || "unspecified"}`,
+            "NATURE / BODY: porcelain-white synthetic face with visible panel seams, long dark hair, glowing cyan eyes, battered cool-metal chrome plating over an exposed robotic endoskeleton — no warm or golden tones.",
+            "WARDROBE / GEAR: worn silver/gunmetal armour panels, scuffed and battle-aged, synthetic components showing at the joints.",
+            uploadedPhoto
+              ? "LIKENESS: modelled on a real reference photo the player supplied."
+              : "LIKENESS: canonical Paradoxxia likeness.",
+          ].join("\n"),
+        );
+
         
         // Generate a new pose using the provided image with a public URL
         const publicImageUrl = `${window.location.origin}/paradoxxia-poster.jpg`;

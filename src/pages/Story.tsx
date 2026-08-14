@@ -485,9 +485,11 @@ const Story = () => {
       toast.success("Generated random name");
     }
     setStarted(true);
+    setIsDead(false);
     trackEvent("Story", "Begin Encounter", `${startSpecies ?? species}-${startGender ?? gender}-${finalName}`);
     replyCount.current = 0;
     setOptions([]);
+
     void generateCard(finalName, startSpecies, startGender).then((portrait) => {
       if (portrait) void playIntroVideo(portrait, finalName, startSpecies, startGender);
     });

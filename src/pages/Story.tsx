@@ -1196,7 +1196,9 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                 new character →
               </Button>
             </div>
+            </div>
           </div>
+
         )}
 
         {lightboxImage && (

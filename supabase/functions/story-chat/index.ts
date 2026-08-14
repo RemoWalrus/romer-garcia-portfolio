@@ -105,7 +105,9 @@ serve(async (req) => {
       name: sanitizeShortText(characterInput.name, 40),
       species: sanitizeShortText(characterInput.species, 30),
       gender: sanitizeShortText(characterInput.gender, 30),
-      dossier: sanitizeShortText(characterInput.dossier, 3500),
+      dossier: typeof characterInput.dossier === "string"
+        ? characterInput.dossier.replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, "").trim().slice(0, 3500)
+        : undefined,
     };
 
     // Suggested-action mode: return 3 short things the player could do next.

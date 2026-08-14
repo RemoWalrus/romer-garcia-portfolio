@@ -121,14 +121,15 @@ const Story = () => {
     }
   }, [searchParams]);
 
-  const generateImage = async (prompt: string) => {
+  const generateImage = async (prompt: string, referenceImage?: string) => {
     const { data, error } = await supabase.functions.invoke("generate-character-image", {
-      body: { prompt, timestamp: Date.now() },
+      body: { prompt, imageUrl: referenceImage || undefined, timestamp: Date.now() },
     });
     if (error) throw error;
     if (!data?.imageUrl) throw new Error("No image returned");
     return data.imageUrl as string;
   };
+
 
   const generateCard = async (
     finalName: string,

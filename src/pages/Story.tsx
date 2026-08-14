@@ -571,21 +571,22 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
 
       // illustrate the scene every few replies to keep the story visual
       replyCount.current += 1;
-      if (died || replyCount.current % SCENE_EVERY === 1) {
+      if (!died && replyCount.current % SCENE_EVERY === 1) {
         void generateSceneImage(finalText, msgId);
       }
       if (died) {
         const lastChoice = [...history].reverse().find((m) => m.role === "user")?.content?.trim() || "";
-        setDeathRecap({
-          choice: lastChoice && !/^I am /i.test(lastChoice) ? lastChoice : "you walked in without a plan",
-          consequence: fatalConsequence(finalText),
-        });
+        const choice = lastChoice && !/^I am /i.test(lastChoice) ? lastChoice : "you walked in without a plan";
+        setDeathRecap({ choice, consequence: fatalConsequence(finalText) });
+        setDeathImage("");
         setIsDead(true);
         setOptions([]);
+        void generateDeathImage(finalText, choice);
         trackEvent("Story", "Death", name);
       } else {
         void fetchOptions([...history, { role: "assistant", content: finalText }]);
       }
+
 
     } catch (error) {
       console.error("story chat error:", error);

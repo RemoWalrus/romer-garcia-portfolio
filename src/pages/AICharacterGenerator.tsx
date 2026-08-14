@@ -1290,8 +1290,9 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                           onClick={() => {
                             localStorage.setItem('paradoxxia_story_character', JSON.stringify({
                               name: displayName,
-                              species,
+                              species: actualSpecies || species,
                               gender,
+                              dossier: characterDossier,
                               autostart: true,
                             }));
                             // carry the generated portrait over as the story profile image

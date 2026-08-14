@@ -775,7 +775,7 @@ const Story = () => {
                   )}
                 </div>
 
-                {(options.length > 0 || optionsLoading) && !isStreaming && (
+                {(options.length > 0 || optionsLoading) && !scrollLocked && (
                   <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
                     <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
                       choose an action

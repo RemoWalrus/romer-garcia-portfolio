@@ -908,7 +908,7 @@ const Story = () => {
                   aria-label="close lightbox"
                   className="bg-black/40 hover:bg-black/60 p-1 rounded-md"
                 >
-                  <span className="text-[#00d9ff] text-xs font-bold leading-none">✕</span>
+                  <span className="text-[#00d9ff] text-sm sm:text-base lg:text-lg xl:text-xl font-bold leading-none">✕</span>
                 </Button>
               </div>
               <div className="absolute top-2 left-2">

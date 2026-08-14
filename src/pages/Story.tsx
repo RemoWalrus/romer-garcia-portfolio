@@ -672,6 +672,13 @@ const Story = () => {
                               className="w-full aspect-square object-cover"
                               loading="lazy"
                             />
+                            <ExpandButton
+                              onClick={() => {
+                                setLightboxImage(cardImage);
+                                setLightboxAlt(`${name}, a ${gender} ${species} in the Cyber Boondocks`);
+                              }}
+                              label="expand character profile"
+                            />
                             <DownloadOverlayButton
                               src={cardImage}
                               fileName={`${name || "character"}_${Date.now()}.png`}

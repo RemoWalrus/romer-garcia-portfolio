@@ -433,14 +433,21 @@ const Story = () => {
       await new Promise((r) => setTimeout(r, 1000));
     }
     const reference = cardImageRef.current || uploadedPhoto || "";
-    const clean = sceneText.replace(/[*"]/g, "").slice(0, 700);
+    const clean = sceneText.replace(/[*"]/g, "").slice(0, 900);
+    const beat = actionBeat(sceneText);
     const mentionsParadoxxia = /paradoxxia/i.test(clean);
     const androidClause = mentionsParadoxxia
       ? "If a white-faced android figure appears, she is distant, half-hidden or barely glimpsed — never posed, never centered, never facing the camera directly: a domestic android with a porcelain-white synthetic face, long dark hair, faint glowing cyan eyes and battered chrome plating, seen far off through dust, doorways or wreckage."
       : "Do NOT include any white-faced android character in this image. Show only the world and whatever the described moment contains — scavengers in small wary groups, collective-minded androids moving in eerie unison, or a lone feral robot or mutant.";
     try {
       const url = await generateImage(
-        `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into a new scene. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. If any detail is unclear in the reference, keep it as close to the reference as possible rather than inventing something new. ` : ""}Scene to depict: a cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, caught in the middle of this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". The camera watches from outside, showing the character interacting with the world rather than looking through their eyes. Dramatic rim lighting with cool cyan and deep blue accents. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. The character should be clearly visible and recognisable as the reference person, but part of the scene, not posed for a portrait. Ultra photorealistic cinematic film still, natural framing, no text or captions other than the required watermark.`,
+        `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into the scene described below. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. ` : ""}THE MOMENT TO ILLUSTRATE — LITERALLY, exactly as written, nothing invented and nothing left out: "${beat}"
+
+FULL PASSAGE FOR CONTEXT: "${clean}"
+
+Depict the specific ACTION in that moment, not a mood shot: show ${name}'s exact posture and gesture from the text (running, crouching, reaching, striking, falling, hiding, climbing, aiming, bleeding, dragging, being grabbed), the exact objects, creatures, machines and people named in it, and the exact location, time of day and weather it describes. Every element named in the moment must be visible in frame and doing what the text says it is doing. If the text names a threat, show that threat in the shot with the character. Freeze the peak instant of the action with motion blur, flying debris, dust and light streaks so it reads as mid-action.
+
+Framing: cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, in the Cyber Boondocks — a lawless scorched no man's land. Camera watches from outside at an angle that best shows the action, wide or medium as the moment demands. ${androidClause} Dramatic rim lighting with cool cyan and deep blue accents, rust, failing neon, static, volumetric light, ruined architecture, dead machinery. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
         reference || undefined,
       );
 
@@ -456,6 +463,32 @@ const Story = () => {
       );
     }
   };
+
+  // Resident Evil style game-over still — the exact way this run ended
+  const generateDeathImage = async (fatalText: string, choice: string) => {
+    setDeathImageLoading(true);
+    const reference = cardImageRef.current || uploadedPhoto || "";
+    const clean = fatalText.replace(/[*"]/g, "").slice(0, 900);
+    const beat = actionBeat(fatalText);
+    try {
+      const url = await generateImage(
+        `${reference ? `TASK: take the attached reference image of ${name} and show THAT EXACT SAME CHARACTER dying in the scene described below. Keep their face, hair, body type, outfit, armour and gear identical to the reference — only the pose, damage, camera angle, lighting and background change. ` : ""}GAME OVER SCENE — depict the character's death exactly as it happened, literally: "${beat}"
+
+FULL FATAL PASSAGE: "${clean}"${choice ? `\n\nTHE ACTION THAT KILLED THEM: "${choice.slice(0, 200)}"` : ""}
+
+Show the precise cause of death named in the text — the creature, machine, fall, blade, gunfire, fire, drowning, collapse or wound — in frame, in the act. ${name} is dead or in the final instant of dying: collapsed, limp, pinned, falling, or overwhelmed, with the wound and the aftermath visible. Do not sanitise it and do not turn it into a heroic pose.
+
+Style: a survival-horror game-over cinematic in the spirit of classic Resident Evil game over screens — grim, low-key, desaturated with sickly red and cold cyan accents, heavy grain, deep shadows crushing the edges of the frame, dust and smoke, a single harsh practical light, dutch-angled or low camera looking at the body, blood and debris on scorched concrete. Ruined Cyber Boondocks setting. Ultra photorealistic cinematic film still, no text or captions other than the required watermark.`,
+        reference || undefined,
+      );
+      setDeathImage(url);
+    } catch (error) {
+      console.error("death image error:", error);
+    } finally {
+      setDeathImageLoading(false);
+    }
+  };
+
 
   const streamReply = async (history: ChatMessage[]) => {
     setIsStreaming(true);

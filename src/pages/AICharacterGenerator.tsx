@@ -25,7 +25,20 @@ import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 
-const AICharacterGenerator = () => {
+interface AICharacterGeneratorProps {
+  /** when true the page is embedded as the story-mode setup screen */
+  storyMode?: boolean;
+  /** called when the player continues into the story with the generated character */
+  onContinueToStory?: (character: {
+    name: string;
+    species: string;
+    gender: string;
+    image: string;
+    photo: string;
+  }) => void;
+}
+
+const AICharacterGenerator = ({ storyMode = false, onContinueToStory }: AICharacterGeneratorProps = {}) => {
   const [step, setStep] = useState(1);
   const [species, setSpecies] = useState("");
   const [actualSpecies, setActualSpecies] = useState("");
@@ -931,23 +944,25 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
-      <Helmet>
-        <title>{meta.title}</title>
-        <meta name="description" content={meta.description} />
-        <meta name="keywords" content={meta.keywords} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={meta.ogTitle} />
-        <meta property="og:description" content={meta.ogDescription} />
-        <meta property="og:type" content="website" />
-        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={meta.twitterTitle} />
-        <meta name="twitter:description" content={meta.twitterDescription} />
-      </Helmet>
-      <CharGenSchema />
+      {!storyMode && (
+        <Helmet>
+          <title>{meta.title}</title>
+          <meta name="description" content={meta.description} />
+          <meta name="keywords" content={meta.keywords} />
+
+          {/* Open Graph */}
+          <meta property="og:title" content={meta.ogTitle} />
+          <meta property="og:description" content={meta.ogDescription} />
+          <meta property="og:type" content="website" />
+          {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+
+          {/* Twitter Card */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={meta.twitterTitle} />
+          <meta name="twitter:description" content={meta.twitterDescription} />
+        </Helmet>
+      )}
+      {!storyMode && <CharGenSchema />}
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />
       <ThemeToggle />
@@ -1170,67 +1185,90 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       <span style={{ fontWeight: 500 }}>ruins.</span>
                     </p>
 
-                    <div className="flex flex-wrap gap-4">
-                      <a 
-                        href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
-                        onClick={() => trackEvent('Music Platform', 'Click Spotify', 'CharGen Page')}
-                      >
-                        <SpotifyIcon className="w-5 h-5" />
-                        Meet Paradoxxia on Spotify
-                        <MoveRight className="w-4 h-4" />
-                      </a>
-                      <a 
-                        href="https://music.apple.com/us/artist/paradoxxia/1803632666"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
-                        onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'CharGen Page')}
-                      >
-                        <AppleMusicIcon className="w-5 h-5" />
-                        Apple Music
-                        <MoveRight className="w-4 h-4" />
-                      </a>
-                      <a 
-                        href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
-                        onClick={() => trackEvent('Music Platform', 'Click YouTube Music', 'CharGen Page')}
-                      >
-                        <YouTubeMusicIcon className="w-5 h-5" />
-                        YouTube Music
-                        <MoveRight className="w-4 h-4" />
-                      </a>
-                    </div>
+                    {!storyMode && (
+                      <div className="flex flex-wrap gap-4">
+                        <a 
+                          href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
+                          onClick={() => trackEvent('Music Platform', 'Click Spotify', 'CharGen Page')}
+                        >
+                          <SpotifyIcon className="w-5 h-5" />
+                          Meet Paradoxxia on Spotify
+                          <MoveRight className="w-4 h-4" />
+                        </a>
+                        <a 
+                          href="https://music.apple.com/us/artist/paradoxxia/1803632666"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
+                          onClick={() => trackEvent('Music Platform', 'Click Apple Music', 'CharGen Page')}
+                        >
+                          <AppleMusicIcon className="w-5 h-5" />
+                          Apple Music
+                          <MoveRight className="w-4 h-4" />
+                        </a>
+                        <a 
+                          href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-2 text-muted-foreground md:text-white/70 hover:text-foreground md:hover:text-white transition-colors text-sm font-roc font-bold uppercase"
+                          onClick={() => trackEvent('Music Platform', 'Click YouTube Music', 'CharGen Page')}
+                        >
+                          <YouTubeMusicIcon className="w-5 h-5" />
+                          YouTube Music
+                          <MoveRight className="w-4 h-4" />
+                        </a>
+                      </div>
+                    )}
 
-                    <div className="pt-3 border-t border-border/50">
-                      <Link
-                        to="/story"
-                        className="text-[10px] sm:text-xs text-muted-foreground/50 hover:text-[#00d4ff] transition-colors font-roc uppercase tracking-widest"
-                        onClick={() => {
-                          localStorage.setItem('paradoxxia_story_character', JSON.stringify({
-                            name: displayName,
-                            species,
-                            gender,
-                            autostart: true,
-                          }));
-                          // carry the generated portrait over as the story profile image
-                          try {
-                            if (generatedImage) {
-                              sessionStorage.setItem('paradoxxia_story_character_image', generatedImage);
+                    {storyMode ? (
+                      <div className="pt-3 border-t border-border/50">
+                        <Button
+                          onClick={() => {
+                            trackEvent('Story', 'Begin From Generator', displayName || 'unnamed');
+                            onContinueToStory?.({
+                              name: displayName,
+                              species: actualSpecies || species,
+                              gender,
+                              image: generatedImage,
+                              photo: uploadedPhoto,
+                            });
+                          }}
+                          className="w-full font-roc font-medium bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 uppercase tracking-wider"
+                          size="lg"
+                        >
+                          begin the encounter →
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="pt-3 border-t border-border/50">
+                        <Link
+                          to="/story"
+                          className="text-[10px] sm:text-xs text-muted-foreground/50 hover:text-[#00d4ff] transition-colors font-roc uppercase tracking-widest"
+                          onClick={() => {
+                            localStorage.setItem('paradoxxia_story_character', JSON.stringify({
+                              name: displayName,
+                              species,
+                              gender,
+                              autostart: true,
+                            }));
+                            // carry the generated portrait over as the story profile image
+                            try {
+                              if (generatedImage) {
+                                sessionStorage.setItem('paradoxxia_story_character_image', generatedImage);
+                              }
+                            } catch {
+                              // image too large for storage — story will generate its own card
                             }
-                          } catch {
-                            // image too large for storage — story will generate its own card
-                          }
-                          trackEvent('Character Generator', 'Continue to Story', displayName || 'unnamed');
-                        }}
-                      >
-                        continue to story mode →
-                      </Link>
-                    </div>
+                            trackEvent('Character Generator', 'Continue to Story', displayName || 'unnamed');
+                          }}
+                        >
+                          continue to story mode →
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

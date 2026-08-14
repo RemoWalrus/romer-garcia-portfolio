@@ -17,6 +17,7 @@ import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadImage, downloadVideo } from "@/utils/imageDownload";
 import TypewriterText from "@/components/story/TypewriterText";
+import AICharacterGenerator from "@/pages/AICharacterGenerator";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
@@ -212,6 +213,11 @@ const Story = () => {
     startSpecies?: string,
     startGender?: string,
   ): Promise<string | undefined> => {
+    // already have a portrait handed over from the generator screen
+    if (cardImageRef.current) {
+      setCardLoading(false);
+      return cardImageRef.current;
+    }
     // reuse the portrait generated on the character generator page when available
     try {
       const handoff = sessionStorage.getItem("paradoxxia_story_character_image");
@@ -474,13 +480,50 @@ const Story = () => {
   };
 
 
-  const handleNext = () => {
-    if (step === 1 && !species) return toast.error("choose a species");
-    if (step === 2 && !gender) return toast.error("choose a gender");
-    if (step < 4) return setStep(step + 1);
-    beginEncounter();
+  // the setup screen IS the character generator page — it hands the character over here
+  const handleGeneratorContinue = (character: {
+    name: string;
+    species: string;
+    gender: string;
+    image: string;
+    photo: string;
+  }) => {
+    const finalName = character.name.trim() || randomName();
+    setName(finalName);
+    setSpecies(character.species);
+    setGender(character.gender);
+    setUploadedPhoto(character.photo || "");
+    if (character.image) setCardImageAndRef(character.image);
+    void beginEncounter(finalName, character.species, character.gender);
   };
 
+  if (!started) {
+    return (
+      <>
+        <Helmet>
+          <title>Paradoxxia Story | Roleplay an Encounter with Paradoxxia</title>
+          <meta
+            name="description"
+            content="Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia — the android from Romer Garcia's dystopian sci-fi universe."
+          />
+          <meta property="og:title" content="Paradoxxia Story | Roleplay an Encounter" />
+          <meta
+            property="og:description"
+            content="Create your character and roleplay a live encounter with Paradoxxia in the Cyber Boondocks."
+          />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://romergarcia.com/story" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="Paradoxxia Story | Roleplay an Encounter" />
+          <meta
+            name="twitter:description"
+            content="Create your character and roleplay a live encounter with Paradoxxia in the Cyber Boondocks."
+          />
+        </Helmet>
+        <AICharacterGenerator storyMode onContinueToStory={handleGeneratorContinue} />
+      </>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
@@ -554,97 +597,6 @@ const Story = () => {
 
             </div>
 
-            {!started && (
-              <Card className="p-4 space-y-4 bg-card border-border dark:border-[#00d4ff]/30">
-                {step === 1 && (
-                  <div className="space-y-3">
-                    <Label className="text-base font-medium text-foreground font-roc">species:</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {["human", "android", "other"].map((opt) => (
-                        <Button
-                          key={opt}
-                          variant={species === opt ? "default" : "outline"}
-                          onClick={() => setSpecies(opt)}
-                          className={species === opt ? ACTIVE_CLASSES : OPTION_CLASSES}
-                        >
-                          {opt}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {step === 2 && (
-                  <div className="space-y-3">
-                    <Label className="text-base font-medium text-foreground font-roc">gender:</Label>
-                    <div className="flex flex-wrap gap-2">
-                      {["male", "female", "other"].map((opt) => (
-                        <Button
-                          key={opt}
-                          variant={gender === opt ? "default" : "outline"}
-                          onClick={() => setGender(opt)}
-                          className={gender === opt ? ACTIVE_CLASSES : OPTION_CLASSES}
-                        >
-                          {opt}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {step === 3 && (
-                  <div className="space-y-3">
-                    <Label className="text-base font-medium text-foreground font-roc">name:</Label>
-                    <Input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="enter your character name..."
-                      className="bg-background w-full"
-                      onKeyDown={(e) => e.key === "Enter" && handleNext()}
-                    />
-                  </div>
-                )}
-
-                {step === 4 && (
-                  <div className="space-y-3">
-                    <Label className="text-base font-medium text-foreground font-roc">
-                      upload photo (optional):
-                    </Label>
-                    <p className="text-sm text-muted-foreground">
-                      Upload a photo to use as reference for your character
-                    </p>
-                    {uploadedPhoto ? (
-                      <div className="relative h-[20vh] overflow-hidden flex items-center justify-center bg-black/10 rounded-lg">
-                        <img
-                          src={uploadedPhoto}
-                          alt="Uploaded reference"
-                          className="max-h-full max-w-full object-contain rounded-lg"
-                        />
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => setUploadedPhoto("")}
-                          className="absolute top-2 right-2"
-                        >
-                          Remove
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button onClick={handlePhotoUpload} variant="outline" className="w-full">
-                        Take Photo or Choose from Gallery
-                      </Button>
-                    )}
-                  </div>
-                )}
-
-                <Button
-                  onClick={handleNext}
-                  className="w-full font-roc font-medium bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90"
-                >
-                  {step < 4 ? "next" : "begin the encounter"}
-                </Button>
-              </Card>
-            )}
 
 
             {started && (

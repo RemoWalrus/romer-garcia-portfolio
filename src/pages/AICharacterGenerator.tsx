@@ -35,7 +35,10 @@ interface AICharacterGeneratorProps {
     gender: string;
     image: string;
     photo: string;
+    /** full character dossier generated here — feeds the story lore */
+    dossier: string;
   }) => void;
+
 }
 
 const AICharacterGenerator = ({ storyMode = false, onContinueToStory }: AICharacterGeneratorProps = {}) => {

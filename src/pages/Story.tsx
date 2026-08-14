@@ -512,15 +512,19 @@ const Story = () => {
                   started ? "text-xl sm:text-2xl" : "text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
                 } transition-all duration-500`}
               >
-                <GlitchTitle subtitleWords={["story", "mode"]} compact={started} />
+                <GlitchTitle
+                  subtitleWords={started ? ["story", "mode"] : ["character", "generator"]}
+                  compact={started}
+                />
               </h1>
               {!started && (
                 <p className="text-foreground max-w-2xl mx-auto font-roc text-base sm:text-xl">
-                  <span style={{ fontWeight: 300 }}>step into the wastes and</span>{" "}
-                  <span className="font-medium">encounter</span>{" "}
-                  <span style={{ fontWeight: 300 }}>paradoxxia</span>
+                  <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
+                  <span className="font-medium">of the</span>{" "}
+                  <span style={{ fontWeight: 300 }}>paradoxxia universe</span>
                 </p>
               )}
+
             </div>
 
             {!started && (

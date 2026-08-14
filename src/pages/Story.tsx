@@ -284,7 +284,7 @@ const Story = () => {
     setCardLoading(true);
     try {
       const url = await generateImage(
-        `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background.${uploadedPhoto ? " CRITICAL: the attached reference photo is this character — faithfully match the reference face's structure, features, skin tone and hair so they are recognisably the same person." : ""} Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+        `A cinematic full-body character card portrait of ${finalName}, a ${describeChar(startGender ?? gender, startSpecies ?? species)} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background.${uploadedPhoto ? " CRITICAL: the attached reference photo is this character — faithfully match the reference face's structure, features, skin tone and hair so they are recognisably the same person." : ""} Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
         uploadedPhoto || undefined,
       );
 
@@ -313,7 +313,7 @@ const Story = () => {
         body: {
           action: "create",
           imageDataUrl: portrait.startsWith("data:") ? portrait : undefined,
-          prompt: `Cinematic 5 second intro of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor, standing in the scorched Cyber Boondocks. Slow camera push-in, drifting dust, flickering failing neon, wind moving hair and battered clothing, a slow turn of the head toward camera. Ultra photorealistic, moody cool cyan rim light, no text.`,
+          prompt: `Cinematic 5 second intro of ${finalName}, a ${describeChar(startGender ?? gender, startSpecies ?? species)} survivor, standing in the scorched Cyber Boondocks. Slow camera push-in, drifting dust, flickering failing neon, wind moving hair and battered clothing, a slow turn of the head toward camera. Ultra photorealistic, moody cool cyan rim light, no text.`,
         },
       });
       if (error) throw error;
@@ -385,7 +385,7 @@ const Story = () => {
       : "Do NOT include any white-faced android character in this image. Show only the world and whatever the described moment contains — scavengers in small wary groups, collective-minded androids moving in eerie unison, or a lone feral robot or mutant.";
     try {
       const url = await generateImage(
-        `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into a new scene. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. If any detail is unclear in the reference, keep it as close to the reference as possible rather than inventing something new. ` : ""}Scene to depict: a cinematic third-person film still of ${name}, a ${gender} ${species} survivor, caught in the middle of this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". The camera watches from outside, showing the character interacting with the world rather than looking through their eyes. Dramatic rim lighting with cool cyan and deep blue accents. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. The character should be clearly visible and recognisable as the reference person, but part of the scene, not posed for a portrait. Ultra photorealistic cinematic film still, natural framing, no text or captions other than the required watermark.`,
+        `${reference ? `TASK: take the attached reference image of ${name} and place THAT EXACT SAME CHARACTER into a new scene. This is a character-consistency task, not a new character design. Copy from the reference, without altering them: face shape, facial features, eye colour, skin tone, hair colour/length/style, facial hair, age, body type, and their outfit, armour, gear and colour palette. Same person, same wardrobe — only the pose, camera angle, lighting and background change. If any detail is unclear in the reference, keep it as close to the reference as possible rather than inventing something new. ` : ""}Scene to depict: a cinematic third-person film still of ${name}, a ${describeChar(gender, species)} survivor, caught in the middle of this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". The camera watches from outside, showing the character interacting with the world rather than looking through their eyes. Dramatic rim lighting with cool cyan and deep blue accents. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. The character should be clearly visible and recognisable as the reference person, but part of the scene, not posed for a portrait. Ultra photorealistic cinematic film still, natural framing, no text or captions other than the required watermark.`,
         reference || undefined,
       );
 
@@ -502,7 +502,7 @@ const Story = () => {
     const opening: ChatMessage[] = [
       {
         role: "user",
-        content: `I am ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species}. Open the story: first, in one short paragraph, describe me — how I look, what I carry, what I have survived — then describe exactly where I am right now and the situation I am caught in at this moment: what I can see, hear and smell, what I need, and what is pressing in on me. Do not introduce Paradoxxia yet. End with an opening that lets me act.`,
+        content: `I am ${finalName}, a ${describeChar(startGender ?? gender, startSpecies ?? species)}. Open the story: first, in one short paragraph, describe me — how I look, what I carry, what I have survived — then describe exactly where I am right now and the situation I am caught in at this moment: what I can see, hear and smell, what I need, and what is pressing in on me. Do not introduce Paradoxxia yet. End with an opening that lets me act.`,
       },
     ];
 
@@ -676,7 +676,7 @@ const Story = () => {
               <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
                 <div className="flex items-center justify-between px-4 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-4 border-b border-border dark:border-[#00d4ff]/20">
                   <span className="text-xs sm:text-sm lg:text-base xl:text-lg font-mono text-muted-foreground">
-                    {name} · {gender} {species}
+                    {name} · {describeChar(gender, species)}
                   </span>
                   <Button variant="ghost" size="sm" onClick={restart} className="text-xs sm:text-sm lg:text-base">
                     <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 mr-1" /> restart
@@ -695,14 +695,14 @@ const Story = () => {
                             <div className="relative">
                               <img
                                 src={cardImage}
-                                alt={`${name}, a ${gender} ${species} in the Cyber Boondocks`}
+                                alt={`${name}, a ${describeChar(gender, species)} in the Cyber Boondocks`}
                                 className="w-full aspect-square object-cover"
                                 loading="lazy"
                               />
                               <ExpandButton
                                 onClick={() => {
                                   setLightboxImage(cardImage);
-                                  setLightboxAlt(`${name}, a ${gender} ${species} in the Cyber Boondocks`);
+                                  setLightboxAlt(`${name}, a ${describeChar(gender, species)} in the Cyber Boondocks`);
                                 }}
                                 label="expand character profile"
                               />
@@ -721,7 +721,7 @@ const Story = () => {
                               {name}
                             </span>
                             <span className="block text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground">
-                              {gender} {species}
+                              {describeChar(gender, species)}
                             </span>
                           </div>
                         </div>

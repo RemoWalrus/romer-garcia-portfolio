@@ -141,6 +141,51 @@ const Story = () => {
     return data.imageUrl as string;
   };
 
+  const handlePhotoUpload = async () => {
+    try {
+      if (!Capacitor.isNativePlatform()) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+          const file = (e.target as HTMLInputElement).files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            setUploadedPhoto(event.target?.result as string);
+            toast.success("Photo uploaded successfully!");
+          };
+          reader.readAsDataURL(file);
+        };
+        input.click();
+        return;
+      }
+
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos,
+        promptLabelHeader: "Select Photo",
+        promptLabelPhoto: "From Gallery",
+        promptLabelPicture: "Take Photo",
+      });
+
+      if (image.dataUrl) {
+        setUploadedPhoto(image.dataUrl);
+        toast.success("Photo uploaded successfully!");
+      }
+    } catch (error: any) {
+      console.error("Camera error:", error);
+      if (error?.message?.includes("permission")) {
+        toast.error("Camera permission denied. Please enable camera access in your device settings.");
+      } else if (/cancell?ed/i.test(error?.message ?? "")) {
+        toast.info("Photo upload cancelled");
+      } else {
+        toast.error("Failed to capture photo. Please try again.");
+      }
+    }
+  };
 
   const generateCard = async (
     finalName: string,
@@ -162,8 +207,10 @@ const Story = () => {
     setCardLoading(true);
     try {
       const url = await generateImage(
-        `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+        `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background.${uploadedPhoto ? " CRITICAL: the attached reference photo is this character — faithfully match the reference face's structure, features, skin tone and hair so they are recognisably the same person." : ""} Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+        uploadedPhoto || undefined,
       );
+
       setCardImageAndRef(url);
       return url;
     } catch (error) {

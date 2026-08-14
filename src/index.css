@@ -169,7 +169,7 @@ nav button {
   @apply border-0 scale-150 opacity-75 hover:opacity-100 transition-opacity focus:outline-none focus:ring-0 focus:border-0;
 }
 
-/* Story mode: typewriter + subtle 90s CRT scanlines */
+/* Story mode: blinking terminal cursor for typewriter effect */
 .story-caret {
   display: inline-block;
   margin-left: 1px;
@@ -181,36 +181,3 @@ nav button {
   50%, 100% { opacity: 0; }
 }
 
-.story-scanlines {
-  position: relative;
-  display: inline;
-  text-shadow: 0 0 1px rgba(0, 0, 0, 0.12);
-}
-
-.story-scanlines::after {
-  content: "";
-  position: absolute;
-  inset: -0.15em -0.05em;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.06) 0px,
-    rgba(0, 0, 0, 0.06) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-}
-
-.dark .story-scanlines {
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.08);
-}
-
-.dark .story-scanlines::after {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.28) 0px,
-    rgba(0, 0, 0, 0.28) 1px,
-    transparent 1px,
-    transparent 4px
-  );
-}

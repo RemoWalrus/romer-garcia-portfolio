@@ -80,6 +80,8 @@ const Story = () => {
   const replyCount = useRef(0);
   const autoStarted = useRef(false);
   const introRequested = useRef(false);
+  const cardImageRef = useRef("");
+
 
 
   useEffect(() => {

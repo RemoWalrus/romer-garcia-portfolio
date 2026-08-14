@@ -536,7 +536,27 @@ const Story = () => {
     setIntroStatus("idle");
     introRequested.current = false;
     replyCount.current = 0;
+    setIsDead(false);
+    setTypedIds({});
+    setSkipKey(null);
   };
+
+  // die and go again with the exact same character — portrait, dossier and intro are kept
+  const tryAgain = () => {
+    setIsDead(false);
+    setMessages([]);
+    setTypedIds({});
+    setSkipKey(null);
+    setOptions([]);
+    setInput("");
+    replyCount.current = 0;
+    introRequested.current = true;
+    setIntroStatus("done");
+    trackEvent("Story", "Try Again", name);
+    void beginEncounter(name, species, gender);
+  };
+
+
 
 
   // the setup screen IS the character generator page — it hands the character over here

@@ -833,7 +833,7 @@ const Story = () => {
                   muted
                   playsInline
                   onEnded={() => setIntroStatus("ended")}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
                 {introStatus === "ended" ? (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60">

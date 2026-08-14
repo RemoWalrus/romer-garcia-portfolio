@@ -1247,9 +1247,9 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                       <span style={{ fontWeight: 500 }}>ruins.</span>
                     </p>
 
-                    {(
+                    {!storyMode && (
                       <div className="flex flex-wrap gap-4">
-                        <a 
+                        <a
                           href="https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -1260,7 +1260,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                           Meet Paradoxxia on Spotify
                           <MoveRight className="w-4 h-4" />
                         </a>
-                        <a 
+                        <a
                           href="https://music.apple.com/us/artist/paradoxxia/1803632666"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -1271,7 +1271,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                           Apple Music
                           <MoveRight className="w-4 h-4" />
                         </a>
-                        <a 
+                        <a
                           href="https://music.youtube.com/channel/UCU9jhAcLfv-rv0Yi_C0h-Ig"
                           target="_blank"
                           rel="noopener noreferrer"

@@ -751,6 +751,13 @@ const Story = () => {
                               className="w-full rounded-md border border-border dark:border-[#00d4ff]/30"
                               loading="lazy"
                             />
+                            <ExpandButton
+                              onClick={() => {
+                                setLightboxImage(m.image || null);
+                                setLightboxAlt("Scene from the encounter with Paradoxxia");
+                              }}
+                              label="expand scene image"
+                            />
                             <DownloadOverlayButton
                               src={m.image}
                               fileName={`${name || "scene"}_scene_${Date.now()}.png`}

@@ -114,9 +114,28 @@ const Story = () => {
 
 
 
+  const [typedIds, setTypedIds] = useState<Record<string, boolean>>({});
+
+  const msgKey = (m: ChatMessage, i: number) => String(m.id ?? i);
+  const lastMessage = messages[messages.length - 1];
+  const lastKey = lastMessage ? msgKey(lastMessage, messages.length - 1) : "";
+  const isTyping =
+    !!lastMessage &&
+    lastMessage.role === "assistant" &&
+    lastMessage.content.length > 0 &&
+    !typedIds[lastKey];
+  // scroll is locked (and follows the typewriter) until the reply finishes typing
+  const scrollLocked = isStreaming || isTyping;
+
+  const followScroll = () => {
+    const el = scrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  };
+
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
+
 
   // Auto-start from query params or persisted character data
   useEffect(() => {
@@ -612,8 +631,12 @@ const Story = () => {
 
                 <div
                   ref={scrollRef}
-                  className="h-[60vh] md:h-[65vh] lg:h-[70vh] overflow-y-auto px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6"
+                  className={`h-[60vh] md:h-[65vh] lg:h-[70vh] px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6 ${
+                    scrollLocked ? "overflow-hidden" : "overflow-y-auto"
+                  }`}
                 >
+
+
                   {(cardImage || cardLoading) && (
                     <div className="flex justify-center">
                       <div className="w-40 sm:w-48 md:w-56 lg:w-64 rounded-lg overflow-hidden border border-border dark:border-[#00d4ff]/40 bg-muted">
@@ -678,9 +701,12 @@ const Story = () => {
 
 
 
-                  {messages.map((m, i) => (
+                  {messages.map((m, i) => {
+                    const key = msgKey(m, i);
+                    const typed = m.role !== "assistant" || !!typedIds[key];
+                    return (
                     <div
-                      key={m.id ?? i}
+                      key={key}
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
@@ -696,11 +722,25 @@ const Story = () => {
                           </span>
                         )}
                         {m.role === "assistant" ? (
-                          <TypewriterText text={m.content} speed={34} />
+                          <TypewriterText
+                            text={m.content}
+                            speed={34}
+                            onTick={() => {
+                              followScroll();
+                              if (typedIds[key]) {
+                                setTypedIds((prev) => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            onComplete={() => setTypedIds((prev) => ({ ...prev, [key]: true }))}
+                          />
                         ) : (
                           m.content
                         )}
-                        {m.image && (
+                        {m.image && typed && (
                           <div className="relative mt-2 w-full max-w-sm">
                             <img
                               src={m.image}
@@ -722,14 +762,16 @@ const Story = () => {
                           </div>
                         )}
 
-                        {m.imageLoading && !m.image && (
+                        {m.imageLoading && !m.image && typed && (
                           <span className="mt-2 flex items-center gap-2 text-[10px] text-muted-foreground">
                             <Loader2 className="w-3 h-3 animate-spin" /> rendering scene...
                           </span>
                         )}
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
+
                   {isStreaming && (
                     <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
                       <Loader2 className="w-3 h-3 animate-spin" /> transmitting...
@@ -737,7 +779,7 @@ const Story = () => {
                   )}
                 </div>
 
-                {(options.length > 0 || optionsLoading) && !isStreaming && (
+                {(options.length > 0 || optionsLoading) && !scrollLocked && (
                   <div className="border-t border-border dark:border-[#00d4ff]/20 px-3 pt-3 lg:px-4 lg:pt-4 space-y-2 lg:space-y-3">
                     <span className="block text-[10px] sm:text-xs lg:text-sm font-mono uppercase tracking-widest text-muted-foreground">
                       choose an action

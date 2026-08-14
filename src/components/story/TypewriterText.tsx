@@ -11,8 +11,7 @@ interface TypewriterTextProps {
 
 /**
  * Reveals text one character at a time (works with streaming text that grows),
- * with a blinking terminal cursor. A subtle 90s CRT scanline overlay is applied
- * by the parent `.story-scanlines` class.
+ * with a blinking terminal cursor.
  */
 const TypewriterText = ({ text, speed = 32, className = "", keepCursor = false }: TypewriterTextProps) => {
   const [count, setCount] = useState(0);
@@ -38,7 +37,7 @@ const TypewriterText = ({ text, speed = 32, className = "", keepCursor = false }
   const done = count >= text.length;
 
   return (
-    <span className={`story-scanlines ${className}`}>
+    <span className={className || undefined}>
       {text.slice(0, count)}
       {(!done || keepCursor) && <span className="story-caret" aria-hidden="true">▊</span>}
     </span>

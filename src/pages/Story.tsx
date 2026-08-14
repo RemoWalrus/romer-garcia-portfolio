@@ -56,6 +56,28 @@ const actionBeat = (text: string) => {
   return pool.slice(-3).join(" ").slice(0, 500);
 };
 
+// does the beat depict violence/motion? action beats get a harder, faster camera
+const ACTION_WORDS =
+  /\b(run|runs|running|sprint|charge|lunge|leap|jump|dive|dodge|strike|strikes|swing|slam|hit|punch|kick|stab|slash|shoot|shot|fire|fires|blast|explode|explosion|grab|grabs|drag|throw|thrown|fall|falls|falling|collapse|crash|smash|chase|flee|scramble|climb|claw|bite|roar|scream|blood|bleed|wound|snap|rip|tear|shove|wrestle|pin|swarm|attack|ambush|recoil|stagger)\b/i;
+
+// a distinct cinematic grammar per shot so consecutive scenes don't look identical
+const CAMERA_SETUPS_ACTION = [
+  "low-angle wide on a 24mm anamorphic lens, camera tilted into a dutch angle, subject filling the lower third",
+  "handheld medium shot on a 35mm lens, whip-pan energy, frame slightly off-balance",
+  "over-the-shoulder tracking shot on a 50mm lens, foreground silhouette blurred, subject mid-stride",
+  "wide establishing action shot on a 28mm lens, deep focus, subject small against enormous ruin",
+];
+const CAMERA_SETUPS_QUIET = [
+  "medium-wide on a 40mm lens, subject framed by a doorway or wreckage, shallow depth of field",
+  "slow-push medium shot on a 50mm lens, subject off-centre, negative space heavy with haze",
+  "high-angle wide on a 32mm lens looking down, subject dwarfed by the landscape",
+];
+
+const cinematicSetup = (beat: string) => {
+  const pool = ACTION_WORDS.test(beat) ? CAMERA_SETUPS_ACTION : CAMERA_SETUPS_QUIET;
+  return pool[Math.floor(Math.random() * pool.length)];
+};
+
 
 // intro video cache — keyed per character, short TTL because the URL is a signed link
 const INTRO_CACHE_PREFIX = "paradoxxia_story_intro_video:";

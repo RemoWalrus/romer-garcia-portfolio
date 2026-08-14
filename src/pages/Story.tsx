@@ -213,6 +213,11 @@ const Story = () => {
     startSpecies?: string,
     startGender?: string,
   ): Promise<string | undefined> => {
+    // already have a portrait handed over from the generator screen
+    if (cardImageRef.current) {
+      setCardLoading(false);
+      return cardImageRef.current;
+    }
     // reuse the portrait generated on the character generator page when available
     try {
       const handoff = sessionStorage.getItem("paradoxxia_story_character_image");

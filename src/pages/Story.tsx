@@ -606,12 +606,12 @@ const Story = () => {
 
             {started && (
               <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
-                <div className="flex items-center justify-between px-4 py-2 border-b border-border dark:border-[#00d4ff]/20">
-                  <span className="text-xs font-mono text-muted-foreground">
+                <div className="flex items-center justify-between px-4 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-4 border-b border-border dark:border-[#00d4ff]/20">
+                  <span className="text-xs sm:text-sm lg:text-base xl:text-lg font-mono text-muted-foreground">
                     {name} · {gender} {species}
                   </span>
-                  <Button variant="ghost" size="sm" onClick={restart} className="text-xs">
-                    <RotateCcw className="w-3 h-3 mr-1" /> restart
+                  <Button variant="ghost" size="sm" onClick={restart} className="text-xs sm:text-sm lg:text-base">
+                    <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 mr-1" /> restart
                   </Button>
                 </div>
 

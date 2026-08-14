@@ -17,6 +17,7 @@ import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadImage, downloadVideo } from "@/utils/imageDownload";
 import TypewriterText from "@/components/story/TypewriterText";
+import AICharacterGenerator from "@/pages/AICharacterGenerator";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =

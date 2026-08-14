@@ -80,6 +80,14 @@ const Story = () => {
   const replyCount = useRef(0);
   const autoStarted = useRef(false);
   const introRequested = useRef(false);
+  const cardImageRef = useRef("");
+
+  const setCardImageAndRef = (url: string) => {
+    cardImageRef.current = url;
+    setCardImage(url);
+  };
+
+
 
 
   useEffect(() => {
@@ -121,14 +129,15 @@ const Story = () => {
     }
   }, [searchParams]);
 
-  const generateImage = async (prompt: string) => {
+  const generateImage = async (prompt: string, referenceImage?: string) => {
     const { data, error } = await supabase.functions.invoke("generate-character-image", {
-      body: { prompt, timestamp: Date.now() },
+      body: { prompt, imageUrl: referenceImage || undefined, timestamp: Date.now() },
     });
     if (error) throw error;
     if (!data?.imageUrl) throw new Error("No image returned");
     return data.imageUrl as string;
   };
+
 
   const generateCard = async (
     finalName: string,
@@ -139,7 +148,7 @@ const Story = () => {
     try {
       const handoff = sessionStorage.getItem("paradoxxia_story_character_image");
       if (handoff) {
-        setCardImage(handoff);
+        setCardImageAndRef(handoff);
         setCardLoading(false);
         return handoff;
       }
@@ -152,7 +161,7 @@ const Story = () => {
       const url = await generateImage(
         `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
       );
-      setCardImage(url);
+      setCardImageAndRef(url);
       return url;
     } catch (error) {
       console.error("card image error:", error);
@@ -244,8 +253,10 @@ const Story = () => {
       : "Do NOT include any white-faced android character in this image. Show only the world and whatever the described moment contains — scavengers in small wary groups, collective-minded androids moving in eerie unison, or a lone feral robot or mutant.";
     try {
       const url = await generateImage(
-        `A cinematic third-person film still of ${name}, a ${gender} ${species} survivor, caught in the middle of this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". The camera watches from outside, showing the character interacting with the world rather than looking through their eyes. They wear battered functional clothing and improvised gear, weathered skin, dramatic rim lighting with cool cyan and deep blue accents. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. The character should be clearly visible but part of the scene, not posed for a portrait. Ultra photorealistic cinematic film still, natural framing, no text or captions other than the required watermark.`,
+        `A cinematic third-person film still of ${name}, a ${gender} ${species} survivor, caught in the middle of this exact moment in the Cyber Boondocks — a lawless scorched no man's land: "${clean}". ${cardImageRef.current ? "CRITICAL: the attached reference image is this exact character — reproduce their face, skin tone, hairstyle, body type, clothing, gear and colour palette faithfully so they are unmistakably the same person, only re-posed and re-lit for this new scene." : ""} The camera watches from outside, showing the character interacting with the world rather than looking through their eyes. They wear battered functional clothing and improvised gear, weathered skin, dramatic rim lighting with cool cyan and deep blue accents. ${androidClause} Emphasize place and action: rust, dust, failing neon, static, volumetric light, ruined architecture, dead machinery, makeshift camps. The character should be clearly visible but part of the scene, not posed for a portrait. Ultra photorealistic cinematic film still, natural framing, no text or captions other than the required watermark.`,
+        cardImageRef.current || undefined,
       );
+
 
       setMessages((prev) =>
         prev.map((m) => (m.id === msgId ? { ...m, image: url, imageLoading: false } : m)),
@@ -376,7 +387,7 @@ const Story = () => {
     setSpecies("");
     setGender("");
     setName("");
-    setCardImage("");
+    setCardImageAndRef("");
     setCardLoading(false);
     setOptions([]);
     setIntroVideo("");

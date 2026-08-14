@@ -819,25 +819,48 @@ MAXIMUM PHOTOREALISM REQUIREMENTS (ABSOLUTE PRIORITY):
 
 ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets Blade Runner meets The Road, but this MUST look like an actual photograph from these films, not concept art. Every surface must have photorealistic material properties: metal shows authentic oxidation and wear patterns, fabric has realistic weave and dirt accumulation, skin shows natural imperfections and realistic lighting. Natural cinematic lighting with realistic shadow gradients, authentic bounce light, and proper ambient occlusion. Dystopian atmosphere captured with photographic authenticity. Show decay, dirt, scars, and harsh survival conditions with complete photographic accuracy - every detail must be as realistic as a documentary photograph. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible with realistic engraving or etching. Maximum photorealistic detail in every aspect: authentic material aging, realistic environmental interaction, natural lighting behavior, genuine weathering patterns. Color palette should match real-world photography with natural desaturation, realistic contrast, and authentic shadow/highlight detail as captured by professional cinema cameras.`;
 
-      // Character dossier — the exact traits this generator locked in, handed to the story lore
+      // Character dossier — the exact traits this generator locked in, handed to the story lore.
+      // Any field the generator did not fill gets graceful fallback copy instead of an empty line.
+      const dossierField = (label: string, value: string | undefined, fallback: string) => {
+        const clean = (value ?? "").replace(/\s+/g, " ").trim();
+        return `${label}: ${clean || fallback}`;
+      };
+
       setCharacterDossier(
         [
           `NAME: ${processedName}${processedName !== finalName ? ` (entered as "${finalName}")` : ""}`,
-          `SPECIES: ${selectedSpecies}${species === "other" ? " (rolled from an unspecified origin)" : ""}${isDefective ? " — DEFECTIVE, malfunctioning and deteriorating" : ""}`,
-          `GENDER: ${gender}`,
-          `WHERE THEY WERE FOUND: ${location}`,
-          `NATURE / BODY: ${speciesDescription}`,
-          `WARDROBE / GEAR: ${clothingDescription}`,
-          `PRESENTATION: ${nameDisplay}`,
-          `NAME MEANING / MOTIF: ${nameTheme}`,
+          dossierField(
+            "SPECIES",
+            `${selectedSpecies}${species === "other" ? " (rolled from an unspecified origin)" : ""}${isDefective ? " — DEFECTIVE, malfunctioning and deteriorating" : ""}`,
+            "unrecorded — origin unclear even to them",
+          ),
+          dossierField("GENDER", gender, "unstated — do not dwell on it, use neutral phrasing"),
+          dossierField(
+            "WHERE THEY WERE FOUND",
+            location,
+            "unlogged — somewhere in the Cyber Boondocks, the exact place lost with the record",
+          ),
+          dossierField(
+            "NATURE / BODY",
+            speciesDescription,
+            "undocumented — weathered by the wastes, details left to the narration but never contradicted once described",
+          ),
+          dossierField(
+            "WARDROBE / GEAR",
+            clothingDescription,
+            "salvage-issue: whatever held together, scavenged and repaired more than once",
+          ),
+          dossierField("PRESENTATION", nameDisplay, "no visible name marker on them"),
+          dossierField("NAME MEANING / MOTIF", nameTheme, "no known meaning — the name is simply what they answer to"),
           uploadedPhoto
             ? "LIKENESS: modelled on a real reference photo the player supplied — their face, ethnicity, hair and body type carry over."
-            : "LIKENESS: no reference photo — appearance generated from scratch.",
+            : "LIKENESS: no reference photo — appearance generated from scratch; keep it consistent once established.",
         ]
           .map((line) => line.replace(/\s+/g, " ").trim())
           .join("\n")
           .slice(0, 3500),
       );
+
 
 
       const { data, error } = await supabase.functions.invoke("generate-character-image", {

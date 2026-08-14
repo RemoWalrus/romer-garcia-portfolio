@@ -12,6 +12,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import { Capacitor } from "@capacitor/core";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadImage, downloadVideo } from "@/utils/imageDownload";
 
@@ -66,6 +68,7 @@ const Story = () => {
   const [species, setSpecies] = useState("");
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
+  const [uploadedPhoto, setUploadedPhoto] = useState("");
   const [started, setStarted] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -138,6 +141,51 @@ const Story = () => {
     return data.imageUrl as string;
   };
 
+  const handlePhotoUpload = async () => {
+    try {
+      if (!Capacitor.isNativePlatform()) {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.onchange = (e) => {
+          const file = (e.target as HTMLInputElement).files?.[0];
+          if (!file) return;
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            setUploadedPhoto(event.target?.result as string);
+            toast.success("Photo uploaded successfully!");
+          };
+          reader.readAsDataURL(file);
+        };
+        input.click();
+        return;
+      }
+
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos,
+        promptLabelHeader: "Select Photo",
+        promptLabelPhoto: "From Gallery",
+        promptLabelPicture: "Take Photo",
+      });
+
+      if (image.dataUrl) {
+        setUploadedPhoto(image.dataUrl);
+        toast.success("Photo uploaded successfully!");
+      }
+    } catch (error: any) {
+      console.error("Camera error:", error);
+      if (error?.message?.includes("permission")) {
+        toast.error("Camera permission denied. Please enable camera access in your device settings.");
+      } else if (/cancell?ed/i.test(error?.message ?? "")) {
+        toast.info("Photo upload cancelled");
+      } else {
+        toast.error("Failed to capture photo. Please try again.");
+      }
+    }
+  };
 
   const generateCard = async (
     finalName: string,
@@ -159,8 +207,10 @@ const Story = () => {
     setCardLoading(true);
     try {
       const url = await generateImage(
-        `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background. Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+        `A cinematic full-body character card portrait of ${finalName}, a ${startGender ?? gender} ${startSpecies ?? species} survivor in the Cyber Boondocks — a scorched dystopian sci-fi frontier of rust, dust, neon and static. Battered functional clothing and improvised gear, weathered skin, dramatic moody rim lighting with cool cyan and deep blue accents, shallow depth of field, dark atmospheric background.${uploadedPhoto ? " CRITICAL: the attached reference photo is this character — faithfully match the reference face's structure, features, skin tone and hair so they are recognisably the same person." : ""} Ultra photorealistic cinematic still, no text or captions other than the required watermark.`,
+        uploadedPhoto || undefined,
       );
+
       setCardImageAndRef(url);
       return url;
     } catch (error) {
@@ -387,6 +437,7 @@ const Story = () => {
     setSpecies("");
     setGender("");
     setName("");
+    setUploadedPhoto("");
     setCardImageAndRef("");
     setCardLoading(false);
     setOptions([]);
@@ -400,9 +451,10 @@ const Story = () => {
   const handleNext = () => {
     if (step === 1 && !species) return toast.error("choose a species");
     if (step === 2 && !gender) return toast.error("choose a gender");
-    if (step < 3) return setStep(step + 1);
+    if (step < 4) return setStep(step + 1);
     beginEncounter();
   };
+
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
@@ -461,15 +513,19 @@ const Story = () => {
                   started ? "text-xl sm:text-2xl" : "text-3xl sm:text-4xl md:text-5xl lg:text-6xl"
                 } transition-all duration-500`}
               >
-                <GlitchTitle subtitleWords={["story", "mode"]} compact={started} />
+                <GlitchTitle
+                  subtitleWords={started ? ["story", "mode"] : ["character", "generator"]}
+                  compact={started}
+                />
               </h1>
               {!started && (
                 <p className="text-foreground max-w-2xl mx-auto font-roc text-base sm:text-xl">
-                  <span style={{ fontWeight: 300 }}>step into the wastes and</span>{" "}
-                  <span className="font-medium">encounter</span>{" "}
-                  <span style={{ fontWeight: 300 }}>paradoxxia</span>
+                  <span style={{ fontWeight: 300 }}>forge unique beings from the depths</span>{" "}
+                  <span className="font-medium">of the</span>{" "}
+                  <span style={{ fontWeight: 300 }}>paradoxxia universe</span>
                 </p>
               )}
+
             </div>
 
             {!started && (
@@ -523,14 +579,47 @@ const Story = () => {
                   </div>
                 )}
 
+                {step === 4 && (
+                  <div className="space-y-3">
+                    <Label className="text-base font-medium text-foreground font-roc">
+                      upload photo (optional):
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Upload a photo to use as reference for your character
+                    </p>
+                    {uploadedPhoto ? (
+                      <div className="relative h-[20vh] overflow-hidden flex items-center justify-center bg-black/10 rounded-lg">
+                        <img
+                          src={uploadedPhoto}
+                          alt="Uploaded reference"
+                          className="max-h-full max-w-full object-contain rounded-lg"
+                        />
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setUploadedPhoto("")}
+                          className="absolute top-2 right-2"
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    ) : (
+                      <Button onClick={handlePhotoUpload} variant="outline" className="w-full">
+                        Take Photo or Choose from Gallery
+                      </Button>
+                    )}
+                  </div>
+                )}
+
                 <Button
                   onClick={handleNext}
                   className="w-full font-roc font-medium bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90"
                 >
-                  {step < 3 ? "next" : "begin the encounter"}
+                  {step < 4 ? "next" : "begin the encounter"}
                 </Button>
               </Card>
             )}
+
 
             {started && (
               <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 overflow-hidden">

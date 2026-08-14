@@ -656,6 +656,8 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
     replyCount.current = 0;
     setIsDead(false);
     setDeathRecap(null);
+    setDeathImage("");
+    setDeathImageLoading(false);
     setTypedIds({});
     setSkipKey(null);
   };
@@ -664,6 +666,8 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
   const tryAgain = () => {
     setIsDead(false);
     setDeathRecap(null);
+    setDeathImage("");
+    setDeathImageLoading(false);
     setMessages([]);
     setTypedIds({});
     setSkipKey(null);

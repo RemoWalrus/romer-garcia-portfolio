@@ -871,6 +871,19 @@ const Story = () => {
                       </div>
                     )}
 
+                    {isDead ? (
+                      <div className="p-3 lg:p-4 xl:px-6 xl:py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <span className="font-mono uppercase tracking-widest text-sm sm:text-base lg:text-lg text-red-500">
+                          {name} is dead
+                        </span>
+                        <Button
+                          onClick={tryAgain}
+                          className="bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 font-mono uppercase tracking-widest"
+                        >
+                          <RotateCcw className="w-4 h-4 mr-2" /> try again
+                        </Button>
+                      </div>
+                    ) : (
                     <div className="p-3 lg:p-4 xl:px-6 xl:py-5 flex gap-2 lg:gap-3 xl:gap-4 items-end">
                       <Textarea
                         value={input}
@@ -893,6 +906,8 @@ const Story = () => {
                         {isStreaming ? <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7 animate-spin" /> : <Send className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 xl:w-7 xl:h-7" />}
                       </Button>
                     </div>
+                    )}
+
                   </div>
                 </div>
               </Card>

@@ -115,6 +115,8 @@ const Story = () => {
 
 
   const [typedIds, setTypedIds] = useState<Record<string, boolean>>({});
+  const [skipKey, setSkipKey] = useState<string | null>(null);
+
 
   const msgKey = (m: ChatMessage, i: number) => String(m.id ?? i);
   const lastMessage = messages[messages.length - 1];
@@ -693,21 +695,38 @@ const Story = () => {
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] rounded-lg px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-5 leading-relaxed whitespace-pre-wrap ${
+                        className={`${
+                          m.role === "user"
+                            ? "max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] rounded-lg"
+                            : "w-full rounded-lg"
+                        } px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-5 leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
                             ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
                             : "bg-muted text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
                         }`}
                       >
                         {m.role === "assistant" && (
-                          <span className="block text-xs sm:text-sm lg:text-base xl:text-lg uppercase tracking-widest text-muted-foreground mb-1">
-                            パラドクシア
-                          </span>
+                          <div className="flex items-center justify-between gap-3 mb-1 sm:mb-2">
+                            <span className="text-xs sm:text-sm lg:text-base xl:text-lg uppercase tracking-widest text-muted-foreground">
+                              パラドクシア
+                            </span>
+                            {!typed && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setSkipKey(key)}
+                                className="h-auto px-2 py-1 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground"
+                              >
+                                skip
+                              </Button>
+                            )}
+                          </div>
                         )}
                         {m.role === "assistant" ? (
                           <TypewriterText
                             text={m.content}
                             speed={34}
+                            skip={skipKey === key}
                             onTick={() => {
                               followScroll();
                               if (typedIds[key]) {

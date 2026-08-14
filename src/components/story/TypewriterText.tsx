@@ -11,6 +11,8 @@ interface TypewriterTextProps {
   onTick?: () => void;
   /** called once the full text has been revealed */
   onComplete?: () => void;
+  /** when true, immediately reveal the full text */
+  skip?: boolean;
 }
 
 /**
@@ -24,6 +26,7 @@ const TypewriterText = ({
   keepCursor = false,
   onTick,
   onComplete,
+  skip = false,
 }: TypewriterTextProps) => {
   const [count, setCount] = useState(0);
   const countRef = useRef(0);
@@ -42,6 +45,15 @@ const TypewriterText = ({
       setCount(0);
     }
   }, [text]);
+
+  // skip: immediately reveal the full text
+  useEffect(() => {
+    if (skip && countRef.current < text.length) {
+      countRef.current = text.length;
+      setCount(text.length);
+      tickRef.current?.();
+    }
+  }, [skip, text.length]);
 
   useEffect(() => {
     if (count >= text.length) return;

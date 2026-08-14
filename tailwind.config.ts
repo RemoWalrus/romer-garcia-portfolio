@@ -21,7 +21,6 @@ export default {
 		extend: {
 			fontFamily: {
 				roc: ["roc-grotesk", "sans-serif"],
-				digital: ["'Share Tech Mono'", "ui-monospace", "monospace"],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

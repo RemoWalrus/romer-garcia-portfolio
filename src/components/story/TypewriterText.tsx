@@ -11,8 +11,8 @@ interface TypewriterTextProps {
 
 /**
  * Reveals text one character at a time (works with streaming text that grows),
- * with a blinking terminal cursor. Rendered in a digital font with a scanline
- * overlay by the parent classes.
+ * with a blinking terminal cursor. A subtle 90s CRT scanline overlay is applied
+ * by the parent `.story-scanlines` class.
  */
 const TypewriterText = ({ text, speed = 32, className = "", keepCursor = false }: TypewriterTextProps) => {
   const [count, setCount] = useState(0);

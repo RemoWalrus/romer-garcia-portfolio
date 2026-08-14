@@ -115,6 +115,8 @@ const Story = () => {
 
 
   const [typedIds, setTypedIds] = useState<Record<string, boolean>>({});
+  const [skipKey, setSkipKey] = useState<string | null>(null);
+
 
   const msgKey = (m: ChatMessage, i: number) => String(m.id ?? i);
   const lastMessage = messages[messages.length - 1];

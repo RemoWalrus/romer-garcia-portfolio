@@ -592,7 +592,7 @@ const Story = () => {
         <main
           className="container mx-auto px-4 lg:px-8 xl:px-12 relative z-10 flex-1 flex flex-col min-h-0 pt-20 sm:pt-24 transition-all duration-500"
         >
-          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto w-full flex-1 flex flex-col min-h-0 space-y-4 lg:space-y-6">
+          <div className="max-w-3xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[85vw] mx-auto w-full flex-1 flex flex-col min-h-0 space-y-4 lg:space-y-6">
             <div className="text-center space-y-2">
               <h1
                 className="hero-title font-bold text-foreground px-4 text-xl sm:text-2xl transition-all duration-500"

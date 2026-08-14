@@ -47,6 +47,22 @@ const DownloadOverlayButton = ({ src, fileName }: { src: string; fileName: strin
   </Button>
 );
 
+const ExpandButton = ({ onClick, label }: { onClick: () => void; label?: string }) => (
+  <Button
+    onClick={onClick}
+    size="icon"
+    variant="ghost"
+    aria-label={label || "expand image"}
+    className="absolute top-2 left-2 z-30 bg-black/40 hover:bg-black/60 p-1 rounded-md"
+  >
+    <Maximize2
+      className="h-5 w-5"
+      style={{ color: "#00d9ff", filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))" }}
+    />
+  </Button>
+);
+
+
 
 const OPTION_CLASSES =
   "flex-1 min-w-[100px] font-roc font-medium dark:border-[#00d4ff]/30 dark:text-neutral-300";

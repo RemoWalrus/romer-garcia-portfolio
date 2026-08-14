@@ -1273,6 +1273,7 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
                               gender,
                               image: generatedImage,
                               photo: uploadedPhoto,
+                              dossier: characterDossier,
                             });
                           }}
                           className="w-full font-roc font-medium bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 uppercase tracking-wider"

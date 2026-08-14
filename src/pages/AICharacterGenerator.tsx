@@ -806,6 +806,27 @@ MAXIMUM PHOTOREALISM REQUIREMENTS (ABSOLUTE PRIORITY):
 
 ${photoReference} ${speciesDescription} ${clothingDescription}. The character is ${nameDisplay}. ${nameTheme} Show the full body of the character in a dynamic action pose, clearly visible in the foreground, with the environment visible around them but not dominating the scene. The aesthetic is dark horror sci-fi with grim realism - think Alien meets Blade Runner meets The Road, but this MUST look like an actual photograph from these films, not concept art. Every surface must have photorealistic material properties: metal shows authentic oxidation and wear patterns, fabric has realistic weave and dirt accumulation, skin shows natural imperfections and realistic lighting. Natural cinematic lighting with realistic shadow gradients, authentic bounce light, and proper ambient occlusion. Dystopian atmosphere captured with photographic authenticity. Show decay, dirt, scars, and harsh survival conditions with complete photographic accuracy - every detail must be as realistic as a documentary photograph. CRITICAL: Show ONLY this single character - absolutely no other people or characters in the image. The name on the dog tags or body panel must be clearly legible with realistic engraving or etching. Maximum photorealistic detail in every aspect: authentic material aging, realistic environmental interaction, natural lighting behavior, genuine weathering patterns. Color palette should match real-world photography with natural desaturation, realistic contrast, and authentic shadow/highlight detail as captured by professional cinema cameras.`;
 
+      // Character dossier — the exact traits this generator locked in, handed to the story lore
+      setCharacterDossier(
+        [
+          `NAME: ${processedName}${processedName !== finalName ? ` (entered as "${finalName}")` : ""}`,
+          `SPECIES: ${selectedSpecies}${species === "other" ? " (rolled from an unspecified origin)" : ""}${isDefective ? " — DEFECTIVE, malfunctioning and deteriorating" : ""}`,
+          `GENDER: ${gender}`,
+          `WHERE THEY WERE FOUND: ${location}`,
+          `NATURE / BODY: ${speciesDescription}`,
+          `WARDROBE / GEAR: ${clothingDescription}`,
+          `PRESENTATION: ${nameDisplay}`,
+          `NAME MEANING / MOTIF: ${nameTheme}`,
+          uploadedPhoto
+            ? "LIKENESS: modelled on a real reference photo the player supplied — their face, ethnicity, hair and body type carry over."
+            : "LIKENESS: no reference photo — appearance generated from scratch.",
+        ]
+          .join("\n")
+          .replace(/\s+/g, " ")
+          .slice(0, 3500),
+      );
+
+
       const { data, error } = await supabase.functions.invoke("generate-character-image", {
         body: { 
           prompt,

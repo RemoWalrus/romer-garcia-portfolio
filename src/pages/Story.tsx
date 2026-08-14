@@ -617,7 +617,7 @@ const Story = () => {
 
                 <div
                   ref={scrollRef}
-                  className="flex-1 overflow-y-auto flex flex-col px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6"
+                  className={`flex-1 ${scrollLocked ? "overflow-hidden" : "overflow-y-auto"} flex flex-col px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6`}
                 >
                   <div className="flex-1 space-y-4 lg:space-y-6">
                     {(cardImage || cardLoading) && (

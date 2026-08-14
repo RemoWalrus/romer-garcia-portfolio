@@ -450,9 +450,10 @@ const Story = () => {
   const handleNext = () => {
     if (step === 1 && !species) return toast.error("choose a species");
     if (step === 2 && !gender) return toast.error("choose a gender");
-    if (step < 3) return setStep(step + 1);
+    if (step < 4) return setStep(step + 1);
     beginEncounter();
   };
+
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">

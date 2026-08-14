@@ -138,6 +138,14 @@ const Story = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, isStreaming]);
 
+  // after typing finishes (or is skipped), scroll to the end so the latest options/image are visible
+  useEffect(() => {
+    if (!scrollLocked) {
+      const timer = window.setTimeout(() => followScroll(), 60);
+      return () => window.clearTimeout(timer);
+    }
+  }, [scrollLocked]);
+
 
   // Auto-start from query params or persisted character data
   useEffect(() => {

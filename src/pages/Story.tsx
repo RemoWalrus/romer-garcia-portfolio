@@ -751,12 +751,15 @@ const Story = () => {
                           m.content
                         )}
                         {m.image && typed && (
-                          <div className="relative mt-2 w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
+                          <div className="relative mt-2 w-32 sm:w-36 md:w-40 lg:w-44 xl:w-48 2xl:w-56 shrink-0">
                             <img
                               src={m.image}
                               alt="Scene from the encounter with Paradoxxia"
                               className="w-full rounded-md border border-border dark:border-[#00d4ff]/30"
                               loading="lazy"
+                              onLoad={() => {
+                                if (!scrollLocked) followScroll();
+                              }}
                             />
                             <ExpandButton
                               onClick={() => {

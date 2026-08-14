@@ -944,23 +944,25 @@ ${photoReference} ${speciesDescription} ${clothingDescription}. The character is
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">
-      <Helmet>
-        <title>{meta.title}</title>
-        <meta name="description" content={meta.description} />
-        <meta name="keywords" content={meta.keywords} />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={meta.ogTitle} />
-        <meta property="og:description" content={meta.ogDescription} />
-        <meta property="og:type" content="website" />
-        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={meta.twitterTitle} />
-        <meta name="twitter:description" content={meta.twitterDescription} />
-      </Helmet>
-      <CharGenSchema />
+      {!storyMode && (
+        <Helmet>
+          <title>{meta.title}</title>
+          <meta name="description" content={meta.description} />
+          <meta name="keywords" content={meta.keywords} />
+
+          {/* Open Graph */}
+          <meta property="og:title" content={meta.ogTitle} />
+          <meta property="og:description" content={meta.ogDescription} />
+          <meta property="og:type" content="website" />
+          {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+
+          {/* Twitter Card */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={meta.twitterTitle} />
+          <meta name="twitter:description" content={meta.twitterDescription} />
+        </Helmet>
+      )}
+      {!storyMode && <CharGenSchema />}
       <div className="min-h-full flex flex-col pb-safe">
       <GoogleAnalytics />
       <ThemeToggle />

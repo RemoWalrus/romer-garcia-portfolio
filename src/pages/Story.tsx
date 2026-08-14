@@ -42,6 +42,36 @@ const fatalConsequence = (text: string) => {
   return tail.length > 320 ? `${tail.slice(0, 317).trimEnd()}…` : tail;
 };
 
+// intro video cache — keyed per character, short TTL because the URL is a signed link
+const INTRO_CACHE_PREFIX = "paradoxxia_story_intro_video:";
+const INTRO_CACHE_TTL = 40 * 60 * 1000;
+
+const introCacheKey = (name: string, species?: string, gender?: string) =>
+  `${INTRO_CACHE_PREFIX}${[name, species ?? "", gender ?? ""].join("|").toLowerCase()}`;
+
+const readIntroCache = (key: string) => {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return "";
+    const { url, at } = JSON.parse(raw) as { url?: string; at?: number };
+    if (!url || !at || Date.now() - at > INTRO_CACHE_TTL) {
+      sessionStorage.removeItem(key);
+      return "";
+    }
+    return url;
+  } catch {
+    return "";
+  }
+};
+
+const writeIntroCache = (key: string, url: string) => {
+  try {
+    sessionStorage.setItem(key, JSON.stringify({ url, at: Date.now() }));
+  } catch {
+    // storage unavailable — caching is best effort
+  }
+};
+
 // graceful copy when the generator did not hand over a species or gender
 const describeChar = (g?: string, s?: string) =>
   [(g ?? "").trim(), (s ?? "").trim() || "wasteland survivor"].filter(Boolean).join(" ");
@@ -312,6 +342,8 @@ const Story = () => {
   };
 
   // 4-5 second cinematic intro animated from the character portrait
+  // cached per character so a restart or reload replays it instead of paying for a new render.
+  // the stored URL is a short-lived signed URL, so the cache expires well before it does.
   const playIntroVideo = async (
     portrait: string,
     finalName: string,
@@ -320,6 +352,15 @@ const Story = () => {
   ) => {
     if (introRequested.current || !portrait) return;
     introRequested.current = true;
+
+    const cacheKey = introCacheKey(finalName, startSpecies ?? species, startGender ?? gender);
+    const cached = readIntroCache(cacheKey);
+    if (cached) {
+      setIntroVideo(cached);
+      setIntroStatus("playing");
+      return;
+    }
+
     setIntroStatus("rendering");
     try {
       const { data, error } = await supabase.functions.invoke("story-video", {
@@ -340,6 +381,7 @@ const Story = () => {
         });
         if (statusError) throw statusError;
         if (status?.status === "completed" && status.videoUrl) {
+          writeIntroCache(cacheKey, status.videoUrl as string);
           setIntroVideo(status.videoUrl as string);
           setIntroStatus("playing");
           trackEvent("Story", "Intro Video", finalName);

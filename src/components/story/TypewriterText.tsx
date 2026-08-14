@@ -11,6 +11,8 @@ interface TypewriterTextProps {
   onTick?: () => void;
   /** called once the full text has been revealed */
   onComplete?: () => void;
+  /** when true, immediately reveal the full text */
+  skip?: boolean;
 }
 
 /**

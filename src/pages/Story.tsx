@@ -31,6 +31,17 @@ const DEATH_MARKER = /\[\s*you\s+died\s*\]/i;
 const stripDeathMarker = (text: string) =>
   text.replace(/\[\s*you\s+died\s*\]/gi, "").replace(/\s+$/, "");
 
+// pull the closing beat of the fatal reply — the consequence that actually killed them
+const fatalConsequence = (text: string) => {
+  const sentences = text
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .filter((s) => s.trim().length > 0);
+  const tail = sentences.slice(-2).join(" ").trim();
+  return tail.length > 320 ? `${tail.slice(0, 317).trimEnd()}…` : tail;
+};
+
 // graceful copy when the generator did not hand over a species or gender
 const describeChar = (g?: string, s?: string) =>
   [(g ?? "").trim(), (s ?? "").trim() || "wasteland survivor"].filter(Boolean).join(" ");
@@ -113,6 +124,8 @@ const Story = () => {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [lightboxAlt, setLightboxAlt] = useState("");
   const [isDead, setIsDead] = useState(false);
+  // the exact action that got them killed, and the fatal consequence it triggered
+  const [deathRecap, setDeathRecap] = useState<{ choice: string; consequence: string } | null>(null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -469,6 +482,11 @@ const Story = () => {
         void generateSceneImage(finalText, msgId);
       }
       if (died) {
+        const lastChoice = [...history].reverse().find((m) => m.role === "user")?.content?.trim() || "";
+        setDeathRecap({
+          choice: lastChoice && !/^I am /i.test(lastChoice) ? lastChoice : "you walked in without a plan",
+          consequence: fatalConsequence(finalText),
+        });
         setIsDead(true);
         setOptions([]);
         trackEvent("Story", "Death", name);
@@ -543,6 +561,7 @@ const Story = () => {
     introRequested.current = false;
     replyCount.current = 0;
     setIsDead(false);
+    setDeathRecap(null);
     setTypedIds({});
     setSkipKey(null);
   };
@@ -550,6 +569,7 @@ const Story = () => {
   // die and go again with the exact same character — portrait, dossier and intro are kept
   const tryAgain = () => {
     setIsDead(false);
+    setDeathRecap(null);
     setMessages([]);
     setTypedIds({});
     setSkipKey(null);
@@ -1007,6 +1027,25 @@ const Story = () => {
             <p className="mt-4 max-w-md font-mono text-xs sm:text-sm lg:text-base uppercase tracking-widest text-neutral-400">
               the cyber boondocks keeps what it takes. {name}'s run ends here.
             </p>
+            {deathRecap && (
+              <div className="mt-6 w-full max-w-lg text-left border border-red-500/30 bg-red-500/5 rounded-lg p-4 sm:p-5">
+                <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-red-400/80">
+                  how you died
+                </p>
+                <p className="mt-3 font-mono text-[11px] sm:text-xs uppercase tracking-widest text-neutral-500">
+                  your choice
+                </p>
+                <p className="mt-1 text-sm sm:text-base text-neutral-200">“{deathRecap.choice}”</p>
+                {deathRecap.consequence && (
+                  <>
+                    <p className="mt-4 font-mono text-[11px] sm:text-xs uppercase tracking-widest text-neutral-500">
+                      what it cost you
+                    </p>
+                    <p className="mt-1 text-sm sm:text-base text-neutral-300">{deathRecap.consequence}</p>
+                  </>
+                )}
+              </div>
+            )}
             <div className="mt-8 flex flex-col sm:flex-row items-center gap-4">
               <Button
                 onClick={tryAgain}

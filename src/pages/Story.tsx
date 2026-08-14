@@ -474,13 +474,50 @@ const Story = () => {
   };
 
 
-  const handleNext = () => {
-    if (step === 1 && !species) return toast.error("choose a species");
-    if (step === 2 && !gender) return toast.error("choose a gender");
-    if (step < 4) return setStep(step + 1);
-    beginEncounter();
+  // the setup screen IS the character generator page — it hands the character over here
+  const handleGeneratorContinue = (character: {
+    name: string;
+    species: string;
+    gender: string;
+    image: string;
+    photo: string;
+  }) => {
+    const finalName = character.name.trim() || randomName();
+    setName(finalName);
+    setSpecies(character.species);
+    setGender(character.gender);
+    setUploadedPhoto(character.photo || "");
+    if (character.image) setCardImageAndRef(character.image);
+    void beginEncounter(finalName, character.species, character.gender);
   };
 
+  if (!started) {
+    return (
+      <>
+        <Helmet>
+          <title>Paradoxxia Story | Roleplay an Encounter with Paradoxxia</title>
+          <meta
+            name="description"
+            content="Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia — the android from Romer Garcia's dystopian sci-fi universe."
+          />
+          <meta property="og:title" content="Paradoxxia Story | Roleplay an Encounter" />
+          <meta
+            property="og:description"
+            content="Create your character and roleplay a live encounter with Paradoxxia in the Cyber Boondocks."
+          />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://romergarcia.com/story" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content="Paradoxxia Story | Roleplay an Encounter" />
+          <meta
+            name="twitter:description"
+            content="Create your character and roleplay a live encounter with Paradoxxia in the Cyber Boondocks."
+          />
+        </Helmet>
+        <AICharacterGenerator storyMode onContinueToStory={handleGeneratorContinue} />
+      </>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-background overflow-x-hidden overflow-y-auto">

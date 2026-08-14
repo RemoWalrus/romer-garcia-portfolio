@@ -630,6 +630,8 @@ const Story = () => {
                   className={`h-[60vh] md:h-[65vh] lg:h-[70vh] px-4 py-4 lg:px-6 lg:py-6 space-y-4 lg:space-y-6 ${
                     scrollLocked ? "overflow-hidden" : "overflow-y-auto"
                   }`}
+                >
+
 
                   {(cardImage || cardLoading) && (
                     <div className="flex justify-center">

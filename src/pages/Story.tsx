@@ -16,6 +16,7 @@ import { Capacitor } from "@capacitor/core";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadImage, downloadVideo } from "@/utils/imageDownload";
+import TypewriterText from "@/components/story/TypewriterText";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =
@@ -734,7 +735,7 @@ const Story = () => {
                         className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
                             ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc"
-                            : "bg-muted text-foreground font-mono"
+                            : "bg-muted text-foreground font-digital text-[15px] tracking-wide"
                         }`}
                       >
                         {m.role === "assistant" && (
@@ -742,7 +743,11 @@ const Story = () => {
                             パラドクシア
                           </span>
                         )}
-                        {m.content}
+                        {m.role === "assistant" ? (
+                          <TypewriterText text={m.content} speed={34} />
+                        ) : (
+                          m.content
+                        )}
                         {m.image && (
                           <div className="relative mt-2 w-full max-w-sm">
                             <img

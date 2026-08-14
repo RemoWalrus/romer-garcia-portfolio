@@ -13,7 +13,7 @@ import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
 import { supabase } from "@/integrations/supabase/client";
-import { downloadImage } from "@/utils/imageDownload";
+import { downloadImage, downloadVideo } from "@/utils/imageDownload";
 
 const CHAT_ENDPOINT = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/story-chat";
 const SUPABASE_PUBLISHABLE_KEY =

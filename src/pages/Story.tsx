@@ -725,7 +725,7 @@ const Story = () => {
                         )}
                         {m.content}
                         {m.image && (
-                          <div className="relative mt-2 w-full max-w-sm">
+                          <TiltCard className="relative mt-2 w-full max-w-sm">
                             <img
                               src={m.image}
                               alt="Scene from the encounter with Paradoxxia"
@@ -736,7 +736,7 @@ const Story = () => {
                               src={m.image}
                               fileName={`${name || "scene"}_scene_${Date.now()}.png`}
                             />
-                          </div>
+                          </TiltCard>
                         )}
 
                         {m.imageLoading && !m.image && (

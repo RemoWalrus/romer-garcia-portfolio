@@ -901,6 +901,40 @@ const Story = () => {
             )}
           </div>
         )}
+        {lightboxImage && (
+          <div
+            className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setLightboxImage(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="expanded image"
+          >
+            <div className="relative max-w-full max-h-full">
+              <img
+                src={lightboxImage}
+                alt={lightboxAlt}
+                className="max-w-full max-h-[90vh] object-contain rounded-lg border border-[#00d4ff]/40"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <div className="absolute top-2 right-2 flex gap-2">
+                <ExpandButton
+                  onClick={() => {
+                    setLightboxImage(null);
+                  }}
+                  label="close lightbox"
+                >
+                  <span className="sr-only">close</span>
+                </ExpandButton>
+              </div>
+              <div className="absolute top-2 left-2">
+                <DownloadOverlayButton
+                  src={lightboxImage}
+                  fileName={`${name || "image"}_${Date.now()}.png`}
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

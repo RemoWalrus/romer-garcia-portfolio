@@ -829,8 +829,8 @@ const Story = () => {
                     className="w-40 rounded-lg border border-[#00d4ff]/40 opacity-70"
                   />
                 )}
-                <span className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#00d4ff]">
-                  <Loader2 className="w-3 h-3 animate-spin" /> rendering intro sequence...
+                <span className="flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-[#00d4ff]">
+                  <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> rendering intro sequence...
                 </span>
               </div>
             )}
@@ -854,20 +854,20 @@ const Story = () => {
                       className="group flex flex-col items-center gap-3 p-6 rounded-lg transition-colors hover:bg-black/40"
                     >
                       <Download
-                        className="h-12 w-12"
+                        className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16"
                         style={{
                           color: "#00d9ff",
                           filter: "drop-shadow(0 0 12px rgba(0, 217, 255, 0.8))",
                         }}
                       />
-                      <span className="text-sm font-roc font-medium text-[#00d9ff] uppercase tracking-widest">
+                      <span className="text-sm sm:text-base lg:text-lg xl:text-xl font-roc font-medium text-[#00d9ff] uppercase tracking-widest">
                         click to download intro sequence
                       </span>
                     </button>
                     <Button
                       variant="ghost"
                       onClick={() => setIntroStatus("done")}
-                      className="mt-8 text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+                      className="mt-8 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
                     >
                       continue to story →
                     </Button>
@@ -876,7 +876,7 @@ const Story = () => {
                   <Button
                     variant="ghost"
                     onClick={() => setIntroStatus("done")}
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
+                    className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-neutral-400 hover:text-[#00d4ff]"
                   >
                     skip intro →
                   </Button>

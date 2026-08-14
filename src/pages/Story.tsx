@@ -12,6 +12,8 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
 import GlitchTitle from "@/components/paradoxxia/GlitchTitle";
 import circuitBg from "@/assets/paradoxxia-bg.png";
+import { Capacitor } from "@capacitor/core";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { supabase } from "@/integrations/supabase/client";
 import { downloadImage, downloadVideo } from "@/utils/imageDownload";
 

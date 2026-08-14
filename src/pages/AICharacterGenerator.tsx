@@ -51,6 +51,8 @@ const AICharacterGenerator = ({ storyMode = false, onContinueToStory }: AICharac
   const [generatedImage, setGeneratedImage] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [uploadedPhoto, setUploadedPhoto] = useState("");
+  const [characterDossier, setCharacterDossier] = useState("");
+
   const [introComplete, setIntroComplete] = useState(false);
   const [titleText, setTitleText] = useState<'katakana' | 'english'>('katakana');
   const [titleZoom, setTitleZoom] = useState(1);

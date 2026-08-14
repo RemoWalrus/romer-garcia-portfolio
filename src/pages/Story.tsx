@@ -661,23 +661,23 @@ const Story = () => {
                     )}
 
                     {introVideo && introStatus === "done" && (
-                      <div className="flex justify-center">
-                        <button
-                          onClick={() =>
-                            downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
-                          }
-                          className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          <Download
-                            className="h-4 w-4"
-                            style={{
-                              color: "#00d9ff",
-                              filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
-                            }}
-                          />
-                          download intro sequence
-                        </button>
-                      </div>
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() =>
+                          downloadVideo(introVideo, `${name || "character"}_intro_${Date.now()}.mp4`)
+                        }
+                        className="inline-flex items-center gap-2 text-xs sm:text-sm lg:text-base xl:text-lg font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Download
+                          className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6"
+                          style={{
+                            color: "#00d9ff",
+                            filter: "drop-shadow(0 0 8px rgba(0, 217, 255, 0.8))",
+                          }}
+                        />
+                        download intro sequence
+                      </button>
+                    </div>
                     )}
 
 

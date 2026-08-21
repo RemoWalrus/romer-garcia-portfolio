@@ -665,7 +665,6 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
   const restart = () => {
     setMessages([]);
     setStarted(false);
-    setStep(1);
     setSpecies("");
     setGender("");
     setName("");

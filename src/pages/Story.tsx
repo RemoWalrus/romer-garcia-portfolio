@@ -5,8 +5,6 @@ import { toast } from "sonner";
 import { Loader2, Send, RotateCcw, Download, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics, trackEvent } from "@/components/GoogleAnalytics";
@@ -156,10 +154,6 @@ const ExpandButton = ({ onClick, label }: { onClick: () => void; label?: string 
 
 
 
-const OPTION_CLASSES =
-  "flex-1 min-w-[100px] font-roc font-medium dark:border-[#00d4ff]/30 dark:text-neutral-300";
-const ACTIVE_CLASSES =
-  "flex-1 min-w-[100px] font-roc font-medium bg-[#0a1e5c] dark:bg-[#00d4ff] dark:text-neutral-950 hover:bg-[#0a1e5c]/90 dark:hover:bg-[#00d4ff]/90 dark:border-transparent";
 
 const randomName = () => {
   const prefixes = ["Kry", "Zor", "Ral", "Cal", "Del", "Lur", "Mir", "Pel"];
@@ -172,7 +166,7 @@ const randomName = () => {
 
 const Story = () => {
   const [searchParams] = useSearchParams();
-  const [step, setStep] = useState(1);
+  
   const [species, setSpecies] = useState("");
   const [gender, setGender] = useState("");
   const [name, setName] = useState("");
@@ -748,6 +742,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
           />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://romergarcia.com/story" />
+          <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects/paradoxxia-cover.png" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:title" content="Paradoxxia Story | Roleplay an Encounter" />
           <meta
@@ -775,6 +770,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://romergarcia.com/story" />
+        <meta property="og:image" content="https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/projects/paradoxxia-cover.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Paradoxxia Story | Roleplay an Encounter" />
         <meta
@@ -957,7 +953,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                           m.content
                         )}
                         {m.image && typed && (
-                          <div className="relative mt-2 w-32 sm:w-36 md:w-40 lg:w-44 xl:w-48 2xl:w-56 shrink-0">
+                          <div className="relative mt-3 w-full max-w-sm lg:max-w-md shrink-0">
                             <img
                               src={m.image}
                               alt="Scene from the encounter with Paradoxxia"

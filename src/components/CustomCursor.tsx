@@ -184,6 +184,7 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
   }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter, noTrail]);
 
   if (isTouchDevice()) return null;
+  if (noTrail) return null; // story mode uses the native cursor
 
   const sizeTransition = 'width 0.45s cubic-bezier(0.25,1,0.5,1), height 0.45s cubic-bezier(0.25,1,0.5,1), margin 0.45s cubic-bezier(0.25,1,0.5,1)';
   const isLite = lite.current;

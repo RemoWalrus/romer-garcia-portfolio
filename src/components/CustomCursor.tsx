@@ -194,8 +194,8 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
           }}
         />
       </div>
-      {/* Ghost ring — hidden in lite mode */}
-      {!isLite && (
+      {/* Ghost ring — hidden in lite mode or when no-trail is requested */}
+      {!isLite && !noTrail && (
         <div
           ref={ghostRef}
           className="fixed top-0 left-0 pointer-events-none z-[9997]"

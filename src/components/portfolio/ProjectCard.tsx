@@ -11,13 +11,14 @@ interface ProjectCardProps {
     alt_text?: string | null;
   };
   onSelect: (project: any) => void;
+  className?: string;
 }
 
-export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
+export const ProjectCard = ({ project, onSelect, className = '' }: ProjectCardProps) => {
   return (
     <article
       onClick={() => onSelect(project)}
-      className="group relative cursor-pointer overflow-hidden bg-neutral-900"
+      className={`group relative cursor-pointer overflow-hidden bg-neutral-900 ${className}`}
       style={{ aspectRatio: '4/3' }}
       itemScope
       itemType="https://schema.org/CreativeWork"

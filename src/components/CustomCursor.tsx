@@ -73,8 +73,8 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
         }
       }
 
-      // Ghost interpolation — skip in lite mode
-      if (!lite.current && ghostRef.current) {
+      // Ghost interpolation — skip in lite mode or when no-trail is requested
+      if (!lite.current && !noTrailRef.current && ghostRef.current) {
         ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
         ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
         ghostRef.current.style.transform = `translate3d(${ghostPos.current.x}px, ${ghostPos.current.y}px, 0)`;

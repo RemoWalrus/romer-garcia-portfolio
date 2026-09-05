@@ -794,16 +794,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
         />
         <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
 
-        {backdropImage && (
-          <>
-            <div
-              className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-[background-image] duration-1000 opacity-25 dark:opacity-35"
-              style={{ backgroundImage: `url(${backdropImage})` }}
-              aria-hidden="true"
-            />
-            <div className="fixed inset-0 pointer-events-none z-0 bg-background/70 dark:bg-background/75 backdrop-blur-[2px]" />
-          </>
-        )}
+
 
 
         <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">

@@ -834,7 +834,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
             </div>
 
             {started && (
-              <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
+              <Card className="bg-card/60 backdrop-blur-md border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
                 <div className="flex items-center justify-between px-4 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-4 border-b border-border dark:border-[#00d4ff]/20">
                   <span className="text-xs sm:text-sm lg:text-base xl:text-lg font-mono text-muted-foreground">
                     {name} · {describeChar(gender, species)}
@@ -928,8 +928,8 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                             : "w-full rounded-lg"
                         } px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-5 leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
-                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
-                            : "bg-muted text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
+                            ? "bg-[#0a1e5c]/85 text-white dark:bg-[#00d4ff]/85 dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
+                            : "bg-muted/55 backdrop-blur-sm text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
                         }`}
                       >
                         {m.role === "assistant" && (

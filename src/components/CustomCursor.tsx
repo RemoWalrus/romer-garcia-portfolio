@@ -54,9 +54,14 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
       const mx = mouse.current.x;
       const my = mouse.current.y;
 
-      // Ring interpolation
-      ringPos.current.x += (mx - ringPos.current.x) * RING_LERP;
-      ringPos.current.y += (my - ringPos.current.y) * RING_LERP;
+      // Ring interpolation — snap instantly when no-trail is requested
+      if (noTrailRef.current) {
+        ringPos.current.x = mx;
+        ringPos.current.y = my;
+      } else {
+        ringPos.current.x += (mx - ringPos.current.x) * RING_LERP;
+        ringPos.current.y += (my - ringPos.current.y) * RING_LERP;
+      }
 
       const isHover = hovering.current;
       const size = isHover ? SIZE_HOVER : SIZE_DEFAULT;

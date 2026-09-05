@@ -21,7 +21,7 @@ interface CustomCursorProps {
 const isTouchDevice = () =>
   typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
-export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
+export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCursorProps = {}) => {
   const cursorColor = color || DEFAULT_COLOR;
   const cursorGhostColor = ghostColor || DEFAULT_GHOST_COLOR;
   const dotRef = useRef<HTMLDivElement>(null);

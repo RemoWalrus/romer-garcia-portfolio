@@ -15,12 +15,13 @@ const SETTLE_THRESHOLD = 0.5; // px – stop loop when ring is close enough
 interface CustomCursorProps {
   color?: string;
   ghostColor?: string;
+  noTrail?: boolean;
 }
 
 const isTouchDevice = () =>
   typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
 
-export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
+export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCursorProps = {}) => {
   const cursorColor = color || DEFAULT_COLOR;
   const cursorGhostColor = ghostColor || DEFAULT_GHOST_COLOR;
   const dotRef = useRef<HTMLDivElement>(null);
@@ -35,6 +36,7 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
   const raf = useRef<number>(0);
   const running = useRef(false);
   const lite = useRef(isLiteMode());
+  const noTrailRef = useRef(noTrail);
 
   // Extracted so onMouseMove can reference it
   const animateRef = useRef<() => void>(() => {});
@@ -71,8 +73,8 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
         }
       }
 
-      // Ghost interpolation — skip in lite mode
-      if (!lite.current && ghostRef.current) {
+      // Ghost interpolation — skip in lite mode or when no-trail is requested
+      if (!lite.current && !noTrailRef.current && ghostRef.current) {
         ghostPos.current.x += (mx - ghostPos.current.x) * GHOST_LERP;
         ghostPos.current.y += (my - ghostPos.current.y) * GHOST_LERP;
         ghostRef.current.style.transform = `translate3d(${ghostPos.current.x}px, ${ghostPos.current.y}px, 0)`;
@@ -192,8 +194,8 @@ export const CustomCursor = ({ color, ghostColor }: CustomCursorProps = {}) => {
           }}
         />
       </div>
-      {/* Ghost ring — hidden in lite mode */}
-      {!isLite && (
+      {/* Ghost ring — hidden in lite mode or when no-trail is requested */}
+      {!isLite && !noTrail && (
         <div
           ref={ghostRef}
           className="fixed top-0 left-0 pointer-events-none z-[9997]"

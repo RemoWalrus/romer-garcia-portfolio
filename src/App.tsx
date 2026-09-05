@@ -46,13 +46,15 @@ const RoutedCursor = () => {
     return () => window.removeEventListener('paradoxxia-phase-change', handlePhaseChange as EventListener);
   }, []);
 
-  const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia';
+  const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia' || location.pathname === '/story';
   const useBlackCursor = location.pathname === '/paradoxxia' && isYellowPhase;
+  const noTrail = location.pathname === '/story';
 
   return (
     <CustomCursor
       color={useBlackCursor ? BLACK_CURSOR : useNeonCursor ? NEON_BLUE : undefined}
       ghostColor={useBlackCursor ? BLACK_CURSOR_GHOST : useNeonCursor ? NEON_BLUE_GHOST : undefined}
+      noTrail={noTrail}
     />
   );
 };

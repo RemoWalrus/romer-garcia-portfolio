@@ -36,6 +36,7 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
   const raf = useRef<number>(0);
   const running = useRef(false);
   const lite = useRef(isLiteMode());
+  const noTrailRef = useRef(noTrail);
 
   // Extracted so onMouseMove can reference it
   const animateRef = useRef<() => void>(() => {});

@@ -50,13 +50,24 @@ export const Portfolio = () => {
         </ChromaticTitle>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-          {projects.map((project: any) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              onSelect={handleProjectSelect}
-            />
-          ))}
+          {projects.map((project: any, index: number) => {
+            const isLast = index === projects.length - 1;
+            const lastItemClasses = isLast
+              ? [
+                  projects.length % 2 === 1 ? 'md:col-span-2' : '',
+                  projects.length % 3 === 1 ? 'lg:col-span-3' : '',
+                ].filter(Boolean).join(' ')
+              : '';
+
+            return (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onSelect={handleProjectSelect}
+                className={lastItemClasses}
+              />
+            );
+          })}
         </div>
       </div>
 

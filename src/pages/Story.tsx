@@ -227,6 +227,12 @@ const Story = () => {
   // scroll is locked (and follows the typewriter) until the reply finishes typing
   const scrollLocked = isStreaming || isTyping;
 
+  // latest generated scene image (falls back to the character portrait) used as a fixed backdrop
+  const backdropImage =
+    [...messages].reverse().find((m) => !!m.image)?.image || cardImage || null;
+
+
+
   const followScroll = () => {
     const el = scrollRef.current;
     if (el) el.scrollTop = el.scrollHeight;

@@ -159,6 +159,15 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
   useEffect(() => {
     if (isTouchDevice()) return;
 
+    // In story mode we use the native cursor for responsiveness
+    if (noTrail) {
+      const prevCursor = document.body.style.cursor;
+      document.body.style.cursor = 'auto';
+      return () => {
+        document.body.style.cursor = prevCursor;
+      };
+    }
+
     document.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseover', onMouseOver, { passive: true });
     document.addEventListener('mouseleave', onMouseLeave);
@@ -172,9 +181,10 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
       cancelAnimationFrame(raf.current);
       running.current = false;
     };
-  }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter]);
+  }, [onMouseMove, onMouseOver, onMouseLeave, onMouseEnter, noTrail]);
 
   if (isTouchDevice()) return null;
+  if (noTrail) return null; // story mode uses the native cursor
 
   const sizeTransition = 'width 0.45s cubic-bezier(0.25,1,0.5,1), height 0.45s cubic-bezier(0.25,1,0.5,1), margin 0.45s cubic-bezier(0.25,1,0.5,1)';
   const isLite = lite.current;

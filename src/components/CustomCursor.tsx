@@ -233,6 +233,7 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
             marginLeft: -SIZE_DEFAULT / 2,
             marginTop: -SIZE_DEFAULT / 2,
             border: `1px solid ${cursorColor}`,
+            opacity: noTrail ? 0.5 : 1,
             transition: sizeTransition,
           }}
         />

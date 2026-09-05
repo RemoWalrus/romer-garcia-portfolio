@@ -922,7 +922,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`${
+                        className={`relative overflow-hidden ${
                           m.role === "user"
                             ? "max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] rounded-lg"
                             : "w-full rounded-lg"
@@ -932,6 +932,18 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                             : "bg-muted/55 backdrop-blur-sm text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
                         }`}
                       >
+                        {m.image && typed && (
+                          <>
+                            <div
+                              className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20 dark:opacity-30"
+                              style={{ backgroundImage: `url(${m.image})`, backgroundAttachment: "fixed" }}
+                              aria-hidden="true"
+                            />
+                            <div className="absolute inset-0 pointer-events-none bg-card/40 dark:bg-background/40" aria-hidden="true" />
+                          </>
+                        )}
+                        <div className="relative">
+
                         {m.role === "assistant" && (
                           <div className="flex items-center justify-between gap-3 mb-1 sm:mb-2">
                             <span className="text-xs sm:text-sm lg:text-base xl:text-lg uppercase tracking-widest text-muted-foreground">

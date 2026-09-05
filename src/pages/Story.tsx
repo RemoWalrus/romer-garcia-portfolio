@@ -1011,7 +1011,9 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                             <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> rendering scene...
                           </span>
                         )}
+                        </div>
                       </div>
+
                     </div>
                     );
                   })}

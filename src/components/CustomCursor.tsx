@@ -15,6 +15,7 @@ const SETTLE_THRESHOLD = 0.5; // px – stop loop when ring is close enough
 interface CustomCursorProps {
   color?: string;
   ghostColor?: string;
+  noTrail?: boolean;
 }
 
 const isTouchDevice = () =>

@@ -227,10 +227,6 @@ const Story = () => {
   // scroll is locked (and follows the typewriter) until the reply finishes typing
   const scrollLocked = isStreaming || isTyping;
 
-  // latest generated scene image (falls back to the character portrait) used as a fixed backdrop
-  const backdropImage =
-    [...messages].reverse().find((m) => !!m.image)?.image || cardImage || null;
-
 
 
   const followScroll = () => {
@@ -794,16 +790,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
         />
         <div className="fixed inset-0 pointer-events-none z-0 bg-white/60 dark:bg-transparent" />
 
-        {backdropImage && (
-          <>
-            <div
-              className="fixed inset-0 pointer-events-none z-0 bg-cover bg-center transition-[background-image] duration-1000 opacity-25 dark:opacity-35"
-              style={{ backgroundImage: `url(${backdropImage})` }}
-              aria-hidden="true"
-            />
-            <div className="fixed inset-0 pointer-events-none z-0 bg-background/70 dark:bg-background/75 backdrop-blur-[2px]" />
-          </>
-        )}
+
 
 
         <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
@@ -834,7 +821,7 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
             </div>
 
             {started && (
-              <Card className="bg-card/60 backdrop-blur-md border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
+              <Card className="bg-card/90 backdrop-blur-sm border-border dark:border-[#00d4ff]/30 flex flex-col flex-1 min-h-0">
                 <div className="flex items-center justify-between px-4 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-4 border-b border-border dark:border-[#00d4ff]/20">
                   <span className="text-xs sm:text-sm lg:text-base xl:text-lg font-mono text-muted-foreground">
                     {name} · {describeChar(gender, species)}
@@ -922,16 +909,28 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                       className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`${
+                        className={`relative overflow-hidden ${
                           m.role === "user"
                             ? "max-w-[92%] md:max-w-[85%] lg:max-w-[80%] xl:max-w-[75%] rounded-lg"
                             : "w-full rounded-lg"
                         } px-3 py-2 sm:px-4 sm:py-3 lg:px-6 lg:py-4 xl:px-8 xl:py-5 leading-relaxed whitespace-pre-wrap ${
                           m.role === "user"
-                            ? "bg-[#0a1e5c]/85 text-white dark:bg-[#00d4ff]/85 dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
+                            ? "bg-[#0a1e5c] text-white dark:bg-[#00d4ff] dark:text-neutral-950 font-roc text-base sm:text-lg lg:text-xl xl:text-2xl"
                             : "bg-muted/55 backdrop-blur-sm text-foreground font-roc text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl"
                         }`}
                       >
+                        {m.image && typed && (
+                          <>
+                            <div
+                              className="absolute inset-0 pointer-events-none bg-cover bg-center opacity-20 dark:opacity-30"
+                              style={{ backgroundImage: `url(${m.image})`, backgroundAttachment: "fixed" }}
+                              aria-hidden="true"
+                            />
+                            <div className="absolute inset-0 pointer-events-none bg-card/40 dark:bg-background/40" aria-hidden="true" />
+                          </>
+                        )}
+                        <div className="relative">
+
                         {m.role === "assistant" && (
                           <div className="flex items-center justify-between gap-3 mb-1 sm:mb-2">
                             <span className="text-xs sm:text-sm lg:text-base xl:text-lg uppercase tracking-widest text-muted-foreground">
@@ -999,7 +998,9 @@ Style: a survival-horror game-over cinematic in the spirit of classic Resident E
                             <Loader2 className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 animate-spin" /> rendering scene...
                           </span>
                         )}
+                        </div>
                       </div>
+
                     </div>
                     );
                   })}

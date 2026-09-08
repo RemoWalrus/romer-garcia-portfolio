@@ -1,0 +1,1 @@
+CREATE POLICY "temp_reverb_upload" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'images');

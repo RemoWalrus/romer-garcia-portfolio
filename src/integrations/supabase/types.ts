@@ -305,6 +305,7 @@ export type Database = {
       reverb_characters: {
         Row: {
           accent: string
+          base_id: string | null
           caption: string
           color_name: string | null
           created_at: string
@@ -334,6 +335,7 @@ export type Database = {
         }
         Insert: {
           accent?: string
+          base_id?: string | null
           caption?: string
           color_name?: string | null
           created_at?: string
@@ -363,6 +365,7 @@ export type Database = {
         }
         Update: {
           accent?: string
+          base_id?: string | null
           caption?: string
           color_name?: string | null
           created_at?: string

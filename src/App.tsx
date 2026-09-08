@@ -18,6 +18,7 @@ const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
 const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
 const Story = lazy(() => import("./pages/Story"));
 const Reverb = lazy(() => import("./pages/Reverb"));
+const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -89,6 +90,7 @@ const App = () => {
                 <Route path="/paradoxxia" element={<Paradoxxia />} />
                 <Route path="/story" element={<Story />} />
                 <Route path="/reverb" element={<Reverb />} />
+                <Route path="/reverb/:id" element={<ReverbCharacter />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

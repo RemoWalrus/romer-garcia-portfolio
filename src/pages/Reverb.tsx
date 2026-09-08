@@ -1,75 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import reverbImg from "@/assets/reverb-char-reverb.png.asset.json";
-import sparkImg from "@/assets/reverb-char-spark.png.asset.json";
-import harmonixImg from "@/assets/reverb-char-harmonix.png.asset.json";
-import eduqImg from "@/assets/reverb-char-eduq.png.asset.json";
-import widaImg from "@/assets/reverb-char-wida.png.asset.json";
-
-interface Character {
-  id: string;
-  name: string;
-  role: string;
-  quote: string;
-  caption: string;
-  image: string;
-  accent: string;
-  glow: string;
-}
-
-const CHARACTERS: Character[] = [
-  {
-    id: "reverb",
-    name: "Reverb",
-    role: "Music Producer // Visionary",
-    quote: "\u201cFeel it. Create it. Move it.\u201d",
-    caption: "From the streets to a brighter tomorrow.",
-    image: reverbImg.url,
-    accent: "#a855f7",
-    glow: "rgba(168,85,247,0.55)",
-  },
-  {
-    id: "spark",
-    name: "Spark",
-    role: "Idea Generator // Creative Lead",
-    quote: "\u201cBig ideas start with a spark.\u201d",
-    caption: "People change worlds. Sometimes by just being them.",
-    image: sparkImg.url,
-    accent: "#ff2e88",
-    glow: "rgba(255,46,136,0.55)",
-  },
-  {
-    id: "harmonix",
-    name: "Harmonix",
-    role: "Community Builder // Connector",
-    quote: "\u201cDifferent voices. Stronger together.\u201d",
-    caption: "Systems link people. People make them matter.",
-    image: harmonixImg.url,
-    accent: "#2f8cff",
-    glow: "rgba(47,140,255,0.55)",
-  },
-  {
-    id: "eduq",
-    name: "Eduq",
-    role: "Infiltration Specialist // Tech",
-    quote: "\u201cInformation is freedom. Control is survival.\u201d",
-    caption: "Tradition meets tomorrow. Same places. Different times.",
-    image: eduqImg.url,
-    accent: "#b6f13b",
-    glow: "rgba(182,241,59,0.55)",
-  },
-  {
-    id: "wida",
-    name: "Wida",
-    role: "Time Traveler // Impact Lead",
-    quote: "\u201cA kinder, brighter world is possible.\u201d",
-    caption: "Same frequency. Louder together.",
-    image: widaImg.url,
-    accent: "#2fe6d6",
-    glow: "rgba(47,230,214,0.55)",
-  },
-];
+import { CHARACTERS } from "@/data/reverbCharacters";
 
 const NAV = ["Home", "The Crew", "Universe", "Music", "Projects", "Media", "Store"];
 
@@ -135,14 +67,13 @@ const Reverb = () => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
             return (
-              <button
+              <Link
                 key={c.id}
-                type="button"
+                to={`/reverb/${c.id}`}
                 onMouseEnter={() => setActive(c.id)}
                 onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(c.id)}
                 onBlur={() => setActive(null)}
-                onClick={() => setActive(isActive ? null : c.id)}
                 aria-label={`${c.name} — ${c.role}`}
                 className="group relative flex-1 h-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
                 style={{
@@ -209,7 +140,7 @@ const Reverb = () => {
                     View Profile
                   </span>
                 </div>
-              </button>
+              </Link>
             );
           })}
         </div>

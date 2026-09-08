@@ -8,3 +8,4 @@
 - [x] Use the native cursor throughout Reverb pages
 - [x] Brighten the Reverb wordmark to cyan and refine its letter spacing
 - [x] Tighten the V/reversed-E spacing and make the Reverb landing page follow the automatic site theme
+- [x] Unify Reverb headers, remove the wordmark glow and center nav, and theme profile-page chrome

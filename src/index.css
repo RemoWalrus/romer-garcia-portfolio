@@ -25,6 +25,7 @@
     --input: 0 0% 90%;
     --ring: 0 0% 5%;
     --reverb-cyan: 188 100% 50%;
+    --reverb-wordmark: 225 80% 20%;
     --radius: 0;
   }
  
@@ -48,6 +49,7 @@
     --border: 0 0% 15%;
     --input: 0 0% 15%;
     --ring: 0 0% 85%;
+    --reverb-wordmark: 188 100% 50%;
   }
 
   * {

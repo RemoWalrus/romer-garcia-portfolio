@@ -25,12 +25,13 @@ const ReverbHeader = ({ sticky = false }: { sticky?: boolean }) => (
   <header
     className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 flex items-center justify-between border-b border-border bg-background/80 px-5 py-4 backdrop-blur-sm transition-colors md:px-8`}
   >
-    <Link to="/reverb" className="leading-none">
+    <Link to="/reverb" className="min-w-0 leading-none pr-4">
       <ReverbWordmark />
-      <span className="mt-1 block font-roc text-[9px] uppercase tracking-[0.3em] text-muted-foreground md:text-[10px]">
+      <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">
         People / Ideas / Music / Change
       </span>
     </Link>
+
 
     <Link
       to="/paradoxxia"

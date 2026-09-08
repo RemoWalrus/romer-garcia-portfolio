@@ -125,9 +125,7 @@ const ReverbCharacter = () => {
               >
 
                 {character.hasProfile ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7">
-                    <section className="md:col-span-2">
-                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                         Identity
                       </h2>
                       <dl className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">

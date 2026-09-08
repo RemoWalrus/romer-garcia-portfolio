@@ -6,6 +6,42 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const NAV = ["Home", "The Crew", "Universe", "Music", "Projects", "Media", "Store"];
 
+const ReverbWordmark = () => {
+  const word = "REVERB".split("");
+  const renderWord = () =>
+    word.map((letter, index) => (
+      <span
+        key={`${letter}-${index}`}
+        className={index === 3 ? "inline-block -scale-x-100" : "inline-block"}
+      >
+        {letter}
+      </span>
+    ));
+
+  return (
+    <span
+      className="relative inline-block font-roc text-2xl md:text-3xl font-extrabold tracking-[-0.05em] uppercase"
+      aria-label="Reverb"
+    >
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 translate-x-[2px] text-red-500/45 mix-blend-screen"
+      >
+        {renderWord()}
+      </span>
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 -translate-x-[2px] text-cyan-400/40 mix-blend-screen"
+      >
+        {renderWord()}
+      </span>
+      <span aria-hidden="true" className="relative z-10 text-white">
+        {renderWord()}
+      </span>
+    </span>
+  );
+};
+
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
   const isMobile = useIsMobile();
@@ -31,9 +67,7 @@ const Reverb = () => {
       {/* Top bar */}
       <header className="absolute top-0 left-0 right-0 z-30 px-5 md:px-8 py-4 flex items-center justify-between">
         <Link to="/reverb" className="leading-none">
-          <span className="block font-roc text-2xl md:text-3xl font-black tracking-[0.25em] uppercase">
-            Reverb
-          </span>
+          <ReverbWordmark />
           <span className="block font-roc text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-white/60 mt-1">
             People / Ideas / Music / Change
           </span>
@@ -102,13 +136,14 @@ const Reverb = () => {
                   flexGrow: grow,
                   flexBasis: 0,
                   minHeight: mobileCollapsed ? 44 : undefined,
+                  marginLeft: !isMobile && i > 0 ? "-5vw" : undefined,
                   clipPath: isMobile
                     ? undefined
                     : i === 0
-                    ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
+                    ? "polygon(0 0, 100% 0, 92% 100%, 0% 100%)"
                     : i === CHARACTERS.length - 1
-                    ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
-                    : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
+                    ? "polygon(8% 0, 100% 0, 100% 100%, 0% 100%)"
+                    : "polygon(8% 0, 100% 0, 92% 100%, 0% 100%)",
                 }}
               >
                 {/* Image */}
@@ -153,17 +188,11 @@ const Reverb = () => {
                     >
                       {c.name}
                     </span>
-                    <span className="block font-roc text-[10px] xl:text-[11px] tracking-[0.16em] uppercase text-white/75 mt-2">
+                    <span className="block h-8 max-w-[20ch] overflow-hidden font-roc text-[10px] xl:text-[11px] leading-4 tracking-[0.16em] uppercase text-white/75 mt-2">
                       {c.role}
                     </span>
                     <span
-                      className="hidden lg:block font-roc text-[10px] xl:text-xs leading-snug uppercase mt-3 max-w-[16ch]"
-                      style={{ color: isActive ? c.accent : "rgba(255,255,255,0.65)" }}
-                    >
-                      {c.quote}
-                    </span>
-                    <span
-                      className={`${isActive ? "inline-block" : "hidden xl:inline-block"} mt-4 font-roc text-[10px] tracking-[0.2em] uppercase border px-3 py-2 transition-colors`}
+                      className={`${isActive ? "inline-block" : "invisible xl:inline-block"} mt-4 font-roc text-[10px] tracking-[0.2em] uppercase border px-3 py-2 transition-colors`}
                       style={{
                         borderColor: isActive ? c.accent : "rgba(255,255,255,0.35)",
                         color: isActive ? c.accent : "rgba(255,255,255,0.8)",

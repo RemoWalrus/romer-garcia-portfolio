@@ -51,19 +51,23 @@ const ReverbCharacter = () => {
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
-        <title>{`${character.name} | Reverb Collective Character Sheet`}</title>
-        <meta
-          name="description"
-          content={`${character.name} — ${character.role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`}
-        />
-        <meta property="og:title" content={`${character.name} | Reverb`} />
-        <meta property="og:description" content={`${character.name} — ${character.role}.`} />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="profile" />
+        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
+        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
         <link
           rel="canonical"
           href={`https://romer-garcia-portfolio.lovable.app/reverb/${character.id}`}
         />
+
         <link
           rel="preload"
           as="image"

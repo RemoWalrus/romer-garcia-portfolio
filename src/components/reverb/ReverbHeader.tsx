@@ -59,33 +59,56 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
   );
 };
 
+const useReverbFavicon = () => {
+  useEffect(() => {
+    const link =
+      document.querySelector<HTMLLinkElement>('link[rel="icon"]') ||
+      document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
+    if (!link) return;
+
+    const originalHref = link.href;
+    const originalType = link.type;
+    link.href = "/favicon-reverb.png";
+    link.type = "image/png";
+
+    return () => {
+      link.href = originalHref;
+      link.type = originalType;
+    };
+  }, []);
+};
+
 const ReverbHeader = ({
   sticky = false,
 }: {
   sticky?: boolean;
-}) => (
-  <header
-    className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
-  >
-    <div className="mx-auto flex w-full max-w-[1500px] items-center justify-between px-5 py-4 md:px-8">
-      <Link to="/reverb" className="min-w-0 leading-none pr-4">
-        <ReverbWordmark />
-        <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">
-          People / Ideas / Music / Change
-        </span>
-      </Link>
+}) => {
+  useReverbFavicon();
 
-      <div className="flex shrink-0 items-center gap-3 md:gap-4">
-        <ReverbThemeToggle />
-        <Link
-          to="/paradoxxia"
-          className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Paradoxxia →
+  return (
+    <header
+      className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
+    >
+      <div className="mx-auto flex w-full max-w-[1500px] items-center justify-between px-5 py-4 md:px-8">
+        <Link to="/reverb" className="min-w-0 leading-none pr-4">
+          <ReverbWordmark />
+          <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">
+            People / Ideas / Music / Change
+          </span>
         </Link>
+
+        <div className="flex shrink-0 items-center gap-3 md:gap-4">
+          <ReverbThemeToggle />
+          <Link
+            to="/paradoxxia"
+            className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Paradoxxia →
+          </Link>
+        </div>
       </div>
-    </div>
-  </header>
-);
+    </header>
+  );
+};
 
 export default ReverbHeader;

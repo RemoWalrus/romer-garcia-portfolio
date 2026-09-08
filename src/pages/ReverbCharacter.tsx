@@ -45,21 +45,21 @@ const ReverbCharacter = () => {
         />
       </Helmet>
 
-      <ReverbHeader sticky />
+      <ReverbHeader sticky contained />
 
       {/* Sheet */}
       <main className="relative flex flex-col flex-1 min-h-0 bg-background transition-colors">
         <div className="mx-auto flex flex-col flex-1 min-h-0 w-full max-w-[1500px]">
           {/* Character sheet */}
           <div
-            className="relative flex-1 min-h-0 overflow-hidden lg:overflow-visible"
+            className="relative flex-1 min-h-0 overflow-visible"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
             <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative z-40 h-[76svh] min-h-[380px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
+              <div className="relative z-40 h-[76svh] min-h-[380px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
 
                 <h1
                   className="relative z-50 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"

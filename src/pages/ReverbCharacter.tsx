@@ -114,7 +114,7 @@ const ReverbCharacter = () => {
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
-                    className="w-full h-full object-contain object-top lg:object-contain lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="w-full h-full object-contain object-top lg:w-auto lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>

@@ -86,7 +86,9 @@ const Reverb = () => {
                 <img
                   src={c.image}
                   alt={`${c.name}, ${c.role}`}
-                  loading="lazy"
+                  loading="eager"
+                  fetchPriority={i === 0 ? "high" : "auto"}
+                  decoding="async"
                   className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out ${
                     isActive
                       ? "grayscale-0 scale-[1.14]"

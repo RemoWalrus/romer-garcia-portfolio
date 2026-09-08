@@ -128,7 +128,9 @@ const ReverbCharacter = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <section className="md:col-span-2">
                       <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
-                      <dl className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                        Identity
+                      </h2>
+                      <dl className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
                         {(character.identity ?? []).map((row) => (
                           <div key={row.label} className="flex gap-2 items-baseline">
                             <dt className="font-roc text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-black/45 shrink-0">

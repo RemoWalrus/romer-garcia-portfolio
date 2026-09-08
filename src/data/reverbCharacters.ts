@@ -167,7 +167,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "LOYAL BUT DIFFICULT TO READ",
       "UNCOMFORTABLE WITH VARIABLES HE CANNOT CONTROL",
     ],
-    colorName: "Cyan",
+    colorName: "Deep Blue",
     specialties: [
       "Strategy",
       "Surveillance",
@@ -175,7 +175,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "Infiltration",
       "Tactical Technology",
     ],
-    palette: ["#0d0d0f", "#1a1f2b", "#5a616b", "#12439e", "#22d3ee", "#dbe6f5"],
+    palette: ["#0d0d0f", "#1a1f2b", "#5a616b", "#12439e", "#2563eb", "#dbe6f5"],
     gear: [
       "HUD Visor",
       "Respirator",

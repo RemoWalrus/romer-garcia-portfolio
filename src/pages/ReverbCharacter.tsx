@@ -142,11 +142,8 @@ const ReverbCharacter = () => {
                           </div>
                         ))}
                       </dl>
-                      <p className="mt-3 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
+                      <p className="mt-2 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
                         {character.discipline ?? character.role}
-                      </p>
-                      <p className="mt-1.5 font-hand text-2xl" style={{ color: accent }}>
-                        {character.quote}
                       </p>
                     </section>
 

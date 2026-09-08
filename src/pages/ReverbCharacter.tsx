@@ -161,26 +161,28 @@ const ReverbCharacter = () => {
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
                 <div className="absolute -right-[4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[4%] md:w-[58%] md:h-[100%] lg:right-[-58%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[110%] lg:items-start">
-                  <img
-                    src={character.figure ?? character.image}
-                    alt={`${character.name}, ${character.role}`}
-                    loading="eager"
-                    fetchPriority="high"
-                    decoding="async"
-                    className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
-                    style={
-                      locked
-                        ? { filter: "grayscale(100%) brightness(0.35) contrast(1.3) blur(1.5px)", opacity: 0.9 }
-                        : undefined
-                    }
-                  />
-                  {locked && (
-                    <span
-                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-roc text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/45 border border-white/25 px-3 py-2"
-                    >
-                      Locked
-                    </span>
-                  )}
+                  <div className="relative h-full">
+                    <img
+                      src={character.figure ?? character.image}
+                      alt={`${character.name}, ${character.role}`}
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
+                      className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                      style={
+                        locked
+                          ? { filter: "grayscale(100%) brightness(0.5) contrast(1) blur(3px)", opacity: 0.85 }
+                          : undefined
+                      }
+                    />
+                    {locked && (
+                      <span
+                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-roc text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/45 border border-white/25 px-3 py-2"
+                      >
+                        Locked
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 

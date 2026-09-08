@@ -306,11 +306,11 @@ export type Database = {
         Row: {
           accent: string
           caption: string
-          closing_quote: string | null
           color_name: string | null
           created_at: string
           discipline: string | null
           figure_file: string | null
+          gallery: Json | null
           gear: string[]
           glow: string
           has_profile: boolean
@@ -334,11 +334,11 @@ export type Database = {
         Insert: {
           accent?: string
           caption?: string
-          closing_quote?: string | null
           color_name?: string | null
           created_at?: string
           discipline?: string | null
           figure_file?: string | null
+          gallery?: Json | null
           gear?: string[]
           glow?: string
           has_profile?: boolean
@@ -362,11 +362,11 @@ export type Database = {
         Update: {
           accent?: string
           caption?: string
-          closing_quote?: string | null
           color_name?: string | null
           created_at?: string
           discipline?: string | null
           figure_file?: string | null
+          gallery?: Json | null
           gear?: string[]
           glow?: string
           has_profile?: boolean

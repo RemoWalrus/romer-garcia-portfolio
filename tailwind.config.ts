@@ -22,6 +22,7 @@ export default {
 			fontFamily: {
 				roc: ["roc-grotesk", "sans-serif"],
 				reverb: ["Kanit", "Impact", "sans-serif"],
+				hand: ["Caveat", "cursive"],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

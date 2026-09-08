@@ -63,182 +63,199 @@ const ReverbCharacter = () => {
       </header>
 
       {/* Sheet */}
-      <main
-        className="relative"
-        style={{ background: `radial-gradient(120% 80% at 20% 0%, ${glow} -40%, #05050700 60%), #050507` }}
-      >
-        <div className="mx-auto max-w-[1400px] px-5 md:px-8 py-10 md:py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)_minmax(0,0.8fr)] gap-8 lg:gap-10">
-            {/* Left: identity */}
-            <div className="order-1 min-w-0">
-              <h1
-                className="font-reverb italic uppercase leading-[0.8] text-[16vw] sm:text-[11vw] lg:text-[4.4vw] break-words"
-                style={{ color: accent, textShadow: `0 0 40px ${glow}` }}
-              >
-                {character.name}
-              </h1>
+      <main className="relative bg-black">
+        <div className="mx-auto max-w-[1500px] px-3 md:px-6 py-6 md:py-10">
+          {/* Character sheet */}
+          <div
+            className="relative overflow-hidden border border-white/10"
+            style={{
+              background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
+            }}
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)]">
+              {/* LEFT: identity + figure */}
+              <div className="relative px-5 md:px-8 pt-8 pb-0 min-h-[520px]">
+                <h1
+                  className="font-reverb italic uppercase leading-[0.78] text-[19vw] sm:text-[13vw] lg:text-[6.6vw] tracking-[-0.02em]"
+                  style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
+                >
+                  {character.name}
+                </h1>
 
-              <div className="mt-5 h-px w-16" style={{ backgroundColor: accent }} />
+                <div className="mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
-              <p className="mt-5 font-roc text-[11px] md:text-xs tracking-[0.22em] uppercase text-white/80 leading-relaxed">
-                {(character.title ?? character.role).split("//").map((line, i) => (
-                  <span key={i} className="block">
-                    {i === 0 ? line.trim() : `// ${line.trim()}`}
-                  </span>
-                ))}
-              </p>
-
-              {character.kanji && (
-                <p className="mt-4 text-3xl md:text-4xl" style={{ color: accent }}>
-                  {character.kanji}
+                <p className="mt-4 font-roc text-[10px] md:text-[11px] tracking-[0.28em] uppercase text-white/85 leading-[1.9]">
+                  Reverb
+                  <br />
+                  Collective
+                  <br />
+                  {`// ${(character.title ?? character.role).split("//").pop()?.trim()}`}
                 </p>
-              )}
 
-              {character.hasProfile ? (
-                <>
-                  {character.tagline && (
-                    <p className="mt-8 font-roc text-sm leading-relaxed text-white/75">
-                      {character.tagline.map((line) => (
-                        <span key={line} className="block italic">
-                          {line}
-                        </span>
-                      ))}
-                    </p>
-                  )}
-                  <blockquote
-                    className="mt-8 font-roc text-xs md:text-sm tracking-[0.14em] uppercase leading-relaxed max-w-[22ch]"
+                {character.kanji && (
+                  <p className="mt-3 text-2xl md:text-3xl tracking-[0.2em]" style={{ color: accent }}>
+                    {character.kanji}
+                  </p>
+                )}
+
+                {character.tagline && (
+                  <p className="mt-6 font-hand text-2xl md:text-3xl leading-[1.15] text-white/90">
+                    {character.tagline.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </p>
+                )}
+
+                {/* Reverb mark + word list */}
+                <div className="mt-8 relative z-10">
+                  <span
+                    className="font-roc text-xl md:text-2xl font-black tracking-[0.28em] uppercase"
                     style={{ color: accent }}
                   >
-                    {character.quote}
-                  </blockquote>
-                </>
-              ) : (
-                <p className="mt-8 font-roc text-xs tracking-[0.18em] uppercase text-white/60 max-w-[26ch] leading-relaxed">
-                  {character.caption}
-                </p>
-              )}
+                    Reverb
+                  </span>
+                  <div className="mt-3 h-px w-8" style={{ backgroundColor: accent }} />
+                  <p className="mt-3 font-roc text-[10px] tracking-[0.34em] uppercase text-white/55 leading-[2]">
+                    Arts
+                    <br />
+                    People
+                    <br />
+                    Places
+                    <br />
+                    Times
+                    <br />
+                    <span className="text-white">Together</span>
+                  </p>
+                </div>
 
-              <div className="mt-12 hidden lg:block">
-                <span className="font-roc text-2xl font-black tracking-[0.22em] uppercase" style={{ color: accent }}>
-                  Reverb
-                </span>
-                <div className="mt-4 h-px w-8" style={{ backgroundColor: accent }} />
-                <p className="mt-4 font-roc text-[10px] tracking-[0.3em] uppercase text-white/50 leading-loose">
-                  People<br />Arts<br />Places<br />Times<br />
-                  <span className="text-white">Together</span>
-                </p>
+                {/* Figure */}
+                <div className="relative lg:absolute lg:right-[-6%] lg:bottom-0 lg:top-6 lg:w-[72%] flex items-end justify-center pointer-events-none">
+                  <img
+                    src={character.figure ?? character.image}
+                    alt={`${character.name}, ${character.role}`}
+                    className="w-full max-h-[80vh] h-full object-contain object-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Center: figure */}
-            <div className="order-2 relative min-w-0">
-              <div
-                className="relative overflow-hidden border border-white/10"
-                style={{ background: `linear-gradient(180deg, #0b0b0f 0%, ${glow} 220%)` }}
-              >
-                <img
-                  src={character.image}
-                  alt={`${character.name}, ${character.role}`}
-                  className="w-full h-auto min-h-[420px] object-contain"
-                />
-                {!character.hasProfile && (
-                  <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px] flex flex-col items-center justify-center text-center px-6">
+              {/* RIGHT: light data panels */}
+              <div className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:p-7">
+                {character.hasProfile ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7">
+                    <section className="md:col-span-2">
+                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                        Identity
+                      </h2>
+                      <p className="mt-3 font-roc text-[11px] md:text-xs tracking-[0.16em] uppercase leading-[2] text-black/70">
+                        {character.role}
+                      </p>
+                      <p className="mt-2 font-hand text-2xl" style={{ color: accent }}>
+                        {character.quote}
+                      </p>
+                    </section>
+
+                    <section>
+                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                        Notes
+                      </h2>
+                      <ul className="mt-3 space-y-1.5">
+                        {character.notes?.map((n) => (
+                          <li
+                            key={n}
+                            className="font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75"
+                          >
+                            – {n}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+
+                    <section className="space-y-6">
+                      {character.palette && (
+                        <div>
+                          <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                            Color Palette
+                          </h2>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            {character.palette.map((c) => (
+                              <span
+                                key={c}
+                                className="h-8 w-8 rounded-full border border-black/10 shadow-inner"
+                                style={{ backgroundColor: c }}
+                                title={c}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {character.gear && (
+                        <div>
+                          <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                            Gear / Accessories
+                          </h2>
+                          <ul className="mt-3 space-y-1.5">
+                            {character.gear.map((g) => (
+                              <li
+                                key={g}
+                                className="font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75"
+                              >
+                                – {g}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </section>
+
+                    <section className="md:col-span-2 border-t border-black/15 pt-5 flex flex-wrap items-end justify-between gap-4">
+                      <div>
+                        {character.signOff && (
+                          <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
+                            {character.signOff}
+                          </p>
+                        )}
+                        <span
+                          className="mt-3 block font-roc text-lg font-black tracking-[0.3em] uppercase"
+                          style={{ color: "#111" }}
+                        >
+                          Reverb
+                        </span>
+                      </div>
+                      {character.closingQuote && (
+                        <p className="font-hand text-2xl leading-tight text-black/80 max-w-[24ch] text-right">
+                          {character.closingQuote}
+                          <span className="block mt-1 text-lg text-black/55">— {character.name}</span>
+                        </p>
+                      )}
+                    </section>
+                  </div>
+                ) : (
+                  <div className="min-h-[360px] flex flex-col items-center justify-center text-center px-4">
                     <span
-                      className="font-reverb italic uppercase text-4xl md:text-5xl leading-none"
-                      style={{ color: accent, textShadow: `0 0 30px ${glow}` }}
+                      className="font-reverb italic uppercase text-5xl md:text-6xl leading-none"
+                      style={{ color: accent }}
                     >
                       Coming
                       <br />
                       Soon
                     </span>
-                    <span className="mt-5 font-roc text-[10px] tracking-[0.28em] uppercase text-white/60">
+                    <span className="mt-5 font-roc text-[10px] tracking-[0.28em] uppercase text-black/55">
                       Full character sheet in production
                     </span>
+                    <p className="mt-6 font-hand text-2xl text-black/70 max-w-[24ch]">
+                      {character.caption}
+                    </p>
                   </div>
                 )}
               </div>
-              {character.hasProfile && character.signOff && (
-                <p className="mt-4 font-roc text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-white/55">
-                  {character.signOff}
-                </p>
-              )}
-            </div>
-
-            {/* Right: notes */}
-            <div className="order-3 space-y-10">
-              {character.hasProfile ? (
-                <>
-                  <section>
-                    <h2 className="font-roc text-[11px] tracking-[0.28em] uppercase text-white/90 pb-2 border-b-2 border-white/70">
-                      Notes
-                    </h2>
-                    <ul className="mt-4 space-y-1.5">
-                      {character.notes?.map((n) => (
-                        <li key={n} className="font-roc text-[11px] tracking-[0.12em] uppercase text-white/70">
-                          – {n}
-                        </li>
-                      ))}
-                    </ul>
-                  </section>
-
-                  {character.palette && (
-                    <section>
-                      <h2 className="font-roc text-[11px] tracking-[0.28em] uppercase text-white/90 pb-2 border-b-2 border-white/70">
-                        Color Palette
-                      </h2>
-                      <div className="mt-4 flex gap-2">
-                        {character.palette.map((c) => (
-                          <span
-                            key={c}
-                            className="h-9 w-9 rounded-sm border border-white/15"
-                            style={{ backgroundColor: c }}
-                            title={c}
-                          />
-                        ))}
-                      </div>
-                    </section>
-                  )}
-
-                  {character.gear && (
-                    <section>
-                      <h2 className="font-roc text-[11px] tracking-[0.28em] uppercase text-white/90 pb-2 border-b-2 border-white/70">
-                        Gear / Accessories
-                      </h2>
-                      <ul className="mt-4 space-y-1.5">
-                        {character.gear.map((g) => (
-                          <li key={g} className="font-roc text-[11px] tracking-[0.12em] uppercase text-white/70">
-                            – {g}
-                          </li>
-                        ))}
-                      </ul>
-                    </section>
-                  )}
-
-                  {character.closingQuote && (
-                    <p className="font-roc text-sm italic leading-relaxed" style={{ color: accent }}>
-                      {character.closingQuote}
-                      <span className="block mt-2 text-white/60 not-italic text-[11px] tracking-[0.2em] uppercase">
-                        — {character.name}
-                      </span>
-                    </p>
-                  )}
-                </>
-              ) : (
-                <section>
-                  <h2 className="font-roc text-[11px] tracking-[0.28em] uppercase text-white/90 pb-2 border-b-2 border-white/70">
-                    Notes
-                  </h2>
-                  <p className="mt-4 font-roc text-[11px] tracking-[0.14em] uppercase text-white/60 leading-relaxed">
-                    Expressions, turnaround, palette and gear for {character.name} are still being
-                    developed. Check back soon.
-                  </p>
-                </section>
-              )}
             </div>
           </div>
 
           {/* Crew nav */}
-          <nav className="mt-16 border-t border-white/10 pt-8">
+          <nav className="mt-12 border-t border-white/10 pt-8">
             <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-white/50">
               The Collective
             </h2>
@@ -268,6 +285,7 @@ const ReverbCharacter = () => {
           </nav>
         </div>
       </main>
+
 
       <footer className="border-t border-white/10 py-8 text-center">
         <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-white/40">

@@ -55,12 +55,14 @@ const ReverbCharacter = () => {
             className="relative overflow-hidden border-x border-b border-white/10"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
-              minHeight: "calc(100vh - 64px)",
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)] h-full">
+            <div
+              className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:h-[calc(100dvh-64px-150px)] lg:min-h-[560px]"
+            >
               {/* LEFT: identity + figure */}
               <div className="relative px-5 md:px-8 pt-8 pb-0 h-full">
+
                 <h1
                   className="font-reverb italic uppercase leading-[0.78] text-[19vw] sm:text-[13vw] lg:text-[6.6vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
@@ -110,18 +112,22 @@ const ReverbCharacter = () => {
                   </p>
                 </div>
 
-                {/* Figure */}
-                <div className="relative lg:absolute lg:right-[-6%] lg:bottom-0 lg:top-6 lg:w-[72%] flex items-end justify-center pointer-events-none">
+                {/* Figure — as tall as the section */}
+                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-24%] lg:bottom-0 lg:top-0 lg:h-full lg:w-[80%] flex items-end justify-center pointer-events-none z-[5]">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
-                    className="w-full max-h-[80vh] h-full object-contain object-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="w-full h-full object-contain object-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>
 
               {/* RIGHT: light data panels */}
-              <div className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:p-7 h-full">
+              <div
+                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-16 lg:pr-8 lg:py-7 h-full overflow-hidden lg:overflow-y-auto"
+                style={{ clipPath: "polygon(9% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
+              >
+
                 {character.hasProfile ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7">
                     <section className="md:col-span-2">

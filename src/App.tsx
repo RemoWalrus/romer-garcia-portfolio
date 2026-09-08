@@ -17,6 +17,7 @@ const AICharacterGenerator = lazy(() => import("./pages/AICharacterGenerator"));
 const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
 const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
 const Story = lazy(() => import("./pages/Story"));
+const Reverb = lazy(() => import("./pages/Reverb"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -87,6 +88,7 @@ const App = () => {
                 <Route path="/contact" element={<ContactRedirect />} />
                 <Route path="/paradoxxia" element={<Paradoxxia />} />
                 <Route path="/story" element={<Story />} />
+                <Route path="/reverb" element={<Reverb />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

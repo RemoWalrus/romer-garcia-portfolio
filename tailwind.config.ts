@@ -21,6 +21,7 @@ export default {
 		extend: {
 			fontFamily: {
 				roc: ["roc-grotesk", "sans-serif"],
+				reverb: ["Kanit", "Impact", "sans-serif"],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "temp reverb upload" ON storage.objects;

@@ -146,8 +146,8 @@ export const CHARACTERS: ReverbCharacter[] = [
     caption: "Systems link people. People make them matter.",
     image: reverbImage("reverb-char-harmonix.webp"),
     figure: reverbImage("reverb-harmonix-main.webp"),
-    accent: "#22d3ee",
-    glow: "rgba(34,211,238,0.55)",
+    accent: "#2563eb",
+    glow: "rgba(37,99,235,0.55)",
     hasProfile: true,
     kanji: "\u8abf\u548c\u8005",
     title: "Reverb Collective // Strategist",
@@ -167,7 +167,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "LOYAL BUT DIFFICULT TO READ",
       "UNCOMFORTABLE WITH VARIABLES HE CANNOT CONTROL",
     ],
-    colorName: "Cyan",
+    colorName: "Deep Blue",
     specialties: [
       "Strategy",
       "Surveillance",
@@ -175,7 +175,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "Infiltration",
       "Tactical Technology",
     ],
-    palette: ["#0d0d0f", "#1a1f2b", "#5a616b", "#12439e", "#22d3ee", "#dbe6f5"],
+    palette: ["#0d0d0f", "#1a1f2b", "#5a616b", "#12439e", "#2563eb", "#dbe6f5"],
     gear: [
       "HUD Visor",
       "Respirator",

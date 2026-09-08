@@ -125,12 +125,12 @@ const ReverbCharacter = () => {
               >
 
                 {character.hasProfile ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <section className="md:col-span-2">
-                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
                         Identity
                       </h2>
-                      <dl className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                      <dl className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
                         {(character.identity ?? []).map((row) => (
                           <div key={row.label} className="flex gap-2 items-baseline">
                             <dt className="font-roc text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-black/45 shrink-0">
@@ -142,19 +142,19 @@ const ReverbCharacter = () => {
                           </div>
                         ))}
                       </dl>
-                      <p className="mt-4 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
+                      <p className="mt-3 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
                         {character.discipline ?? character.role}
                       </p>
-                      <p className="mt-2 font-hand text-2xl" style={{ color: accent }}>
+                      <p className="mt-1.5 font-hand text-2xl" style={{ color: accent }}>
                         {character.quote}
                       </p>
                     </section>
 
                     <section>
-                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
                         Character
                       </h2>
-                      <ul className="mt-3 space-y-1.5">
+                      <ul className="mt-2 space-y-1">
                         {character.notes?.map((n) => (
                           <li
                             key={n}
@@ -166,13 +166,13 @@ const ReverbCharacter = () => {
                       </ul>
                     </section>
 
-                    <section className="space-y-6">
+                    <section className="space-y-4">
                       <div>
-                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
                           Signature
                         </h2>
                         {character.colorName && (
-                          <div className="mt-3 flex items-center gap-3">
+                          <div className="mt-2 flex items-center gap-3">
                             <span
                               className="h-6 w-6 rounded-full border border-black/10 shadow-inner"
                               style={{ backgroundColor: accent }}
@@ -183,7 +183,7 @@ const ReverbCharacter = () => {
                           </div>
                         )}
                         {character.specialties && (
-                          <p className="mt-4 font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
+                          <p className="mt-3 font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
                             <span className="text-black/45">Specialties — </span>
                             {character.specialties.join(" / ")}
                           </p>
@@ -192,10 +192,10 @@ const ReverbCharacter = () => {
 
                       {character.gear && (
                         <div>
-                          <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                          <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
                             Gear / Accessories
                           </h2>
-                          <ul className="mt-3 space-y-1.5">
+                          <ul className="mt-2 space-y-1">
                             {character.gear.map((g) => (
                               <li
                                 key={g}
@@ -211,10 +211,10 @@ const ReverbCharacter = () => {
 
                     {character.overview && (
                       <section className="md:col-span-2">
-                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
                           Overview
                         </h2>
-                        <div className="mt-3 space-y-3">
+                        <div className="mt-2 space-y-2">
                           {character.overview.map((p) => (
                             <p
                               key={p.slice(0, 24)}
@@ -227,7 +227,7 @@ const ReverbCharacter = () => {
                       </section>
                     )}
 
-                    <section className="md:col-span-2 border-t border-black/15 pt-5 flex flex-wrap items-end justify-between gap-4">
+                    <section className="md:col-span-2 border-t border-black/15 pt-3 flex flex-wrap items-end justify-between gap-4">
                       <div>
                         {character.signOff && (
                           <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">

@@ -45,7 +45,7 @@ const ReverbCharacter = () => {
         />
       </Helmet>
 
-      <ReverbHeader sticky contained />
+      <ReverbHeader sticky />
 
       {/* Sheet */}
       <main className="relative flex flex-col flex-1 min-h-0 bg-background transition-colors">

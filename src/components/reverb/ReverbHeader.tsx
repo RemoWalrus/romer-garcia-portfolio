@@ -27,17 +27,13 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
 
 const ReverbHeader = ({
   sticky = false,
-  contained = false,
 }: {
   sticky?: boolean;
-  contained?: boolean;
 }) => (
   <header
     className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
   >
-    <div
-      className={`${contained ? "mx-auto max-w-[1500px]" : ""} flex items-center justify-between px-5 py-4 md:px-8`}
-    >
+    <div className="mx-auto flex w-full max-w-[1500px] items-center justify-between px-5 py-4 md:px-8">
       <Link to="/reverb" className="min-w-0 leading-none pr-4">
         <ReverbWordmark />
         <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">

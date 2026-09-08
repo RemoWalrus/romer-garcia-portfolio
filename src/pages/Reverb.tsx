@@ -16,7 +16,8 @@ const FALLBACK_SOCIAL_DESC =
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
   const isMobile = useIsMobile();
-  const characters = useReverbCharacters();
+  const allCharacters = useReverbCharacters();
+  const characters = allCharacters.filter((c) => !c.hidden);
   const metadata = useReverbMeta();
   const meta = usePageMetaFromData("reverb", metadata, {
     title: FALLBACK_TITLE,

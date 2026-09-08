@@ -30,6 +30,7 @@ type Row = {
   overview: string[] | null;
   sign_off: string | null;
   gallery: { type: "image" | "video"; src: string; caption?: string }[] | null;
+  is_hidden: boolean | null;
 };
 
 const mapRow = (row: Row): ReverbCharacter => ({
@@ -56,6 +57,7 @@ const mapRow = (row: Row): ReverbCharacter => ({
   overview: row.overview ?? [],
   signOff: row.sign_off ?? undefined,
   gallery: row.gallery ?? [],
+  hidden: row.is_hidden ?? false,
 });
 
 /**

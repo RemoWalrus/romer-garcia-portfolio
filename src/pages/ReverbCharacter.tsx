@@ -46,7 +46,7 @@ const ReverbCharacter = () => {
   }
 
   const { accent, glow } = character;
-  const others = characters.filter((c) => c.id !== character.id);
+  const others = characters.filter((c) => c.id !== character.id && !c.hidden);
 
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
@@ -300,6 +300,18 @@ const ReverbCharacter = () => {
                         </p>
                       )}
                     </section>
+
+                    {character.id === "spark" && (
+                      <section className="md:col-span-2">
+                        <Link
+                          to="/reverb/spark-20"
+                          aria-label="Spark, one year later"
+                          className="inline-block font-roc text-[9px] tracking-[0.4em] uppercase text-black/15 hover:text-black/70 transition-colors"
+                        >
+                          [ +1 YR ]
+                        </Link>
+                      </section>
+                    )}
 
                     <section className="md:col-span-2 border-t border-black/15 pt-3">
                       {character.signOff && (

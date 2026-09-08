@@ -55,12 +55,14 @@ const ReverbCharacter = () => {
             className="relative overflow-hidden border-x border-b border-white/10"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
-              minHeight: "calc(100vh - 64px)",
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)] h-full">
+            <div
+              className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:h-[calc(100dvh-64px-150px)] lg:min-h-[560px]"
+            >
               {/* LEFT: identity + figure */}
               <div className="relative px-5 md:px-8 pt-8 pb-0 h-full">
+
                 <h1
                   className="font-reverb italic uppercase leading-[0.78] text-[19vw] sm:text-[13vw] lg:text-[6.6vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}

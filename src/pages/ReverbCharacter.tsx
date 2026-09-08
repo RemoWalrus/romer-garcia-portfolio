@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { CHARACTERS, getCharacter } from "@/data/reverbCharacters";
+import ReverbHeader from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
@@ -8,14 +9,14 @@ const ReverbCharacter = () => {
 
   if (!character) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center gap-6 px-6 text-center">
+      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-6 px-6 text-center">
         <h1 className="font-reverb italic uppercase text-5xl">Unknown</h1>
-        <p className="font-roc text-xs tracking-[0.2em] uppercase text-white/60">
+        <p className="font-roc text-xs tracking-[0.2em] uppercase text-muted-foreground">
           No such member of the Reverb collective.
         </p>
         <Link
           to="/reverb"
-          className="font-roc text-[10px] tracking-[0.25em] uppercase border border-white/40 px-4 py-3 hover:bg-white hover:text-black transition-colors"
+          className="font-roc text-[10px] tracking-[0.25em] uppercase border border-border px-4 py-3 hover:bg-foreground hover:text-background transition-colors"
         >
           ← Back to the crew
         </Link>
@@ -27,7 +28,7 @@ const ReverbCharacter = () => {
   const others = CHARACTERS.filter((c) => c.id !== character.id);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
         <title>{`${character.name} | Reverb Collective Character Sheet`}</title>
         <meta
@@ -44,26 +45,10 @@ const ReverbCharacter = () => {
         />
       </Helmet>
 
-      {/* Top bar */}
-      <header className="sticky top-0 z-30 bg-black/80 backdrop-blur-sm border-b border-white/10 px-5 md:px-8 py-4 flex items-center justify-between">
-        <Link to="/reverb" className="leading-none">
-          <span className="block font-roc text-xl md:text-2xl font-black tracking-[0.25em] uppercase">
-            Reverb
-          </span>
-          <span className="block font-roc text-[9px] tracking-[0.3em] uppercase text-white/55 mt-1">
-            People / Ideas / Music / Change
-          </span>
-        </Link>
-        <Link
-          to="/reverb"
-          className="font-roc text-[10px] tracking-[0.22em] uppercase text-white/60 hover:text-white transition-colors"
-        >
-          ← The Crew
-        </Link>
-      </header>
+      <ReverbHeader sticky />
 
       {/* Sheet */}
-      <main className="relative bg-black">
+      <main className="relative bg-background transition-colors">
         <div className="mx-auto max-w-[1500px] px-3 md:px-6 py-6 md:py-10">
           {/* Character sheet */}
           <div
@@ -255,8 +240,8 @@ const ReverbCharacter = () => {
           </div>
 
           {/* Crew nav */}
-          <nav className="mt-12 border-t border-white/10 pt-8">
-            <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-white/50">
+          <nav className="mt-12 border-t border-border pt-8">
+            <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
               The Collective
             </h2>
             <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -264,7 +249,7 @@ const ReverbCharacter = () => {
                 <Link
                   key={c.id}
                   to={`/reverb/${c.id}`}
-                  className="group relative overflow-hidden border border-white/10 h-32 md:h-40"
+                  className="group relative overflow-hidden border border-border h-32 md:h-40"
                 >
                   <img
                     src={c.image}
@@ -287,8 +272,8 @@ const ReverbCharacter = () => {
       </main>
 
 
-      <footer className="border-t border-white/10 py-8 text-center">
-        <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-white/40">
+      <footer className="border-t border-border py-8 text-center">
+        <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
           © {new Date().getFullYear()} Romer Garcia — Reverb / Paradoxxia
         </p>
       </footer>

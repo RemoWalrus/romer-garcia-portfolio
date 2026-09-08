@@ -26,6 +26,7 @@ export default {
 			},
 			colors: {
 				'reverb-cyan': 'hsl(var(--reverb-cyan))',
+				'reverb-wordmark': 'hsl(var(--reverb-wordmark))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

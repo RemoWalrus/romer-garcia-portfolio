@@ -3,44 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { CHARACTERS } from "@/data/reverbCharacters";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-const NAV = ["Home", "The Crew", "Universe", "Music", "Projects", "Media", "Store"];
-
-const ReverbWordmark = () => {
-  const word = "REVERB".split("");
-  const renderWord = () =>
-    word.map((letter, index) => (
-      <span
-        key={`${letter}-${index}`}
-        className={index === 3 ? "ml-[0.035em] inline-block -scale-x-100" : "inline-block"}
-      >
-        {letter}
-      </span>
-    ));
-
-  return (
-    <span
-      className="relative inline-flex gap-[0.025em] font-roc text-2xl md:text-3xl font-extrabold tracking-normal uppercase"
-      aria-label="Reverb"
-    >
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 inline-flex gap-[0.025em] translate-x-[2px] text-red-500/40 mix-blend-screen"
-      >
-        {renderWord()}
-      </span>
-      <span
-        aria-hidden="true"
-        className="absolute inset-0 inline-flex gap-[0.025em] -translate-x-[2px] text-reverb-cyan/70 mix-blend-screen"
-      >
-        {renderWord()}
-      </span>
-      <span aria-hidden="true" className="relative z-10 inline-flex gap-[0.025em] text-reverb-cyan drop-shadow-[0_0_8px_hsl(var(--reverb-cyan)/0.85)]">
-        {renderWord()}
-      </span>
-    </span>
-  );
-};
+import ReverbHeader from "@/components/reverb/ReverbHeader";
 
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
@@ -64,35 +27,7 @@ const Reverb = () => {
         <link rel="canonical" href="https://romer-garcia-portfolio.lovable.app/reverb" />
       </Helmet>
 
-      {/* Top bar */}
-      <header className="absolute top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-sm px-5 md:px-8 py-4 flex items-center justify-between transition-colors">
-        <Link to="/reverb" className="leading-none">
-          <ReverbWordmark />
-          <span className="block font-roc text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-muted-foreground mt-1">
-            People / Ideas / Music / Change
-          </span>
-        </Link>
-
-        <nav className="hidden lg:flex items-center gap-7">
-          {NAV.map((item, i) => (
-            <span
-              key={item}
-              className={`font-roc text-[11px] tracking-[0.22em] uppercase cursor-default transition-colors ${
-                i === 0 ? "text-foreground border-b border-foreground pb-1" : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {item}
-            </span>
-          ))}
-        </nav>
-
-        <Link
-          to="/paradoxxia"
-          className="font-roc text-[10px] tracking-[0.22em] uppercase text-muted-foreground hover:text-foreground transition-colors"
-        >
-          Paradoxxia →
-        </Link>
-      </header>
+      <ReverbHeader />
 
       {/* Hero: diagonal character panels (columns on desktop, rows on mobile) */}
       <section className="relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20">

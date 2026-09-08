@@ -62,7 +62,7 @@ const ReverbCharacter = () => {
               <div className="relative z-40 h-[76svh] min-h-[380px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
 
                 <h1
-                  className="relative z-50 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
+                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[3.6vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
@@ -107,7 +107,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[6%] top-0 z-40 flex h-[118%] w-[78%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[150%] lg:items-start">
+                <div className="absolute -right-[6%] top-0 z-40 flex h-[118%] w-[78%] items-start justify-end pointer-events-none lg:right-[-30%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[110%] lg:items-start">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
@@ -180,18 +180,6 @@ const ReverbCharacter = () => {
                             <span className="font-roc text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-black/75">
                               Color — {character.colorName}
                             </span>
-                          </div>
-                        )}
-                        {character.palette && (
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {character.palette.map((c) => (
-                              <span
-                                key={c}
-                                className="h-6 w-6 rounded-full border border-black/10 shadow-inner"
-                                style={{ backgroundColor: c }}
-                                title={c}
-                              />
-                            ))}
                           </div>
                         )}
                         {character.specialties && (

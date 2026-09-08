@@ -86,7 +86,10 @@ const ReverbCharacter = () => {
                 </p>
 
                 {character.tagline && (
-                  <p className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1] text-white/90">
+                  <p
+                    className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1]"
+                    style={{ color: accent }}
+                  >
                     {character.tagline.map((line) => (
                       <span key={line} className="block">
                         {line}

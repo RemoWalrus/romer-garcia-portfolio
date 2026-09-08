@@ -259,7 +259,7 @@ const ReverbCharacter = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
                   <span
-                    className="absolute bottom-2 left-3 font-reverb italic uppercase text-lg md:text-xl"
+                    className="absolute bottom-1 left-2 font-reverb italic uppercase text-sm md:text-base"
                     style={{ color: c.accent }}
                   >
                     {c.name}

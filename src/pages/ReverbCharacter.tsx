@@ -46,7 +46,7 @@ const ReverbCharacter = () => {
   }
 
   const { accent, glow } = character;
-  const others = characters.filter((c) => c.id !== character.id);
+  const others = characters.filter((c) => c.id !== character.id && !c.hidden);
 
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">

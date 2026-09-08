@@ -33,6 +33,8 @@ export interface ReverbCharacter {
   overview?: string[];
   signOff?: string;
   gallery?: { type: "image" | "video"; src: string; caption?: string }[];
+  /** Hidden from the public crew lists — reachable only via the Easter-egg link. */
+  hidden?: boolean;
 }
 
 

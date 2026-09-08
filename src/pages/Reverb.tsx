@@ -180,7 +180,7 @@ const Reverb = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
 
                 {/* Copy */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 xl:p-6">
+                <div className="absolute bottom-0 left-0 right-0 pb-5 pt-4 pr-6 pl-[8%] xl:pl-[9%]">
                   <span
                     className="block font-reverb italic uppercase leading-[0.85] text-[8vw] sm:text-[5vw] lg:text-[3.1vw] transition-all duration-500"
                     style={{

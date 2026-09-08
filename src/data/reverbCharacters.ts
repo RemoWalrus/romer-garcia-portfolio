@@ -3,6 +3,9 @@ import sparkImg from "@/assets/reverb-char-spark.png.asset.json";
 import harmonixImg from "@/assets/reverb-char-harmonix.png.asset.json";
 import eduqImg from "@/assets/reverb-char-eduq.png.asset.json";
 import widaImg from "@/assets/reverb-char-wida.png.asset.json";
+import sparkFigure from "@/assets/reverb-spark-main.png.asset.json";
+import harmonixFigure from "@/assets/reverb-harmonix-main.png.asset.json";
+import widaFigure from "@/assets/reverb-wida-main.png.asset.json";
 
 export interface ReverbCharacter {
   id: string;
@@ -11,6 +14,8 @@ export interface ReverbCharacter {
   quote: string;
   caption: string;
   image: string;
+  /** Full-body cutout used as the main figure on the character sheet. */
+  figure?: string;
   accent: string;
   glow: string;
   /** Full character sheet available? Otherwise the profile shows "coming soon". */
@@ -24,6 +29,7 @@ export interface ReverbCharacter {
   signOff?: string;
   closingQuote?: string;
 }
+
 
 export const CHARACTERS: ReverbCharacter[] = [
   {

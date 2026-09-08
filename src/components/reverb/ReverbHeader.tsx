@@ -65,9 +65,8 @@ const ReverbHeader = ({
 }: {
   sticky?: boolean;
 }) => {
-  useReverbFavicon();
-
   return (
+
     <header
       className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
     >

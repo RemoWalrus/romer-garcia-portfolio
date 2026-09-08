@@ -136,14 +136,14 @@ const Reverb = () => {
                   flexGrow: grow,
                   flexBasis: 0,
                   minHeight: mobileCollapsed ? 44 : undefined,
-                  marginLeft: !isMobile && i > 0 ? "-2.8vw" : undefined,
+                  marginLeft: !isMobile && i > 0 ? "-5vw" : undefined,
                   clipPath: isMobile
                     ? undefined
                     : i === 0
-                    ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
+                    ? "polygon(0 0, 100% 0, 92% 100%, 0% 100%)"
                     : i === CHARACTERS.length - 1
-                    ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
-                    : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
+                    ? "polygon(8% 0, 100% 0, 100% 100%, 0% 100%)"
+                    : "polygon(8% 0, 100% 0, 92% 100%, 0% 100%)",
                 }}
               >
                 {/* Image */}
@@ -188,7 +188,7 @@ const Reverb = () => {
                     >
                       {c.name}
                     </span>
-                    <span className="block font-roc text-[10px] xl:text-[11px] tracking-[0.16em] uppercase text-white/75 mt-2">
+                    <span className="block h-8 max-w-[20ch] overflow-hidden font-roc text-[10px] xl:text-[11px] leading-4 tracking-[0.16em] uppercase text-white/75 mt-2">
                       {c.role}
                     </span>
                     <span

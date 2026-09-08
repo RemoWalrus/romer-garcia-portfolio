@@ -213,7 +213,7 @@ const Reverb = () => {
 
       <footer className="border-t border-border py-8 font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
         <div className="mx-auto w-full max-w-[1500px] px-5 text-center md:px-8">
-          © {new Date().getFullYear()} Romer Garcia — Different people. A brighter tomorrow.
+          © {new Date().getFullYear()} Romer Garcia. All rights reserved.
         </div>
       </footer>
     </div>

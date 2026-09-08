@@ -1,0 +1,1 @@
+CREATE POLICY "Temp anon upload for reverb images" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'images' AND name LIKE 'reverb/%');

@@ -5,9 +5,11 @@ import { useReverbCharacters } from "@/hooks/use-reverb-characters";
 import { useReverbMeta } from "@/hooks/use-reverb-meta";
 import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
+import { useReverbUnlocked } from "@/lib/reverbLock";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
+  const unlocked = useReverbUnlocked();
   const characters = useReverbCharacters();
   const metadata = useReverbMeta();
   const character = characters.find((c) => c.id === id?.toLowerCase());

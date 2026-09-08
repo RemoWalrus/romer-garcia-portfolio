@@ -147,8 +147,13 @@ const Reverb = () => {
                 className="group relative flex-1 h-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
                 style={{
                   flexGrow: isActive ? 1.45 : 1,
-                  clipPath: "polygon(11% 0, 100% 0, 89% 100%, 0% 100%)",
-                  marginLeft: "-3%",
+                  clipPath:
+                    i === 0
+                      ? "polygon(0 0, 100% 0, 90% 100%, 0% 100%)"
+                      : i === CHARACTERS.length - 1
+                      ? "polygon(10% 0, 100% 0, 100% 100%, 0% 100%)"
+                      : "polygon(10% 0, 100% 0, 90% 100%, 0% 100%)",
+                  marginLeft: i === 0 ? 0 : "-2.5%",
                 }}
               >
                 {/* Image */}

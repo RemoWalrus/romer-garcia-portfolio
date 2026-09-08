@@ -51,6 +51,22 @@ const ReverbCharacter = () => {
   const excludeIds = new Set([character.id, character.baseId].filter(Boolean));
   const others = characters.filter((c) => !excludeIds.has(c.id) && !c.hidden);
 
+  /** Unlockable profiles stay classified until the unlock flag is set. */
+  const locked = !!character.hidden && !unlocked;
+
+  const Redact = ({ children }: { children: React.ReactNode }) =>
+    locked ? (
+      <span
+        aria-hidden="true"
+        className="select-none bg-black/85 text-transparent decoration-clone box-decoration-clone rounded-[1px] px-1"
+      >
+        {children}
+      </span>
+    ) : (
+      <>{children}</>
+    );
+
+
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>

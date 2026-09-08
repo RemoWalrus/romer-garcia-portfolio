@@ -104,6 +104,7 @@ const ReverbHeader = ({
 
         <div className="flex shrink-0 items-center gap-3 md:gap-4">
           <ReverbThemeToggle />
+          <ReverbLockToggle />
           <Link
             to="/paradoxxia"
             className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"

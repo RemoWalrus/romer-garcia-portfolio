@@ -122,7 +122,7 @@ const ReverbCharacter = () => {
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-[13%] lg:pr-6 lg:py-7 h-full overflow-hidden lg:overflow-y-auto"
+                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-[17%] lg:pr-7 lg:py-7 h-full overflow-hidden lg:overflow-y-auto"
                 style={{ clipPath: "polygon(11% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
               >
 

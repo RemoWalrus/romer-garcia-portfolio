@@ -182,7 +182,7 @@ const Reverb = () => {
                 {/* Copy */}
                 <div className="absolute bottom-0 left-0 right-0 pb-5 pt-4 pr-6 pl-[8%] xl:pl-[9%]">
                   <span
-                    className="block font-reverb italic uppercase leading-[0.85] text-[8vw] sm:text-[5vw] lg:text-[3.1vw] transition-all duration-500"
+                    className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[8vw] sm:text-[5vw] lg:text-[2.6vw] transition-all duration-500"
                     style={{
                       color: isActive ? c.accent : "#ffffff",
                       textShadow: isActive ? `0 0 26px ${c.glow}` : "0 2px 12px rgba(0,0,0,0.6)",

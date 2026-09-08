@@ -93,7 +93,7 @@ const ReverbCharacter = () => {
               <div className="relative z-40 h-[70svh] min-h-[340px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
 
                 <h1
-                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[3.6vw] tracking-[-0.02em]"
+                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] lg:max-w-none lg:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
@@ -102,7 +102,7 @@ const ReverbCharacter = () => {
 
                 <div className="relative z-50 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
-                <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[9px] md:text-[11px] tracking-[0.18em] md:tracking-[0.28em] uppercase text-white/85 leading-[1.8]">
+                <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[9px] md:text-[10px] tracking-[0.18em] md:tracking-[0.24em] uppercase text-white/85 leading-[1.8]">
                   <ReverbWordmark className="text-[inherit] text-white/85" />
                   <br />
                   Collective
@@ -112,7 +112,7 @@ const ReverbCharacter = () => {
 
                 {character.tagline && (
                   <p
-                    className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1]"
+                    className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-2xl lg:text-3xl leading-[1.1]"
                     style={{ color: accent }}
                   >
                     {character.tagline.map((line) => (
@@ -125,7 +125,7 @@ const ReverbCharacter = () => {
 
                 {/* Reverb mark + word list */}
                 <div className="mt-6 relative z-50 max-w-[42%] lg:mt-8 lg:max-w-none">
-                  <ReverbWordmark className="text-xl md:text-2xl" />
+                  <ReverbWordmark className="text-xl md:text-xl lg:text-2xl" />
                   <div className="mt-3 h-px w-8" style={{ backgroundColor: accent }} />
                   <p className="mt-3 font-roc text-[10px] tracking-[0.34em] uppercase text-white/55 leading-[2]">
                     Arts
@@ -141,14 +141,14 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none lg:right-[-58%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[110%] lg:items-start">
+                <div className="absolute -right-[4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[4%] md:w-[58%] md:h-[100%] lg:right-[-58%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[110%] lg:items-start">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
                     loading="eager"
                     fetchPriority="high"
                     decoding="async"
-                    className="h-full w-auto max-w-none object-contain object-right lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>

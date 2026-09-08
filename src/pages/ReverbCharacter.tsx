@@ -57,21 +57,21 @@ const ReverbCharacter = () => {
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
+            <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative isolate h-[88svh] min-h-[420px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
+              <div className="relative z-20 h-[76svh] min-h-[380px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
 
                 <h1
-                  className="relative z-10 max-w-[55%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
+                  className="relative z-50 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
                 </h1>
 
 
-                <div className="relative z-10 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
+                <div className="relative z-50 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
-                <p className="relative z-10 mt-4 max-w-[15ch] font-roc text-[9px] md:text-[11px] tracking-[0.18em] md:tracking-[0.28em] uppercase text-white/85 leading-[1.8]">
+                <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[9px] md:text-[11px] tracking-[0.18em] md:tracking-[0.28em] uppercase text-white/85 leading-[1.8]">
                   Reverb
                   <br />
                   Collective
@@ -80,7 +80,7 @@ const ReverbCharacter = () => {
                 </p>
 
                 {character.tagline && (
-                  <p className="relative z-10 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1] text-white/90">
+                  <p className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1] text-white/90">
                     {character.tagline.map((line) => (
                       <span key={line} className="block">
                         {line}
@@ -90,7 +90,7 @@ const ReverbCharacter = () => {
                 )}
 
                 {/* Reverb mark + word list */}
-                <div className="mt-6 relative z-10 max-w-[42%] lg:mt-8 lg:max-w-none">
+                <div className="mt-6 relative z-50 max-w-[42%] lg:mt-8 lg:max-w-none">
                   <span
                     className="font-roc text-xl md:text-2xl font-black tracking-[0.28em] uppercase"
                     style={{ color: accent }}
@@ -112,18 +112,18 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[22%] bottom-0 z-20 flex h-[102%] w-[92%] items-end justify-center pointer-events-none lg:right-[-48%] lg:top-[-2%] lg:bottom-auto lg:h-[103%] lg:w-[132%]">
+                <div className="absolute right-0 top-0 z-40 flex h-[102%] w-[60%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-auto lg:bottom-0 lg:h-[103%] lg:w-[150%] lg:items-end">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
-                    className="w-full h-full object-contain object-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="w-full h-full object-cover object-[65%_0%] lg:object-contain lg:object-right-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 lg:overflow-y-auto lg:pl-[24%] lg:pr-7 lg:py-6 lg:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
+                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 lg:overflow-y-auto lg:pl-[24%] lg:pr-7 lg:py-6 lg:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
               >
 
                 {character.hasProfile ? (

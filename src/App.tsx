@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import { applyTheme, getThemeOverride } from "./lib/theme";
@@ -34,6 +34,40 @@ const NEON_BLUE = 'hsl(192, 100%, 50%)';
 const NEON_BLUE_GHOST = 'hsla(192, 100%, 50%, 0.3)';
 const BLACK_CURSOR = 'hsl(0, 0%, 0%)';
 const BLACK_CURSOR_GHOST = 'hsla(0, 0%, 0%, 0.28)';
+
+const RoutedFavicon = () => {
+  const location = useLocation();
+  const originalRef = useRef<{ href: string; type: string } | null>(null);
+
+  useEffect(() => {
+    const link =
+      document.querySelector<HTMLLinkElement>('link[rel="icon"]') ||
+      document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
+    if (!link) return;
+
+    if (originalRef.current === null) {
+      originalRef.current = { href: link.href, type: link.type };
+    }
+
+    const path = location.pathname;
+    const isParadoxxia = path === '/paradoxxia' || path === '/char-gen' || path === '/story';
+    const isReverb = path === '/reverb' || path.startsWith('/reverb/');
+
+    if (isParadoxxia) {
+      link.href = '/favicon-paradoxxia.png';
+      link.type = 'image/png';
+    } else if (isReverb) {
+      link.href = '/favicon-reverb.png';
+      link.type = 'image/png';
+    } else {
+      const original = originalRef.current;
+      link.href = original.href;
+      link.type = original.type;
+    }
+  }, [location.pathname]);
+
+  return null;
+};
 
 const RoutedCursor = () => {
   const location = useLocation();
@@ -82,6 +116,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <ThemeColor />
+            <RoutedFavicon />
             <RoutedCursor />
             <Suspense fallback={null}>
               <Routes>
@@ -105,3 +140,4 @@ const App = () => {
 };
 
 export default App;
+

@@ -107,11 +107,11 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute right-0 top-0 z-40 flex h-[102%] w-[60%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[150%] lg:items-start">
+                <div className="absolute -right-[6%] top-0 z-40 flex h-[118%] w-[78%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[150%] lg:items-start">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
-                    className="w-full h-full object-cover object-[65%_0%] lg:object-contain lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="w-full h-full object-contain object-top lg:object-contain lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>

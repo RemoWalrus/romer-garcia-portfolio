@@ -32,8 +32,28 @@ A single-page portfolio with fixed hero and scrollable content sections:
 |-------|------|-------------|
 | `/paradoxxia` | Paradoxxia | AI Character Generator with Gemini-powered image generation |
 | `/char-gen` | AI Character Generator | Three-step character creation (species → gender → name) |
+| `/story` | Story Mode | Survival roleplay encounter with Paradoxxia (streaming AI + generated scene images) |
+| `/reverb` | Reverb | Landing page for the Reverb collective, a prequel franchise in the Paradoxxia universe |
+| `/reverb/:id` | Reverb Character Sheet | Full dossier profiles for Reverb, Spark, Harmonix, Eduq and Wida |
 | `/meme` | Dev Memes | Random coding memes, tips, and fun facts |
 | `/contact` | Contact Redirect | Redirects to homepage contact section |
+
+## Reverb (Paradoxxia Universe)
+
+- **Landing page** (`/reverb`): edge-to-edge slanted character panels; grayscale → color on hover (tap to expand on mobile), always dark themed.
+- **Character sheets** (`/reverb/:id`): dark/light split layout with a diagonal clip path, full-height character cutout overlapping the dossier, and a compact "The Collective" navigation strip.
+- **Wordmark**: `ReverbWordmark` renders REVERB with the **first E mirrored**; used for the collective only, never for the character named Reverb. Cyan in dark mode, Paradoxxia purple in light mode.
+- **Data**: all copy (identity, character notes, signature, gear, overview) lives in `src/data/reverbCharacters.ts`; each character carries an `accent` color used for the name, rules and handwritten tagline.
+- **Images**: stored in Supabase Storage under `images/reverb/` and served through the `/api/download-file` proxy. Panels/figures are WebP (`reverb-char-*.webp`, `reverb-*-main.webp`) plus 320px `-thumb.webp` versions for the crew navigation.
+
+## Performance
+
+- Route-level code splitting: every secondary page is `React.lazy` loaded in `src/App.tsx`.
+- Reverb imagery was converted from PNG (~18 MB total) to WebP (~1.1 MB) and thumbnails are served at 320px.
+- Above-the-fold images use `loading="eager"` + `fetchPriority="high"`; the character figure is additionally preloaded via `<link rel="preload" as="image">`.
+- Off-screen imagery uses `loading="lazy"` with `decoding="async"` and explicit dimensions to avoid layout shift.
+- `preconnect` hints for Supabase, Typekit, Google Fonts and GTM live in `index.html`.
+- Heavy animation work is decoupled from React renders via `requestAnimationFrame`, with a Lite Mode fallback on low-end devices.
 
 ## Key Features & Capabilities
 

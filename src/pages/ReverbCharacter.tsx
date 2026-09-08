@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
-import { CHARACTERS, getCharacter } from "@/data/reverbCharacters";
+import { CHARACTERS, getCharacter, reverbThumb } from "@/data/reverbCharacters";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {
@@ -43,6 +43,12 @@ const ReverbCharacter = () => {
           rel="canonical"
           href={`https://romer-garcia-portfolio.lovable.app/reverb/${character.id}`}
         />
+        <link
+          rel="preload"
+          as="image"
+          href={character.figure ?? character.image}
+          fetchPriority="high"
+        />
       </Helmet>
 
       <ReverbHeader sticky />
@@ -80,7 +86,10 @@ const ReverbCharacter = () => {
                 </p>
 
                 {character.tagline && (
-                  <p className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1] text-white/90">
+                  <p
+                    className="relative z-50 mt-5 max-w-[8ch] font-hand text-xl md:text-3xl leading-[1.1]"
+                    style={{ color: accent }}
+                  >
                     {character.tagline.map((line) => (
                       <span key={line} className="block">
                         {line}
@@ -276,9 +285,12 @@ const ReverbCharacter = () => {
                   className="group relative overflow-hidden border border-border h-12 md:h-14"
                 >
                   <img
-                    src={c.image}
+                    src={reverbThumb(c.id)}
                     alt={c.name}
                     loading="lazy"
+                    decoding="async"
+                    width={320}
+                    height={480}
                     className="absolute inset-0 w-full h-full object-cover object-top grayscale brightness-[0.7] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />

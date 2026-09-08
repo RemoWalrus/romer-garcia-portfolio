@@ -12,7 +12,7 @@ const ReverbWordmark = () => {
     word.map((letter, index) => (
       <span
         key={`${letter}-${index}`}
-        className={index === 3 ? "ml-[0.08em] inline-block -scale-x-100" : "inline-block"}
+        className={index === 3 ? "ml-[0.035em] inline-block -scale-x-100" : "inline-block"}
       >
         {letter}
       </span>
@@ -47,7 +47,7 @@ const Reverb = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
         <title>Reverb | Paradoxxia Universe Multimedia Franchise</title>
         <meta
@@ -65,10 +65,10 @@ const Reverb = () => {
       </Helmet>
 
       {/* Top bar */}
-      <header className="absolute top-0 left-0 right-0 z-30 px-5 md:px-8 py-4 flex items-center justify-between">
+      <header className="absolute top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-sm px-5 md:px-8 py-4 flex items-center justify-between transition-colors">
         <Link to="/reverb" className="leading-none">
           <ReverbWordmark />
-          <span className="block font-roc text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-white/60 mt-1">
+          <span className="block font-roc text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-muted-foreground mt-1">
             People / Ideas / Music / Change
           </span>
         </Link>
@@ -78,7 +78,7 @@ const Reverb = () => {
             <span
               key={item}
               className={`font-roc text-[11px] tracking-[0.22em] uppercase cursor-default transition-colors ${
-                i === 0 ? "text-white border-b border-[#ff2e88] pb-1" : "text-white/60 hover:text-white"
+                i === 0 ? "text-foreground border-b border-foreground pb-1" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {item}
@@ -88,7 +88,7 @@ const Reverb = () => {
 
         <Link
           to="/paradoxxia"
-          className="font-roc text-[10px] tracking-[0.22em] uppercase text-white/60 hover:text-white transition-colors"
+          className="font-roc text-[10px] tracking-[0.22em] uppercase text-muted-foreground hover:text-foreground transition-colors"
         >
           Paradoxxia →
         </Link>
@@ -214,12 +214,12 @@ const Reverb = () => {
       </section>
 
       {/* Captions strip */}
-      <section className="border-t border-white/10 bg-black">
+      <section className="border-t border-border bg-background transition-colors">
         <div className="grid grid-cols-2 md:grid-cols-5">
           {CHARACTERS.map((c) => (
             <p
               key={c.id}
-              className="font-roc text-[10px] md:text-[11px] uppercase tracking-[0.12em] text-white/55 leading-relaxed p-4 border-r border-b border-white/10"
+              className="font-roc text-[10px] md:text-[11px] uppercase tracking-[0.12em] text-muted-foreground leading-relaxed p-4 border-r border-b border-border"
             >
               {c.caption}
             </p>
@@ -230,7 +230,7 @@ const Reverb = () => {
       {/* Universe blurb */}
       <section className="max-w-4xl mx-auto px-5 py-20 md:py-28 text-center">
         <h2 className="font-reverb italic uppercase text-4xl md:text-6xl mb-6">The Universe</h2>
-        <p className="font-roc text-sm md:text-base leading-relaxed text-white/70">
+        <p className="font-roc text-sm md:text-base leading-relaxed text-muted-foreground">
           Long before an android woke up alone in the Cyber Boondocks, five outsiders were already
           fighting the silence. Reverb is the prequel chapter of the Paradoxxia universe — a story
           about people, ideas, music and change, told through sound, image and motion.
@@ -238,20 +238,20 @@ const Reverb = () => {
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Link
             to="/paradoxxia"
-            className="font-roc text-[11px] tracking-[0.22em] uppercase border border-white/40 px-6 py-3 hover:border-[#2fe6d6] hover:text-[#2fe6d6] transition-colors"
+            className="font-roc text-[11px] tracking-[0.22em] uppercase border border-border px-6 py-3 hover:border-reverb-cyan hover:text-reverb-cyan transition-colors"
           >
             Enter Paradoxxia
           </Link>
           <Link
             to="/story"
-            className="font-roc text-[11px] tracking-[0.22em] uppercase border border-white/40 px-6 py-3 hover:border-[#ff2e88] hover:text-[#ff2e88] transition-colors"
+            className="font-roc text-[11px] tracking-[0.22em] uppercase border border-border px-6 py-3 hover:border-foreground hover:text-foreground transition-colors"
           >
             Play the Story
           </Link>
         </div>
       </section>
 
-      <footer className="border-t border-white/10 py-8 text-center font-roc text-[10px] tracking-[0.2em] uppercase text-white/40">
+      <footer className="border-t border-border py-8 text-center font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
         © {new Date().getFullYear()} Romer Garcia — Different people. A brighter tomorrow.
       </footer>
     </div>

@@ -7,3 +7,4 @@
 - [x] Match the Reverb wordmark to the Paradoxxia treatment with its second E mirrored
 - [x] Use the native cursor throughout Reverb pages
 - [x] Brighten the Reverb wordmark to cyan and refine its letter spacing
+- [x] Tighten the V/reversed-E spacing and make the Reverb landing page follow the automatic site theme

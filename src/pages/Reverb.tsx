@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { CHARACTERS } from "@/data/reverbCharacters";
+import { useReverbCharacters } from "@/hooks/use-reverb-characters";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
   const isMobile = useIsMobile();
+  const characters = useReverbCharacters();
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden transition-colors">
@@ -34,7 +35,7 @@ const Reverb = () => {
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
-          {CHARACTERS.map((c, i) => {
+          {characters.map((c, i) => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
             const mobileCollapsed = isMobile && active !== null && !isActive;
@@ -72,12 +73,12 @@ const Reverb = () => {
                   flexBasis: 0,
                   minHeight: mobileCollapsed ? 44 : undefined,
                   marginLeft: !isMobile && i > 0 ? "-5vw" : undefined,
-                  zIndex: isActive ? CHARACTERS.length + 1 : CHARACTERS.length - i,
+                  zIndex: isActive ? characters.length + 1 : characters.length - i,
                   clipPath: isMobile
                     ? undefined
                     : i === 0
                     ? "polygon(0 0, 100% 0, 92% 100%, 0% 100%)"
-                    : i === CHARACTERS.length - 1
+                    : i === characters.length - 1
                     ? "polygon(8% 0, 100% 0, 100% 100%, 0% 100%)"
                     : "polygon(8% 0, 100% 0, 92% 100%, 0% 100%)",
                 }}
@@ -154,7 +155,7 @@ const Reverb = () => {
       {/* Captions strip */}
       <section className="border-t border-border bg-background transition-colors">
         <div className="grid grid-cols-2 md:grid-cols-5">
-          {CHARACTERS.map((c) => (
+          {characters.map((c) => (
             <p
               key={c.id}
               className="font-roc text-[10px] md:text-[11px] uppercase tracking-[0.12em] text-muted-foreground leading-relaxed p-4 border-r border-b border-border"

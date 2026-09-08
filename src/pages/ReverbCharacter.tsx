@@ -1,11 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
-import { CHARACTERS, getCharacter, reverbThumb } from "@/data/reverbCharacters";
+import { reverbThumb } from "@/data/reverbCharacters";
+import { useReverbCharacters } from "@/hooks/use-reverb-characters";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
-  const character = getCharacter(id);
+  const characters = useReverbCharacters();
+  const character = characters.find((c) => c.id === id?.toLowerCase());
 
   if (!character) {
     return (
@@ -25,7 +27,7 @@ const ReverbCharacter = () => {
   }
 
   const { accent, glow } = character;
-  const others = CHARACTERS.filter((c) => c.id !== character.id);
+  const others = characters.filter((c) => c.id !== character.id);
 
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">

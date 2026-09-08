@@ -110,10 +110,10 @@ const Reverb = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
 
-                {/* Copy */}
-                <div className="absolute bottom-0 left-0 right-0 pb-5 pt-4 pr-6 pl-[8%] xl:pl-[9%]">
+                {/* Copy — fixed-width block so text never jumps when the panel grows */}
+                <div className="absolute bottom-0 left-0 pb-5 pt-4 pr-4 pl-[16%] md:pl-[10%] xl:pl-[11%] w-max">
                   <span
-                    className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[8vw] sm:text-[5vw] lg:text-[2.3vw] transition-all duration-500"
+                    className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[26px] sm:text-[30px] lg:text-[clamp(28px,2.1vw,44px)] transition-all duration-500"
                     style={{
                       color: isActive ? c.accent : "#ffffff",
                       textShadow: isActive ? `0 0 26px ${c.glow}` : "0 2px 12px rgba(0,0,0,0.6)",

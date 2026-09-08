@@ -28,7 +28,7 @@ const ReverbCharacter = () => {
   const others = CHARACTERS.filter((c) => c.id !== character.id);
 
   return (
-    <div className="min-h-screen lg:h-[100dvh] flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
+    <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
         <title>{`${character.name} | Reverb Collective Character Sheet`}</title>
         <meta

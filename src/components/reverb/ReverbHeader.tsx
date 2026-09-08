@@ -110,3 +110,5 @@ const ReverbHeader = ({
     </header>
   );
 };
+
+export default ReverbHeader;

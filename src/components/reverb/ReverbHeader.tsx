@@ -6,8 +6,11 @@ import { applyTheme, isDarkNow, setThemeOverride } from "@/lib/theme";
 
 const ReverbThemeToggle = () => {
   const [isDark, setIsDark] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
+    // Only show in Lovable preview/edit mode (rendered in iframe)
+    setIsEditMode(window.self !== window.top);
     setIsDark(isDarkNow());
   }, []);
 
@@ -17,6 +20,8 @@ const ReverbThemeToggle = () => {
     applyTheme(next);
     setThemeOverride(next ? "dark" : "light");
   };
+
+  if (!isEditMode) return null;
 
   return (
     <button

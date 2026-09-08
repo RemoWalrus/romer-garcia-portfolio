@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { CHARACTERS, getCharacter } from "@/data/reverbCharacters";
-import ReverbHeader from "@/components/reverb/ReverbHeader";
+import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
@@ -52,14 +52,14 @@ const ReverbCharacter = () => {
         <div className="mx-auto flex flex-col flex-1 min-h-0 w-full max-w-[1500px]">
           {/* Character sheet */}
           <div
-            className="relative flex-1 min-h-0 overflow-hidden border-x border-b border-white/10"
+            className="relative flex-1 min-h-0 overflow-hidden lg:overflow-visible"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
             <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative z-20 h-[76svh] min-h-[380px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
+              <div className="relative z-40 h-[76svh] min-h-[380px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
 
                 <h1
                   className="relative z-50 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
@@ -72,7 +72,7 @@ const ReverbCharacter = () => {
                 <div className="relative z-50 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
                 <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[9px] md:text-[11px] tracking-[0.18em] md:tracking-[0.28em] uppercase text-white/85 leading-[1.8]">
-                  Reverb
+                  <ReverbWordmark className="text-[inherit] text-white/85" />
                   <br />
                   Collective
                   <br />
@@ -91,12 +91,7 @@ const ReverbCharacter = () => {
 
                 {/* Reverb mark + word list */}
                 <div className="mt-6 relative z-50 max-w-[42%] lg:mt-8 lg:max-w-none">
-                  <span
-                    className="font-roc text-xl md:text-2xl font-black tracking-[0.28em] uppercase"
-                    style={{ color: accent }}
-                  >
-                    Reverb
-                  </span>
+                  <ReverbWordmark className="text-xl md:text-2xl" />
                   <div className="mt-3 h-px w-8" style={{ backgroundColor: accent }} />
                   <p className="mt-3 font-roc text-[10px] tracking-[0.34em] uppercase text-white/55 leading-[2]">
                     Arts
@@ -112,11 +107,11 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute right-0 top-0 z-40 flex h-[102%] w-[60%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-auto lg:bottom-0 lg:h-[103%] lg:w-[150%] lg:items-end">
+                <div className="absolute right-0 top-0 z-40 flex h-[102%] w-[60%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[150%] lg:items-start">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
-                    className="w-full h-full object-cover object-[65%_0%] lg:object-contain lg:object-right-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="w-full h-full object-cover object-[65%_0%] lg:object-contain lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>
@@ -201,12 +196,7 @@ const ReverbCharacter = () => {
                             {character.signOff}
                           </p>
                         )}
-                        <span
-                          className="mt-3 block font-roc text-lg font-black tracking-[0.3em] uppercase"
-                          style={{ color: "#111" }}
-                        >
-                          Reverb
-                        </span>
+                        <ReverbWordmark className="mt-3 text-lg text-[#111]" />
                       </div>
                       {character.closingQuote && (
                         <p className="font-hand text-2xl leading-tight text-black/80 max-w-[24ch] text-right">

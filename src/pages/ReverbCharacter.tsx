@@ -258,22 +258,54 @@ const ReverbCharacter = () => {
                       </section>
                     )}
 
-                    <section className="md:col-span-2 border-t border-black/15 pt-3 flex flex-wrap items-end justify-between gap-4">
-                      <div>
-                        {character.signOff && (
-                          <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
-                            {character.signOff}
-                          </p>
-                        )}
-                        <ReverbWordmark className="mt-3 text-lg text-[#111]" />
-                      </div>
-                      {character.closingQuote && (
-                        <p
-                          className="font-hand text-2xl leading-tight max-w-[24ch] text-right"
-                          style={{ color: accent }}
-                        >
-                          {character.closingQuote}
-                          <span className="block mt-1 text-lg opacity-70">— {character.name}</span>
+                    <section className="md:col-span-2 border-t border-black/15 pt-3">
+                      {character.signOff && (
+                        <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
+                          {character.signOff}
+                        </p>
+                      )}
+                      <ReverbWordmark className="mt-3 text-lg text-[#111]" />
+                    </section>
+
+                    {/* Gallery */}
+                    <section className="md:col-span-2">
+                      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
+                        Gallery
+                      </h2>
+                      {character.gallery && character.gallery.length > 0 ? (
+                        <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                          {character.gallery.map((item, idx) => (
+                            <div
+                              key={idx}
+                              className="relative aspect-video bg-black/5 border border-black/10 overflow-hidden"
+                            >
+                              {item.type === "video" ? (
+                                <video
+                                  src={item.src}
+                                  className="w-full h-full object-cover"
+                                  controls
+                                  preload="metadata"
+                                />
+                              ) : (
+                                <img
+                                  src={item.src}
+                                  alt={item.caption || `${character.name} gallery ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              )}
+                              {item.caption && (
+                                <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white/90 font-roc text-[9px] tracking-[0.2em] uppercase px-2 py-1 truncate">
+                                  {item.caption}
+                                </span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="mt-3 font-roc text-[11px] tracking-[0.14em] uppercase text-black/45">
+                          Gallery coming soon.
                         </p>
                       )}
                     </section>

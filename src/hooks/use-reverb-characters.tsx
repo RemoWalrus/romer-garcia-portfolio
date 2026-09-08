@@ -29,7 +29,7 @@ type Row = {
   gear: string[] | null;
   overview: string[] | null;
   sign_off: string | null;
-  closing_quote: string | null;
+  gallery: { type: "image" | "video"; src: string; caption?: string }[] | null;
 };
 
 const mapRow = (row: Row): ReverbCharacter => ({
@@ -55,7 +55,7 @@ const mapRow = (row: Row): ReverbCharacter => ({
   gear: row.gear ?? [],
   overview: row.overview ?? [],
   signOff: row.sign_off ?? undefined,
-  closingQuote: row.closing_quote ?? undefined,
+  gallery: row.gallery ?? [],
 });
 
 /**

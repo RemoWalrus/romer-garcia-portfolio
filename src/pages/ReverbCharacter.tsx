@@ -57,16 +57,17 @@ const ReverbCharacter = () => {
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] h-full lg:min-h-[560px]">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
               <div className="relative px-5 md:px-8 pt-8 pb-0 h-full">
 
                 <h1
-                  className="font-reverb italic uppercase leading-[0.78] text-[19vw] sm:text-[13vw] lg:text-[6.6vw] tracking-[-0.02em]"
+                  className="font-reverb italic uppercase leading-[0.78] text-[17vw] sm:text-[12vw] lg:text-[5.2vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
                 </h1>
+
 
                 <div className="mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 

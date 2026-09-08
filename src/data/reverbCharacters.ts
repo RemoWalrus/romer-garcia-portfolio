@@ -32,7 +32,7 @@ export interface ReverbCharacter {
   gear?: string[];
   overview?: string[];
   signOff?: string;
-  closingQuote?: string;
+  gallery?: { type: "image" | "video"; src: string; caption?: string }[];
 }
 
 

@@ -49,6 +49,9 @@ A single-page portfolio with fixed hero and scrollable content sections:
 ## Performance
 
 - Route-level code splitting: every secondary page is `React.lazy` loaded in `src/App.tsx`.
+- Vendor chunk splitting (`build.rollupOptions.output.manualChunks` in `vite.config.ts`): React/router, Framer Motion, Supabase and React Query ship as separate long-lived cacheable chunks, so the app entry chunk dropped from ~645 kB to ~226 kB.
+- Bundled backgrounds are WebP: `paradoxxia-bg` 1.39 MB → 27 kB, `paradoxxia-carousel-placeholder` 1.81 MB → 124 kB. The unused `circuit-background.png` (1.37 MB) and leftover `*.asset.json` manifests were removed.
+- Google Fonts (Kanit/Caveat, Reverb display only) load non-blocking via `media="print" onload="this.media='all'"` with a `<noscript>` fallback; Typekit stays blocking as the primary UI typeface.
 - Reverb imagery was converted from PNG (~18 MB total) to WebP (~1.1 MB) and thumbnails are served at 320px.
 - Above-the-fold images use `loading="eager"` + `fetchPriority="high"`; the character figure is additionally preloaded via `<link rel="preload" as="image">`.
 - Off-screen imagery uses `loading="lazy"` with `decoding="async"` and explicit dimensions to avoid layout shift.

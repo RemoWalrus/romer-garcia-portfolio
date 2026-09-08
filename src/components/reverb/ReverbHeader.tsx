@@ -59,24 +59,6 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
   );
 };
 
-const useReverbFavicon = () => {
-  useEffect(() => {
-    const link =
-      document.querySelector<HTMLLinkElement>('link[rel="icon"]') ||
-      document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
-    if (!link) return;
-
-    const originalHref = link.href;
-    const originalType = link.type;
-    link.href = "/favicon-reverb.png";
-    link.type = "image/png";
-
-    return () => {
-      link.href = originalHref;
-      link.type = originalType;
-    };
-  }, []);
-};
 
 const ReverbHeader = ({
   sticky = false,

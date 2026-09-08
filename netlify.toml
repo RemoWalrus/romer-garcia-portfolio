@@ -31,6 +31,12 @@
   status = 200
   force = true
 
+# Keep Lovable-hosted assets out of the SPA fallback
+[[redirects]]
+  from = "/__l5e/*"
+  to = "/__l5e/:splat"
+  status = 200
+
 # SPA fallback
 [[redirects]]
   from = "/*"

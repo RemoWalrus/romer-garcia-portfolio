@@ -33,8 +33,9 @@
     <link rel="preconnect" href="https://xxigtbxqgbdcfpmnrzvp.supabase.co" crossorigin />
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
 
-    <!-- Adobe Fonts (Typekit) — render-blocking on purpose: primary UI typeface -->
-    <link rel="stylesheet" href="https://use.typekit.net/rol4qcd.css" />
+    <!-- Adobe Fonts (Typekit) — JS embed: the CSS endpoint for this kit returns 412 -->
+    <script src="https://use.typekit.net/rol4qcd.js"></script>
+    <script>try{Typekit.load({async:false});}catch(e){}</script>
 
     <!-- Display fonts are self-hosted in /fonts and declared in src/index.css -->
     <link rel="preload" href="/fonts/kanit-900-italic.woff2" as="font" type="font/woff2" crossorigin />

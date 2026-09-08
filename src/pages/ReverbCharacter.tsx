@@ -28,7 +28,7 @@ const ReverbCharacter = () => {
   const others = CHARACTERS.filter((c) => c.id !== character.id);
 
   return (
-    <div className="min-h-screen lg:h-[100dvh] flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
+    <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
         <title>{`${character.name} | Reverb Collective Character Sheet`}</title>
         <meta
@@ -57,16 +57,17 @@ const ReverbCharacter = () => {
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] h-full lg:min-h-[560px]">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
               <div className="relative px-5 md:px-8 pt-8 pb-0 h-full">
 
                 <h1
-                  className="font-reverb italic uppercase leading-[0.78] text-[19vw] sm:text-[13vw] lg:text-[6.6vw] tracking-[-0.02em]"
+                  className="font-reverb italic uppercase leading-[0.78] text-[17vw] sm:text-[12vw] lg:text-[5.2vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
                 </h1>
+
 
                 <div className="mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
@@ -110,8 +111,8 @@ const ReverbCharacter = () => {
                   </p>
                 </div>
 
-                {/* Figure — as tall as the section, overlapping the title */}
-                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-8%] lg:bottom-0 lg:top-[-14%] lg:h-[114%] lg:w-[105%] flex items-end justify-center pointer-events-none z-[5]">
+                {/* Figure — tall, shifted right so it overlaps the data sheet */}
+                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-30%] lg:bottom-0 lg:top-[-4%] lg:h-[104%] lg:w-[118%] flex items-end justify-center pointer-events-none z-[5]">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
@@ -122,7 +123,7 @@ const ReverbCharacter = () => {
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-[17%] lg:pr-7 lg:py-7 h-full overflow-hidden lg:overflow-y-auto"
+                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-[22%] lg:pr-7 lg:py-6 h-full overflow-hidden lg:overflow-y-auto"
                 style={{ clipPath: "polygon(11% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
               >
 
@@ -239,16 +240,16 @@ const ReverbCharacter = () => {
           </div>
 
           {/* Crew nav */}
-          <nav className="border-t border-border py-3">
-            <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-muted-foreground px-3 md:px-6">
+          <nav className="border-t border-border py-2 shrink-0">
+            <h2 className="font-roc text-[9px] tracking-[0.3em] uppercase text-muted-foreground px-3 md:px-6">
               The Collective
             </h2>
-            <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-1 px-3 md:px-6">
+            <div className="mt-1.5 grid grid-cols-2 md:grid-cols-4 gap-1 px-3 md:px-6">
               {others.map((c) => (
                 <Link
                   key={c.id}
                   to={`/reverb/${c.id}`}
-                  className="group relative overflow-hidden border border-border h-20 md:h-24"
+                  className="group relative overflow-hidden border border-border h-12 md:h-14"
                 >
                   <img
                     src={c.image}
@@ -258,7 +259,7 @@ const ReverbCharacter = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
                   <span
-                    className="absolute bottom-2 left-3 font-reverb italic uppercase text-lg md:text-xl"
+                    className="absolute bottom-1 left-2 font-reverb italic uppercase text-sm md:text-base"
                     style={{ color: c.accent }}
                   >
                     {c.name}
@@ -271,7 +272,7 @@ const ReverbCharacter = () => {
       </main>
 
 
-      <footer className="border-t border-border py-4 text-center">
+      <footer className="border-t border-border py-2 text-center shrink-0">
         <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
           © {new Date().getFullYear()} Romer Garcia — Reverb / Paradoxxia
         </p>

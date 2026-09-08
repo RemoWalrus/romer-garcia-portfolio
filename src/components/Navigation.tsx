@@ -181,6 +181,15 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                 <a href="/char-gen" className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50">
                   パラドクシア
                 </a>
+                <a
+                  href="/reverb"
+                  aria-label="REVERB"
+                  className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50 tracking-[0.12em]"
+                >
+                  <span aria-hidden="true">
+                    R<span className="inline-block scale-x-[-1]">E</span>VERB
+                  </span>
+                </a>
               </div>
               <div className="text-neutral-500 dark:text-neutral-400 text-sm">
                 © {new Date().getFullYear()} Romer Garcia. All rights reserved.

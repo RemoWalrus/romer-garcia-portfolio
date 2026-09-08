@@ -130,7 +130,7 @@ const Reverb = () => {
       <section className="relative h-[92vh] min-h-[560px] w-full pt-20">
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
-        <div className="flex h-full w-full overflow-hidden">
+        <div className="flex h-full w-full gap-1.5 md:gap-3 px-2 md:px-4 overflow-hidden">
           {CHARACTERS.map((c, i) => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
@@ -149,11 +149,11 @@ const Reverb = () => {
                   flexGrow: isActive ? 1.45 : 1,
                   clipPath:
                     i === 0
-                      ? "polygon(0 0, 100% 0, 90% 100%, 0% 100%)"
+                      ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
                       : i === CHARACTERS.length - 1
-                      ? "polygon(10% 0, 100% 0, 100% 100%, 0% 100%)"
-                      : "polygon(10% 0, 100% 0, 90% 100%, 0% 100%)",
-                  marginLeft: i === 0 ? 0 : "-2.5%",
+                      ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
+                      : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
+                  filter: "drop-shadow(0 0 14px rgba(0,0,0,0.9))",
                 }}
               >
                 {/* Image */}

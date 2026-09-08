@@ -38,6 +38,11 @@ export const CustomCursor = ({ color, ghostColor, noTrail = false }: CustomCurso
   const lite = useRef(isLiteMode());
   const noTrailRef = useRef(noTrail);
 
+  // Sync the mutable ref with the prop so route changes update the animation loop
+  useEffect(() => {
+    noTrailRef.current = noTrail;
+  }, [noTrail]);
+
   // Extracted so onMouseMove can reference it
   const animateRef = useRef<() => void>(() => {});
 

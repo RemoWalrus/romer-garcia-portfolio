@@ -43,7 +43,10 @@ A single-page portfolio with fixed hero and scrollable content sections:
 - **Landing page** (`/reverb`): edge-to-edge slanted character panels; grayscale → color on hover (tap to expand on mobile), always dark themed.
 - **Character sheets** (`/reverb/:id`): dark/light split layout with a diagonal clip path, full-height character cutout overlapping the dossier, and a compact "The Collective" navigation strip.
 - **Wordmark**: `ReverbWordmark` renders REVERB with the **first E mirrored**; used for the collective only, never for the character named Reverb. Cyan in dark mode, Paradoxxia purple in light mode.
-- **Data**: all copy (identity, character notes, signature, gear, overview) lives in `src/data/reverbCharacters.ts`; each character carries an `accent` color used for the name, rules and handwritten tagline.
+- **Easter egg entry**: the homepage footer carries a hidden `REVERB` link (first E mirrored via `scale-x-[-1]`) next to the `パラドクシア` and meme links.
+- **Metadata**: editable in the Supabase `metadata` table under `reverb.*` and `reverb.<character-id>.*` keys. Collective titles use the Unicode reversed E (`RƎVERB`) so the mirrored letter survives in browser tabs and social previews.
+- **Favicons**: `/reverb*` routes swap to a multi-size set (`favicon-reverb.png` 64px, `-192`, `-512`, plus `apple-touch-icon-reverb.png`), handled in `src/App.tsx`.
+- **Data**: all copy (identity, character notes, signature, gear, overview) lives in the Supabase `reverb_characters` table with `src/data/reverbCharacters.ts` as bundled fallback; each character carries an `accent` color used for the name, rules and handwritten tagline.
 - **Images**: stored in Supabase Storage under `images/reverb/` and served through the `/api/download-file` proxy. Panels/figures are WebP (`reverb-char-*.webp`, `reverb-*-main.webp`) plus 320px `-thumb.webp` versions for the crew navigation.
 
 ## Performance

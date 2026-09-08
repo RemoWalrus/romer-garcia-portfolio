@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Temp anon upload for reverb images" ON storage.objects;

@@ -25,6 +25,7 @@ export default {
 				hand: ["Caveat", "cursive"],
 			},
 			colors: {
+				'reverb-cyan': 'hsl(var(--reverb-cyan))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

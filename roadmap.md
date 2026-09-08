@@ -5,3 +5,5 @@
 - [x] Remove visible seams between Reverb character panels
 - [x] Remove panel quotes and normalize title block heights
 - [x] Match the Reverb wordmark to the Paradoxxia treatment with its second E mirrored
+- [x] Use the native cursor throughout Reverb pages
+- [x] Brighten the Reverb wordmark to cyan and refine its letter spacing

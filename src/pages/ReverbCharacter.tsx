@@ -5,9 +5,11 @@ import { useReverbCharacters } from "@/hooks/use-reverb-characters";
 import { useReverbMeta } from "@/hooks/use-reverb-meta";
 import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
+import { useReverbUnlocked } from "@/lib/reverbLock";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
+  const unlocked = useReverbUnlocked();
   const characters = useReverbCharacters();
   const metadata = useReverbMeta();
   const character = characters.find((c) => c.id === id?.toLowerCase());
@@ -48,6 +50,22 @@ const ReverbCharacter = () => {
   const { accent, glow } = character;
   const excludeIds = new Set([character.id, character.baseId].filter(Boolean));
   const others = characters.filter((c) => !excludeIds.has(c.id) && !c.hidden);
+
+  /** Unlockable profiles stay classified until the unlock flag is set. */
+  const locked = !!character.hidden && !unlocked;
+
+  const Redact = ({ children }: { children: React.ReactNode }) =>
+    locked ? (
+      <span
+        aria-hidden="true"
+        className="select-none bg-black/85 text-transparent decoration-clone box-decoration-clone rounded-[1px] px-1"
+      >
+        {children}
+      </span>
+    ) : (
+      <>{children}</>
+    );
+
 
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
@@ -118,7 +136,7 @@ const ReverbCharacter = () => {
                   >
                     {character.tagline.map((line) => (
                       <span key={line} className="block">
-                        {line}
+                        <Redact>{line}</Redact>
                       </span>
                     ))}
                   </p>
@@ -150,7 +168,19 @@ const ReverbCharacter = () => {
                     fetchPriority="high"
                     decoding="async"
                     className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    style={
+                      locked
+                        ? { filter: "brightness(0.06) contrast(1.6) blur(1.5px)", opacity: 0.9 }
+                        : undefined
+                    }
                   />
+                  {locked && (
+                    <span
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-roc text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/45 border border-white/25 px-3 py-2"
+                    >
+                      Locked
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -172,13 +202,13 @@ const ReverbCharacter = () => {
                               {row.label}
                             </dt>
                             <dd className="font-roc text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-black/80">
-                              {row.value}
+                              <Redact>{row.value}</Redact>
                             </dd>
                           </div>
                         ))}
                       </dl>
                       <p className="mt-2 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
-                        {character.discipline ?? character.role}
+                        <Redact>{character.discipline ?? character.role}</Redact>
                       </p>
                     </section>
 
@@ -192,7 +222,7 @@ const ReverbCharacter = () => {
                             key={n}
                             className="font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75"
                           >
-                            – {n}
+                            – <Redact>{n}</Redact>
                           </li>
                         ))}
                       </ul>
@@ -210,14 +240,14 @@ const ReverbCharacter = () => {
                               style={{ backgroundColor: accent }}
                             />
                             <span className="font-roc text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-black/75">
-                              Color — {character.colorName}
+                              Color — <Redact>{character.colorName}</Redact>
                             </span>
                           </div>
                         )}
                         {character.specialties && (
                           <p className="mt-3 font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
                             <span className="text-black/45">Specialties — </span>
-                            {character.specialties.join(" / ")}
+                            <Redact>{character.specialties.join(" / ")}</Redact>
                           </p>
                         )}
                       </div>
@@ -233,7 +263,7 @@ const ReverbCharacter = () => {
                                 key={g}
                                 className="font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75"
                               >
-                                – {g}
+                                – <Redact>{g}</Redact>
                               </li>
                             ))}
                           </ul>
@@ -252,7 +282,7 @@ const ReverbCharacter = () => {
                               key={p.slice(0, 24)}
                               className="font-roc text-[11px] md:text-xs leading-[1.9] text-black/75"
                             >
-                              {p}
+                              <Redact>{p}</Redact>
                             </p>
                           ))}
                         </div>

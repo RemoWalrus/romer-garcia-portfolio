@@ -1,8 +1,32 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Lock, LockOpen, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { applyTheme, isDarkNow, setThemeOverride } from "@/lib/theme";
+import { setUnlocked, useReverbUnlocked } from "@/lib/reverbLock";
+
+const ReverbLockToggle = () => {
+  const unlocked = useReverbUnlocked();
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  useEffect(() => {
+    setIsEditMode(window.self !== window.top);
+  }, []);
+
+  if (!isEditMode) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => setUnlocked(!unlocked)}
+      aria-label={unlocked ? "Lock unlockable profiles" : "Unlock hidden profiles"}
+      title={unlocked ? "Unlockables: unlocked" : "Unlockables: locked"}
+      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+    >
+      {unlocked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
+    </button>
+  );
+};
 
 const ReverbThemeToggle = () => {
   const [isDark, setIsDark] = useState(false);
@@ -80,6 +104,7 @@ const ReverbHeader = ({
 
         <div className="flex shrink-0 items-center gap-3 md:gap-4">
           <ReverbThemeToggle />
+          <ReverbLockToggle />
           <Link
             to="/paradoxxia"
             className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"

@@ -202,6 +202,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     quote: "\u201cInformation is freedom. Control is survival.\u201d",
     caption: "Tradition meets tomorrow. Same places. Different times.",
     image: reverbImage("reverb-char-eduq.webp"),
+    figure: reverbImage("reverb-eduq-main.webp"),
     accent: "#b6f13b",
     glow: "rgba(182,241,59,0.55)",
     hasProfile: true,

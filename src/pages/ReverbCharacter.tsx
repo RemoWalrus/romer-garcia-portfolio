@@ -12,6 +12,21 @@ const ReverbCharacter = () => {
   const metadata = useReverbMeta();
   const character = characters.find((c) => c.id === id?.toLowerCase());
 
+  const name = character?.name ?? "Reverb";
+  const role = character?.role ?? "";
+  const meta = usePageMetaFromData(`reverb.${id?.toLowerCase() ?? ""}`, metadata, {
+    title: `${name} | Reverb Collective Character Sheet`,
+    description: `${name} — ${role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`,
+    keywords: `${name}, Reverb Collective, Paradoxxia universe, character profile`,
+    ogTitle: `${name} | Reverb`,
+    ogDescription: `${name} — ${role}.`,
+    ogUrl: `https://romer-garcia-portfolio.lovable.app/reverb/${id?.toLowerCase() ?? ""}`,
+    twitterTitle: `${name} | Reverb`,
+    twitterDescription: `${name} — ${role}.`,
+  });
+
+
+
 
   if (!character) {
     return (

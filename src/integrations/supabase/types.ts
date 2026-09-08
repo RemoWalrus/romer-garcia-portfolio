@@ -302,6 +302,93 @@ export type Database = {
         }
         Relationships: []
       }
+      reverb_characters: {
+        Row: {
+          accent: string
+          caption: string
+          closing_quote: string | null
+          color_name: string | null
+          created_at: string
+          discipline: string | null
+          figure_file: string | null
+          gear: string[]
+          glow: string
+          has_profile: boolean
+          id: string
+          identity: Json
+          image_file: string
+          kanji: string | null
+          name: string
+          notes: string[]
+          overview: string[]
+          palette: string[]
+          quote: string
+          role: string
+          sign_off: string | null
+          sort_order: number
+          specialties: string[]
+          tagline: string[]
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          accent?: string
+          caption?: string
+          closing_quote?: string | null
+          color_name?: string | null
+          created_at?: string
+          discipline?: string | null
+          figure_file?: string | null
+          gear?: string[]
+          glow?: string
+          has_profile?: boolean
+          id: string
+          identity?: Json
+          image_file?: string
+          kanji?: string | null
+          name: string
+          notes?: string[]
+          overview?: string[]
+          palette?: string[]
+          quote?: string
+          role?: string
+          sign_off?: string | null
+          sort_order?: number
+          specialties?: string[]
+          tagline?: string[]
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          accent?: string
+          caption?: string
+          closing_quote?: string | null
+          color_name?: string | null
+          created_at?: string
+          discipline?: string | null
+          figure_file?: string | null
+          gear?: string[]
+          glow?: string
+          has_profile?: boolean
+          id?: string
+          identity?: Json
+          image_file?: string
+          kanji?: string | null
+          name?: string
+          notes?: string[]
+          overview?: string[]
+          palette?: string[]
+          quote?: string
+          role?: string
+          sign_off?: string | null
+          sort_order?: number
+          specialties?: string[]
+          tagline?: string[]
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sections: {
         Row: {
           button_text: string

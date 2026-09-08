@@ -25,24 +25,33 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
   );
 };
 
-const ReverbHeader = ({ sticky = false }: { sticky?: boolean }) => (
+const ReverbHeader = ({
+  sticky = false,
+  contained = false,
+}: {
+  sticky?: boolean;
+  contained?: boolean;
+}) => (
   <header
-    className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 flex items-center justify-between border-b border-border bg-background px-5 py-4 transition-colors md:px-8`}
+    className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
   >
-    <Link to="/reverb" className="min-w-0 leading-none pr-4">
-      <ReverbWordmark />
-      <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">
-        People / Ideas / Music / Change
-      </span>
-    </Link>
-
-
-    <Link
-      to="/paradoxxia"
-      className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
+    <div
+      className={`${contained ? "mx-auto max-w-[1500px]" : ""} flex items-center justify-between px-5 py-4 md:px-8`}
     >
-      Paradoxxia →
-    </Link>
+      <Link to="/reverb" className="min-w-0 leading-none pr-4">
+        <ReverbWordmark />
+        <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">
+          People / Ideas / Music / Change
+        </span>
+      </Link>
+
+      <Link
+        to="/paradoxxia"
+        className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
+      >
+        Paradoxxia →
+      </Link>
+    </div>
   </header>
 );
 

@@ -44,6 +44,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     quote: "\u201cI don't follow the shadows. I am the gap between them.\u201d",
     caption: "From the streets to a brighter tomorrow.",
     image: reverbImage("reverb-char-reverb.webp"),
+    figure: reverbImage("reverb-reverb-main.webp"),
     accent: "#a855f7",
     glow: "rgba(168,85,247,0.55)",
     hasProfile: true,

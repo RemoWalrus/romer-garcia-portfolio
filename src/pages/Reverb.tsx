@@ -121,7 +121,7 @@ const Reverb = () => {
                   >
                     {c.name}
                   </span>
-                  <span className="hidden md:block font-roc text-[9px] xl:text-[10px] tracking-[0.16em] uppercase text-white/75 mt-2">
+                  <span className="block font-roc text-[10px] xl:text-[11px] tracking-[0.16em] uppercase text-white/75 mt-2">
                     {c.role}
                   </span>
                   <span

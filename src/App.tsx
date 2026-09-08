@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
+import { applyTheme, getThemeOverride } from "./lib/theme";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -65,7 +66,8 @@ const App = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const updateTheme = (e: MediaQueryListEvent | MediaQueryList) => {
-      document.documentElement.classList.toggle('dark', e.matches);
+      const override = getThemeOverride();
+      applyTheme(override ? override === 'dark' : e.matches);
     };
     updateTheme(mediaQuery);
     mediaQuery.addEventListener('change', updateTheme);

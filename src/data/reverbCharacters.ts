@@ -1,6 +1,6 @@
 import { getProxyUrl } from "@/utils/supabaseProxy";
 
-const reverbImage = (filename: string) => getProxyUrl("images", `reverb/${filename}`);
+export const reverbImage = (filename: string) => getProxyUrl("images", `reverb/${filename}`);
 
 /** Tiny (320px) preview used for crew thumbnails — keeps navigation lightweight. */
 export const reverbThumb = (id: string) => reverbImage(`reverb-char-${id}-thumb.webp`);

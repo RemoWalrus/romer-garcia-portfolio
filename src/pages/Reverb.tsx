@@ -58,11 +58,11 @@ const Reverb = () => {
         </Link>
       </header>
 
-      {/* Hero: diagonal character panels */}
-      <section className="relative h-[92vh] min-h-[560px] w-full pt-20">
+      {/* Hero: diagonal character panels (columns on desktop, rows on mobile) */}
+      <section className="relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20">
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
-        <div className="flex h-full w-full gap-1.5 md:gap-3 px-2 md:px-4 overflow-hidden">
+        <div className="flex flex-col md:flex-row h-full w-full gap-[2px] md:gap-[3px] overflow-hidden">
           {CHARACTERS.map((c, i) => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
@@ -75,16 +75,16 @@ const Reverb = () => {
                 onFocus={() => setActive(c.id)}
                 onBlur={() => setActive(null)}
                 aria-label={`${c.name} — ${c.role}`}
-                className="group relative flex-1 h-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
+                className="group relative h-full w-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
                 style={{
-                  flexGrow: isActive ? 1.45 : 1,
+                  flexGrow: isActive ? 1.9 : 1,
+                  flexBasis: 0,
                   clipPath:
                     i === 0
                       ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
                       : i === CHARACTERS.length - 1
                       ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
                       : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
-                  filter: "drop-shadow(0 0 14px rgba(0,0,0,0.9))",
                 }}
               >
                 {/* Image */}
@@ -94,7 +94,7 @@ const Reverb = () => {
                   loading="lazy"
                   className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out ${
                     isActive
-                      ? "grayscale-0 scale-[1.04]"
+                      ? "grayscale-0 scale-[1.12]"
                       : "grayscale contrast-[1.1] brightness-[0.75]"
                   } ${dimmed ? "opacity-60" : "opacity-100"}`}
                 />
@@ -110,10 +110,10 @@ const Reverb = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
 
-                {/* Copy */}
-                <div className="absolute bottom-0 left-0 right-0 pb-5 pt-4 pr-6 pl-[8%] xl:pl-[9%]">
+                {/* Copy — fixed-width block so text never jumps when the panel grows */}
+                <div className="absolute bottom-0 left-0 pb-5 pt-4 pr-4 pl-[16%] md:pl-[10%] xl:pl-[11%] w-max">
                   <span
-                    className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[8vw] sm:text-[5vw] lg:text-[2.3vw] transition-all duration-500"
+                    className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[26px] sm:text-[30px] lg:text-[clamp(28px,2.1vw,44px)] transition-all duration-500"
                     style={{
                       color: isActive ? c.accent : "#ffffff",
                       textShadow: isActive ? `0 0 26px ${c.glow}` : "0 2px 12px rgba(0,0,0,0.6)",
@@ -121,7 +121,7 @@ const Reverb = () => {
                   >
                     {c.name}
                   </span>
-                  <span className="hidden md:block font-roc text-[9px] xl:text-[10px] tracking-[0.16em] uppercase text-white/75 mt-2">
+                  <span className="block font-roc text-[10px] xl:text-[11px] tracking-[0.16em] uppercase text-white/75 mt-2">
                     {c.role}
                   </span>
                   <span

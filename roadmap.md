@@ -11,3 +11,5 @@
 - [x] Unify Reverb headers, remove the wordmark glow and center nav, and theme profile-page chrome
 - [x] Remove translucent Reverb header/panel banding and refine character-sheet proportions
 - [x] Verify and republish the Reverb image assets on the live site
+- [ ] Restack mobile character profiles with a side-overlapping figure and no diagonal divider
+- [ ] Verify the production character and figure images load from their published asset URLs

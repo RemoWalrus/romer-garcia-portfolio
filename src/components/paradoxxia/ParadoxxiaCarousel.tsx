@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import placeholderImage from "@/assets/paradoxxia-carousel-placeholder.png";
+import placeholderImage from "@/assets/paradoxxia-carousel-placeholder.webp";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useParadoxxiaData } from "@/hooks/use-paradoxxia-data";
 

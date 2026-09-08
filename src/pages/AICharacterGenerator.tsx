@@ -19,7 +19,7 @@ import { Media } from '@capacitor-community/media';
 import { ActionSheet } from '@capacitor/action-sheet';
 import { Link } from "react-router-dom";
 import { motion, useAnimation } from "framer-motion";
-import circuitBg from "@/assets/paradoxxia-bg.png";
+import circuitBg from "@/assets/paradoxxia-bg.webp";
 import { CharGenSchema, SpotifyIcon, AppleMusicIcon, YouTubeMusicIcon } from "@/components/seo/ParadoxxiaSchemas";
 import paradoxxiaPoster from "@/assets/paradoxxia-poster.jpg";
 import { ThemeToggle } from "@/components/ThemeToggle";

@@ -43,6 +43,12 @@ const ReverbCharacter = () => {
           rel="canonical"
           href={`https://romer-garcia-portfolio.lovable.app/reverb/${character.id}`}
         />
+        <link
+          rel="preload"
+          as="image"
+          href={character.figure ?? character.image}
+          fetchpriority="high"
+        />
       </Helmet>
 
       <ReverbHeader sticky />

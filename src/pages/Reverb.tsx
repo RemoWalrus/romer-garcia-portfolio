@@ -130,8 +130,8 @@ const Reverb = () => {
       <section className="relative h-[92vh] min-h-[560px] w-full pt-20">
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
-        <div className="flex h-full w-full">
-          {CHARACTERS.map((c) => {
+        <div className="flex h-full w-full overflow-hidden">
+          {CHARACTERS.map((c, i) => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
             return (

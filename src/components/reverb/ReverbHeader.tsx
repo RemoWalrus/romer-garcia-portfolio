@@ -70,12 +70,15 @@ const ReverbHeader = ({
         </span>
       </Link>
 
-      <Link
-        to="/paradoxxia"
-        className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
-      >
-        Paradoxxia →
-      </Link>
+      <div className="flex shrink-0 items-center gap-3 md:gap-4">
+        <ReverbThemeToggle />
+        <Link
+          to="/paradoxxia"
+          className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Paradoxxia →
+        </Link>
+      </div>
     </div>
   </header>
 );

@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useSiteMeta, metaValue, metaList, metaJson } from '@/hooks/use-reverb-meta';
 
 const SPOTIFY_URL = 'https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr';
 const APPLE_MUSIC_URL = 'https://music.apple.com/us/artist/paradoxxia/1803632666';
@@ -10,29 +11,70 @@ const romerGarciaCreator = {
   "jobTitle": "Design Lead & AI-Driven Multimedia Strategist",
 };
 
+type FaqItem = { question: string; answer: string };
+
+const DEFAULT_FAQ: FaqItem[] = [
+  {
+    question: "What is Paradoxxia?",
+    answer: "Paradoxxia (パラドクシア) is an AI-synthesized multimedia artist and character entity created by Romer Garcia. It combines cinematic sci-fi storytelling with AI-generated electronic music and an interactive character generator."
+  },
+  {
+    question: "Where can I listen to Paradoxxia's music?",
+    answer: "Paradoxxia's AI-synthesized music is available on Spotify and Apple Music. Visit the Paradoxxia page at romergarcia.com/paradoxxia for direct links."
+  },
+  {
+    question: "Who created Paradoxxia?",
+    answer: "Paradoxxia was created by Romer Garcia, a Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design and multimedia strategy."
+  },
+  {
+    question: "What is the Paradoxxia AI Character Generator?",
+    answer: "The Paradoxxia AI Character Generator is a free interactive web tool that lets users create unique cinematic characters set in the Paradoxxia sci-fi universe, complete with AI-generated portraits, backstories, and stats."
+  }
+];
+
 export const ParadoxxiaLandingSchema = () => {
+  const rows = useSiteMeta();
+
+  const name = metaValue(rows, 'paradoxxia.schema.name', 'Paradoxxia');
+  const alternateName = metaValue(rows, 'paradoxxia.schema.alternate_name', 'パラドクシア');
+  const description = metaValue(
+    rows,
+    'paradoxxia.schema.description',
+    "Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia. Blending cinematic sci-fi storytelling with AI-generated electronic music available on Spotify and Apple Music."
+  );
+  const url = metaValue(rows, 'paradoxxia.schema.url', 'https://romergarcia.com/paradoxxia');
+  const genre = metaList(rows, 'paradoxxia.schema.genre', ["Electronic", "AI-Generated", "Cinematic", "Sci-Fi Soundtrack"]);
+  const sameAs = metaList(rows, 'paradoxxia.schema.same_as', [SPOTIFY_URL, APPLE_MUSIC_URL]);
+  const pageName = metaValue(rows, 'paradoxxia.schema.page_name', 'Paradoxxia | AI Multimedia Artist & Music');
+  const pageDescription = metaValue(
+    rows,
+    'paradoxxia.schema.page_description',
+    "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator."
+  );
+  const faq = metaJson<FaqItem[]>(rows, 'paradoxxia.schema.faq', DEFAULT_FAQ);
+
   const musicGroupSchema = {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
-    "name": "Paradoxxia",
-    "alternateName": "パラドクシア",
-    "description": "Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia. Blending cinematic sci-fi storytelling with AI-generated electronic music available on Spotify and Apple Music.",
-    "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL],
-    "url": "https://romergarcia.com/paradoxxia",
+    "name": name,
+    "alternateName": alternateName,
+    "description": description,
+    "sameAs": sameAs,
+    "url": url,
     "founder": romerGarciaCreator,
-    "genre": ["Electronic", "AI-Generated", "Cinematic", "Sci-Fi Soundtrack"],
+    "genre": genre,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://romergarcia.com/paradoxxia"
+      "@id": url
     }
   };
 
   const webPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Paradoxxia | AI Multimedia Artist & Music",
-    "url": "https://romergarcia.com/paradoxxia",
-    "description": "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator.",
+    "name": pageName,
+    "url": url,
+    "description": pageDescription,
     "isPartOf": {
       "@type": "WebSite",
       "name": "Romer Garcia Portfolio",
@@ -41,48 +83,22 @@ export const ParadoxxiaLandingSchema = () => {
     "author": romerGarciaCreator,
     "about": {
       "@type": "MusicGroup",
-      "name": "Paradoxxia",
-      "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL]
+      "name": name,
+      "sameAs": sameAs
     }
   };
 
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is Paradoxxia?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Paradoxxia (パラドクシア) is an AI-synthesized multimedia artist and character entity created by Romer Garcia. It combines cinematic sci-fi storytelling with AI-generated electronic music and an interactive character generator."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Where can I listen to Paradoxxia's music?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Paradoxxia's AI-synthesized music is available on Spotify and Apple Music. Visit the Paradoxxia page at romergarcia.com/paradoxxia for direct links."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Who created Paradoxxia?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Paradoxxia was created by Romer Garcia, a Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design and multimedia strategy."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is the Paradoxxia AI Character Generator?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The Paradoxxia AI Character Generator is a free interactive web tool that lets users create unique cinematic characters set in the Paradoxxia sci-fi universe, complete with AI-generated portraits, backstories, and stats."
-        }
+    "mainEntity": (Array.isArray(faq) && faq.length ? faq : DEFAULT_FAQ).map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
       }
-    ]
+    }))
   };
 
   return (
@@ -101,15 +117,34 @@ export const ParadoxxiaLandingSchema = () => {
 };
 
 export const CharGenSchema = () => {
+  const rows = useSiteMeta();
+
+  const appName = metaValue(rows, 'chargen.schema.name', 'Paradoxxia AI Character Generator');
+  const appUrl = metaValue(rows, 'chargen.schema.url', 'https://romergarcia.com/char-gen');
+  const appDescription = metaValue(
+    rows,
+    'chargen.schema.description',
+    "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats."
+  );
+  const features = metaList(rows, 'chargen.schema.features', ["Visual Synthesis", "AI Lore Generation", "Photo Reference Upload", "Character Stats Generation"]);
+  const artistName = metaValue(rows, 'paradoxxia.schema.name', 'Paradoxxia');
+  const artistShortDescription = metaValue(
+    rows,
+    'paradoxxia.schema.short_description',
+    'An AI-synthesized multimedia artist and character entity.'
+  );
+  const sameAs = metaList(rows, 'paradoxxia.schema.same_as', [SPOTIFY_URL, APPLE_MUSIC_URL]);
+  const genre = metaList(rows, 'paradoxxia.schema.genre', ["Electronic", "AI-Generated", "Cinematic"]);
+
   const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Paradoxxia AI Character Generator",
+    "name": appName,
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Web",
-    "url": "https://romergarcia.com/char-gen",
-    "description": "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats.",
-    "featureList": ["Visual Synthesis", "AI Lore Generation", "Photo Reference Upload", "Character Stats Generation"],
+    "url": appUrl,
+    "description": appDescription,
+    "featureList": features,
     "author": romerGarciaCreator,
     "creator": romerGarciaCreator,
     "offers": {
@@ -119,20 +154,20 @@ export const CharGenSchema = () => {
     },
     "associatedMedia": {
       "@type": "MusicGroup",
-      "name": "Paradoxxia",
-      "description": "An AI-synthesized multimedia artist and character entity.",
-      "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL]
+      "name": artistName,
+      "description": artistShortDescription,
+      "sameAs": sameAs
     }
   };
 
   const musicGroupSchema = {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
-    "name": "Paradoxxia",
-    "description": "An AI-synthesized multimedia artist and character entity.",
-    "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL],
+    "name": artistName,
+    "description": artistShortDescription,
+    "sameAs": sameAs,
     "founder": romerGarciaCreator,
-    "genre": ["Electronic", "AI-Generated", "Cinematic"]
+    "genre": genre
   };
 
   return (

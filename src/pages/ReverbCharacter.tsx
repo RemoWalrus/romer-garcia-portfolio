@@ -2,12 +2,16 @@ import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { reverbThumb } from "@/data/reverbCharacters";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
+import { useReverbMeta } from "@/hooks/use-reverb-meta";
+import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
   const characters = useReverbCharacters();
+  const metadata = useReverbMeta();
   const character = characters.find((c) => c.id === id?.toLowerCase());
+
 
   if (!character) {
     return (

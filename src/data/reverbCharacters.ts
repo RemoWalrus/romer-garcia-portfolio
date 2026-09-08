@@ -105,7 +105,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     tagline: ["Loud.", "Restless.", "First to move."],
     discipline: "Demolitions // Close-Quarters",
     identity: [
-      { label: "Real Name", value: "Unknown" },
+      { label: "Real Name", value: "Spark" },
       { label: "Age", value: "19" },
       { label: "Origin", value: "Porvoo, Finland" },
       { label: "Role", value: "Demolitions / Close-Quarters / Runner" },
@@ -266,7 +266,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     tagline: ["Different times.", "Same people."],
     discipline: "Time Traveler // Connector",
     identity: [
-      { label: "Real Name", value: "Withaya \u201cWida\u201d" },
+      { label: "Real Name", value: "Wida" },
       { label: "Age", value: "19" },
       { label: "Origin", value: "Bangkok, Thailand" },
       { label: "Timeline", value: "Alternate" },

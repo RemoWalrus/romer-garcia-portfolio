@@ -117,15 +117,34 @@ export const ParadoxxiaLandingSchema = () => {
 };
 
 export const CharGenSchema = () => {
+  const rows = useSiteMeta();
+
+  const appName = metaValue(rows, 'chargen.schema.name', 'Paradoxxia AI Character Generator');
+  const appUrl = metaValue(rows, 'chargen.schema.url', 'https://romergarcia.com/char-gen');
+  const appDescription = metaValue(
+    rows,
+    'chargen.schema.description',
+    "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats."
+  );
+  const features = metaList(rows, 'chargen.schema.features', ["Visual Synthesis", "AI Lore Generation", "Photo Reference Upload", "Character Stats Generation"]);
+  const artistName = metaValue(rows, 'paradoxxia.schema.name', 'Paradoxxia');
+  const artistShortDescription = metaValue(
+    rows,
+    'paradoxxia.schema.short_description',
+    'An AI-synthesized multimedia artist and character entity.'
+  );
+  const sameAs = metaList(rows, 'paradoxxia.schema.same_as', [SPOTIFY_URL, APPLE_MUSIC_URL]);
+  const genre = metaList(rows, 'paradoxxia.schema.genre', ["Electronic", "AI-Generated", "Cinematic"]);
+
   const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "Paradoxxia AI Character Generator",
+    "name": appName,
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Web",
-    "url": "https://romergarcia.com/char-gen",
-    "description": "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats.",
-    "featureList": ["Visual Synthesis", "AI Lore Generation", "Photo Reference Upload", "Character Stats Generation"],
+    "url": appUrl,
+    "description": appDescription,
+    "featureList": features,
     "author": romerGarciaCreator,
     "creator": romerGarciaCreator,
     "offers": {
@@ -135,20 +154,20 @@ export const CharGenSchema = () => {
     },
     "associatedMedia": {
       "@type": "MusicGroup",
-      "name": "Paradoxxia",
-      "description": "An AI-synthesized multimedia artist and character entity.",
-      "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL]
+      "name": artistName,
+      "description": artistShortDescription,
+      "sameAs": sameAs
     }
   };
 
   const musicGroupSchema = {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
-    "name": "Paradoxxia",
-    "description": "An AI-synthesized multimedia artist and character entity.",
-    "sameAs": [SPOTIFY_URL, APPLE_MUSIC_URL],
+    "name": artistName,
+    "description": artistShortDescription,
+    "sameAs": sameAs,
     "founder": romerGarciaCreator,
-    "genre": ["Electronic", "AI-Generated", "Cinematic"]
+    "genre": genre
   };
 
   return (

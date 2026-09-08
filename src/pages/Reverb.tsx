@@ -62,29 +62,51 @@ const Reverb = () => {
       <section className="relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20">
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
-        <div className="flex flex-col md:flex-row h-full w-full gap-[2px] md:gap-[3px] overflow-hidden">
+        <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
           {CHARACTERS.map((c, i) => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
+            const mobileCollapsed = isMobile && active !== null && !isActive;
+            const grow = isMobile
+              ? isActive
+                ? 9
+                : active !== null
+                ? 0.28
+                : 1
+              : isActive
+              ? 3
+              : 1;
+
+            const handleClick = (e: React.MouseEvent) => {
+              if (!isMobile) return;
+              if (!isActive) {
+                e.preventDefault();
+                setActive(c.id);
+              }
+            };
+
             return (
               <Link
                 key={c.id}
                 to={`/reverb/${c.id}`}
-                onMouseEnter={() => setActive(c.id)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(c.id)}
-                onBlur={() => setActive(null)}
+                onClick={handleClick}
+                onMouseEnter={() => !isMobile && setActive(c.id)}
+                onMouseLeave={() => !isMobile && setActive(null)}
+                onFocus={() => !isMobile && setActive(c.id)}
+                onBlur={() => !isMobile && setActive(null)}
                 aria-label={`${c.name} — ${c.role}`}
                 className="group relative h-full w-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
                 style={{
-                  flexGrow: isActive ? 1.9 : 1,
+                  flexGrow: grow,
                   flexBasis: 0,
-                  clipPath:
-                    i === 0
-                      ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
-                      : i === CHARACTERS.length - 1
-                      ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
-                      : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
+                  minHeight: mobileCollapsed ? 44 : undefined,
+                  clipPath: isMobile
+                    ? undefined
+                    : i === 0
+                    ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
+                    : i === CHARACTERS.length - 1
+                    ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
+                    : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
                 }}
               >
                 {/* Image */}
@@ -94,9 +116,9 @@ const Reverb = () => {
                   loading="lazy"
                   className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out ${
                     isActive
-                      ? "grayscale-0 scale-[1.12]"
+                      ? "grayscale-0 scale-[1.14]"
                       : "grayscale contrast-[1.1] brightness-[0.75]"
-                  } ${dimmed ? "opacity-60" : "opacity-100"}`}
+                  } ${dimmed ? "opacity-40" : "opacity-100"}`}
                 />
 
                 {/* Accent + readability gradients */}
@@ -110,36 +132,45 @@ const Reverb = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
 
-                {/* Copy — fixed-width block so text never jumps when the panel grows */}
-                <div className="absolute bottom-0 left-0 pb-5 pt-4 pr-4 pl-[16%] md:pl-[10%] xl:pl-[11%] w-max">
-                  <span
-                    className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[26px] sm:text-[30px] lg:text-[clamp(28px,2.1vw,44px)] transition-all duration-500"
-                    style={{
-                      color: isActive ? c.accent : "#ffffff",
-                      textShadow: isActive ? `0 0 26px ${c.glow}` : "0 2px 12px rgba(0,0,0,0.6)",
-                    }}
-                  >
-                    {c.name}
-                  </span>
-                  <span className="block font-roc text-[10px] xl:text-[11px] tracking-[0.16em] uppercase text-white/75 mt-2">
-                    {c.role}
-                  </span>
-                  <span
-                    className="hidden lg:block font-roc text-[10px] xl:text-xs leading-snug uppercase mt-3 max-w-[16ch]"
-                    style={{ color: isActive ? c.accent : "rgba(255,255,255,0.65)" }}
-                  >
-                    {c.quote}
-                  </span>
-                  <span
-                    className="hidden xl:inline-block mt-4 font-roc text-[10px] tracking-[0.2em] uppercase border px-3 py-2 transition-colors"
-                    style={{
-                      borderColor: isActive ? c.accent : "rgba(255,255,255,0.35)",
-                      color: isActive ? c.accent : "rgba(255,255,255,0.8)",
-                    }}
-                  >
-                    View Profile
-                  </span>
-                </div>
+                {mobileCollapsed ? (
+                  /* Collapsed mobile row — name only */
+                  <div className="absolute inset-0 flex items-center bg-black/55 px-5">
+                    <span className="font-reverb italic uppercase text-[15px] leading-none text-white/85">
+                      {c.name}
+                    </span>
+                  </div>
+                ) : (
+                  /* Copy — fixed-width block so text never jumps when the panel grows */
+                  <div className="absolute bottom-0 left-0 pb-5 pt-4 pr-4 pl-[7%] md:pl-[10%] xl:pl-[11%] w-max">
+                    <span
+                      className="block whitespace-nowrap font-reverb italic uppercase leading-[0.85] text-[26px] sm:text-[30px] lg:text-[clamp(28px,2.1vw,44px)] transition-all duration-500"
+                      style={{
+                        color: isActive ? c.accent : "#ffffff",
+                        textShadow: isActive ? `0 0 26px ${c.glow}` : "0 2px 12px rgba(0,0,0,0.6)",
+                      }}
+                    >
+                      {c.name}
+                    </span>
+                    <span className="block font-roc text-[10px] xl:text-[11px] tracking-[0.16em] uppercase text-white/75 mt-2">
+                      {c.role}
+                    </span>
+                    <span
+                      className="hidden lg:block font-roc text-[10px] xl:text-xs leading-snug uppercase mt-3 max-w-[16ch]"
+                      style={{ color: isActive ? c.accent : "rgba(255,255,255,0.65)" }}
+                    >
+                      {c.quote}
+                    </span>
+                    <span
+                      className={`${isActive ? "inline-block" : "hidden xl:inline-block"} mt-4 font-roc text-[10px] tracking-[0.2em] uppercase border px-3 py-2 transition-colors`}
+                      style={{
+                        borderColor: isActive ? c.accent : "rgba(255,255,255,0.35)",
+                        color: isActive ? c.accent : "rgba(255,255,255,0.8)",
+                      }}
+                    >
+                      View Profile
+                    </span>
+                  </div>
+                )}
               </Link>
             );
           })}

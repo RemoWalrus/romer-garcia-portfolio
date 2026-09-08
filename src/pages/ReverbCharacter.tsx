@@ -47,7 +47,7 @@ const ReverbCharacter = () => {
           rel="preload"
           as="image"
           href={character.figure ?? character.image}
-          fetchpriority="high"
+          fetchPriority="high"
         />
       </Helmet>
 

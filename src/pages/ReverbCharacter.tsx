@@ -240,16 +240,16 @@ const ReverbCharacter = () => {
           </div>
 
           {/* Crew nav */}
-          <nav className="border-t border-border py-3">
-            <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-muted-foreground px-3 md:px-6">
+          <nav className="border-t border-border py-2 shrink-0">
+            <h2 className="font-roc text-[9px] tracking-[0.3em] uppercase text-muted-foreground px-3 md:px-6">
               The Collective
             </h2>
-            <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-1 px-3 md:px-6">
+            <div className="mt-1.5 grid grid-cols-2 md:grid-cols-4 gap-1 px-3 md:px-6">
               {others.map((c) => (
                 <Link
                   key={c.id}
                   to={`/reverb/${c.id}`}
-                  className="group relative overflow-hidden border border-border h-20 md:h-24"
+                  className="group relative overflow-hidden border border-border h-12 md:h-14"
                 >
                   <img
                     src={c.image}

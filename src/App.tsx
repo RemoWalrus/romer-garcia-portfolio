@@ -88,6 +88,7 @@ const App = () => {
                 <Route path="/contact" element={<ContactRedirect />} />
                 <Route path="/paradoxxia" element={<Paradoxxia />} />
                 <Route path="/story" element={<Story />} />
+                <Route path="/reverb" element={<Reverb />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

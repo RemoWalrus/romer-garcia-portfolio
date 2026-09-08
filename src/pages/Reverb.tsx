@@ -72,6 +72,7 @@ const Reverb = () => {
                   flexBasis: 0,
                   minHeight: mobileCollapsed ? 44 : undefined,
                   marginLeft: !isMobile && i > 0 ? "-5vw" : undefined,
+                  zIndex: isActive ? CHARACTERS.length + 1 : CHARACTERS.length - i,
                   clipPath: isMobile
                     ? undefined
                     : i === 0
@@ -90,7 +91,7 @@ const Reverb = () => {
                     isActive
                       ? "grayscale-0 scale-[1.14]"
                       : "grayscale contrast-[1.1] brightness-[0.75]"
-                  } ${dimmed ? "opacity-40" : "opacity-100"}`}
+                  } ${dimmed ? "brightness-[0.48]" : "brightness-100"}`}
                 />
 
                 {/* Accent + readability gradients */}

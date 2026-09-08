@@ -272,7 +272,7 @@ const ReverbCharacter = () => {
       </main>
 
 
-      <footer className="border-t border-border py-4 text-center">
+      <footer className="border-t border-border py-2 text-center shrink-0">
         <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
           © {new Date().getFullYear()} Romer Garcia — Reverb / Paradoxxia
         </p>

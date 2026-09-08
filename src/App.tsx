@@ -52,13 +52,31 @@ const RoutedFavicon = () => {
     const path = location.pathname;
     const isParadoxxia = path === '/paradoxxia' || path === '/char-gen' || path === '/story';
     const isReverb = path === '/reverb' || path.startsWith('/reverb/');
+    const brand = isParadoxxia ? 'paradoxxia' : isReverb ? 'reverb' : null;
 
-    if (isParadoxxia) {
-      link.href = '/favicon-paradoxxia.png';
+    // Managed extra icon sizes (large PNGs + apple touch icon)
+    const MANAGED = 'data-brand-icon';
+    document.querySelectorAll(`link[${MANAGED}]`).forEach((el) => el.remove());
+
+    if (brand) {
+      link.href = `/favicon-${brand}.png`;
       link.type = 'image/png';
-    } else if (isReverb) {
-      link.href = '/favicon-reverb.png';
-      link.type = 'image/png';
+
+      const extras: Array<{ rel: string; sizes?: string; href: string }> = [
+        { rel: 'icon', sizes: '192x192', href: `/favicon-${brand}-192.png` },
+        { rel: 'icon', sizes: '512x512', href: `/favicon-${brand}-512.png` },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: `/apple-touch-icon-${brand}.png` },
+      ];
+
+      extras.forEach((cfg) => {
+        const el = document.createElement('link');
+        el.rel = cfg.rel;
+        el.type = 'image/png';
+        if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
+        el.href = cfg.href;
+        el.setAttribute(MANAGED, brand);
+        document.head.appendChild(el);
+      });
     } else {
       const original = originalRef.current;
       link.href = original.href;

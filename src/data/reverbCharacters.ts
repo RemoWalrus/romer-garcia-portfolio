@@ -35,6 +35,8 @@ export interface ReverbCharacter {
   gallery?: { type: "image" | "video"; src: string; caption?: string }[];
   /** Hidden from the public crew lists — reachable only via the Easter-egg link. */
   hidden?: boolean;
+  /** For hidden variant profiles: the canonical character id to exclude from crew nav. */
+  baseId?: string;
 }
 
 
@@ -320,6 +322,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     glow: "rgba(255,46,136,0.55)",
     hasProfile: true,
     hidden: true,
+    baseId: "spark",
     kanji: "\u706b\u82b1",
     title: "Reverb Collective // Demolitions",
     tagline: ["Rebuilt.", "Still moving."],

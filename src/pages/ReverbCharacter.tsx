@@ -48,18 +48,16 @@ const ReverbCharacter = () => {
       <ReverbHeader sticky />
 
       {/* Sheet */}
-      <main className="relative bg-background transition-colors">
-        <div className="mx-auto max-w-[1500px]">
+      <main className="relative flex flex-col min-h-[calc(100dvh-64px)] bg-background transition-colors">
+        <div className="mx-auto flex flex-col flex-1 min-h-0 w-full max-w-[1500px]">
           {/* Character sheet */}
           <div
-            className="relative overflow-hidden border-x border-b border-white/10"
+            className="relative flex-1 min-h-0 overflow-hidden border-x border-b border-white/10"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div
-              className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:h-[calc(100dvh-64px-150px)] lg:min-h-[560px]"
-            >
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] h-full lg:min-h-[560px]">
               {/* LEFT: identity + figure */}
               <div className="relative px-5 md:px-8 pt-8 pb-0 h-full">
 
@@ -112,8 +110,8 @@ const ReverbCharacter = () => {
                   </p>
                 </div>
 
-                {/* Figure — as tall as the section */}
-                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-24%] lg:bottom-0 lg:top-0 lg:h-full lg:w-[80%] flex items-end justify-center pointer-events-none z-[5]">
+                {/* Figure — as tall as the section, overlapping the title */}
+                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-8%] lg:bottom-0 lg:top-[-14%] lg:h-[114%] lg:w-[105%] flex items-end justify-center pointer-events-none z-[5]">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
@@ -124,8 +122,8 @@ const ReverbCharacter = () => {
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-16 lg:pr-8 lg:py-7 h-full overflow-hidden lg:overflow-y-auto"
-                style={{ clipPath: "polygon(9% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
+                className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:pl-[13%] lg:pr-6 lg:py-7 h-full overflow-hidden lg:overflow-y-auto"
+                style={{ clipPath: "polygon(11% 0%, 100% 0%, 100% 100%, 0% 100%)" }}
               >
 
                 {character.hasProfile ? (

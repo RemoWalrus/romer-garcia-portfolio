@@ -268,9 +268,12 @@ const ReverbCharacter = () => {
                         <ReverbWordmark className="mt-3 text-lg text-[#111]" />
                       </div>
                       {character.closingQuote && (
-                        <p className="font-hand text-2xl leading-tight text-black/80 max-w-[24ch] text-right">
+                        <p
+                          className="font-hand text-2xl leading-tight max-w-[24ch] text-right"
+                          style={{ color: accent }}
+                        >
                           {character.closingQuote}
-                          <span className="block mt-1 text-lg text-black/55">— {character.name}</span>
+                          <span className="block mt-1 text-lg opacity-70">— {character.name}</span>
                         </p>
                       )}
                     </section>

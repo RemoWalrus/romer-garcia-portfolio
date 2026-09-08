@@ -268,7 +268,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     identity: [
       { label: "Real Name", value: "Wida" },
       { label: "Age", value: "19" },
-      { label: "Origin", value: "Bangkok, Thailand" },
+      { label: "Origin", value: "Alternative Timeline" },
       { label: "Timeline", value: "Alternate" },
       { label: "Role", value: "Temporal Traveler / Connector" },
       { label: "Affiliation", value: "Reverb Collective" },
@@ -297,8 +297,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "Ragdoll Charm",
     ],
     overview: [
-      "Wida is from Bangkok.",
-      "Just not this Bangkok.",
+      "Wida is from a different time, from a place that doesn’t exist in this timeline.",
       "An accidental temporal displacement pulls nineteen-year-old Wida from an earlier period of a completely different timeline and deposits her in Reverb's world.",
       "She understands enough about what has happened to know that interfering could be dangerous. Her solution is to remain in the background, observe and leave as little impact as possible.",
       "Then she meets Reverb.",

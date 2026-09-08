@@ -12,7 +12,7 @@ const ReverbWordmark = () => {
     word.map((letter, index) => (
       <span
         key={`${letter}-${index}`}
-        className={index === 3 ? "inline-block -scale-x-100" : "inline-block"}
+        className={index === 3 ? "ml-[0.08em] inline-block -scale-x-100" : "inline-block"}
       >
         {letter}
       </span>
@@ -20,22 +20,22 @@ const ReverbWordmark = () => {
 
   return (
     <span
-      className="relative inline-block font-roc text-2xl md:text-3xl font-extrabold tracking-[-0.05em] uppercase"
+      className="relative inline-flex gap-[0.025em] font-roc text-2xl md:text-3xl font-extrabold tracking-normal uppercase"
       aria-label="Reverb"
     >
       <span
         aria-hidden="true"
-        className="absolute inset-0 translate-x-[2px] text-red-500/45 mix-blend-screen"
+        className="absolute inset-0 inline-flex gap-[0.025em] translate-x-[2px] text-red-500/40 mix-blend-screen"
       >
         {renderWord()}
       </span>
       <span
         aria-hidden="true"
-        className="absolute inset-0 -translate-x-[2px] text-cyan-400/40 mix-blend-screen"
+        className="absolute inset-0 inline-flex gap-[0.025em] -translate-x-[2px] text-reverb-cyan/70 mix-blend-screen"
       >
         {renderWord()}
       </span>
-      <span aria-hidden="true" className="relative z-10 text-white">
+      <span aria-hidden="true" className="relative z-10 inline-flex gap-[0.025em] text-reverb-cyan drop-shadow-[0_0_8px_hsl(var(--reverb-cyan)/0.85)]">
         {renderWord()}
       </span>
     </span>

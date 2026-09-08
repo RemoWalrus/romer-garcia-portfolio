@@ -140,7 +140,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "That same fearlessness will eventually lead to the accident that changes Spark, Eduq and the future of the Paradoxxiaverse.",
     ],
     signOff: "ONE SPARK. WHOLE CITY.",
-    closingQuote: "\u201cIf it scares you, it's the right idea.\u201d",
+    gallery: [],
   },
   {
     id: "harmonix",
@@ -194,7 +194,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "But the same family connections that make Harmonix invaluable to Reverb will eventually help give Eduq an opportunity that changes both men's lives.",
     ],
     signOff: "DIFFERENT ROADS. SAME FREQUENCY. REVERB.",
-    closingQuote: "\u201cEvery move is in sync.\u201d",
+    gallery: [],
   },
   {
     id: "eduq",
@@ -248,7 +248,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "That decision will eventually change the world.",
     ],
     signOff: "SAME CREW. DIFFERENT TIMES.",
-    closingQuote: "\u201cLimitations are just temporary.\u201d",
+    gallery: [],
   },
   {
     id: "wida",
@@ -304,7 +304,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "She joins the collective before Eduq arrives, grows particularly close to Spark, and remains through the accident and recovery—slowly discovering that avoiding history is much easier than avoiding attachment.",
     ],
     signOff: "SOMEWHERE. SOMETIME. WE'RE STILL REVERB.",
-    closingQuote: "\u201cTime isn't a line. It's a crew.\u201d",
+    gallery: [],
   },
 ];
 

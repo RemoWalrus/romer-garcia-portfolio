@@ -59,10 +59,10 @@ const ReverbCharacter = () => {
           >
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative isolate h-[48svh] min-h-[390px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
+              <div className="relative isolate h-[88svh] min-h-[420px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
 
                 <h1
-                  className="relative z-10 max-w-[62%] font-reverb italic uppercase leading-[0.82] text-[12vw] sm:text-[9vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
+                  className="relative z-10 max-w-[55%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
@@ -112,7 +112,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[12%] bottom-0 z-20 flex h-[98%] w-[82%] items-end justify-center pointer-events-none lg:right-[-48%] lg:top-[-2%] lg:bottom-auto lg:h-[103%] lg:w-[132%]">
+                <div className="absolute -right-[22%] bottom-0 z-20 flex h-[102%] w-[92%] items-end justify-center pointer-events-none lg:right-[-48%] lg:top-[-2%] lg:bottom-auto lg:h-[103%] lg:w-[132%]">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}

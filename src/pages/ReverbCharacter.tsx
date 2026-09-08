@@ -182,18 +182,6 @@ const ReverbCharacter = () => {
                             </span>
                           </div>
                         )}
-                        {character.palette && (
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {character.palette.map((c) => (
-                              <span
-                                key={c}
-                                className="h-6 w-6 rounded-full border border-black/10 shadow-inner"
-                                style={{ backgroundColor: c }}
-                                title={c}
-                              />
-                            ))}
-                          </div>
-                        )}
                         {character.specialties && (
                           <p className="mt-4 font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
                             <span className="text-black/45">Specialties — </span>

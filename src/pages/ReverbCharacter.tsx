@@ -45,21 +45,21 @@ const ReverbCharacter = () => {
         />
       </Helmet>
 
-      <ReverbHeader sticky />
+      <ReverbHeader sticky contained />
 
       {/* Sheet */}
       <main className="relative flex flex-col flex-1 min-h-0 bg-background transition-colors">
         <div className="mx-auto flex flex-col flex-1 min-h-0 w-full max-w-[1500px]">
           {/* Character sheet */}
           <div
-            className="relative flex-1 min-h-0 overflow-hidden lg:overflow-visible"
+            className="relative flex-1 min-h-0 overflow-visible"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
             <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative z-40 h-[76svh] min-h-[380px] overflow-hidden px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:overflow-visible lg:pt-8">
+              <div className="relative z-40 h-[76svh] min-h-[380px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
 
                 <h1
                   className="relative z-50 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[9vw] sm:text-[7vw] lg:max-w-none lg:text-[4.2vw] tracking-[-0.02em]"
@@ -107,11 +107,11 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute right-0 top-0 z-40 flex h-[102%] w-[60%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[150%] lg:items-start">
+                <div className="absolute -right-[6%] top-0 z-40 flex h-[118%] w-[78%] items-start justify-end pointer-events-none lg:right-[-80%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[150%] lg:items-start">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}
-                    className="w-full h-full object-cover object-[65%_0%] lg:object-contain lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                    className="w-full h-full object-contain object-top lg:object-contain lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                   />
                 </div>
               </div>
@@ -261,10 +261,12 @@ const ReverbCharacter = () => {
       </main>
 
 
-      <footer className="border-t border-border py-2 text-center shrink-0">
-        <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
-          © {new Date().getFullYear()} Romer Garcia — Reverb / Paradoxxia
-        </p>
+      <footer className="border-t border-border py-2 shrink-0">
+        <div className="mx-auto w-full max-w-[1500px] px-5 md:px-8 text-center">
+          <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
+            © {new Date().getFullYear()} Romer Garcia — Reverb / Paradoxxia
+          </p>
+        </div>
       </footer>
     </div>
   );

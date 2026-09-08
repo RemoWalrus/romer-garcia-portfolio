@@ -30,7 +30,7 @@ const Reverb = () => {
       <ReverbHeader />
 
       {/* Hero: diagonal character panels (columns on desktop, rows on mobile) */}
-      <section className="relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20">
+      <section className="dark relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20 bg-black text-white">
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">

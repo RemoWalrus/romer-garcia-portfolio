@@ -2,12 +2,31 @@ import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { reverbThumb } from "@/data/reverbCharacters";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
+import { useReverbMeta } from "@/hooks/use-reverb-meta";
+import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
   const characters = useReverbCharacters();
+  const metadata = useReverbMeta();
   const character = characters.find((c) => c.id === id?.toLowerCase());
+
+  const name = character?.name ?? "Reverb";
+  const role = character?.role ?? "";
+  const meta = usePageMetaFromData(`reverb.${id?.toLowerCase() ?? ""}`, metadata, {
+    title: `${name} | Reverb Collective Character Sheet`,
+    description: `${name} — ${role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`,
+    keywords: `${name}, Reverb Collective, Paradoxxia universe, character profile`,
+    ogTitle: `${name} | Reverb`,
+    ogDescription: `${name} — ${role}.`,
+    ogUrl: `https://romer-garcia-portfolio.lovable.app/reverb/${id?.toLowerCase() ?? ""}`,
+    twitterTitle: `${name} | Reverb`,
+    twitterDescription: `${name} — ${role}.`,
+  });
+
+
+
 
   if (!character) {
     return (
@@ -32,19 +51,23 @@ const ReverbCharacter = () => {
   return (
     <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
-        <title>{`${character.name} | Reverb Collective Character Sheet`}</title>
-        <meta
-          name="description"
-          content={`${character.name} — ${character.role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`}
-        />
-        <meta property="og:title" content={`${character.name} | Reverb`} />
-        <meta property="og:description" content={`${character.name} — ${character.role}.`} />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="profile" />
+        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
+        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
         <link
           rel="canonical"
           href={`https://romer-garcia-portfolio.lovable.app/reverb/${character.id}`}
         />
+
         <link
           rel="preload"
           as="image"

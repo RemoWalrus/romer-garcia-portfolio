@@ -2,31 +2,52 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
+import { useReverbMeta } from "@/hooks/use-reverb-meta";
+import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
+
+const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
+const FALLBACK_DESC =
+  "Reverb is a multimedia franchise set in the Paradoxxia universe — a prequel following five outsiders who turn sound into resistance.";
+const FALLBACK_SOCIAL_DESC =
+  "People / Ideas / Music / Change. Meet the crew of Reverb, a prequel chapter of the Paradoxxia universe.";
 
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const characters = useReverbCharacters();
+  const metadata = useReverbMeta();
+  const meta = usePageMetaFromData("reverb", metadata, {
+    title: FALLBACK_TITLE,
+    description: FALLBACK_DESC,
+    keywords:
+      "Reverb, Reverb Collective, Paradoxxia universe, multimedia franchise, prequel, Romer Garcia",
+    ogTitle: "Reverb | Paradoxxia Universe",
+    ogDescription: FALLBACK_SOCIAL_DESC,
+    ogUrl: "https://romer-garcia-portfolio.lovable.app/reverb",
+    twitterTitle: "Reverb | Paradoxxia Universe",
+    twitterDescription: FALLBACK_SOCIAL_DESC,
+  });
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
-        <title>Reverb | Paradoxxia Universe Multimedia Franchise</title>
-        <meta
-          name="description"
-          content="Reverb is a multimedia franchise set in the Paradoxxia universe — a prequel following five outsiders who turn sound into resistance."
-        />
-        <meta property="og:title" content="Reverb | Paradoxxia Universe" />
-        <meta
-          property="og:description"
-          content="People / Ideas / Music / Change. Meet the crew of Reverb, a prequel chapter of the Paradoxxia universe."
-        />
+        <title>{meta.title}</title>
+        <meta name="description" content={meta.description} />
+        <meta name="keywords" content={meta.keywords} />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="website" />
+        {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
+        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={meta.twitterTitle} />
+        <meta name="twitter:description" content={meta.twitterDescription} />
+        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
         <link rel="canonical" href="https://romer-garcia-portfolio.lovable.app/reverb" />
       </Helmet>
+
 
       <ReverbHeader />
 

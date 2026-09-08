@@ -12,4 +12,4 @@
 - [x] Remove translucent Reverb header/panel banding and refine character-sheet proportions
 - [x] Verify and republish the Reverb image assets on the live site
 - [x] Restack mobile character profiles with a side-overlapping figure and no diagonal divider
-- [x] Verify the production character and figure images load from their published asset URLs
+- [ ] Mobile Reverb character: move figure left, reduce left panel height, bring next section up

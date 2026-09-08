@@ -2,11 +2,13 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { CHARACTERS } from "@/data/reverbCharacters";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const NAV = ["Home", "The Crew", "Universe", "Music", "Projects", "Media", "Store"];
 
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">

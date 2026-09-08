@@ -44,7 +44,7 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
       {word.map((letter, index) => (
         <span
           key={`${letter}-${index}`}
-          className={index === 1 || index === 5 ? "inline-block -scale-x-100" : "inline-block"}
+          className={index === 1 ? "inline-block -scale-x-100" : "inline-block"}
           aria-hidden="true"
         >
           {letter}

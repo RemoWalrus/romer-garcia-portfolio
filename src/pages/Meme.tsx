@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { RefreshCw } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
-import circuitBg from "@/assets/paradoxxia-bg.png";
+import circuitBg from "@/assets/paradoxxia-bg.webp";
 
 interface MemeData {
   id: number;

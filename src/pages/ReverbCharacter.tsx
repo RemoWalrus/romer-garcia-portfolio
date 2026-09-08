@@ -127,8 +127,20 @@ const ReverbCharacter = () => {
                       <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
                         Identity
                       </h2>
-                      <p className="mt-3 font-roc text-[11px] md:text-xs tracking-[0.16em] uppercase leading-[2] text-black/70">
-                        {character.role}
+                      <dl className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
+                        {(character.identity ?? []).map((row) => (
+                          <div key={row.label} className="flex gap-2 items-baseline">
+                            <dt className="font-roc text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-black/45 shrink-0">
+                              {row.label}
+                            </dt>
+                            <dd className="font-roc text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-black/80">
+                              {row.value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                      <p className="mt-4 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
+                        {character.discipline ?? character.role}
                       </p>
                       <p className="mt-2 font-hand text-2xl" style={{ color: accent }}>
                         {character.quote}
@@ -137,7 +149,7 @@ const ReverbCharacter = () => {
 
                     <section>
                       <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
-                        Notes
+                        Character
                       </h2>
                       <ul className="mt-3 space-y-1.5">
                         {character.notes?.map((n) => (
@@ -152,23 +164,40 @@ const ReverbCharacter = () => {
                     </section>
 
                     <section className="space-y-6">
-                      {character.palette && (
-                        <div>
-                          <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
-                            Color Palette
-                          </h2>
+                      <div>
+                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                          Signature
+                        </h2>
+                        {character.colorName && (
+                          <div className="mt-3 flex items-center gap-3">
+                            <span
+                              className="h-6 w-6 rounded-full border border-black/10 shadow-inner"
+                              style={{ backgroundColor: accent }}
+                            />
+                            <span className="font-roc text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-black/75">
+                              Color — {character.colorName}
+                            </span>
+                          </div>
+                        )}
+                        {character.palette && (
                           <div className="mt-3 flex flex-wrap gap-2">
                             {character.palette.map((c) => (
                               <span
                                 key={c}
-                                className="h-8 w-8 rounded-full border border-black/10 shadow-inner"
+                                className="h-6 w-6 rounded-full border border-black/10 shadow-inner"
                                 style={{ backgroundColor: c }}
                                 title={c}
                               />
                             ))}
                           </div>
-                        </div>
-                      )}
+                        )}
+                        {character.specialties && (
+                          <p className="mt-4 font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
+                            <span className="text-black/45">Specialties — </span>
+                            {character.specialties.join(" / ")}
+                          </p>
+                        )}
+                      </div>
 
                       {character.gear && (
                         <div>
@@ -188,6 +217,24 @@ const ReverbCharacter = () => {
                         </div>
                       )}
                     </section>
+
+                    {character.overview && (
+                      <section className="md:col-span-2">
+                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-2 border-b-2 border-black/80">
+                          Overview
+                        </h2>
+                        <div className="mt-3 space-y-3">
+                          {character.overview.map((p) => (
+                            <p
+                              key={p.slice(0, 24)}
+                              className="font-roc text-[11px] md:text-xs leading-[1.9] text-black/75"
+                            >
+                              {p}
+                            </p>
+                          ))}
+                        </div>
+                      </section>
+                    )}
 
                     <section className="md:col-span-2 border-t border-black/15 pt-5 flex flex-wrap items-end justify-between gap-4">
                       <div>

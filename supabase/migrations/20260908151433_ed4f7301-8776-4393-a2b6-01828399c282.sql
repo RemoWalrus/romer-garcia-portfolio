@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "temp_reverb_webp_upload" ON storage.objects;

@@ -1,11 +1,6 @@
-import reverbImg from "@/assets/reverb-char-reverb.png.asset.json";
-import sparkImg from "@/assets/reverb-char-spark.png.asset.json";
-import harmonixImg from "@/assets/reverb-char-harmonix.png.asset.json";
-import eduqImg from "@/assets/reverb-char-eduq.png.asset.json";
-import widaImg from "@/assets/reverb-char-wida.png.asset.json";
-import sparkFigure from "@/assets/reverb-spark-main.png.asset.json";
-import harmonixFigure from "@/assets/reverb-harmonix-main.png.asset.json";
-import widaFigure from "@/assets/reverb-wida-main.png.asset.json";
+import { getProxyUrl } from "@/utils/supabaseProxy";
+
+const reverbImage = (filename: string) => getProxyUrl("images", `reverb/${filename}`);
 
 export interface ReverbCharacter {
   id: string;
@@ -38,7 +33,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     role: "Music Producer // Visionary",
     quote: "\u201cFeel it. Create it. Move it.\u201d",
     caption: "From the streets to a brighter tomorrow.",
-    image: reverbImg.url,
+    image: reverbImage("reverb-char-reverb.png"),
     accent: "#a855f7",
     glow: "rgba(168,85,247,0.55)",
     hasProfile: false,
@@ -49,8 +44,8 @@ export const CHARACTERS: ReverbCharacter[] = [
     role: "Idea Generator // Creative Lead",
     quote: "\u201cBig ideas start with a spark.\u201d",
     caption: "People change worlds. Sometimes by just being them.",
-    image: sparkImg.url,
-    figure: sparkFigure.url,
+    image: reverbImage("reverb-char-spark.png"),
+    figure: reverbImage("reverb-spark-main.png"),
     accent: "#ff2e88",
     glow: "rgba(255,46,136,0.55)",
     hasProfile: true,
@@ -84,8 +79,8 @@ export const CHARACTERS: ReverbCharacter[] = [
     role: "Community Builder // Strategist",
     quote: "\u201cDifferent voices. Stronger together.\u201d",
     caption: "Systems link people. People make them matter.",
-    image: harmonixImg.url,
-    figure: harmonixFigure.url,
+    image: reverbImage("reverb-char-harmonix.png"),
+    figure: reverbImage("reverb-harmonix-main.png"),
     accent: "#2f8cff",
     glow: "rgba(47,140,255,0.55)",
     hasProfile: true,
@@ -121,7 +116,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     role: "Infiltration Specialist // Tech",
     quote: "\u201cInformation is freedom. Control is survival.\u201d",
     caption: "Tradition meets tomorrow. Same places. Different times.",
-    image: eduqImg.url,
+    image: reverbImage("reverb-char-eduq.png"),
     accent: "#b6f13b",
     glow: "rgba(182,241,59,0.55)",
     hasProfile: false,
@@ -132,8 +127,8 @@ export const CHARACTERS: ReverbCharacter[] = [
     role: "Time Traveler // Impact Lead",
     quote: "\u201cA kinder, brighter world is possible.\u201d",
     caption: "Same frequency. Louder together.",
-    image: widaImg.url,
-    figure: widaFigure.url,
+    image: reverbImage("reverb-char-wida.png"),
+    figure: reverbImage("reverb-wida-main.png"),
     accent: "#a855f7",
     glow: "rgba(168,85,247,0.55)",
     hasProfile: true,

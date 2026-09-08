@@ -13,3 +13,6 @@
 - [x] Verify and republish the Reverb image assets on the live site
 - [x] Restack mobile character profiles with a side-overlapping figure and no diagonal divider
 - [x] Mobile Reverb character: move figure left, reduce left panel height, bring next section up
+- [x] Correct desktop portrait head framing and remove the character-sheet outer border
+- [x] Mirror the first E in collective Reverb wordmarks
+- [x] Move all Reverb character artwork to Supabase Storage

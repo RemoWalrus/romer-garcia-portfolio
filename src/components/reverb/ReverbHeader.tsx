@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
-const ReverbWordmark = () => {
+export const ReverbWordmark = ({ className }: { className?: string }) => {
   const word = "REVERB".split("");
 
   return (
     <span
-      className="inline-flex gap-[0.025em] font-roc text-2xl font-extrabold tracking-normal uppercase text-reverb-wordmark md:text-3xl"
+      className={cn(
+        "inline-flex gap-[0.025em] font-roc font-extrabold tracking-normal uppercase",
+        className ?? "text-2xl text-reverb-wordmark md:text-3xl",
+      )}
       aria-label="Reverb"
     >
       {word.map((letter, index) => (
         <span
           key={`${letter}-${index}`}
-          className={index === 3 ? "ml-[0.035em] inline-block -scale-x-100" : "inline-block"}
+          className={index === 1 ? "inline-block -scale-x-100" : "inline-block"}
           aria-hidden="true"
         >
           {letter}

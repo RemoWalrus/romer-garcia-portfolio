@@ -17,6 +17,7 @@ const AICharacterGenerator = lazy(() => import("./pages/AICharacterGenerator"));
 const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
 const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
 const Story = lazy(() => import("./pages/Story"));
+const Reverb = lazy(() => import("./pages/Reverb"));
 
 const queryClient = new QueryClient({
   defaultOptions: {

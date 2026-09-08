@@ -17,3 +17,6 @@
 - [x] Mirror the first E in collective Reverb wordmarks
 - [x] Move all Reverb character artwork to Supabase Storage
 - [x] Align every Reverb header and footer to the shared 1500px content width
+- [ ] Remove right-side quote from Reverb character pages
+- [ ] Add empty Gallery section under Overview on Reverb character pages
+- [ ] Replace Eduq's character image with uploaded version and optimize

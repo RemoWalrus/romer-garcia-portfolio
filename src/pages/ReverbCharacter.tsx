@@ -49,17 +49,18 @@ const ReverbCharacter = () => {
 
       {/* Sheet */}
       <main className="relative bg-background transition-colors">
-        <div className="mx-auto max-w-[1500px] px-3 md:px-6 py-6 md:py-10">
+        <div className="mx-auto max-w-[1500px]">
           {/* Character sheet */}
           <div
-            className="relative overflow-hidden border border-white/10"
+            className="relative overflow-hidden border-x border-b border-white/10"
             style={{
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
+              minHeight: "calc(100vh - 64px)",
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)]">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.35fr)] h-full">
               {/* LEFT: identity + figure */}
-              <div className="relative px-5 md:px-8 pt-8 pb-0 min-h-[520px]">
+              <div className="relative px-5 md:px-8 pt-8 pb-0 h-full">
                 <h1
                   className="font-reverb italic uppercase leading-[0.78] text-[19vw] sm:text-[13vw] lg:text-[6.6vw] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
@@ -76,12 +77,6 @@ const ReverbCharacter = () => {
                   <br />
                   {`// ${(character.title ?? character.role).split("//").pop()?.trim()}`}
                 </p>
-
-                {character.kanji && (
-                  <p className="mt-3 text-2xl md:text-3xl tracking-[0.2em]" style={{ color: accent }}>
-                    {character.kanji}
-                  </p>
-                )}
 
                 {character.tagline && (
                   <p className="mt-6 font-hand text-2xl md:text-3xl leading-[1.15] text-white/90">
@@ -126,7 +121,7 @@ const ReverbCharacter = () => {
               </div>
 
               {/* RIGHT: light data panels */}
-              <div className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:p-7">
+              <div className="relative bg-[#ececef] text-[#111] p-4 md:p-6 lg:p-7 h-full">
                 {character.hasProfile ? (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-7">
                     <section className="md:col-span-2">
@@ -218,7 +213,7 @@ const ReverbCharacter = () => {
                     </section>
                   </div>
                 ) : (
-                  <div className="min-h-[360px] flex flex-col items-center justify-center text-center px-4">
+                  <div className="h-full flex flex-col items-center justify-center text-center px-4">
                     <span
                       className="font-reverb italic uppercase text-5xl md:text-6xl leading-none"
                       style={{ color: accent }}
@@ -240,16 +235,16 @@ const ReverbCharacter = () => {
           </div>
 
           {/* Crew nav */}
-          <nav className="mt-12 border-t border-border pt-8">
-            <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
+          <nav className="border-t border-border py-3">
+            <h2 className="font-roc text-[10px] tracking-[0.3em] uppercase text-muted-foreground px-3 md:px-6">
               The Collective
             </h2>
-            <div className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-1 px-3 md:px-6">
               {others.map((c) => (
                 <Link
                   key={c.id}
                   to={`/reverb/${c.id}`}
-                  className="group relative overflow-hidden border border-border h-32 md:h-40"
+                  className="group relative overflow-hidden border border-border h-20 md:h-24"
                 >
                   <img
                     src={c.image}
@@ -272,7 +267,7 @@ const ReverbCharacter = () => {
       </main>
 
 
-      <footer className="border-t border-border py-8 text-center">
+      <footer className="border-t border-border py-4 text-center">
         <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
           © {new Date().getFullYear()} Romer Garcia — Reverb / Paradoxxia
         </p>

@@ -70,9 +70,9 @@ const ReverbCharacter = () => {
         <div className="mx-auto max-w-[1400px] px-5 md:px-8 py-10 md:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)_minmax(0,0.8fr)] gap-8 lg:gap-10">
             {/* Left: identity */}
-            <div className="order-1">
+            <div className="order-1 min-w-0">
               <h1
-                className="font-reverb italic uppercase leading-[0.8] text-[19vw] sm:text-[13vw] lg:text-[6vw]"
+                className="font-reverb italic uppercase leading-[0.8] text-[16vw] sm:text-[11vw] lg:text-[4.4vw] break-words"
                 style={{ color: accent, textShadow: `0 0 40px ${glow}` }}
               >
                 {character.name}
@@ -131,7 +131,7 @@ const ReverbCharacter = () => {
             </div>
 
             {/* Center: figure */}
-            <div className="order-2 relative">
+            <div className="order-2 relative min-w-0">
               <div
                 className="relative overflow-hidden border border-white/10"
                 style={{ background: `linear-gradient(180deg, #0b0b0f 0%, ${glow} 220%)` }}
@@ -139,7 +139,7 @@ const ReverbCharacter = () => {
                 <img
                   src={character.image}
                   alt={`${character.name}, ${character.role}`}
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto min-h-[420px] object-contain"
                 />
                 {!character.hasProfile && (
                   <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px] flex flex-col items-center justify-center text-center px-6">

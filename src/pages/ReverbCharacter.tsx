@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
-import { CHARACTERS, getCharacter } from "@/data/reverbCharacters";
+import { CHARACTERS, getCharacter, reverbThumb } from "@/data/reverbCharacters";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 
 const ReverbCharacter = () => {

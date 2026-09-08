@@ -1,0 +1,1 @@
+DROP POLICY "Allow fixed Reverb artwork upload" ON storage.objects;

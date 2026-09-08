@@ -187,8 +187,10 @@ const Reverb = () => {
         </div>
       </section>
 
-      <footer className="border-t border-border py-8 text-center font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-        © {new Date().getFullYear()} Romer Garcia — Different people. A brighter tomorrow.
+      <footer className="border-t border-border py-8 font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+        <div className="mx-auto w-full max-w-[1500px] px-5 text-center md:px-8">
+          © {new Date().getFullYear()} Romer Garcia — Different people. A brighter tomorrow.
+        </div>
       </footer>
     </div>
   );

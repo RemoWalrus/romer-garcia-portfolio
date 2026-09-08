@@ -16,3 +16,4 @@
 - [x] Correct desktop portrait head framing and remove the character-sheet outer border
 - [x] Mirror the first E in collective Reverb wordmarks
 - [x] Move all Reverb character artwork to Supabase Storage
+- [x] Align every Reverb header and footer to the shared 1500px content width

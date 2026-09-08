@@ -258,15 +258,6 @@ const ReverbCharacter = () => {
                       </section>
                     )}
 
-                    <section className="md:col-span-2 border-t border-black/15 pt-3">
-                      {character.signOff && (
-                        <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
-                          {character.signOff}
-                        </p>
-                      )}
-                      <ReverbWordmark className="mt-3 text-lg text-[#111]" />
-                    </section>
-
                     {/* Gallery */}
                     <section className="md:col-span-2">
                       <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
@@ -308,6 +299,15 @@ const ReverbCharacter = () => {
                           Gallery coming soon.
                         </p>
                       )}
+                    </section>
+
+                    <section className="md:col-span-2 border-t border-black/15 pt-3">
+                      {character.signOff && (
+                        <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
+                          {character.signOff}
+                        </p>
+                      )}
+                      <ReverbWordmark className="mt-3 text-lg text-reverb-wordmark" />
                     </section>
                   </div>
                 ) : (

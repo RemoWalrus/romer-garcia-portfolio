@@ -23,7 +23,7 @@ const ReverbWordmark = () => {
 
 const ReverbHeader = ({ sticky = false }: { sticky?: boolean }) => (
   <header
-    className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 flex items-center justify-between border-b border-border bg-background/80 px-5 py-4 backdrop-blur-sm transition-colors md:px-8`}
+    className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 flex items-center justify-between border-b border-border bg-background px-5 py-4 transition-colors md:px-8`}
   >
     <Link to="/reverb" className="min-w-0 leading-none pr-4">
       <ReverbWordmark />

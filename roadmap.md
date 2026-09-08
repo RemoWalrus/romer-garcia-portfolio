@@ -9,3 +9,5 @@
 - [x] Brighten the Reverb wordmark to cyan and refine its letter spacing
 - [x] Tighten the V/reversed-E spacing and make the Reverb landing page follow the automatic site theme
 - [x] Unify Reverb headers, remove the wordmark glow and center nav, and theme profile-page chrome
+- [x] Remove translucent Reverb header/panel banding and refine character-sheet proportions
+- [x] Verify and republish the Reverb image assets on the live site

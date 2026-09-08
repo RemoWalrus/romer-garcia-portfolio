@@ -58,11 +58,11 @@ const Reverb = () => {
         </Link>
       </header>
 
-      {/* Hero: diagonal character panels */}
-      <section className="relative h-[92vh] min-h-[560px] w-full pt-20">
+      {/* Hero: diagonal character panels (columns on desktop, rows on mobile) */}
+      <section className="relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20">
         <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
 
-        <div className="flex h-full w-full gap-1.5 md:gap-3 px-2 md:px-4 overflow-hidden">
+        <div className="flex flex-col md:flex-row h-full w-full gap-[2px] md:gap-[3px] overflow-hidden">
           {CHARACTERS.map((c, i) => {
             const isActive = active === c.id;
             const dimmed = active !== null && !isActive;
@@ -75,16 +75,16 @@ const Reverb = () => {
                 onFocus={() => setActive(c.id)}
                 onBlur={() => setActive(null)}
                 aria-label={`${c.name} — ${c.role}`}
-                className="group relative flex-1 h-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
+                className="group relative h-full w-full overflow-hidden text-left focus:outline-none transition-[flex-grow] duration-500 ease-out"
                 style={{
-                  flexGrow: isActive ? 1.45 : 1,
+                  flexGrow: isActive ? 1.9 : 1,
+                  flexBasis: 0,
                   clipPath:
                     i === 0
                       ? "polygon(0 0, 100% 0, 86% 100%, 0% 100%)"
                       : i === CHARACTERS.length - 1
                       ? "polygon(14% 0, 100% 0, 100% 100%, 0% 100%)"
                       : "polygon(14% 0, 100% 0, 86% 100%, 0% 100%)",
-                  filter: "drop-shadow(0 0 14px rgba(0,0,0,0.9))",
                 }}
               >
                 {/* Image */}
@@ -94,7 +94,7 @@ const Reverb = () => {
                   loading="lazy"
                   className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out ${
                     isActive
-                      ? "grayscale-0 scale-[1.04]"
+                      ? "grayscale-0 scale-[1.12]"
                       : "grayscale contrast-[1.1] brightness-[0.75]"
                   } ${dimmed ? "opacity-60" : "opacity-100"}`}
                 />

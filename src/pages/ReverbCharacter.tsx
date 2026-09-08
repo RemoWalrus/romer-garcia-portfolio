@@ -111,8 +111,8 @@ const ReverbCharacter = () => {
                   </p>
                 </div>
 
-                {/* Figure — as tall as the section, overlapping the title */}
-                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-8%] lg:bottom-0 lg:top-[-14%] lg:h-[114%] lg:w-[105%] flex items-end justify-center pointer-events-none z-[5]">
+                {/* Figure — tall, shifted right so it overlaps the data sheet */}
+                <div className="relative mt-6 h-[60vh] lg:mt-0 lg:absolute lg:right-[-30%] lg:bottom-0 lg:top-[-4%] lg:h-[104%] lg:w-[118%] flex items-end justify-center pointer-events-none z-[5]">
                   <img
                     src={character.figure ?? character.image}
                     alt={`${character.name}, ${character.role}`}

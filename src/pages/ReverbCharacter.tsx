@@ -285,9 +285,12 @@ const ReverbCharacter = () => {
                   className="group relative overflow-hidden border border-border h-12 md:h-14"
                 >
                   <img
-                    src={c.image}
+                    src={reverbThumb(c.id)}
                     alt={c.name}
                     loading="lazy"
+                    decoding="async"
+                    width={320}
+                    height={480}
                     className="absolute inset-0 w-full h-full object-cover object-top grayscale brightness-[0.7] group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />

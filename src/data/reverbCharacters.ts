@@ -87,7 +87,7 @@ export const CHARACTERS: ReverbCharacter[] = [
       "Spark, Harmonix, Eduq and eventually Wida are radically different people. Reverb gives them the space to become a family.",
     ],
     signOff: "DIFFERENT ROADS. SAME FREQUENCY. REVERB.",
-    closingQuote: "\u201cI am the gap between them.\u201d",
+    gallery: [],
   },
   {
     id: "spark",

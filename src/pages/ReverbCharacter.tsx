@@ -9,7 +9,7 @@ import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 import { useReverbUnlocked } from "@/lib/reverbLock";
 import { characterSchema } from "@/lib/reverbSchema";
-import { JoinCollectiveCta } from "@/components/reverb/JoinCollective";
+import { useReverbUnlocked } from "@/lib/reverbLock";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();

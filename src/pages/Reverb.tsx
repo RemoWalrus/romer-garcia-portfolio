@@ -7,7 +7,7 @@ import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
-import { JoinCollectiveCta, JoinCollectiveSection } from "@/components/reverb/JoinCollective";
+import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
 
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";

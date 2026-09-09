@@ -35,6 +35,13 @@ const ReverbCharacter = () => {
     trackEvent("Reverb", "View Character", `${character.id}${isLocked ? " (locked)" : ""}`);
   }, [character?.id, isLocked]);
 
+  // On mobile, jump to the top whenever the character changes.
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, [id]);
+
 
 
 

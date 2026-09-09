@@ -217,7 +217,8 @@ const Reverb = () => {
                       {c.role}
                     </span>
                     <span
-                      className={`${isActive ? "inline-block" : "invisible xl:inline-block"} reverb-button mt-4`}
+                      className={`${isActive ? "inline-block" : "invisible xl:inline-block"} reverb-button reverb-character-button mt-4`}
+                      style={{ "--character-accent": c.accent } as React.CSSProperties}
                     >
                       View Profile
                     </span>

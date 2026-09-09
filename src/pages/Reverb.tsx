@@ -116,11 +116,11 @@ const Reverb = () => {
           {characters.map((c, i) => {
             const isActive = highlight === c.id;
             const dimmed = highlight !== null && !isActive;
-            const mobileCollapsed = isMobile && active !== null && active !== c.id;
+            const mobileCollapsed = isMobile && highlight !== null && highlight !== c.id;
             const grow = isMobile
-              ? active === c.id
+              ? isActive
                 ? 9
-                : active !== null
+                : highlight !== null
                 ? 0.28
                 : 1
               : isActive

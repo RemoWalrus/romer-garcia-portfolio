@@ -38,51 +38,39 @@ const BLACK_CURSOR_GHOST = 'hsla(0, 0%, 0%, 0.28)';
 
 const RoutedFavicon = () => {
   const location = useLocation();
-  const originalRef = useRef<{ href: string; type: string } | null>(null);
 
   useEffect(() => {
-    const link =
-      document.querySelector<HTMLLinkElement>('link[rel="icon"]') ||
-      document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
-    if (!link) return;
-
-    if (originalRef.current === null) {
-      originalRef.current = { href: link.href, type: link.type };
-    }
-
     const path = location.pathname;
     const isParadoxxia = path === '/paradoxxia' || path === '/char-gen' || path === '/story';
     const isReverb = path === '/reverb' || path.startsWith('/reverb/');
     const brand = isParadoxxia ? 'paradoxxia' : isReverb ? 'reverb' : null;
 
-    // Managed extra icon sizes (large PNGs + apple touch icon)
-    const MANAGED = 'data-brand-icon';
-    document.querySelectorAll(`link[${MANAGED}]`).forEach((el) => el.remove());
+    // Remove every icon link we manage (including the ones from index.html)
+    document
+      .querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]')
+      .forEach((el) => el.remove());
 
-    if (brand) {
-      link.href = `/favicon-${brand}.png`;
-      link.type = 'image/png';
+    const small = brand ? `/favicon-${brand}.png` : '/favicon-32.png';
+    const medium = brand ? `/favicon-${brand}-192.png` : '/favicon-192.png';
+    const large = brand ? `/favicon-${brand}-512.png` : '/favicon-512.png';
+    const apple = brand ? `/apple-touch-icon-${brand}.png` : '/apple-touch-icon.png';
 
-      const extras: Array<{ rel: string; sizes?: string; href: string }> = [
-        { rel: 'icon', sizes: '192x192', href: `/favicon-${brand}-192.png` },
-        { rel: 'icon', sizes: '512x512', href: `/favicon-${brand}-512.png` },
-        { rel: 'apple-touch-icon', sizes: '180x180', href: `/apple-touch-icon-${brand}.png` },
-      ];
+    const links: Array<{ rel: string; sizes?: string; href: string }> = [
+      { rel: 'icon', sizes: '32x32', href: small },
+      { rel: 'icon', sizes: '192x192', href: medium },
+      { rel: 'icon', sizes: '512x512', href: large },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: apple },
+      { rel: 'apple-touch-icon-precomposed', sizes: '180x180', href: apple },
+    ];
 
-      extras.forEach((cfg) => {
-        const el = document.createElement('link');
-        el.rel = cfg.rel;
-        el.type = 'image/png';
-        if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
-        el.href = cfg.href;
-        el.setAttribute(MANAGED, brand);
-        document.head.appendChild(el);
-      });
-    } else {
-      const original = originalRef.current;
-      link.href = original.href;
-      link.type = original.type;
-    }
+    links.forEach((cfg) => {
+      const el = document.createElement('link');
+      el.rel = cfg.rel;
+      el.type = 'image/png';
+      if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
+      el.href = cfg.href;
+      document.head.appendChild(el);
+    });
   }, [location.pathname]);
 
   return null;

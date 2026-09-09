@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Temp agent upload reverb gallery" ON storage.objects;

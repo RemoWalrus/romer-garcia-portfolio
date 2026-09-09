@@ -8,6 +8,7 @@ import { useReverbMeta } from "@/hooks/use-reverb-meta";
 import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 import { useReverbUnlocked } from "@/lib/reverbLock";
+import { characterSchema } from "@/lib/reverbSchema";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
@@ -113,6 +114,16 @@ const ReverbCharacter = () => {
           href={character.figure ?? character.image}
           fetchPriority="high"
         />
+
+        {/* Redacted or unfinished sheets stay out of the index until they have real content. */}
+        {(locked || !character.hasProfile) && (
+          <meta name="robots" content="noindex, follow" />
+        )}
+        {!locked && character.hasProfile && (
+          <script type="application/ld+json">
+            {JSON.stringify(characterSchema(character))}
+          </script>
+        )}
       </Helmet>
 
       <ReverbHeader sticky />

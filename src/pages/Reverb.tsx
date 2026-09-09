@@ -6,6 +6,7 @@ import { useReverbMeta } from "@/hooks/use-reverb-meta";
 import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
+import { rosterSchema } from "@/lib/reverbSchema";
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
 const FALLBACK_DESC =
@@ -103,6 +104,11 @@ const Reverb = () => {
         <meta name="twitter:description" content={meta.twitterDescription} />
         {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
         <link rel="canonical" href="https://romer-garcia-portfolio.lovable.app/reverb" />
+        {characters.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(rosterSchema(characters))}
+          </script>
+        )}
       </Helmet>
 
 
@@ -242,6 +248,27 @@ const Reverb = () => {
             </p>
           ))}
         </div>
+      </section>
+
+      {/* Crawlable roster summary — text version of the visual panels above */}
+      <section className="sr-only">
+        <h2>The Reverb Collective</h2>
+        <ul>
+          {characters.map((c) => (
+            <li key={c.id}>
+              <Link to={`/reverb/${c.id}`}>
+                {c.name} — {c.discipline ?? c.role}
+              </Link>
+              {c.identity?.length ? (
+                <span>
+                  {" "}
+                  {c.identity.map((row) => `${row.label}: ${row.value}`).join(". ")}.
+                </span>
+              ) : null}
+              {c.overview?.length ? <p>{c.overview[0]}</p> : null}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Universe blurb */}

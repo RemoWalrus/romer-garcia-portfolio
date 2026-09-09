@@ -324,6 +324,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     glow: "rgba(255,46,136,0.55)",
     hasProfile: true,
     hidden: true,
+    locked: true,
     baseId: "spark",
     kanji: "\u706b\u82b1",
     title: "Reverb Collective // Demolitions",

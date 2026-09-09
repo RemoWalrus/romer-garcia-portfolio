@@ -106,7 +106,7 @@ function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconL
     <meta name="twitter:description" content="${meta.twitterDescription}" />
     <meta name="twitter:image" content="${meta.twitterImage}" />
     
-    ${meta.iconLinks}
+    ${iconLinks}
 
     <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
@@ -261,7 +261,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    const html = buildHTML(meta, memeComment);
+    const html = buildHTML(meta, memeComment, iconLinksFor(path));
 
     return new Response(html, {
       headers: { ...corsHeaders, 'Content-Type': 'text/html' },

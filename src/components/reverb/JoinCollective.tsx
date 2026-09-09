@@ -40,10 +40,7 @@ export const JoinCollectiveCta = ({
     <Link
       to="/reverb#join"
       onClick={onClick}
-      className={cn(
-        "font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground",
-        className,
-      )}
+      className={cn("reverb-button", className)}
     >
       {label}
     </Link>
@@ -128,7 +125,7 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="shrink-0 border border-foreground px-6 py-3 font-roc text-[10px] uppercase tracking-[0.22em] text-foreground transition-colors hover:bg-foreground hover:text-background disabled:opacity-60"
+          className="reverb-button shrink-0 disabled:opacity-60"
         >
           {state === "sending" ? "Tuning in…" : "Join the Collective"}
         </button>

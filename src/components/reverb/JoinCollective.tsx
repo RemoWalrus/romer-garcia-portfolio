@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { trackEvent } from "@/components/GoogleAnalytics";
@@ -148,7 +148,20 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
 };
 
 /** Full signup block for the bottom of the main Reverb page. */
-export const JoinCollectiveSection = () => (
+export const JoinCollectiveSection = () => {
+  const { hash } = useLocation();
+
+  // Arriving from a CTA on another Reverb page (/reverb#join).
+  useEffect(() => {
+    if (hash !== "#join") return;
+    const t = window.setTimeout(
+      () => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" }),
+      120,
+    );
+    return () => window.clearTimeout(t);
+  }, [hash]);
+
+  return (
   <section id="join" className="border-t border-border bg-background transition-colors">
     <div className="mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
       <div className="mx-auto max-w-2xl text-center">
@@ -165,4 +178,5 @@ export const JoinCollectiveSection = () => (
       </div>
     </div>
   </section>
-);
+  );
+};

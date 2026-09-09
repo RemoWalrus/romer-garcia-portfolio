@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useReverbGallery } from "@/hooks/use-reverb-gallery";
 
@@ -15,6 +16,29 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
   const items = useReverbGallery(characterId);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const active = openIndex === null ? null : items[openIndex];
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const step = useCallback(
+    (delta: number) => {
+      setOpenIndex((current) =>
+        current === null || items.length === 0
+          ? current
+          : (current + delta + items.length) % items.length
+      );
+    },
+    [items.length]
+  );
+
+  useEffect(() => {
+    if (openIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openIndex, step]);
+
 
   if (!items.length) {
     return (
@@ -56,7 +80,22 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
       <Dialog open={active !== null} onOpenChange={() => setOpenIndex(null)}>
         <DialogContent className="max-w-4xl w-[95vw] p-0 bg-black border-white/10">
           {active && (
-            <div className="relative">
+            <div
+              className="relative touch-pan-y select-none"
+              onTouchStart={(e) => {
+                const t = e.touches[0];
+                touchStart.current = { x: t.clientX, y: t.clientY };
+              }}
+              onTouchEnd={(e) => {
+                const start = touchStart.current;
+                touchStart.current = null;
+                if (!start) return;
+                const t = e.changedTouches[0];
+                const dx = t.clientX - start.x;
+                const dy = t.clientY - start.y;
+                if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
+              }}
+            >
               {active.mediaType === "video" ? (
                 <video src={active.src} className="w-full max-h-[85vh]" controls autoPlay />
               ) : (
@@ -64,13 +103,41 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
                   src={active.src}
                   alt={active.caption || `${characterName} — Reverb gallery image`}
                   className="w-full max-h-[85vh] object-contain"
+                  draggable={false}
                 />
               )}
-              {active.caption && (
-                <span className="absolute bottom-0 left-0 right-0 bg-black/70 text-white/90 font-roc text-[10px] tracking-[0.25em] uppercase px-3 py-2">
-                  {active.caption}
-                </span>
+
+              {items.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => step(-1)}
+                    aria-label="Previous image"
+                    className="absolute left-2 top-1/2 -translate-y-1/2 grid place-items-center w-10 h-10 bg-black/55 hover:bg-black/80 text-white border border-white/20 transition-colors"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => step(1)}
+                    aria-label="Next image"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 grid place-items-center w-10 h-10 bg-black/55 hover:bg-black/80 text-white border border-white/20 transition-colors"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
               )}
+
+              <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-3 bg-black/70 px-3 py-2">
+                <span className="text-white/90 font-roc text-[10px] tracking-[0.25em] uppercase truncate">
+                  {active.caption || ""}
+                </span>
+                {items.length > 1 && (
+                  <span className="text-white/60 font-roc text-[10px] tracking-[0.2em] shrink-0">
+                    {(openIndex ?? 0) + 1}/{items.length}
+                  </span>
+                )}
+              </div>
             </div>
           )}
         </DialogContent>

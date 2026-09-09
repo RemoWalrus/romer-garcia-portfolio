@@ -59,7 +59,29 @@ const defaultMeta = {
   twitterImage: DEFAULT_OG_IMAGE,
 };
 
-function buildHTML(meta: typeof defaultMeta, memeComment = '') {
+// Per-brand icon sets — must be in the initial HTML so iOS picks them up
+function iconLinksFor(path: string) {
+  const brand = path === '/paradoxxia' || path === '/char-gen' || path === '/story'
+    ? 'paradoxxia'
+    : path === '/reverb' || path.startsWith('/reverb/')
+      ? 'reverb'
+      : null;
+
+  if (!brand) {
+    return `    <link rel="icon" type="image/png" sizes="32x32" href="https://romergarcia.com/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="https://romergarcia.com/favicon-192.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://romergarcia.com/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://romergarcia.com/apple-touch-icon.png" />`;
+  }
+
+  return `    <link rel="icon" type="image/png" sizes="32x32" href="https://romergarcia.com/favicon-${brand}.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="https://romergarcia.com/favicon-${brand}-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="https://romergarcia.com/favicon-${brand}-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://romergarcia.com/apple-touch-icon-${brand}.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://romergarcia.com/apple-touch-icon-${brand}.png" />`;
+}
+
+function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconLinksFor('/')) {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>

@@ -385,7 +385,7 @@ const ReverbCharacter = () => {
                           return (
                             <Link
                               to={`/reverb/${base.id}`}
-                              className="reverb-character-button inline-flex items-center justify-center"
+                              className="reverb-button reverb-character-button"
                               style={{ "--character-accent": accent } as React.CSSProperties}
                             >
                               ← {base.name}

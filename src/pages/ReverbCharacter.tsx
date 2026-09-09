@@ -113,7 +113,7 @@ const ReverbCharacter = () => {
           rel="preload"
           as="image"
           href={character.figure ?? character.image}
-          fetchPriority="high"
+          {...{ fetchpriority: "high" }}
         />
 
         {/* Redacted or unfinished sheets stay out of the index until they have real content. */}
@@ -198,7 +198,7 @@ const ReverbCharacter = () => {
                       src={character.figure ?? character.image}
                       alt={`${character.name}, ${character.role}`}
                       loading="eager"
-                      fetchPriority="high"
+                      {...{ fetchpriority: "high" }}
                       decoding="async"
                       className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                       style={

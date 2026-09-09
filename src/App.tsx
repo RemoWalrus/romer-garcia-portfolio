@@ -10,10 +10,10 @@ import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import { RouteAnalytics } from "./components/GoogleAnalytics";
 import { applyTheme, getThemeOverride } from "./lib/theme";
-import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
 // Lazy-load heavy routes so initial paint is fast
+const Index = lazy(() => import("./pages/Index"));
 const Meme = lazy(() => import("./pages/Meme"));
 const AICharacterGenerator = lazy(() => import("./pages/AICharacterGenerator"));
 const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));

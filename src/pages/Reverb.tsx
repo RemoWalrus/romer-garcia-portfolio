@@ -174,7 +174,7 @@ const Reverb = () => {
                   src={c.image}
                   alt={`${c.name}, ${c.role}`}
                   loading="eager"
-                  fetchPriority={i === 0 ? "high" : "auto"}
+                  {...{ fetchpriority: i === 0 ? "high" : "auto" }}
                   decoding="async"
                   className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out ${
                     isActive

@@ -134,6 +134,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <ThemeColor />
+            <RouteAnalytics />
             <RoutedFavicon />
             <RoutedCursor />
             <Suspense fallback={null}>

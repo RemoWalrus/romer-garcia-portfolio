@@ -186,7 +186,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
                   aria-label="REVERB"
                   className="text-[10px] text-neutral-400 dark:text-neutral-600 hover:text-neutral-500 dark:hover:text-neutral-500 transition-colors opacity-50 tracking-[0.12em]"
                 >
-                  <span aria-hidden="true">
+                  <span aria-hidden="true" className="italic">
                     R<span className="inline-block scale-x-[-1]">E</span>VERB
                   </span>
                 </a>

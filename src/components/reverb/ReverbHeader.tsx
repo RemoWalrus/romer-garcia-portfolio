@@ -65,7 +65,7 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
   return (
     <span
       className={cn(
-        "inline-flex gap-[0.025em] font-roc font-extrabold tracking-normal uppercase",
+        "inline-flex gap-[0.025em] font-roc font-extrabold italic tracking-normal uppercase",
         className ?? "text-2xl text-reverb-wordmark md:text-3xl",
       )}
       aria-label="Reverb"

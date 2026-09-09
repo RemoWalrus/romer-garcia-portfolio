@@ -120,12 +120,12 @@ const ReverbCharacter = () => {
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
+            <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.5fr)] xl:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
               <div className="relative z-40 h-[70svh] min-h-[340px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
 
                 <h1
-                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] lg:max-w-none lg:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
+                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] lg:z-50 lg:max-w-none lg:text-[clamp(2.1rem,3.2vw,3rem)] xl:z-30 xl:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
@@ -173,7 +173,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[4%] md:w-[58%] md:h-[100%] lg:right-[-58%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[110%] lg:items-start">
+                <div className="absolute -right-[4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[4%] md:w-[58%] md:h-[100%] lg:right-[-28%] lg:top-0 lg:bottom-auto lg:h-full lg:w-full lg:items-start xl:right-[-58%] xl:top-[-2.5%] xl:h-[105.5%] xl:w-[110%]">
                   <div className="relative h-full">
                     <img
                       src={character.figure ?? character.image}
@@ -201,7 +201,7 @@ const ReverbCharacter = () => {
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 lg:overflow-y-auto lg:pl-[24%] lg:pr-7 lg:py-6 lg:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
+                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 lg:overflow-y-auto lg:pl-[18%] lg:pr-7 lg:py-6 lg:[clip-path:polygon(8%_0%,100%_0%,100%_100%,0%_100%)] xl:pl-[24%] xl:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
               >
 
                 {character.hasProfile ? (

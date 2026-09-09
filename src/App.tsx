@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import { RouteAnalytics } from "./components/GoogleAnalytics";

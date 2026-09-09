@@ -84,7 +84,7 @@ function buildHTML(meta: typeof defaultMeta, memeComment = '') {
     <meta name="twitter:description" content="${meta.twitterDescription}" />
     <meta name="twitter:image" content="${meta.twitterImage}" />
     
-    <link rel="icon" type="image/x-icon" href="https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=graphics&file=favicon.ico" />
+    ${meta.iconLinks}
 
     <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />

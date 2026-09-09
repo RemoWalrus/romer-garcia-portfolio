@@ -11,6 +11,19 @@
     <meta name="keywords" content="Design Lead, Multimedia Designer, Digital Media, Brand Transformation, Visual Narrative, Creative Strategy, Digital Campaigns" />
     <meta name="theme-color" content="#020817" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      // Apply theme before first paint (fixes iOS auto dark/light not applying)
+      (function () {
+        try {
+          var override = localStorage.getItem('theme-override');
+          var dark = override
+            ? override === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
     
     <!-- Open Graph Meta Tags for social sharing -->
     <meta property="og:title" content="Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader" />

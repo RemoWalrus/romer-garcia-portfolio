@@ -23,9 +23,11 @@ const utm = (key: string) => {
 export const JoinCollectiveCta = ({
   className,
   label = "Join the Collective",
+  accentColor,
 }: {
   className?: string;
   label?: string;
+  accentColor?: string;
 }) => {
   const location = useLocation();
 
@@ -40,7 +42,8 @@ export const JoinCollectiveCta = ({
     <Link
       to="/reverb#join"
       onClick={onClick}
-      className={cn("reverb-button", className)}
+      className={cn("reverb-button", accentColor && "reverb-character-cta", className)}
+      style={accentColor ? ({ "--character-accent": accentColor } as React.CSSProperties) : undefined}
     >
       {label}
     </Link>

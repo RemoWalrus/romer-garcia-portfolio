@@ -143,6 +143,23 @@
     background-color: var(--character-accent);
     color: hsl(var(--background));
   }
+
+  .reverb-character-cta {
+    @apply reverb-button;
+    border-color: hsl(var(--reverb-wordmark));
+    color: hsl(var(--reverb-wordmark));
+  }
+
+  .dark .reverb-character-cta {
+    border-color: var(--character-accent);
+    color: var(--character-accent);
+  }
+
+  .reverb-character-cta:hover {
+    background-color: var(--character-accent);
+    border-color: var(--character-accent);
+    color: hsl(var(--background));
+  }
 }
 
 .glass-card {

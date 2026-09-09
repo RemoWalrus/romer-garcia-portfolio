@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Lock, LockOpen, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { applyTheme, isDarkNow, setThemeOverride } from "@/lib/theme";
 import { setUnlocked, useReverbUnlocked } from "@/lib/reverbLock";
 import { JoinCollectiveCta } from "@/components/reverb/JoinCollective";
+import { getCharacter } from "@/data/reverbCharacters";
 
 
 const ReverbLockToggle = () => {
@@ -95,8 +96,11 @@ const ReverbHeader = ({
 }: {
   sticky?: boolean;
 }) => {
-  return (
+  const { id } = useParams<{ id: string }>();
+  const character = id ? getCharacter(id) : undefined;
+  const accent = character?.accent;
 
+  return (
     <header
       className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
     >
@@ -114,9 +118,9 @@ const ReverbHeader = ({
           <JoinCollectiveCta
             className="reverb-button"
             label="Join the Collective"
+            accentColor={accent}
           />
         </div>
-
       </div>
     </header>
   );

@@ -37,6 +37,8 @@ export interface ReverbCharacter {
   hidden?: boolean;
   /** For hidden variant profiles: the canonical character id to exclude from crew nav. */
   baseId?: string;
+  /** Redacted/silhouetted until unlocked — controlled by `is_locked` in Supabase. */
+  locked?: boolean;
 }
 
 
@@ -322,6 +324,7 @@ export const CHARACTERS: ReverbCharacter[] = [
     glow: "rgba(255,46,136,0.55)",
     hasProfile: true,
     hidden: true,
+    locked: true,
     baseId: "spark",
     kanji: "\u706b\u82b1",
     title: "Reverb Collective // Demolitions",

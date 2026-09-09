@@ -31,6 +31,7 @@ type Row = {
   sign_off: string | null;
   gallery: { type: "image" | "video"; src: string; caption?: string }[] | null;
   is_hidden: boolean | null;
+  is_locked: boolean | null;
   base_id: string | null;
 };
 
@@ -59,6 +60,7 @@ const mapRow = (row: Row): ReverbCharacter => ({
   signOff: row.sign_off ?? undefined,
   gallery: row.gallery ?? [],
   hidden: row.is_hidden ?? false,
+  locked: row.is_locked ?? false,
   baseId: row.base_id ?? undefined,
 });
 

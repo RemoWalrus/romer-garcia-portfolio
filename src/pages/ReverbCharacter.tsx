@@ -51,8 +51,11 @@ const ReverbCharacter = () => {
   const excludeIds = new Set([character.id, character.baseId].filter(Boolean));
   const others = characters.filter((c) => !excludeIds.has(c.id) && !c.hidden);
 
-  /** Unlockable profiles stay classified until the unlock flag is set. */
-  const locked = !!character.hidden && !unlocked;
+  /**
+   * Lock state lives in Supabase (`reverb_characters.is_locked`).
+   * The preview-only toggle can reveal a locked entry locally without editing the row.
+   */
+  const locked = !!character.locked && !unlocked;
 
   const Redact = ({ children }: { children: React.ReactNode }) =>
     locked ? (

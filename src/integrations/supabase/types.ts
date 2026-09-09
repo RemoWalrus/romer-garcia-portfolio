@@ -319,6 +319,7 @@ export type Database = {
           identity: Json
           image_file: string
           is_hidden: boolean
+          is_locked: boolean
           kanji: string | null
           name: string
           notes: string[]
@@ -349,6 +350,7 @@ export type Database = {
           identity?: Json
           image_file?: string
           is_hidden?: boolean
+          is_locked?: boolean
           kanji?: string | null
           name: string
           notes?: string[]
@@ -379,6 +381,7 @@ export type Database = {
           identity?: Json
           image_file?: string
           is_hidden?: boolean
+          is_locked?: boolean
           kanji?: string | null
           name?: string
           notes?: string[]

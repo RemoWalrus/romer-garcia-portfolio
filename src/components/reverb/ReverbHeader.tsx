@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Lock, LockOpen, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { applyTheme, isDarkNow, setThemeOverride } from "@/lib/theme";
 import { setUnlocked, useReverbUnlocked } from "@/lib/reverbLock";
 import { JoinCollectiveCta } from "@/components/reverb/JoinCollective";
+import { getCharacter } from "@/data/reverbCharacters";
 
 
 const ReverbLockToggle = () => {

@@ -40,9 +40,11 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
               <video src={item.src} className="w-full h-full object-cover" preload="metadata" muted />
             ) : (
               <img
-                src={item.src}
+                src={item.thumbSrc}
                 alt={item.caption || `${characterName} — Reverb gallery image ${idx + 1}`}
                 className="w-full h-full object-cover"
+                width={64}
+                height={64}
                 loading="lazy"
                 decoding="async"
               />

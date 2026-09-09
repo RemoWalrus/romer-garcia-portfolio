@@ -7,7 +7,7 @@ import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
-import { JoinCollectiveCta, JoinCollectiveSection } from "@/components/reverb/JoinCollective";
+import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
 
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
@@ -275,7 +275,7 @@ const Reverb = () => {
 
       {/* Universe blurb */}
       <section className="max-w-4xl mx-auto px-5 py-20 md:py-28 text-center">
-        <h2 className="font-reverb italic uppercase text-4xl md:text-6xl mb-6">The Universe</h2>
+        <h2 className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-4xl md:text-6xl mb-6">The Universe</h2>
         <p className="font-roc text-sm md:text-base leading-relaxed text-muted-foreground">
           Long before an android woke up alone in the Cyber Boondocks, five outsiders were already
           fighting the silence. Reverb is the prequel chapter of the Paradoxxia universe — a story
@@ -300,8 +300,7 @@ const Reverb = () => {
       <JoinCollectiveSection />
 
       <footer className="border-t border-border py-8 font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-        <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center gap-2 px-5 text-center md:px-8">
-          <JoinCollectiveCta />
+        <div className="mx-auto w-full max-w-[1500px] px-5 text-center md:px-8">
           <span>© {new Date().getFullYear()} Romer Garcia. All rights reserved.</span>
         </div>
       </footer>

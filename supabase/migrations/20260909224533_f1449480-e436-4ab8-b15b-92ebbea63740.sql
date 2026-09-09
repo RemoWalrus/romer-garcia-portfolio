@@ -1,0 +1,1 @@
+CREATE POLICY "tmp_spark_turnaround_upload" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'images' AND name IN ('reverb/gallery/spark-360-turnaround.webp', 'reverb/gallery/thumb-spark-360-turnaround.webp'));

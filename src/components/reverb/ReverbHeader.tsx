@@ -70,19 +70,19 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
       )}
       aria-label="Reverb"
     >
-      {word.map((letter, index) => (
-        <span
-          key={`${letter}-${index}`}
-          className={cn(
-            "inline-block",
-            index === 1 && "-scale-x-100",
-            index === 2 && "-ml-[0.22em]",
-          )}
-          aria-hidden="true"
-        >
-          {letter}
-        </span>
-      ))}
+        {word.map((letter, index) => (
+          <span
+            key={`${letter}-${index}`}
+            className={cn(
+              "inline-block",
+              index === 1 && "-scale-x-100 mr-[0.04em]",
+              index === 2 && "-ml-[0.27em]",
+            )}
+            aria-hidden="true"
+          >
+            {letter}
+          </span>
+        ))}
     </span>
   );
 };

@@ -184,7 +184,7 @@ const ReverbCharacter = () => {
                       className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                       style={
                         locked
-                          ? { filter: "grayscale(100%) brightness(0.38) contrast(1.25) blur(5px)", opacity: 1 }
+                          ? { filter: "grayscale(100%) brightness(0.5) contrast(1.15) blur(4px)", opacity: 1 }
                           : undefined
                       }
                     />

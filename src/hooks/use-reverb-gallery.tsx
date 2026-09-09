@@ -5,6 +5,7 @@ import { getProxyUrl } from "@/utils/supabaseProxy";
 export type ReverbGalleryItem = {
   id: string;
   src: string;
+  thumbSrc: string;
   caption?: string;
   mediaType: "image" | "video";
   characterIds: string[];
@@ -36,6 +37,10 @@ export const useReverbGallery = (characterId?: string) => {
         data.map((row: any) => ({
           id: row.id,
           src: getProxyUrl("images", row.image_file),
+          thumbSrc: getProxyUrl(
+            "images",
+            row.image_file.replace(/([^/]+)$/, "thumb-$1"),
+          ),
           caption: row.caption ?? undefined,
           mediaType: (row.media_type as "image" | "video") ?? "image",
           characterIds: row.character_ids ?? [],

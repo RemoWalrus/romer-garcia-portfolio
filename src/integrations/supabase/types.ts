@@ -434,6 +434,39 @@ export type Database = {
         }
         Relationships: []
       }
+      reverb_gallery: {
+        Row: {
+          caption: string | null
+          character_ids: string[]
+          created_at: string
+          id: string
+          image_file: string
+          media_type: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          caption?: string | null
+          character_ids?: string[]
+          created_at?: string
+          id?: string
+          image_file: string
+          media_type?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          caption?: string | null
+          character_ids?: string[]
+          created_at?: string
+          id?: string
+          image_file?: string
+          media_type?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       sections: {
         Row: {
           button_text: string

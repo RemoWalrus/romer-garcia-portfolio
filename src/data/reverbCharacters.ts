@@ -37,6 +37,8 @@ export interface ReverbCharacter {
   hidden?: boolean;
   /** For hidden variant profiles: the canonical character id to exclude from crew nav. */
   baseId?: string;
+  /** Redacted/silhouetted until unlocked — controlled by `is_locked` in Supabase. */
+  locked?: boolean;
 }
 
 

@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "tmp_spark_turnaround_upload" ON storage.objects;

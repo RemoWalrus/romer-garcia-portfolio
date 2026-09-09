@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Rotate3D } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useReverbGallery } from "@/hooks/use-reverb-gallery";
-import sparkTurnaround from "@/assets/spark-360-turnaround.webp.asset.json";
-import sparkTurnaroundThumb from "@/assets/thumb-spark-360-turnaround.webp.asset.json";
+import { getProxyUrl } from "@/utils/supabaseProxy";
 
 interface Props {
   characterId: string;
   characterName: string;
 }
 
-const TURNAROUND_ID = "spark-360-turnaround";
 const TURNAROUND_ANGLES = ["0°", "45°", "90°", "135°", "180°", "225°", "270°", "315°"];
+const TURNAROUND_SRC = getProxyUrl("images", "reverb/gallery/spark-360-turnaround.webp");
+const TURNAROUND_THUMB = getProxyUrl("images", "reverb/gallery/thumb-spark-360-turnaround.webp");
 
 const SparkTurnaround = () => {
   const [frame, setFrame] = useState(0);
@@ -48,7 +48,7 @@ const SparkTurnaround = () => {
         onPointerCancel={() => { dragStart.current = null; }}
       >
         <img
-          src={sparkTurnaround.url}
+          src={TURNAROUND_SRC}
           alt=""
           draggable={false}
           className="pointer-events-none absolute inset-y-0 left-0 h-full w-[800%] max-w-none object-fill"
@@ -137,7 +137,7 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
             className="relative h-14 w-14 overflow-hidden border border-black/15 bg-black/5 transition-colors hover:border-black/60 sm:h-16 sm:w-16"
           >
             <img
-              src={sparkTurnaroundThumb.url}
+              src={TURNAROUND_THUMB}
               alt="Spark 360 degree turnaround"
               className="h-full w-full object-cover"
               width={64}
@@ -177,6 +177,9 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
 
       <Dialog open={openIndex !== null} onOpenChange={() => setOpenIndex(null)}>
         <DialogContent className="max-w-4xl w-[95vw] p-0 bg-black border-white/10">
+          <DialogTitle className="sr-only">
+            {isTurnaround ? "Spark 360 degree turnaround" : `${characterName} gallery image`}
+          </DialogTitle>
           {isTurnaround ? (
             <SparkTurnaround />
           ) : active ? (

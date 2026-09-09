@@ -41,6 +41,7 @@ A single-page portfolio with fixed hero and scrollable content sections:
 ## Reverb (Paradoxxia Universe)
 
 - **Landing page** (`/reverb`): edge-to-edge slanted character panels; grayscale → color on hover (tap to expand on mobile), always dark themed.
+- **Idle showcase**: after 7 seconds without pointer, keyboard, wheel, touch or scroll input, the landing page cycles the highlight through each character every 3.5 seconds — expanding panels on desktop and mobile exactly as a hover/tap would. Any interaction stops the cycle and restarts the 7-second countdown.
 - **Character sheets** (`/reverb/:id`): dark/light split layout with a diagonal clip path, full-height character cutout overlapping the dossier, and a compact "The Collective" navigation strip.
 - **Wordmark**: `ReverbWordmark` renders REVERB with the **first E mirrored**; used for the collective only, never for the character named Reverb. Cyan in dark mode, Paradoxxia purple in light mode.
 - **Easter egg entry**: the homepage footer carries a hidden `REVERB` link (first E mirrored via `scale-x-[-1]`) next to the `パラドクシア` and meme links.

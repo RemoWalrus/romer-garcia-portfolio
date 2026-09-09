@@ -111,13 +111,10 @@ const ReverbHeader = ({
         <div className="flex shrink-0 items-center gap-3 md:gap-4">
           <ReverbThemeToggle />
           <ReverbLockToggle />
-          <JoinCollectiveCta className="hidden sm:inline" label="Join →" />
-          <Link
-            to="/paradoxxia"
-            className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
-          >
-            Paradoxxia →
-          </Link>
+          <JoinCollectiveCta
+            className="inline-flex items-center border border-reverb-wordmark px-3 py-2 text-reverb-wordmark hover:bg-reverb-wordmark hover:text-background"
+            label="Join the Collective"
+          />
         </div>
 
       </div>

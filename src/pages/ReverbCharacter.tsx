@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { trackEvent } from "@/components/GoogleAnalytics";
 import { Link, useParams } from "react-router-dom";
 import { reverbThumb } from "@/data/reverbCharacters";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";

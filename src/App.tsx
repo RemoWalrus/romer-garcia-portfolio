@@ -47,7 +47,7 @@ const RoutedFavicon = () => {
 
     // Remove every icon link we manage (including the ones from index.html)
     document
-      .querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"]')
+      .querySelectorAll('link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"], link[rel="apple-touch-icon-precomposed"], link[rel="manifest"]')
       .forEach((el) => el.remove());
 
     const small = brand ? `/favicon-${brand}.png` : '/favicon-32.png';

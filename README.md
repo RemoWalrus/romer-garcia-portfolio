@@ -48,6 +48,8 @@ A single-page portfolio with fixed hero and scrollable content sections:
 - **Favicons**: `/reverb*` routes swap to a multi-size set (`favicon-reverb.png` 64px, `-192`, `-512`, plus `apple-touch-icon-reverb.png`), handled in `src/App.tsx`.
 - **Data**: all copy (identity, character notes, signature, gear, overview) lives in the Supabase `reverb_characters` table with `src/data/reverbCharacters.ts` as bundled fallback; each character carries an `accent` color used for the name, rules and handwritten tagline.
 - **Images**: stored in Supabase Storage under `images/reverb/` and served through the `/api/download-file` proxy. Panels/figures are WebP (`reverb-char-*.webp`, `reverb-*-main.webp`) plus 320px `-thumb.webp` versions for the crew navigation.
+- **Hidden / unlockable entries**: `reverb_characters.is_hidden` keeps a profile out of the public panels and "The Collective" strip (e.g. `/reverb/spark-20`), and `base_id` points a variant at its canonical character so both are filtered from that page's crew links.
+- **Lock control (Supabase)**: `reverb_characters.is_locked` decides whether an entry shows as a flat grey silhouette with its dossier text redacted. Flip `is_locked` to `false` in the Supabase table editor to reveal a character for everyone — no code change or redeploy needed. The lock/unlock button in the Reverb header only appears inside the Lovable preview and is a local preview override; it never writes to the database.
 
 ## Performance
 

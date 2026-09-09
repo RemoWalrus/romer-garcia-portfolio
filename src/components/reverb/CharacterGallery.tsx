@@ -16,6 +16,29 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
   const items = useReverbGallery(characterId);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const active = openIndex === null ? null : items[openIndex];
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const step = useCallback(
+    (delta: number) => {
+      setOpenIndex((current) =>
+        current === null || items.length === 0
+          ? current
+          : (current + delta + items.length) % items.length
+      );
+    },
+    [items.length]
+  );
+
+  useEffect(() => {
+    if (openIndex === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [openIndex, step]);
+
 
   if (!items.length) {
     return (

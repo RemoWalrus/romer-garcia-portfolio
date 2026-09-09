@@ -57,7 +57,7 @@ const ReverbCharacter = () => {
         </p>
         <Link
           to="/reverb"
-          className="font-roc text-[10px] tracking-[0.25em] uppercase border border-border px-4 py-3 hover:bg-foreground hover:text-background transition-colors"
+          className="reverb-button"
         >
           ← Back to the crew
         </Link>
@@ -367,13 +367,13 @@ const ReverbCharacter = () => {
 
                     {character.id === "spark" && (
                       <section className="md:col-span-2">
-                        <Link
-                          to="/reverb/spark-20"
-                          aria-label="Spark, one year later"
-                          className="inline-block font-roc text-[9px] tracking-[0.4em] uppercase text-black/15 hover:text-black/70 transition-colors"
-                        >
-                          [ +1 YR ]
-                        </Link>
+                      <Link
+                        to="/reverb/spark-20"
+                        aria-label="Spark, one year later"
+                        className="reverb-button"
+                      >
+                        [ +1 YR ]
+                      </Link>
                       </section>
                     )}
 

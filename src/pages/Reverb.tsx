@@ -18,6 +18,62 @@ const Reverb = () => {
   const isMobile = useIsMobile();
   const allCharacters = useReverbCharacters();
   const characters = allCharacters.filter((c) => !c.hidden);
+  const [autoActive, setAutoActive] = useState<string | null>(null);
+  const ids = characters.map((c) => c.id).join(",");
+  const idsRef = useRef<string[]>([]);
+  idsRef.current = characters.map((c) => c.id);
+
+  // Idle showcase: after 10s without user input, cycle the highlight
+  // through each character. Any interaction stops it and restarts the timer.
+  useEffect(() => {
+    let idle: ReturnType<typeof setTimeout>;
+    let cycle: ReturnType<typeof setInterval>;
+    let index = 0;
+
+    const stopCycle = () => {
+      clearInterval(cycle);
+      setAutoActive(null);
+    };
+
+    const startCycle = () => {
+      const list = idsRef.current;
+      if (!list.length) return;
+      index = 0;
+      setAutoActive(list[0]);
+      cycle = setInterval(() => {
+        index = (index + 1) % list.length;
+        setAutoActive(list[index]);
+      }, 2200);
+    };
+
+    const reset = () => {
+      stopCycle();
+      clearTimeout(idle);
+      idle = setTimeout(startCycle, 10000);
+    };
+
+    const events = [
+      "pointerdown",
+      "pointermove",
+      "keydown",
+      "wheel",
+      "touchstart",
+      "scroll",
+    ];
+    events.forEach((e) =>
+      window.addEventListener(e, reset, { passive: true } as AddEventListenerOptions)
+    );
+    reset();
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, reset));
+      clearTimeout(idle);
+      clearInterval(cycle);
+    };
+  }, [ids]);
+
+  const highlight = active ?? autoActive;
+
   const metadata = useReverbMeta();
   const meta = usePageMetaFromData("reverb", metadata, {
     title: FALLBACK_TITLE,

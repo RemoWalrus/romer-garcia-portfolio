@@ -59,9 +59,9 @@ export const Footer = () => {
                 aria-label="REVERB"
                 className="text-neutral-400 hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors duration-300 story-link text-sm tracking-[0.12em]"
               >
-                <span aria-hidden="true">
-                  R<span className="inline-block scale-x-[-1]">E</span>VERB
-                </span>
+                  <span aria-hidden="true" className="italic">
+                    R<span className="inline-block scale-x-[-1]">E</span>VERB
+                  </span>
               </a>
             </div>
             <div>

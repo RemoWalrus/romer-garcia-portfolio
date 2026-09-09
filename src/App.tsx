@@ -55,18 +55,20 @@ const RoutedFavicon = () => {
     const large = brand ? `/favicon-${brand}-512.png` : '/favicon-512.png';
     const apple = brand ? `/apple-touch-icon-${brand}.png` : '/apple-touch-icon.png';
 
-    const links: Array<{ rel: string; sizes?: string; href: string }> = [
+    const links: Array<{ rel: string; sizes?: string; href: string; type?: string }> = [
+      ...(brand === 'reverb' ? [{ rel: 'icon', sizes: '16x16', href: '/favicon-reverb-16.png' }] : []),
       { rel: 'icon', sizes: '32x32', href: small },
       { rel: 'icon', sizes: '192x192', href: medium },
       { rel: 'icon', sizes: '512x512', href: large },
       { rel: 'apple-touch-icon', sizes: '180x180', href: apple },
       { rel: 'apple-touch-icon-precomposed', sizes: '180x180', href: apple },
+      ...(brand === 'reverb' ? [{ rel: 'manifest', href: '/reverb.webmanifest', type: 'application/manifest+json' }] : []),
     ];
 
     links.forEach((cfg) => {
       const el = document.createElement('link');
       el.rel = cfg.rel;
-      el.type = 'image/png';
+      el.type = cfg.type ?? 'image/png';
       if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
       el.href = cfg.href;
       document.head.appendChild(el);

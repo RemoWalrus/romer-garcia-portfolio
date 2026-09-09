@@ -8,6 +8,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
+import { RouteAnalytics } from "./components/GoogleAnalytics";
 import { applyTheme, getThemeOverride } from "./lib/theme";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";

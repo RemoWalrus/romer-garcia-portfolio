@@ -217,11 +217,7 @@ const Reverb = () => {
                       {c.role}
                     </span>
                     <span
-                      className={`${isActive ? "inline-block" : "invisible xl:inline-block"} mt-4 font-roc text-[10px] tracking-[0.2em] uppercase border px-3 py-2 transition-colors`}
-                      style={{
-                        borderColor: isActive ? c.accent : "rgba(255,255,255,0.35)",
-                        color: isActive ? c.accent : "rgba(255,255,255,0.8)",
-                      }}
+                      className={`${isActive ? "inline-block" : "invisible xl:inline-block"} reverb-button mt-4`}
                     >
                       View Profile
                     </span>
@@ -284,13 +280,13 @@ const Reverb = () => {
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <Link
             to="/paradoxxia"
-            className="font-roc text-[11px] tracking-[0.22em] uppercase border border-border px-6 py-3 hover:border-reverb-cyan hover:text-reverb-cyan transition-colors"
+            className="reverb-button"
           >
             Enter Paradoxxia
           </Link>
           <Link
             to="/story"
-            className="font-roc text-[11px] tracking-[0.22em] uppercase border border-border px-6 py-3 hover:border-foreground hover:text-foreground transition-colors"
+            className="reverb-button"
           >
             Play the Story
           </Link>

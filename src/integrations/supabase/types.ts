@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      collective_subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          referrer: string | null
+          source_page: string | null
+          status: string
+          utm_campaign: string | null
+          utm_medium: string | null
+          utm_source: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          referrer?: string | null
+          source_page?: string | null
+          status?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          referrer?: string | null
+          source_page?: string | null
+          status?: string
+          utm_campaign?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+        }
+        Relationships: []
+      }
       config: {
         Row: {
           created_at: string

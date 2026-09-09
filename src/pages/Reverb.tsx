@@ -7,6 +7,8 @@ import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
+import { JoinCollectiveCta, JoinCollectiveSection } from "@/components/reverb/JoinCollective";
+
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
 const FALLBACK_DESC =
@@ -295,11 +297,15 @@ const Reverb = () => {
         </div>
       </section>
 
+      <JoinCollectiveSection />
+
       <footer className="border-t border-border py-8 font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
-        <div className="mx-auto w-full max-w-[1500px] px-5 text-center md:px-8">
-          © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+        <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center gap-2 px-5 text-center md:px-8">
+          <JoinCollectiveCta />
+          <span>© {new Date().getFullYear()} Romer Garcia. All rights reserved.</span>
         </div>
       </footer>
+
     </div>
   );
 };

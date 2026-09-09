@@ -4,6 +4,8 @@ import { Lock, LockOpen, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { applyTheme, isDarkNow, setThemeOverride } from "@/lib/theme";
 import { setUnlocked, useReverbUnlocked } from "@/lib/reverbLock";
+import { JoinCollectiveCta } from "@/components/reverb/JoinCollective";
+
 
 const ReverbLockToggle = () => {
   const unlocked = useReverbUnlocked();
@@ -109,6 +111,7 @@ const ReverbHeader = ({
         <div className="flex shrink-0 items-center gap-3 md:gap-4">
           <ReverbThemeToggle />
           <ReverbLockToggle />
+          <JoinCollectiveCta className="hidden sm:inline" label="Join →" />
           <Link
             to="/paradoxxia"
             className="font-roc text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:text-foreground"
@@ -116,6 +119,7 @@ const ReverbHeader = ({
             Paradoxxia →
           </Link>
         </div>
+
       </div>
     </header>
   );

@@ -9,6 +9,7 @@ import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 import { useReverbUnlocked } from "@/lib/reverbLock";
 import { characterSchema } from "@/lib/reverbSchema";
+import { JoinCollectiveCta } from "@/components/reverb/JoinCollective";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
@@ -448,6 +449,8 @@ const ReverbCharacter = () => {
         <div className="mx-auto w-full max-w-[1500px] px-5 md:px-8 text-center">
           <p className="font-roc text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
             © {new Date().getFullYear()} Romer Garcia. All rights reserved.
+            <span className="mx-2 opacity-40">/</span>
+            <JoinCollectiveCta className="tracking-[0.25em]" />
           </p>
         </div>
       </footer>

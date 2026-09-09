@@ -21,4 +21,3 @@
 - [x] Add empty Gallery section under Overview on Reverb character pages
 - [x] Replace Eduq's character image with uploaded version and optimize
 - [x] Add unlockable 20-year-old Spark profile (hidden link on Spark page, optimized Supabase image)
-- [x] Add a masked, swipeable eight-angle Spark turnaround to her gallery

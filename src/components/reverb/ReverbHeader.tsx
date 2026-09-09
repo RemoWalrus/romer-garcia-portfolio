@@ -73,7 +73,11 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
       {word.map((letter, index) => (
         <span
           key={`${letter}-${index}`}
-          className={index === 1 ? "inline-block -scale-x-100" : "inline-block"}
+          className={cn(
+            "inline-block",
+            index === 1 && "-scale-x-100",
+            index === 2 && "-ml-[0.10em]",
+          )}
           aria-hidden="true"
         >
           {letter}

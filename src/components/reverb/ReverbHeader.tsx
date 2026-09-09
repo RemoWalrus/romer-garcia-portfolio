@@ -77,7 +77,7 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
             key={`${letter}-${index}`}
             className={cn(
               "inline-block",
-              index === 1 && "-scale-x-100 skew-x-[4deg] ml-[0.14em] mr-[0.04em]",
+              index === 1 && "-scale-x-100 skew-x-[6deg] ml-[0.14em] mr-[0.04em]",
               index === 2 && "-ml-[0.27em]",
             )}
             aria-hidden="true"

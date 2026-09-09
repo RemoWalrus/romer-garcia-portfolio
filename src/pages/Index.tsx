@@ -158,14 +158,18 @@ const IndexInner = () => {
       <main>
         <Hero scrollToSection={scrollToSection} />
         <div className="relative z-10 bg-background">
-          <Portfolio />
-          <About />
-          <ImageGallery />
-          <Contact />
-          <Quote />
+          <Suspense fallback={<div className="min-h-screen" aria-hidden />}>
+            <Portfolio />
+            <About />
+            <ImageGallery />
+            <Contact />
+            <Quote />
+          </Suspense>
         </div>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

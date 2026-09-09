@@ -23,7 +23,7 @@ const Reverb = () => {
   const idsRef = useRef<string[]>([]);
   idsRef.current = characters.map((c) => c.id);
 
-  // Idle showcase: after 10s without user input, cycle the highlight
+  // Idle showcase: after 7s without user input, cycle the highlight
   // through each character. Any interaction stops it and restarts the timer.
   useEffect(() => {
     let idle: ReturnType<typeof setTimeout>;
@@ -43,13 +43,13 @@ const Reverb = () => {
       cycle = setInterval(() => {
         index = (index + 1) % list.length;
         setAutoActive(list[index]);
-      }, 2200);
+      }, 3500);
     };
 
     const reset = () => {
       stopCycle();
       clearTimeout(idle);
-      idle = setTimeout(startCycle, 10000);
+      idle = setTimeout(startCycle, 7000);
     };
 
     const events = [

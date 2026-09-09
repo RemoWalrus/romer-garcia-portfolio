@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
@@ -18,6 +18,62 @@ const Reverb = () => {
   const isMobile = useIsMobile();
   const allCharacters = useReverbCharacters();
   const characters = allCharacters.filter((c) => !c.hidden);
+  const [autoActive, setAutoActive] = useState<string | null>(null);
+  const ids = characters.map((c) => c.id).join(",");
+  const idsRef = useRef<string[]>([]);
+  idsRef.current = characters.map((c) => c.id);
+
+  // Idle showcase: after 10s without user input, cycle the highlight
+  // through each character. Any interaction stops it and restarts the timer.
+  useEffect(() => {
+    let idle: ReturnType<typeof setTimeout>;
+    let cycle: ReturnType<typeof setInterval>;
+    let index = 0;
+
+    const stopCycle = () => {
+      clearInterval(cycle);
+      setAutoActive(null);
+    };
+
+    const startCycle = () => {
+      const list = idsRef.current;
+      if (!list.length) return;
+      index = 0;
+      setAutoActive(list[0]);
+      cycle = setInterval(() => {
+        index = (index + 1) % list.length;
+        setAutoActive(list[index]);
+      }, 2200);
+    };
+
+    const reset = () => {
+      stopCycle();
+      clearTimeout(idle);
+      idle = setTimeout(startCycle, 10000);
+    };
+
+    const events = [
+      "pointerdown",
+      "pointermove",
+      "keydown",
+      "wheel",
+      "touchstart",
+      "scroll",
+    ];
+    events.forEach((e) =>
+      window.addEventListener(e, reset, { passive: true } as AddEventListenerOptions)
+    );
+    reset();
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, reset));
+      clearTimeout(idle);
+      clearInterval(cycle);
+    };
+  }, [ids]);
+
+  const highlight = active ?? autoActive;
+
   const metadata = useReverbMeta();
   const meta = usePageMetaFromData("reverb", metadata, {
     title: FALLBACK_TITLE,
@@ -58,11 +114,11 @@ const Reverb = () => {
 
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
           {characters.map((c, i) => {
-            const isActive = active === c.id;
-            const dimmed = active !== null && !isActive;
-            const mobileCollapsed = isMobile && active !== null && !isActive;
+            const isActive = highlight === c.id;
+            const dimmed = highlight !== null && !isActive;
+            const mobileCollapsed = isMobile && active !== null && active !== c.id;
             const grow = isMobile
-              ? isActive
+              ? active === c.id
                 ? 9
                 : active !== null
                 ? 0.28

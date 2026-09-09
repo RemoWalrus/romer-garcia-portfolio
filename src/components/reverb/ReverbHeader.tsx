@@ -96,8 +96,11 @@ const ReverbHeader = ({
 }: {
   sticky?: boolean;
 }) => {
-  return (
+  const { id } = useParams<{ id: string }>();
+  const character = id ? getCharacter(id) : undefined;
+  const accent = character?.accent;
 
+  return (
     <header
       className={`${sticky ? "sticky" : "absolute"} top-0 left-0 right-0 z-30 border-b border-border bg-background transition-colors`}
     >
@@ -115,9 +118,9 @@ const ReverbHeader = ({
           <JoinCollectiveCta
             className="reverb-button"
             label="Join the Collective"
+            accentColor={accent}
           />
         </div>
-
       </div>
     </header>
   );

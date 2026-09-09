@@ -114,11 +114,11 @@ const Reverb = () => {
 
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
           {characters.map((c, i) => {
-            const isActive = active === c.id;
-            const dimmed = active !== null && !isActive;
-            const mobileCollapsed = isMobile && active !== null && !isActive;
+            const isActive = highlight === c.id;
+            const dimmed = highlight !== null && !isActive;
+            const mobileCollapsed = isMobile && active !== null && active !== c.id;
             const grow = isMobile
-              ? isActive
+              ? active === c.id
                 ? 9
                 : active !== null
                 ? 0.28

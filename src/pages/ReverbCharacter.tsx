@@ -27,6 +27,14 @@ const ReverbCharacter = () => {
     twitterDescription: `${name} — ${role}.`,
   });
 
+  const locked = Boolean(character?.locked) && !unlocked;
+  useEffect(() => {
+    if (!character) return;
+    trackEvent("Reverb", "View Character", `${character.id}${locked ? " (locked)" : ""}`);
+  }, [character?.id, locked]);
+
+
+
 
 
 

@@ -1,0 +1,2 @@
+CREATE POLICY "tmp_reverb_gallery_upload" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'images' AND name LIKE 'reverb/gallery/%');
+CREATE POLICY "tmp_reverb_gallery_update" ON storage.objects FOR UPDATE TO anon USING (bucket_id = 'images' AND name LIKE 'reverb/gallery/%') WITH CHECK (bucket_id = 'images' AND name LIKE 'reverb/gallery/%');

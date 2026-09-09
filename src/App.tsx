@@ -118,7 +118,6 @@ const App = () => {
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener('change', updateTheme);
     } else {
-      // @ts-expect-error legacy Safari API
       mediaQuery.addListener(updateTheme);
     }
 
@@ -131,7 +130,6 @@ const App = () => {
       if (mediaQuery.removeEventListener) {
         mediaQuery.removeEventListener('change', updateTheme);
       } else {
-        // @ts-expect-error legacy Safari API
         mediaQuery.removeListener(updateTheme);
       }
       window.removeEventListener('focus', recheck);

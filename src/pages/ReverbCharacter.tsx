@@ -134,7 +134,7 @@ const ReverbCharacter = () => {
 
                 <div className="relative z-50 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
-                <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[9px] md:text-[10px] tracking-[0.18em] md:tracking-[0.24em] uppercase text-white/85 leading-[1.8]">
+                <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[11px] tracking-[0.18em] md:tracking-[0.24em] uppercase text-white/85 leading-[1.8]">
                   <ReverbWordmark className="text-[inherit] text-white/85" />
                   <br />
                   Collective
@@ -190,7 +190,7 @@ const ReverbCharacter = () => {
                     />
                     {locked && (
                       <span
-                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-roc text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/45 border border-white/25 px-3 py-2"
+                        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-roc text-[11px] tracking-[0.4em] uppercase text-white/45 border border-white/25 px-3 py-2"
                       >
                         Locked
                       </span>
@@ -213,16 +213,16 @@ const ReverbCharacter = () => {
                       <dl className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5">
                         {(character.identity ?? []).map((row) => (
                           <div key={row.label} className="flex gap-2 items-baseline">
-                            <dt className="font-roc text-[9px] md:text-[10px] tracking-[0.22em] uppercase text-black/45 shrink-0">
+                            <dt className="font-roc text-[11px] tracking-[0.22em] uppercase text-black/45 shrink-0">
                               {row.label}
                             </dt>
-                            <dd className="font-roc text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-black/80">
+                            <dd className="font-roc text-[11px] tracking-[0.12em] uppercase text-black/80">
                               <Redact>{row.value}</Redact>
                             </dd>
                           </div>
                         ))}
                       </dl>
-                      <p className="mt-2 font-roc text-[11px] md:text-xs tracking-[0.2em] uppercase text-black/70">
+                      <p className="mt-2 font-roc text-[11px] tracking-[0.2em] uppercase text-black/70">
                         <Redact>{character.discipline ?? character.role}</Redact>
                       </p>
                     </section>
@@ -235,7 +235,7 @@ const ReverbCharacter = () => {
                         {character.notes?.map((n) => (
                           <li
                             key={n}
-                            className="font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75"
+                            className="font-roc text-[11px] tracking-[0.14em] uppercase text-black/75"
                           >
                             – <Redact>{n}</Redact>
                           </li>
@@ -254,13 +254,13 @@ const ReverbCharacter = () => {
                               className="h-6 w-6 rounded-full border border-black/10 shadow-inner"
                               style={{ backgroundColor: accent }}
                             />
-                            <span className="font-roc text-[10px] md:text-[11px] tracking-[0.18em] uppercase text-black/75">
+                            <span className="font-roc text-[11px] tracking-[0.18em] uppercase text-black/75">
                               Color — <Redact>{character.colorName}</Redact>
                             </span>
                           </div>
                         )}
                         {character.specialties && (
-                          <p className="mt-3 font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
+                          <p className="mt-3 font-roc text-[11px] tracking-[0.14em] uppercase text-black/75 leading-[1.9]">
                             <span className="text-black/45">Specialties — </span>
                             <Redact>{character.specialties.join(" / ")}</Redact>
                           </p>
@@ -276,7 +276,7 @@ const ReverbCharacter = () => {
                             {character.gear.map((g) => (
                               <li
                                 key={g}
-                                className="font-roc text-[10px] md:text-[11px] tracking-[0.14em] uppercase text-black/75"
+                                className="font-roc text-[11px] tracking-[0.14em] uppercase text-black/75"
                               >
                                 – <Redact>{g}</Redact>
                               </li>
@@ -295,7 +295,7 @@ const ReverbCharacter = () => {
                           {character.overview.map((p) => (
                             <p
                               key={p.slice(0, 24)}
-                              className="font-roc text-[11px] md:text-xs leading-[1.9] text-black/75"
+                              className="font-roc text-[11px] leading-[1.9] text-black/75"
                             >
                               <Redact>{p}</Redact>
                             </p>
@@ -361,7 +361,7 @@ const ReverbCharacter = () => {
 
                     <section className="md:col-span-2 border-t border-black/15 pt-3">
                       {character.signOff && (
-                        <p className="font-roc text-[10px] md:text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
+                        <p className="font-roc text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">
                           {character.signOff}
                         </p>
                       )}

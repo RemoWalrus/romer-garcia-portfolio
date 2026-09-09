@@ -113,8 +113,28 @@ const App = () => {
       applyTheme(override ? override === 'dark' : e.matches);
     };
     updateTheme(mediaQuery);
-    mediaQuery.addEventListener('change', updateTheme);
-    return () => mediaQuery.removeEventListener('change', updateTheme);
+
+    // Older iOS Safari only supports addListener/removeListener
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', updateTheme);
+    } else {
+      mediaQuery.addListener(updateTheme);
+    }
+
+    // iOS can miss the change event when returning to the app — re-check on focus/visibility
+    const recheck = () => updateTheme(mediaQuery);
+    window.addEventListener('focus', recheck);
+    document.addEventListener('visibilitychange', recheck);
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', updateTheme);
+      } else {
+        mediaQuery.removeListener(updateTheme);
+      }
+      window.removeEventListener('focus', recheck);
+      document.removeEventListener('visibilitychange', recheck);
+    };
   }, []);
 
   return (

@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { trackEvent } from "@/components/GoogleAnalytics";
 import { Link, useParams } from "react-router-dom";
 import { reverbThumb } from "@/data/reverbCharacters";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
@@ -26,6 +28,14 @@ const ReverbCharacter = () => {
     twitterTitle: `${name} | Reverb`,
     twitterDescription: `${name} — ${role}.`,
   });
+
+  const isLocked = Boolean(character?.locked) && !unlocked;
+  useEffect(() => {
+    if (!character) return;
+    trackEvent("Reverb", "View Character", `${character.id}${isLocked ? " (locked)" : ""}`);
+  }, [character?.id, isLocked]);
+
+
 
 
 

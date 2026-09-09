@@ -158,6 +158,10 @@
   .reverb-character-cta:hover {
     background-color: var(--character-accent);
     border-color: var(--character-accent);
+    color: #000;
+  }
+
+  .dark .reverb-character-cta:hover {
     color: hsl(var(--background));
   }
 }

@@ -370,7 +370,8 @@ const ReverbCharacter = () => {
                       <Link
                         to="/reverb/spark-20"
                         aria-label="Spark, one year later"
-                        className="reverb-button"
+                        className="reverb-button reverb-character-button"
+                        style={{ "--character-accent": accent } as React.CSSProperties}
                       >
                         [ +1 YR ]
                       </Link>

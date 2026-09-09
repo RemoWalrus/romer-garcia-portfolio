@@ -1,15 +1,17 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { usePageMetaFromData } from '@/hooks/use-page-meta';
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
-import { Portfolio } from '@/components/Portfolio';
-import { About } from '@/components/About';
-import { Contact } from '@/components/Contact';
-import { Footer } from '@/components/Footer';
-import { Quote } from '@/components/Quote';
-import { ImageGallery } from '@/components/ImageGallery';
+
+// Below-the-fold sections load after the hero so first paint stays fast
+const Portfolio = lazy(() => import('@/components/Portfolio').then((m) => ({ default: m.Portfolio })));
+const About = lazy(() => import('@/components/About').then((m) => ({ default: m.About })));
+const Contact = lazy(() => import('@/components/Contact').then((m) => ({ default: m.Contact })));
+const Footer = lazy(() => import('@/components/Footer').then((m) => ({ default: m.Footer })));
+const Quote = lazy(() => import('@/components/Quote').then((m) => ({ default: m.Quote })));
+const ImageGallery = lazy(() => import('@/components/ImageGallery').then((m) => ({ default: m.ImageGallery })));
 import { GoogleAnalytics, trackEvent } from '@/components/GoogleAnalytics';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { PersonSchema } from '@/components/seo/JsonLdSchemas';

@@ -125,6 +125,16 @@
   animation: fade-in 0.6s ease-out forwards;
 }
 
+@layer components {
+  .reverb-button {
+    @apply inline-flex items-center justify-center border border-reverb-wordmark px-3 py-2 font-roc text-[10px] uppercase tracking-[0.22em] text-reverb-wordmark transition-colors hover:bg-reverb-wordmark hover:text-background disabled:opacity-60;
+  }
+
+  .reverb-icon-button {
+    @apply inline-flex h-8 w-8 items-center justify-center border border-reverb-wordmark text-reverb-wordmark transition-colors hover:bg-reverb-wordmark hover:text-background disabled:opacity-60;
+  }
+}
+
 .glass-card {
   @apply backdrop-blur-lg bg-white/5 border border-white/10;
 }

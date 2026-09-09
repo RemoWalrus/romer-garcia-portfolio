@@ -23,7 +23,7 @@ const ReverbLockToggle = () => {
       onClick={() => setUnlocked(!unlocked)}
       aria-label={unlocked ? "Lock unlockable profiles" : "Unlock hidden profiles"}
       title={unlocked ? "Unlockables: unlocked" : "Unlockables: locked"}
-      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+      className="reverb-icon-button"
     >
       {unlocked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
     </button>
@@ -54,7 +54,7 @@ const ReverbThemeToggle = () => {
       type="button"
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+      className="reverb-icon-button"
     >
       {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
@@ -112,7 +112,7 @@ const ReverbHeader = ({
           <ReverbThemeToggle />
           <ReverbLockToggle />
           <JoinCollectiveCta
-            className="inline-flex items-center border border-reverb-wordmark px-3 py-2 text-reverb-wordmark hover:bg-reverb-wordmark hover:text-background"
+            className="reverb-button"
             label="Join the Collective"
           />
         </div>

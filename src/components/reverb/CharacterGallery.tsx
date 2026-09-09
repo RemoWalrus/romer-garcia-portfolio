@@ -9,7 +9,6 @@ interface Props {
   characterName: string;
 }
 
-const TURNAROUND_ID = "spark-360-turnaround";
 const TURNAROUND_ANGLES = ["0°", "45°", "90°", "135°", "180°", "225°", "270°", "315°"];
 const TURNAROUND_SRC = getProxyUrl("images", "reverb/gallery/spark-360-turnaround.webp");
 const TURNAROUND_THUMB = getProxyUrl("images", "reverb/gallery/thumb-spark-360-turnaround.webp");

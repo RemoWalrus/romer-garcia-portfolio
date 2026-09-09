@@ -74,12 +74,6 @@ const Reverb = () => {
 
   const highlight = active ?? autoActive;
 
-  // On mobile, the idle highlight should expand the panels as if the user tapped.
-  useEffect(() => {
-    if (!isMobile || active !== null || !autoActive) return;
-    setActive(autoActive);
-  }, [isMobile, active, autoActive]);
-
   const metadata = useReverbMeta();
   const meta = usePageMetaFromData("reverb", metadata, {
     title: FALLBACK_TITLE,

@@ -147,7 +147,7 @@
   .reverb-character-cta {
     @apply reverb-button;
     border-color: hsl(var(--reverb-wordmark));
-    color: hsl(var(--reverb-wordmark));
+    color: #000;
   }
 
   .dark .reverb-character-cta {

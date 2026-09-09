@@ -377,6 +377,24 @@ const ReverbCharacter = () => {
                       </section>
                     )}
 
+                    {character.baseId && (
+                      <section className="md:col-span-2 border-t border-black/15 pt-3">
+                        {(() => {
+                          const base = characters.find((c) => c.id === character.baseId);
+                          if (!base) return null;
+                          return (
+                            <Link
+                              to={`/reverb/${base.id}`}
+                              className="reverb-character-button inline-flex items-center justify-center"
+                              style={{ "--character-accent": accent } as React.CSSProperties}
+                            >
+                              ← {base.name}
+                            </Link>
+                          );
+                        })()}
+                      </section>
+                    )}
+
                     <section className="md:col-span-2 border-t border-black/15 pt-3">
                       {character.signOff && (
                         <p className="font-roc text-[11px] tracking-[0.24em] uppercase text-black/70 leading-[1.9]">

@@ -103,6 +103,11 @@ const Reverb = () => {
         <meta name="twitter:description" content={meta.twitterDescription} />
         {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
         <link rel="canonical" href="https://romer-garcia-portfolio.lovable.app/reverb" />
+        {characters.length > 0 && (
+          <script type="application/ld+json">
+            {JSON.stringify(rosterSchema(characters))}
+          </script>
+        )}
       </Helmet>
 
 

@@ -133,6 +133,16 @@
   .reverb-icon-button {
     @apply inline-flex h-8 w-8 items-center justify-center border border-reverb-wordmark text-reverb-wordmark transition-colors hover:bg-reverb-wordmark hover:text-background disabled:opacity-60;
   }
+
+  .reverb-character-button {
+    border-color: var(--character-accent);
+    color: var(--character-accent);
+  }
+
+  .reverb-character-button:hover {
+    background-color: var(--character-accent);
+    color: hsl(var(--background));
+  }
 }
 
 .glass-card {

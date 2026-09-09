@@ -9,6 +9,7 @@ import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 import { useReverbUnlocked } from "@/lib/reverbLock";
 import { characterSchema } from "@/lib/reverbSchema";
+import CharacterGallery from "@/components/reverb/CharacterGallery";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
@@ -327,41 +328,15 @@ const ReverbCharacter = () => {
                       <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
                         Gallery
                       </h2>
-                      {character.gallery && character.gallery.length > 0 ? (
-                        <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                          {character.gallery.map((item, idx) => (
-                            <div
-                              key={idx}
-                              className="relative aspect-video bg-black/5 border border-black/10 overflow-hidden"
-                            >
-                              {item.type === "video" ? (
-                                <video
-                                  src={item.src}
-                                  className="w-full h-full object-cover"
-                                  controls
-                                  preload="metadata"
-                                />
-                              ) : (
-                                <img
-                                  src={item.src}
-                                  alt={item.caption || `${character.name} gallery ${idx + 1}`}
-                                  className="w-full h-full object-cover"
-                                  loading="lazy"
-                                  decoding="async"
-                                />
-                              )}
-                              {item.caption && (
-                                <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white/90 font-roc text-[9px] tracking-[0.2em] uppercase px-2 py-1 truncate">
-                                  {item.caption}
-                                </span>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
+                      {isLocked ? (
                         <p className="mt-3 font-roc text-[11px] tracking-[0.14em] uppercase text-black/45">
-                          Gallery coming soon.
+                          Classified.
                         </p>
+                      ) : (
+                        <CharacterGallery
+                          characterId={character.baseId ?? character.id}
+                          characterName={character.name}
+                        />
                       )}
                     </section>
 

@@ -165,7 +165,7 @@ export const JoinCollectiveSection = () => {
   <section id="join" className="border-t border-border bg-background transition-colors">
     <div className="mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="font-reverb italic uppercase text-3xl md:text-5xl">
+        <h2 className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-3xl md:text-5xl">
           Join the Collective
         </h2>
         <p className="mt-4 font-roc text-sm leading-relaxed text-muted-foreground">

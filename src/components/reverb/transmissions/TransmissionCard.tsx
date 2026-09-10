@@ -56,7 +56,7 @@ const TransmissionCard = ({
           {t.characterSlug && <span> — {t.characterSlug}</span>}
         </p>
 
-        <h3 className="mt-2 font-reverb text-2xl font-black italic uppercase leading-[0.95] text-foreground md:text-3xl">
+        <h3 className="mt-2 font-reverb text-2xl font-black italic uppercase leading-[0.95] tracking-normal text-reverb-wordmark md:text-3xl">
           {t.title}
         </h3>
 

@@ -103,7 +103,7 @@ const ReverbTransmission = () => {
             Transmission // {number}
           </p>
 
-          <h1 className="mt-4 max-w-[26ch] font-reverb text-4xl font-black italic uppercase leading-[0.9] text-foreground md:text-6xl">
+          <h1 className="mt-4 max-w-[26ch] font-reverb text-4xl font-black italic uppercase leading-[0.9] tracking-normal text-reverb-wordmark md:text-6xl">
             {t.title}
           </h1>
 

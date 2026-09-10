@@ -273,7 +273,7 @@ const Reverb = () => {
 
       <section
         aria-labelledby="reverb-frequency-title"
-        className="relative isolate min-h-[340px] overflow-hidden border-t border-border bg-background transition-colors md:min-h-[420px]"
+        className="relative isolate min-h-[320px] overflow-hidden border-t border-border bg-background transition-colors md:min-h-[380px]"
       >
         <img
           src={frequencyCity}
@@ -285,10 +285,10 @@ const Reverb = () => {
         <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.16] dark:to-background/[0.22]" />
 
-        <div className="mx-auto flex min-h-[340px] w-full max-w-[1500px] items-center px-5 pt-14 pb-16 md:min-h-[420px] md:px-8 md:pt-20 md:pb-24">
+        <div className="mx-auto flex min-h-[320px] w-full max-w-[1500px] items-center px-5 py-12 md:min-h-[380px] md:px-8 md:py-16">
           <div className="max-w-3xl">
             <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-reverb-wordmark">
-              Reverb // Transmission
+              Reverb // Logbook
             </p>
             <h2
               id="reverb-frequency-title"

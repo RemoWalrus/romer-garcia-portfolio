@@ -21,13 +21,13 @@ const LatestTransmission = () => {
       aria-labelledby="reverb-latest-transmission"
       className="relative isolate reverb-noise border-t border-border bg-background transition-colors"
     >
-      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-12 md:px-8 md:py-16">
         <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
           Reverb // Transmission
         </p>
         <p
           id="reverb-latest-transmission"
-          className="mt-0 font-reverb text-sm font-black italic uppercase leading-none tracking-[0.22em] text-reverb-wordmark"
+          className="mt-0 font-reverb text-lg font-black italic uppercase leading-none tracking-normal text-reverb-wordmark md:text-xl"
         >
           Latest Transmission
         </p>
@@ -64,7 +64,7 @@ const LatestTransmission = () => {
               <p className="font-roc text-[10px] uppercase tracking-[0.3em] text-reverb-wordmark">
                 Transmission // {displayTransmissionNumber(t.number, t.isAnomaly)}
               </p>
-              <h3 className="mt-3 font-reverb text-3xl font-black italic uppercase leading-[0.9] text-foreground md:text-5xl">
+              <h3 className="mt-3 font-reverb text-3xl font-black italic uppercase leading-[0.9] tracking-normal text-reverb-wordmark md:text-5xl">
                 {t.title}
               </h3>
               {t.subtitle && (

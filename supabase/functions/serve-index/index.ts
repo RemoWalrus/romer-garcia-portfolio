@@ -497,7 +497,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    const html = buildHTML(meta, memeComment, iconLinksFor(path));
+    const html = buildHTML(meta, memeComment, iconLinksFor(path), extraHead, bodyExtra);
 
     return new Response(html, {
       headers: { ...corsHeaders, 'Content-Type': 'text/html' },

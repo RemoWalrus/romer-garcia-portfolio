@@ -23,7 +23,7 @@ const LatestTransmission = () => {
       aria-labelledby="reverb-latest-transmission"
       className="relative isolate reverb-noise border-t border-border bg-background transition-colors"
     >
-      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-12 md:px-8 md:py-16">
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-10 md:px-8 md:py-14">
         <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
           Reverb // Transmission
         </p>

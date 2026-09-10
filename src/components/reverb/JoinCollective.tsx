@@ -101,9 +101,15 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
   if (state === "done") {
     return (
       <div className={cn("text-center", className)}>
-        <p className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-3xl md:text-4xl">You're in.</p>
+        <p className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-3xl md:text-4xl">
+          {metaValue(metadata, "reverb.join.success_title", "You're in.")}
+        </p>
         <p className="mt-3 font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          Welcome to the Collective. Stay on frequency.
+          {metaValue(
+            metadata,
+            "reverb.join.success_body",
+            "Welcome to the Collective. Stay on frequency.",
+          )}
         </p>
       </div>
     );

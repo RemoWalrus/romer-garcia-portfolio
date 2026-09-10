@@ -200,7 +200,7 @@ const ReverbCharacter = () => {
                       loading="eager"
                       {...{ fetchpriority: "high" }}
                       decoding="async"
-                      className="h-full w-auto max-w-none object-contain object-right md:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                      className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:max-w-[36vw] lg:object-right-bottom xl:max-w-none xl:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                       style={
                         locked
                           ? { filter: "grayscale(100%) brightness(0.5) contrast(1.15) blur(4px)", opacity: 1 }

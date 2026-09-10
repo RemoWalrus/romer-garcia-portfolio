@@ -196,8 +196,8 @@ const ReverbTransmission = () => {
             />
           )}
 
-          <div className="mt-8 max-w-[74ch]">
-            <TransmissionBody body={t.body} />
+          <div className="mt-5 max-w-[74ch]">
+            <TransmissionBody body={t.body} skipHeading={t.subtitle ?? undefined} />
           </div>
 
           {(t.ctaUrl || t.externalUrl) && (

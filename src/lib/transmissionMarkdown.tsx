@@ -81,7 +81,13 @@ const renderInline = (text: string, keyBase: string): ReactNode[] => {
   return nodes;
 };
 
-export const TransmissionBody = ({ body }: { body?: string }) => {
+export const TransmissionBody = ({
+  body,
+  skipHeading,
+}: {
+  body?: string;
+  skipHeading?: string;
+}) => {
   if (!body?.trim()) return null;
 
   const lines = body.replace(/\r\n/g, "\n").split("\n");
@@ -90,6 +96,7 @@ export const TransmissionBody = ({ body }: { body?: string }) => {
   let list: { ordered: boolean; items: string[] } | null = null;
   let quote: string[] = [];
   let key = 0;
+  let skippedFirstHeading = !skipHeading;
 
   const flushParagraph = () => {
     if (!paragraph.length) return;
@@ -152,6 +159,14 @@ export const TransmissionBody = ({ body }: { body?: string }) => {
     const heading = line.match(/^(#{1,4})\s+(.*)$/);
     if (heading) {
       flushAll();
+      if (!skippedFirstHeading) {
+        const plain = headingPlainText(heading[2]);
+        if (plain.toLowerCase() === (skipHeading ?? "").toLowerCase()) {
+          skippedFirstHeading = true;
+          continue;
+        }
+        skippedFirstHeading = true;
+      }
       const level = heading[1].length;
       const sizes = [
         "text-2xl md:text-3xl",
@@ -209,3 +224,11 @@ export const TransmissionBody = ({ body }: { body?: string }) => {
     <div className="font-roc text-[14px] md:text-[15px]">{blocks}</div>
   );
 };
+
+const headingPlainText = (text: string) =>
+  text
+    .replace(/!\[[^\]]*\]\([^)\s]+\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)\s]+\)/g, "$1")
+    .replace(/[*_`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();

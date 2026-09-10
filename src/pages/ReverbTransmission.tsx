@@ -74,6 +74,7 @@ const ReverbTransmission = () => {
     t.excerpt ?? `Transmission ${formatTransmissionNumber(t.number)} from the Reverb archive.`;
   const canonical = `${SITE}/reverb/transmissions/${t.slug}`;
   const ogImage = t.coverImage?.startsWith("http") ? t.coverImage : undefined;
+  const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(t.mediaUrl ?? "");
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -130,7 +131,7 @@ const ReverbTransmission = () => {
             {t.publishedAt && <> // {formatTransmissionDate(t.publishedAt, t.isAnomaly)}</>}
           </p>
 
-          {t.coverImage && (
+          {t.coverImage && !isVideo && (
             <img
               src={t.coverImage}
               alt={t.title}
@@ -140,7 +141,19 @@ const ReverbTransmission = () => {
             />
           )}
 
-          {t.mediaUrl && (
+          {t.mediaUrl && isVideo && (
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster={t.coverImage}
+              src={t.mediaUrl}
+              className="mt-8 w-full border border-border bg-black"
+              aria-label={`${t.title} video`}
+            />
+          )}
+
+          {t.mediaUrl && !isVideo && (
             <audio
               controls
               preload="none"

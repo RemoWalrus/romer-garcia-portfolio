@@ -1,7 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useReverbGallery } from "@/hooks/use-reverb-gallery";
+
+// The lightbox dialog only matters after a thumbnail is clicked — keep it out of the page bundle.
+const Dialog = lazy(() => import("@/components/ui/dialog").then((m) => ({ default: m.Dialog })));
+const DialogContent = lazy(() =>
+  import("@/components/ui/dialog").then((m) => ({ default: m.DialogContent }))
+);
 
 interface Props {
   characterId: string;

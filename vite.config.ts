@@ -33,7 +33,9 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          react: ["react", "react-dom", "react-router-dom"],
+          // "react/jsx-runtime" must live with React: otherwise Rollup parks it in
+          // the motion chunk and every page ends up downloading Framer Motion.
+          react: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"],
           motion: ["framer-motion"],
           supabase: ["@supabase/supabase-js"],
           query: ["@tanstack/react-query"],

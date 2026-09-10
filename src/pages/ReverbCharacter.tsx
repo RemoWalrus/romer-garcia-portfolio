@@ -350,9 +350,6 @@ const ReverbCharacter = () => {
                     {/* Transmissions — published archive entries for this character */}
                     {!isLocked && (
                       <section className="md:col-span-2">
-                        <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
-                          {character.name} // Archive
-                        </h2>
                         <CharacterTransmissions
                           characterSlug={character.baseId ?? character.id}
                           characterName={character.name}

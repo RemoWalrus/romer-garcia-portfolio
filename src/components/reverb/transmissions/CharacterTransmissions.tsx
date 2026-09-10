@@ -37,7 +37,11 @@ const CharacterTransmissions = ({
   if (!items.length && !slots.length) return null;
 
   return (
-    <div className="mt-2">
+    <>
+      <h2 className="font-roc text-[11px] tracking-[0.3em] uppercase pb-1.5 border-b-2 border-black/80">
+        {characterName} // Archive
+      </h2>
+      <div className="mt-3">
       <ul className="space-y-2">
         {items.map((t) => (
           <li key={t.id} className={t.isAnomaly ? "reverb-anomaly" : undefined}>
@@ -89,7 +93,8 @@ const CharacterTransmissions = ({
           View all →
         </Link>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -179,7 +179,10 @@ const ReverbCharacter = () => {
 
                 {/* Reverb mark + word list */}
                 <div className="mt-6 relative z-50 max-w-[42%] lg:mt-8 lg:max-w-none">
-                  <ReverbWordmark className="text-xl md:text-xl lg:text-2xl" />
+                  <ReverbWordmark
+                    className="text-xl md:text-xl lg:text-2xl"
+                    style={{ color: accent }}
+                  />
                   <div className="mt-3 h-px w-8" style={{ backgroundColor: accent }} />
                   <p className="mt-3 font-roc text-[10px] tracking-[0.34em] uppercase text-white/55 leading-[2]">
                     Arts

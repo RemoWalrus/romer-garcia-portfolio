@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Download } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import ReverbHeader from "@/components/reverb/ReverbHeader";

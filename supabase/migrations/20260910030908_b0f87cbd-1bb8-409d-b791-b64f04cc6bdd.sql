@@ -1,0 +1,1 @@
+CREATE POLICY "tmp_anon_upload_optimized_assets" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id IN ('images','graphics'));

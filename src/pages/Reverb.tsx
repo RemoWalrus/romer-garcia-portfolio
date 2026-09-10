@@ -114,7 +114,7 @@ const Reverb = () => {
       </Helmet>
 
 
-      <ReverbHeader />
+      <ReverbHeader accentColor={characters.find((c) => c.id === highlight)?.accent} />
 
       {/* Hero: diagonal character panels (columns on desktop, rows on mobile) */}
       <section className="dark relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20 bg-black text-white">

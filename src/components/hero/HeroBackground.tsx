@@ -10,7 +10,12 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [videoUrl] = useState<string>(getProxyUrl('graphics', 'staticglitchy.mp4'));
+  const [videoUrl] = useState<string>(() => {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    // Skip video entirely on data-saver or slow connections
+    if (conn?.saveData || conn?.effectiveType === '2g' || conn?.effectiveType === 'slow-2g') return '';
+    return getProxyUrl('graphics', 'staticglitchy-lite.mp4');
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -27,13 +32,13 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
         
         // For now, use a predefined list of image names to randomly select from
         const imageNames = [
-          'dualshadow.jpg',
-          'evenbrite-cover.jpg', 
-          'hautesummer.jpg',
-          'militarychild.jpg',
-          'remowalrusdiablo.jpg',
-          'romergarciacover.jpg',
-          'worldzoom.jpg'
+          'dualshadow.webp',
+          'evenbrite-cover.webp',
+          'hautesummer.webp',
+          'militarychild.webp',
+          'remowalrusdiablo.webp',
+          'romergarciacover.webp',
+          'worldzoom.webp'
         ];
 
         // Select a random image from the list
@@ -45,8 +50,8 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
 
       } catch (error) {
         console.error('Error in fetchRandomImage:', error);
-        // Fallback to default image in case of any error
-        const fallbackUrl = getProxyUrl('images', 'dualshadow.jpg');
+      // Fallback to default image in case of any error
+        const fallbackUrl = getProxyUrl('images', 'dualshadow.webp');
         setBackgroundImage(fallbackUrl);
       }
     };
@@ -74,7 +79,8 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
           <img 
             src={backgroundImage} 
             alt="Hero Background" 
-            loading="lazy"
+            loading="eager"
+            fetchPriority="high"
             decoding="async"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 
               ${showVideo ? 'opacity-0' : isDarkMode ? 'opacity-40' : 'opacity-60'}`}

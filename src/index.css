@@ -141,7 +141,8 @@
     color: var(--character-accent);
   }
 
-  .reverb-character-button:hover {
+  .reverb-character-button:hover,
+  .reverb-character-button--active {
     background-color: var(--character-accent);
     color: hsl(var(--background));
   }

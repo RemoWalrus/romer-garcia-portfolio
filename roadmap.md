@@ -21,3 +21,5 @@
 - [x] Add empty Gallery section under Overview on Reverb character pages
 - [x] Replace Eduq's character image with uploaded version and optimize
 - [x] Add unlockable 20-year-old Spark profile (hidden link on Spark page, optimized Supabase image)
+- [ ] iPad portrait (md, ~834-1023px): shift character figure further right — too far left now
+- [ ] Homepage load: drop tmp upload policy, webp hero images + lite video, defer Typekit

@@ -127,28 +127,38 @@ const ReverbTransmission = () => {
           <div
             className={
               hasCoverOverlay
-                ? "relative z-10 mt-4 md:-mt-[38%] md:mx-6 md:border md:border-border md:bg-background/80 md:p-5 md:backdrop-blur-md"
+                ? "relative z-10 mt-4 md:-mt-[38%] md:mx-6 md:border md:border-border md:bg-background/80 md:p-4 md:backdrop-blur-md"
                 : undefined
             }
           >
-          <p
-            className="font-roc text-[10px] uppercase tracking-[0.3em]"
-            style={{ color: accent }}
-          >
-            Transmission // {number}
-          </p>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <p
+                className="font-roc text-[10px] uppercase tracking-[0.3em]"
+                style={{ color: accent }}
+              >
+                Transmission // {number}
+              </p>
 
-          <h1 className="mt-2 max-w-[28ch] font-reverb text-3xl font-black italic uppercase leading-[0.92] tracking-normal text-reverb-wordmark md:text-4xl lg:text-5xl">
-            {t.title}
-          </h1>
+              <h1 className="mt-1 max-w-[28ch] font-reverb text-3xl font-black italic uppercase leading-[0.92] tracking-normal text-reverb-wordmark md:text-4xl lg:text-5xl">
+                {t.title}
+              </h1>
 
-          {t.subtitle && (
-            <p className="mt-1.5 max-w-[52ch] font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground md:mt-2">
-              {t.subtitle}
-            </p>
-          )}
+              {t.subtitle && (
+                <p className="mt-1 max-w-[52ch] font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                  {t.subtitle}
+                </p>
+              )}
+            </div>
 
-          <p className="mt-4 border-y border-border py-2.5 font-roc text-[9px] uppercase tracking-[0.28em] text-muted-foreground md:mt-5">
+            {t.publishedAt && (
+              <p className="shrink-0 pt-0.5 text-right font-roc text-[9px] uppercase tracking-[0.28em] text-muted-foreground md:pt-1">
+                {formatTransmissionDate(t.publishedAt, t.isAnomaly)}
+              </p>
+            )}
+          </div>
+
+          <p className="mt-3 border-y border-border py-2 font-roc text-[9px] uppercase tracking-[0.28em] text-muted-foreground">
             {t.category}
             {character && (
               <>
@@ -162,7 +172,6 @@ const ReverbTransmission = () => {
                 </Link>
               </>
             )}
-            {t.publishedAt && <> // {formatTransmissionDate(t.publishedAt, t.isAnomaly)}</>}
           </p>
 
           {t.mediaUrl && isVideo && (

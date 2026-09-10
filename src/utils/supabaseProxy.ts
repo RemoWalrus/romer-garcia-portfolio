@@ -53,3 +53,24 @@ export const parseSupabaseUrl = (supabaseUrl: string): { bucket: string; file: s
   }
   return null;
 };
+
+/**
+ * Streaming URL for media that needs HTTP Range support (video/audio).
+ * Safari/iOS refuses to play <video> sources that ignore Range requests.
+ */
+const STREAM_BASE = isNetlifyOrVite ? '/api/stream-media' : `${SUPABASE_FUNCTIONS_URL}/stream-media`;
+
+export const getStreamUrl = (bucket: string, file: string): string => {
+  const params = new URLSearchParams();
+  params.set('bucket', bucket);
+  params.set('file', file);
+  return `${STREAM_BASE}?${params.toString()}`;
+};
+
+/** Converts a direct Supabase storage URL into a range-capable stream URL. */
+export const toStreamUrl = (url: string): string => {
+  if (!url || !url.startsWith(SUPABASE_STORAGE_PREFIX)) return url;
+  const parsed = parseSupabaseUrl(url);
+  if (!parsed) return url;
+  return getStreamUrl(parsed.bucket, parsed.file);
+};

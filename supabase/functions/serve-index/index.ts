@@ -163,7 +163,7 @@ ${extraHead}
 ${memeComment}  </head>
 
   <body>
-    <div id="root"></div>
+${bodyExtra}    <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>

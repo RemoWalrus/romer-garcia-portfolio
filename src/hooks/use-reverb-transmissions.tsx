@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { getProxyUrl, toProxyUrl } from "@/utils/supabaseProxy";
+import { getProxyUrl, getStreamUrl, toProxyUrl, toStreamUrl } from "@/utils/supabaseProxy";
 
 /**
  * REVERB // TRANSMISSIONS
@@ -69,6 +69,16 @@ export const transmissionMedia = (value?: string | null): string | undefined => 
   return getProxyUrl("images", value);
 };
 
+/**
+ * Video/audio needs a range-capable stream endpoint (Safari/iOS requirement).
+ */
+export const transmissionStream = (value?: string | null): string | undefined => {
+  if (!value) return undefined;
+  if (/^(https?:)?\/\//i.test(value)) return toStreamUrl(value);
+  if (value.startsWith("/")) return value;
+  return getStreamUrl("images", value);
+};
+
 const mapPreview = (row: any): TransmissionPreview => ({
   id: row.id,
   slug: row.slug,
@@ -81,7 +91,7 @@ const mapPreview = (row: any): TransmissionPreview => ({
   publishedAt: row.published_at ?? undefined,
   coverImage: transmissionMedia(row.cover_image_url),
   thumbnail: transmissionMedia(row.thumbnail_url ?? row.cover_image_url),
-  mediaUrl: transmissionMedia(row.media_url),
+  mediaUrl: transmissionStream(row.media_url),
   featured: !!row.featured,
   isAnomaly: !!row.is_anomaly,
   isCollectiveOnly: !!row.is_collective_only,
@@ -91,7 +101,7 @@ const mapPreview = (row: any): TransmissionPreview => ({
 const mapDetail = (row: any): Transmission => ({
   ...mapPreview(row),
   body: row.body ?? undefined,
-  mediaUrl: transmissionMedia(row.media_url),
+  mediaUrl: transmissionStream(row.media_url),
   externalUrl: row.external_url ?? undefined,
   ctaLabel: row.cta_label ?? undefined,
   ctaUrl: row.cta_url ?? undefined,

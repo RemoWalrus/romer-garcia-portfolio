@@ -108,6 +108,7 @@ const ReverbTransmission = () => {
                 alt={t.title}
                 loading="eager"
                 decoding="async"
+                style={{ objectPosition: coverPosition }}
                 className="h-[75svh] w-full border border-border object-cover"
               />
               <a

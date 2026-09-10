@@ -80,7 +80,8 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
             src={backgroundImage} 
             alt="Hero Background" 
             loading="eager"
-            fetchPriority="high"
+            // React 18 only forwards the lowercase attribute
+            {...{ fetchpriority: "high" }}
             decoding="async"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 
               ${showVideo ? 'opacity-0' : isDarkMode ? 'opacity-40' : 'opacity-60'}`}

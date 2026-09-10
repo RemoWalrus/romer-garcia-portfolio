@@ -62,7 +62,13 @@ const ReverbThemeToggle = () => {
   );
 };
 
-export const ReverbWordmark = ({ className }: { className?: string }) => {
+export const ReverbWordmark = ({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) => {
   const word = "REVERB".split("");
 
   return (
@@ -71,6 +77,7 @@ export const ReverbWordmark = ({ className }: { className?: string }) => {
         "inline-flex gap-0 font-roc font-extrabold italic tracking-normal uppercase",
         className ?? "text-2xl text-reverb-wordmark md:text-3xl",
       )}
+      style={style}
       aria-label="Reverb"
     >
         {word.map((letter, index) => (

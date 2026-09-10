@@ -180,7 +180,10 @@ Deno.serve(async (req) => {
     const path = url.searchParams.get('path') || '/';
     
     // Pick route-specific or default meta
-    const meta = routeMeta[path] || defaultMeta;
+    let meta = routeMeta[path] || defaultMeta;
+    let extraHead = '';
+    let bodyExtra = '';
+    let metaPrefix: string | null = routeMeta[path] ? path.replace(/^\//, '') : null;
 
     // Initialize Supabase client
     const supabase = createClient(
@@ -188,10 +191,209 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? ''
     )
 
-    // Try to fetch dynamic meta from metadata table
-    if (routeMeta[path]) {
+    const jsonLd = (obj: unknown) =>
+      `    <script type="application/ld+json">${JSON.stringify(obj)}</script>\n`;
+    const noscript = (html: string) =>
+      `    <noscript><main style="font-family:monospace;padding:2rem;max-width:42rem;">${html}</main></noscript>\n`;
+    const esc = (s: string) =>
+      String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+    // Reverb routes: resolve meta + crawlable JSON-LD server-side so crawlers
+    // get real content without executing JavaScript.
+    if (path === '/reverb' || path.startsWith('/reverb/')) {
       try {
-        const prefix = path.replace(/^\//, '');
+        if (path === '/reverb') {
+          meta = { ...reverbMetaBase };
+          metaPrefix = 'reverb';
+          const { data: chars } = await supabase
+            .from('reverb_characters')
+            .select('id,name,role,discipline,overview,specialties,image_file')
+            .order('sort_order', { ascending: true });
+          const roster = chars ?? [];
+          extraHead += jsonLd({
+            '@context': 'https://schema.org',
+            '@graph': [
+              {
+                '@type': 'CreativeWorkSeries',
+                '@id': `${SITE}/reverb#franchise`,
+                name: 'Reverb',
+                alternateName: 'Reverb Collective',
+                url: `${SITE}/reverb`,
+                description: reverbMetaBase.description,
+                genre: ['Science Fiction', 'Cyberpunk', 'Multimedia'],
+                author: { '@type': 'Person', name: 'Romer Garcia', url: SITE },
+                character: roster.map((c: any) => ({
+                  '@type': 'Person',
+                  name: c.name,
+                  jobTitle: c.discipline || c.role,
+                  url: `${SITE}/reverb/${c.id}`,
+                })),
+              },
+              {
+                '@type': 'ItemList',
+                name: 'Reverb Collective members',
+                itemListElement: roster.map((c: any, i: number) => ({
+                  '@type': 'ListItem',
+                  position: i + 1,
+                  name: c.name,
+                  description: c.discipline || c.role,
+                  url: `${SITE}/reverb/${c.id}`,
+                })),
+              },
+            ],
+          });
+          bodyExtra = noscript(
+            `<h1>Reverb Collective</h1><p>${esc(reverbMetaBase.description)}</p><ul>` +
+            roster.map((c: any) =>
+              `<li><a href="${SITE}/reverb/${esc(c.id)}"><strong>${esc(c.name)}</strong></a> — ${esc(c.discipline || c.role)}. ${esc((c.overview || []).join(' '))}</li>`
+            ).join('') + `</ul>`
+          );
+        } else if (path === '/reverb/transmissions') {
+          meta = { ...transmissionsMetaBase };
+          metaPrefix = 'reverb';
+          const { data: rows } = await supabase
+            .from('reverb_transmissions')
+            .select('slug,title,subtitle,excerpt,category,published_at')
+            .eq('status', 'published')
+            .order('published_at', { ascending: false })
+            .limit(50);
+          const items = rows ?? [];
+          extraHead += jsonLd({
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Reverb // Transmissions',
+            description: transmissionsMetaBase.description,
+            url: `${SITE}/reverb/transmissions`,
+            isPartOf: { '@type': 'WebSite', url: SITE, name: 'Romer Garcia' },
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: items.map((t: any, i: number) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                name: t.title,
+                url: `${SITE}/reverb/transmissions/${t.slug}`,
+              })),
+            },
+          });
+          bodyExtra = noscript(
+            `<h1>Reverb // Transmissions</h1><p>${esc(transmissionsMetaBase.description)}</p><ul>` +
+            items.map((t: any) =>
+              `<li><a href="${SITE}/reverb/transmissions/${esc(t.slug)}"><strong>${esc(t.title)}</strong></a>${t.subtitle ? ` — ${esc(t.subtitle)}` : ''}${t.excerpt ? `<p>${esc(t.excerpt)}</p>` : ''}</li>`
+            ).join('') + `</ul>`
+          );
+        } else if (path.startsWith('/reverb/transmissions/')) {
+          const slug = path.split('/').pop() || '';
+          const { data: t } = await supabase
+            .from('reverb_transmissions')
+            .select('slug,title,subtitle,excerpt,body,category,cover_image_url,published_at,transmission_number')
+            .eq('slug', slug)
+            .eq('status', 'published')
+            .maybeSingle();
+          if (t) {
+            const desc = t.excerpt || t.subtitle || reverbMetaBase.description;
+            meta = {
+              ...reverbMetaBase,
+              title: `${t.title} | Reverb // Transmissions`,
+              description: desc,
+              keywords: `Reverb, Paradoxxia, ${t.category}, ${t.title}, transmission`,
+              ogTitle: `${t.title} | Reverb // Transmissions`,
+              ogDescription: desc,
+              ogUrl: `${SITE}/reverb/transmissions/${t.slug}`,
+              twitterTitle: `${t.title} | Reverb // Transmissions`,
+              twitterDescription: desc,
+            };
+            extraHead += jsonLd({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: t.title,
+              alternativeHeadline: t.subtitle || undefined,
+              description: desc,
+              articleSection: t.category,
+              datePublished: t.published_at || undefined,
+              author: { '@type': 'Person', name: 'Romer Garcia', url: SITE },
+              isPartOf: { '@type': 'CreativeWorkSeries', name: 'Reverb', url: `${SITE}/reverb` },
+              mainEntityOfPage: `${SITE}/reverb/transmissions/${t.slug}`,
+            });
+            const plain = String(t.body || '').replace(/[#*_`>\[\]]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 1200);
+            bodyExtra = noscript(
+              `<h1>${esc(t.title)}</h1>${t.subtitle ? `<h2>${esc(t.subtitle)}</h2>` : ''}<p>${esc(desc)}</p><p>${esc(plain)}</p>`
+            );
+          } else {
+            meta = { ...transmissionsMetaBase, ogUrl: `${SITE}${path}` };
+          }
+        } else {
+          const id = path.split('/')[2] || '';
+          const { data: c } = await supabase
+            .from('reverb_characters')
+            .select('id,name,role,discipline,overview,specialties,identity,sign_off')
+            .eq('id', id)
+            .maybeSingle();
+          if (c) {
+            const desc = (c.overview || []).join(' ') || `${c.name} — ${c.discipline || c.role}, Reverb Collective.`;
+            meta = {
+              ...reverbMetaBase,
+              title: `${c.name} | Reverb Collective`,
+              description: desc.slice(0, 300),
+              keywords: `${c.name}, Reverb Collective, Paradoxxia, ${c.discipline || c.role}, ${(c.specialties || []).join(', ')}`,
+              ogTitle: `${c.name} | Reverb Collective`,
+              ogDescription: desc.slice(0, 200),
+              ogUrl: `${SITE}/reverb/${c.id}`,
+              twitterTitle: `${c.name} | Reverb Collective`,
+              twitterDescription: desc.slice(0, 200),
+            };
+            const realName = (c.identity || []).find((r: any) => String(r.label).toLowerCase() === 'real name')?.value;
+            extraHead += jsonLd({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'ProfilePage',
+                  '@id': `${SITE}/reverb/${c.id}`,
+                  url: `${SITE}/reverb/${c.id}`,
+                  name: `${c.name} | Reverb Collective`,
+                  description: desc,
+                  mainEntity: { '@id': `${SITE}/reverb/${c.id}#person` },
+                  isPartOf: { '@type': 'WebSite', url: SITE, name: 'Romer Garcia' },
+                },
+                {
+                  '@type': 'Person',
+                  '@id': `${SITE}/reverb/${c.id}#person`,
+                  name: c.name,
+                  ...(realName && String(realName).toLowerCase() !== 'unknown' && realName !== c.name
+                    ? { alternateName: realName } : {}),
+                  jobTitle: c.discipline || c.role,
+                  description: desc,
+                  url: `${SITE}/reverb/${c.id}`,
+                  ...(c.specialties?.length ? { knowsAbout: c.specialties } : {}),
+                  memberOf: { '@type': 'Organization', name: 'Reverb Collective', url: `${SITE}/reverb` },
+                },
+                {
+                  '@type': 'BreadcrumbList',
+                  itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+                    { '@type': 'ListItem', position: 2, name: 'Reverb', item: `${SITE}/reverb` },
+                    { '@type': 'ListItem', position: 3, name: c.name, item: `${SITE}/reverb/${c.id}` },
+                  ],
+                },
+              ],
+            });
+            bodyExtra = noscript(
+              `<h1>${esc(c.name)}</h1><p><strong>${esc(c.discipline || c.role)}</strong></p><p>${esc(desc)}</p>` +
+              (c.specialties?.length ? `<p>Specialties: ${esc(c.specialties.join(', '))}</p>` : '') +
+              `<p><a href="${SITE}/reverb">Reverb Collective</a></p>`
+            );
+          } else {
+            meta = { ...reverbMetaBase, ogUrl: `${SITE}${path}` };
+          }
+        }
+      } catch (e) {
+        console.error('Error building Reverb meta:', e);
+      }
+    }
+
+    // Try to fetch dynamic meta from metadata table
+    if (metaPrefix) {
+      try {
+        const prefix = metaPrefix;
         const { data } = await supabase
           .from('metadata')
           .select('meta_key,meta_value')

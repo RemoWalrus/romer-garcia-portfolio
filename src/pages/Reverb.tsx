@@ -286,7 +286,8 @@ const Reverb = () => {
               id="reverb-frequency-title"
               className="reverb-section-title mt-5 max-w-4xl"
             >
-              Different Steps. Same Frequency.
+              Different Steps.
+              <br className="hidden md:block" /> Same Frequency.
             </h2>
             <p className="mt-7 max-w-[68ch] font-roc text-sm leading-7 text-foreground/80 md:mt-9 md:text-base md:leading-8">
               Reverb never had a headquarters. It had frequencies. What started as a handful of kids trading gear across different cities, different decades, different skylines, turned into something bigger than any one crew. Spark caught it first, all momentum and rooftop lines, tearing through neon sprawl. Wida caught it somewhere else, some other when, and made it hers. Different steps, same frequency. That's the whole premise: Reverb was never about where you're from or when you're standing. It's about who still hears the call. Somewhere, sometime, we're still Reverb.

@@ -32,13 +32,13 @@ export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgrou
         
         // For now, use a predefined list of image names to randomly select from
         const imageNames = [
-          'dualshadow.jpg',
-          'evenbrite-cover.jpg', 
-          'hautesummer.jpg',
-          'militarychild.jpg',
-          'remowalrusdiablo.jpg',
-          'romergarciacover.jpg',
-          'worldzoom.jpg'
+          'dualshadow.webp',
+          'evenbrite-cover.webp',
+          'hautesummer.webp',
+          'militarychild.webp',
+          'remowalrusdiablo.webp',
+          'romergarciacover.webp',
+          'worldzoom.webp'
         ];
 
         // Select a random image from the list

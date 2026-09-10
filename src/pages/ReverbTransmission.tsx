@@ -6,6 +6,7 @@ import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { TransmissionBody } from "@/lib/transmissionMarkdown";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
+import { useSmartCrop } from "@/hooks/use-smart-crop";
 import {
   displayTransmissionNumber,
   formatTransmissionDate,
@@ -21,6 +22,7 @@ const ReverbTransmission = () => {
   const characters = useReverbCharacters();
   const character = characters.find((c) => c.id === t?.characterSlug);
   const accent = character?.accent ?? "hsl(var(--reverb-wordmark))";
+  const coverPosition = useSmartCrop(t?.coverImage);
 
   useEffect(() => {
     if (!t) return;
@@ -106,6 +108,7 @@ const ReverbTransmission = () => {
                 alt={t.title}
                 loading="eager"
                 decoding="async"
+                style={{ objectPosition: coverPosition }}
                 className="h-[75svh] w-full border border-border object-cover"
               />
               <a

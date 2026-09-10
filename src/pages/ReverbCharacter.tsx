@@ -192,7 +192,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute right-[-4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none sm:right-[-10%] sm:top-[-12%] sm:h-[124%] sm:w-[92%] md:right-[-6%] md:w-[72%] md:h-[112%] md:top-[-6%] lg:right-[-40%] lg:top-[-2.5%] lg:bottom-auto lg:h-[92%] lg:w-[92%] lg:items-start xl:right-[-56%] xl:h-[105.5%] xl:w-[110%]">
+                <div className="absolute right-[-4%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none sm:right-[-10%] sm:top-[-10%] sm:h-[122%] sm:w-[92%] md:right-[-6%] md:w-[72%] md:h-[112%] md:top-[-6%] lg:right-[-40%] lg:top-[-2.5%] lg:bottom-auto lg:h-[92%] lg:w-[92%] lg:items-start xl:right-[-56%] xl:h-[105.5%] xl:w-[110%]">
                   <div className="relative h-full">
                     <img
                       src={character.figure ?? character.image}

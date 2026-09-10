@@ -106,7 +106,7 @@ const ReverbTransmission = () => {
                 alt={t.title}
                 loading="eager"
                 decoding="async"
-                className="w-full border border-border object-cover"
+                className="h-[75svh] w-full border border-border object-cover"
               />
               <a
                 href={t.coverImage}
@@ -127,7 +127,7 @@ const ReverbTransmission = () => {
           <div
             className={
               hasCoverOverlay
-                ? "relative z-10 mt-4 md:-mt-[38%] md:mx-6 md:border md:border-border md:bg-background/80 md:p-4 md:backdrop-blur-md"
+                ? "relative z-10 mt-4 md:mx-6 md:border md:border-border md:bg-background/45 md:p-4 md:backdrop-blur-sm"
                 : undefined
             }
           >

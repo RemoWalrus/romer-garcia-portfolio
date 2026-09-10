@@ -19,19 +19,22 @@ const LatestTransmission = () => {
   return (
     <section
       aria-labelledby="reverb-latest-transmission"
-      className="border-t border-border bg-background transition-colors"
+      className="relative isolate reverb-noise border-t border-border bg-background transition-colors"
     >
-      <div className="mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
+      <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
         <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-reverb-wordmark">
-          Reverb // Transmissions
+          Reverb // Transmission
         </p>
-        <h2 id="reverb-latest-transmission" className="reverb-section-title mt-4">
+        <p
+          id="reverb-latest-transmission"
+          className="mt-2 font-reverb text-[10px] font-black italic uppercase tracking-[0.28em] text-reverb-wordmark"
+        >
           Latest Transmission
-        </h2>
+        </p>
 
         {!t ? (
           <p className="mt-8 border border-dashed border-border px-5 py-8 font-roc text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-            No transmissions detected
+            No transmission detected
           </p>
         ) : (
           <article

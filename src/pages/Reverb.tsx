@@ -8,7 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
 import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
-import frequencyCityAsset from "@/assets/reverb-frequency-city.webp.asset.json";
+import frequencyCity from "@/assets/reverb-frequency-city.webp";
 
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
@@ -267,13 +267,13 @@ const Reverb = () => {
         className="relative isolate min-h-[430px] overflow-hidden border-t border-border bg-background transition-colors md:min-h-[540px]"
       >
         <img
-          src={frequencyCityAsset.url}
+          src={frequencyCity}
           alt="Futuristic city skyline carrying the Reverb signal"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.14] grayscale transition-opacity duration-500 dark:opacity-[0.28] dark:grayscale-0"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.34] grayscale transition-opacity duration-500 dark:opacity-[0.46] dark:grayscale-0"
         />
-        <div className="absolute inset-0 -z-10 bg-background/80 dark:bg-background/70" />
+        <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
         <div className="absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-background to-transparent" />
         <div className="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-background to-transparent" />
 
@@ -284,7 +284,7 @@ const Reverb = () => {
             </p>
             <h2
               id="reverb-frequency-title"
-              className="mt-5 max-w-2xl font-reverb text-4xl font-black italic uppercase leading-[0.92] text-reverb-wordmark sm:text-5xl md:text-7xl"
+              className="reverb-section-title mt-5 max-w-4xl"
             >
               Different Steps. Same Frequency.
             </h2>

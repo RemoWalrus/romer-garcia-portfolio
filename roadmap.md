@@ -26,3 +26,4 @@
 
 - [x] Hide the Reverb Universe reveal and move character blurbs into responsive character panels
 - [x] Add the theme-aware “Different Steps. Same Frequency.” introduction below the Reverb roster
+- [x] Restore the cityscape background and standardize new Reverb sections with bold, left-aligned titles

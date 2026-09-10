@@ -136,6 +136,10 @@
     @apply inline-flex h-8 w-8 items-center justify-center border border-reverb-wordmark text-reverb-wordmark transition-colors hover:bg-reverb-wordmark hover:text-background disabled:opacity-60;
   }
 
+  .reverb-section-title {
+    @apply font-reverb text-5xl font-black italic uppercase leading-[0.88] text-reverb-wordmark sm:text-6xl md:text-8xl;
+  }
+
   .reverb-character-button {
     border-color: var(--character-accent);
     color: var(--character-accent);

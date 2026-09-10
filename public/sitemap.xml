@@ -31,6 +31,30 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://romergarcia.com/reverb/transmissions</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://romergarcia.com/reverb/transmissions/the-collective</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://romergarcia.com/reverb/transmissions/spark-before-the-fall</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://romergarcia.com/reverb/transmissions/wida-record-mismatch</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://romergarcia.com/reverb/reverb</loc>
     <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>

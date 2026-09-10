@@ -338,6 +338,60 @@ export type Database = {
         }
         Relationships: []
       }
+      reverb_archive_slots: {
+        Row: {
+          character_slug: string | null
+          created_at: string
+          display_order: number
+          id: string
+          label: string | null
+          linked_transmission_id: string | null
+          release_status: string
+          title: string
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          character_slug?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          label?: string | null
+          linked_transmission_id?: string | null
+          release_status?: string
+          title: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          character_slug?: string | null
+          created_at?: string
+          display_order?: number
+          id?: string
+          label?: string | null
+          linked_transmission_id?: string | null
+          release_status?: string
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reverb_archive_slots_character_slug_fkey"
+            columns: ["character_slug"]
+            isOneToOne: false
+            referencedRelation: "reverb_characters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reverb_archive_slots_linked_transmission_id_fkey"
+            columns: ["linked_transmission_id"]
+            isOneToOne: false
+            referencedRelation: "reverb_transmissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reverb_characters: {
         Row: {
           accent: string
@@ -466,6 +520,92 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      reverb_transmissions: {
+        Row: {
+          body: string | null
+          category: string
+          character_slug: string | null
+          cover_image_url: string | null
+          created_at: string
+          cta_label: string | null
+          cta_url: string | null
+          excerpt: string | null
+          external_url: string | null
+          featured: boolean
+          id: string
+          is_anomaly: boolean
+          is_collective_only: boolean
+          media_url: string | null
+          published_at: string | null
+          slug: string
+          sort_order: number | null
+          status: string
+          subtitle: string | null
+          thumbnail_url: string | null
+          title: string
+          transmission_number: number
+          updated_at: string
+        }
+        Insert: {
+          body?: string | null
+          category?: string
+          character_slug?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          excerpt?: string | null
+          external_url?: string | null
+          featured?: boolean
+          id?: string
+          is_anomaly?: boolean
+          is_collective_only?: boolean
+          media_url?: string | null
+          published_at?: string | null
+          slug: string
+          sort_order?: number | null
+          status?: string
+          subtitle?: string | null
+          thumbnail_url?: string | null
+          title: string
+          transmission_number?: number
+          updated_at?: string
+        }
+        Update: {
+          body?: string | null
+          category?: string
+          character_slug?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          cta_label?: string | null
+          cta_url?: string | null
+          excerpt?: string | null
+          external_url?: string | null
+          featured?: boolean
+          id?: string
+          is_anomaly?: boolean
+          is_collective_only?: boolean
+          media_url?: string | null
+          published_at?: string | null
+          slug?: string
+          sort_order?: number | null
+          status?: string
+          subtitle?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          transmission_number?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reverb_transmissions_character_slug_fkey"
+            columns: ["character_slug"]
+            isOneToOne: false
+            referencedRelation: "reverb_characters"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       sections: {
         Row: {

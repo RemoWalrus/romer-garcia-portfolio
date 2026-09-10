@@ -213,3 +213,36 @@ Presentation-only placeholders shown on character archives (`LOCKED` / `CLASSIFI
 
 ### Media
 Uploads go to the existing public `images` bucket under `reverb/transmissions/…` and are served through the `/api/download-file` proxy. There is no admin UI — publishing happens in the Supabase table editor.
+
+- **Images**: optimize to WebP (max ~1600px) plus a 256px `-thumb.webp`, then set `cover_image_url` / `thumbnail_url` to the bucket path (e.g. `reverb/transmissions/spark-before-the-fall.webp`).
+- **Video / audio**: set `media_url` to the bucket path (e.g. `reverb/transmissions/wida-transmission.mp4`). Video plays inline on the detail page and as a muted looping preview in the Latest Transmission block, using `cover_image_url` as the poster.
+- **Streaming**: video/audio is served through the `stream-media` edge function (`getStreamUrl` / `transmissionStream`), which supports HTTP Range requests so Safari and iOS can seek and play.
+
+## Reverb Copy Editable in Supabase
+
+Section copy is read from the shared `metadata` table with the shipped text as fallback — edit the row, refresh, done.
+
+| Key | Controls |
+| --- | --- |
+| `reverb.logbook.label` | Small `Reverb // Logbook` eyebrow |
+| `reverb.logbook.title_line1`, `reverb.logbook.title_line2` | Two-line section headline |
+| `reverb.logbook.body` | Introduction paragraph |
+| `reverb.join.title`, `reverb.join.line1`, `reverb.join.line2` | Signup heading and supporting lines |
+| `reverb.join.button`, `reverb.join.sending_label` | Submit button labels |
+| `reverb.join.consent` | Consent line under the form |
+| `reverb.join.success_title`, `reverb.join.success_body` | Post-signup confirmation |
+| `reverb.*`, `reverb.<character-id>.*` | Page titles, descriptions, OG/Twitter tags |
+
+Other Reverb content sources:
+
+| Table | Purpose |
+| --- | --- |
+| `reverb_characters` | Dossiers, accents, `is_hidden` / `is_locked` / `base_id` flags |
+| `reverb_gallery` | Shared images tagged to one or more characters via `character_ids` |
+| `reverb_transmissions` | Transmission entries |
+| `reverb_archive_slots` | Locked/classified archive placeholders |
+| `collective_subscribers` | Join the Collective signups (email, source page, referrer, UTM, status) |
+
+## Hosting Note
+
+`/reverb` and `/reverb/*` are rewritten to `/index.html` in `netlify.toml` and `public/_redirects`. They must not be proxied through the `serve-index` edge function — it returns `text/plain`, which makes Safari display page source instead of the site.

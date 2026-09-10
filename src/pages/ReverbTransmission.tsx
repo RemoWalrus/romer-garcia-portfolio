@@ -129,9 +129,7 @@ const ReverbTransmission = () => {
 
           <div
             className={
-              hasCoverOverlay
-                ? "relative z-10 mt-4 md:mx-6 md:border md:border-border md:bg-background/45 md:p-4 md:backdrop-blur-sm"
-                : undefined
+              hasCoverOverlay ? "relative z-10 mt-4" : undefined
             }
           >
           <div className="flex flex-wrap items-start justify-between gap-3">

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
-import { useReverbMeta } from "@/hooks/use-reverb-meta";
+import { useReverbMeta, metaValue } from "@/hooks/use-reverb-meta";
 import { usePageMetaFromData } from "@/hooks/use-page-meta";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
@@ -299,17 +299,22 @@ const Reverb = () => {
         <div className="mx-auto flex min-h-[320px] w-full max-w-[1500px] items-center px-5 py-12 md:min-h-[380px] md:px-8 md:py-16">
           <div className="max-w-3xl">
             <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-reverb-wordmark">
-              Reverb // Logbook
+              {metaValue(metadata, "reverb.logbook.label", "Reverb // Logbook")}
             </p>
             <h2
               id="reverb-frequency-title"
               className="reverb-section-title mt-5 max-w-4xl"
             >
-              Different Steps.
-              <br className="hidden md:block" /> Same Frequency.
+              {metaValue(metadata, "reverb.logbook.title_line1", "Different Steps.")}
+              <br className="hidden md:block" />{" "}
+              {metaValue(metadata, "reverb.logbook.title_line2", "Same Frequency.")}
             </h2>
             <p className="mt-7 max-w-[68ch] font-roc text-sm leading-7 text-foreground/80 md:mt-9 md:text-base md:leading-8">
-              Reverb never had a headquarters. It had frequencies. What started as a handful of kids trading gear across different cities, different decades, different skylines, turned into something bigger than any one crew. Spark caught it first, all momentum and rooftop lines, tearing through neon sprawl. Wida caught it somewhere else, some other when, and made it hers. Different steps, same frequency. That's the whole premise: Reverb was never about where you're from or when you're standing. It's about who still hears the call. Somewhere, sometime, we're still Reverb.
+              {metaValue(
+                metadata,
+                "reverb.logbook.body",
+                "Reverb never had a headquarters. It had frequencies. What started as a handful of kids trading gear across different cities, different decades, different skylines, turned into something bigger than any one crew. Spark caught it first, all momentum and rooftop lines, tearing through neon sprawl. Wida caught it somewhere else, some other when, and made it hers. Different steps, same frequency. That's the whole premise: Reverb was never about where you're from or when you're standing. It's about who still hears the call. Somewhere, sometime, we're still Reverb.",
+              )}
             </p>
           </div>
         </div>

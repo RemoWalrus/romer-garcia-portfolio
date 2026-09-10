@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { cn } from "@/lib/utils";
+import { useReverbMeta, metaValue } from "@/hooks/use-reverb-meta";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -58,6 +59,7 @@ export const JoinCollectiveCta = ({
  */
 export const JoinCollectiveForm = ({ className }: { className?: string }) => {
   const location = useLocation();
+  const metadata = useReverbMeta();
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "sending" | "done">("idle");
   const [error, setError] = useState<string | null>(null);
@@ -101,9 +103,15 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
   if (state === "done") {
     return (
       <div className={cn("text-center", className)}>
-        <p className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-3xl md:text-4xl">You're in.</p>
+        <p className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-3xl md:text-4xl">
+          {metaValue(metadata, "reverb.join.success_title", "You're in.")}
+        </p>
         <p className="mt-3 font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-          Welcome to the Collective. Stay on frequency.
+          {metaValue(
+            metadata,
+            "reverb.join.success_body",
+            "Welcome to the Collective. Stay on frequency.",
+          )}
         </p>
       </div>
     );
@@ -130,7 +138,9 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
           disabled={state === "sending"}
           className="reverb-button shrink-0 disabled:opacity-60"
         >
-          {state === "sending" ? "Tuning in…" : "Join the Collective"}
+          {state === "sending"
+            ? metaValue(metadata, "reverb.join.sending_label", "Tuning in…")
+            : metaValue(metadata, "reverb.join.button", "Join the Collective")}
         </button>
       </div>
 
@@ -141,7 +151,11 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
       )}
 
       <p className="mt-4 font-roc text-[9px] leading-relaxed tracking-[0.1em] text-muted-foreground/70">
-        By joining you agree to receive occasional Reverb emails. Unsubscribe any time.
+        {metaValue(
+          metadata,
+          "reverb.join.consent",
+          "By joining you agree to receive occasional Reverb emails. Unsubscribe any time.",
+        )}
       </p>
     </form>
   );
@@ -150,6 +164,7 @@ export const JoinCollectiveForm = ({ className }: { className?: string }) => {
 /** Full signup block for the bottom of the main Reverb page. */
 export const JoinCollectiveSection = () => {
   const { hash } = useLocation();
+  const metadata = useReverbMeta();
 
   // Arriving from a CTA on another Reverb page (/reverb#join).
   useEffect(() => {
@@ -166,13 +181,17 @@ export const JoinCollectiveSection = () => {
     <div className="mx-auto w-full max-w-[1500px] px-5 py-12 md:px-8 md:py-16">
       <div className="max-w-3xl text-left">
         <h2 className="reverb-section-title">
-          Join the Collective
+          {metaValue(metadata, "reverb.join.title", "Join the Collective")}
         </h2>
         <p className="mt-4 font-roc text-sm leading-relaxed text-muted-foreground">
-          Reverb isn't a club. It's a frequency.
+          {metaValue(metadata, "reverb.join.line1", "Reverb isn't a club. It's a frequency.")}
         </p>
         <p className="mt-2 font-roc text-sm leading-relaxed text-muted-foreground">
-          Get new artwork, stories, character drops, and transmissions from the Reverb universe.
+          {metaValue(
+            metadata,
+            "reverb.join.line2",
+            "Get new artwork, stories, character drops, and transmissions from the Reverb universe.",
+          )}
         </p>
         <JoinCollectiveForm className="mt-8 text-left" />
       </div>

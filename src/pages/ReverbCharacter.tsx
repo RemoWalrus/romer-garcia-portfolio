@@ -90,7 +90,7 @@ const ReverbCharacter = () => {
 
 
   return (
-    <div className="min-h-screen xl:h-[100dvh] xl:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
+    <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
@@ -139,12 +139,12 @@ const ReverbCharacter = () => {
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div className="relative grid grid-cols-1 xl:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full xl:min-h-[520px]">
+            <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative z-40 h-[70svh] min-h-[340px] overflow-visible px-5 pt-7 pb-0 md:px-8 xl:h-full xl:min-h-0 xl:pt-8">
+              <div className="relative z-40 h-[70svh] min-h-[340px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
 
                 <h1
-                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] xl:z-30 xl:max-w-none xl:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
+                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] lg:z-30 lg:max-w-none lg:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}
@@ -192,7 +192,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[14%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[-14%] md:w-[58%] md:h-[100%] xl:right-[-56%] xl:top-[-2.5%] xl:bottom-auto xl:h-[105.5%] xl:w-[110%] xl:items-start">
+                <div className="absolute -right-[14%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[-14%] md:w-[58%] md:h-[100%] lg:right-[-14%] lg:top-[-2.5%] lg:bottom-auto lg:h-[105.5%] lg:w-[92%] lg:items-start xl:right-[-56%] xl:w-[110%]">
                   <div className="relative h-full">
                     <img
                       src={character.figure ?? character.image}
@@ -220,7 +220,7 @@ const ReverbCharacter = () => {
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 xl:overflow-y-auto xl:pl-[24%] xl:pr-7 xl:py-6 xl:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
+                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 lg:overflow-y-auto lg:pl-[16%] lg:pr-7 lg:py-6 lg:[clip-path:polygon(9%_0%,100%_0%,100%_100%,0%_100%)] xl:pl-[24%] xl:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
               >
 
                 {character.hasProfile ? (

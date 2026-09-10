@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
 import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
+import frequencyCityAsset from "@/assets/reverb-frequency-city.webp.asset.json";
 
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
@@ -259,6 +260,39 @@ const Reverb = () => {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section
+        aria-labelledby="reverb-frequency-title"
+        className="relative isolate min-h-[430px] overflow-hidden border-t border-border bg-background transition-colors md:min-h-[540px]"
+      >
+        <img
+          src={frequencyCityAsset.url}
+          alt="Futuristic city skyline carrying the Reverb signal"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.14] grayscale transition-opacity duration-500 dark:opacity-[0.28] dark:grayscale-0"
+        />
+        <div className="absolute inset-0 -z-10 bg-background/80 dark:bg-background/70" />
+        <div className="absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-background to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-background to-transparent" />
+
+        <div className="mx-auto flex min-h-[430px] w-full max-w-[1500px] items-center px-5 py-16 md:min-h-[540px] md:px-8 md:py-24">
+          <div className="max-w-3xl">
+            <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-reverb-wordmark">
+              Reverb // Transmission
+            </p>
+            <h2
+              id="reverb-frequency-title"
+              className="mt-5 max-w-2xl font-reverb text-4xl font-black italic uppercase leading-[0.92] text-reverb-wordmark sm:text-5xl md:text-7xl"
+            >
+              Different Steps. Same Frequency.
+            </h2>
+            <p className="mt-7 max-w-[68ch] font-roc text-sm leading-7 text-foreground/80 md:mt-9 md:text-base md:leading-8">
+              Reverb never had a headquarters. It had frequencies. What started as a handful of kids trading gear across different cities, different decades, different skylines, turned into something bigger than any one crew. Spark caught it first, all momentum and rooftop lines, tearing through neon sprawl. Wida caught it somewhere else, some other when, and made it hers. Different steps, same frequency. That's the whole premise: Reverb was never about where you're from or when you're standing. It's about who still hears the call. Somewhere, sometime, we're still Reverb.
+            </p>
+          </div>
+        </div>
       </section>
 
       <JoinCollectiveSection />

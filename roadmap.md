@@ -25,3 +25,4 @@
 - [x] Homepage load: webp hero images, lite looping video, non-blocking Typekit
 
 - [x] Hide the Reverb Universe reveal and move character blurbs into responsive character panels
+- [x] Add the theme-aware “Different Steps. Same Frequency.” introduction below the Reverb roster

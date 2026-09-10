@@ -114,7 +114,7 @@ function iconLinksFor(path: string) {
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://romergarcia.com/apple-touch-icon-${brand}.png" />`;
 }
 
-function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconLinksFor('/')) {
+function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconLinksFor('/'), extraHead = '', bodyExtra = '') {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>

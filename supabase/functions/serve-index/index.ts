@@ -140,6 +140,7 @@ function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconL
     <meta name="twitter:image" content="${meta.twitterImage}" />
     
     ${iconLinks}
+${extraHead}
 
     <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />

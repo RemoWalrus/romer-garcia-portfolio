@@ -22,12 +22,12 @@ const LatestTransmission = () => {
       className="relative isolate reverb-noise border-t border-border bg-background transition-colors"
     >
       <div className="relative z-10 mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
-        <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-reverb-wordmark">
+        <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
           Reverb // Transmission
         </p>
         <p
           id="reverb-latest-transmission"
-          className="mt-1 font-reverb text-xs font-black italic uppercase tracking-[0.22em] text-reverb-wordmark"
+          className="mt-0 font-reverb text-sm font-black italic uppercase leading-none tracking-[0.22em] text-reverb-wordmark"
         >
           Latest Transmission
         </p>

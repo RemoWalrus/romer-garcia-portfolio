@@ -1,4 +1,9 @@
 # Netlify redirects and rewrites
+# Reverb must use the built SPA document. Supabase Edge Functions force
+# browser-facing HTML to text/plain, which makes Safari show the source code.
+/reverb     /index.html   200!
+/reverb/*   /index.html   200!
+
 # Proxy storage/image masking requests to Supabase Edge Functions
 /api/*  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat  200
 

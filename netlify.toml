@@ -5,6 +5,20 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Reverb is a client-rendered route. Serve the built app document directly;
+# proxying HTML through Supabase makes browsers receive it as text/plain.
+[[redirects]]
+  from = "/reverb"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/reverb/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Proxy Supabase Edge Functions through our domain
 [[redirects]]
   from = "/api/*"

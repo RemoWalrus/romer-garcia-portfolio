@@ -40,6 +40,9 @@ export default defineConfig(({ mode }) => ({
             return "react";
           if (id.includes("node_modules/framer-motion")) return "motion";
           if (id.includes("node_modules/@supabase")) return "supabase";
+          // Keep our Supabase client/data helpers with the SDK chunk instead of the
+          // entry chunk, so pages that never query the database don't download it.
+          if (/src\/(integrations\/supabase|lib\/supabase|utils\/supabase)/.test(id)) return "supabase";
           if (id.includes("node_modules/@tanstack/react-query")) return "query";
           return undefined;
         },

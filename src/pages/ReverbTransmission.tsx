@@ -6,6 +6,7 @@ import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { TransmissionBody } from "@/lib/transmissionMarkdown";
 import { trackEvent } from "@/components/GoogleAnalytics";
 import { useReverbCharacters } from "@/hooks/use-reverb-characters";
+import { useSmartCrop } from "@/hooks/use-smart-crop";
 import {
   displayTransmissionNumber,
   formatTransmissionDate,

@@ -5,29 +5,24 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Reverb is a client-rendered route. Serve the built app document directly;
+# proxying HTML through Supabase makes browsers receive it as text/plain.
+[[redirects]]
+  from = "/reverb"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/reverb/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
 # Proxy Supabase Edge Functions through our domain
 [[redirects]]
   from = "/api/*"
   to = "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat"
-  status = 200
-  force = true
-
-# Route-specific SSR for social meta tags — 301 redirect so crawlers follow to serve-index
-[[redirects]]
-  from = "/paradoxxia"
-  to = "/api/serve-index?path=/paradoxxia"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/char-gen"
-  to = "/api/serve-index?path=/char-gen"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/meme"
-  to = "/api/serve-index?path=/meme"
   status = 200
   force = true
 

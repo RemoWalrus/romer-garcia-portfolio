@@ -46,33 +46,6 @@ const routeMeta: Record<string, {
   },
 };
 
-const SITE = 'https://romergarcia.com';
-const REVERB_OG = 'https://romergarcia.com/paradoxxia-og.jpg';
-
-const reverbMetaBase = {
-  title: 'Reverb Collective | Paradoxxia Universe Prequel',
-  description: 'Reverb is a multimedia franchise set in the Paradoxxia universe — a prequel following five outsiders who turn sound into resistance. Meet the Collective: Reverb, Spark, Harmonix, Eduq, and Wida.',
-  keywords: 'Reverb Collective, Paradoxxia, Reverb, Spark, Harmonix, Eduq, Wida, cyberpunk multimedia franchise, sci-fi characters, Romer Garcia',
-  ogTitle: 'Reverb Collective | Paradoxxia Universe Prequel',
-  ogDescription: 'A multimedia franchise set in the Paradoxxia universe — five outsiders who turn sound into resistance.',
-  ogUrl: `${SITE}/reverb`,
-  ogImage: REVERB_OG,
-  twitterTitle: 'Reverb Collective | Paradoxxia Universe Prequel',
-  twitterDescription: 'A multimedia franchise set in the Paradoxxia universe — five outsiders who turn sound into resistance.',
-  twitterImage: REVERB_OG,
-};
-
-const transmissionsMetaBase = {
-  ...reverbMetaBase,
-  title: 'Reverb // Transmissions | Archive from the Paradoxxia Universe',
-  description: 'Transmissions from the Reverb universe — new artwork, character lore, recovered files, short stories, and archive fragments from the Collective.',
-  ogTitle: 'Reverb // Transmissions',
-  ogDescription: 'New artwork, lore, and recovered files entering the Reverb universe.',
-  ogUrl: `${SITE}/reverb/transmissions`,
-  twitterTitle: 'Reverb // Transmissions',
-  twitterDescription: 'New artwork, lore, and recovered files entering the Reverb universe.',
-};
-
 const defaultMeta = {
   title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
   description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
@@ -114,7 +87,7 @@ function iconLinksFor(path: string) {
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://romergarcia.com/apple-touch-icon-${brand}.png" />`;
 }
 
-function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconLinksFor('/'), extraHead = '', bodyExtra = '') {
+function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconLinksFor('/')) {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -140,7 +113,6 @@ function buildHTML(meta: typeof defaultMeta, memeComment = '', iconLinks = iconL
     <meta name="twitter:image" content="${meta.twitterImage}" />
     
     ${iconLinks}
-${extraHead}
 
     <!-- Preconnect to external origins -->
     <link rel="preconnect" href="https://use.typekit.net" crossorigin />
@@ -163,7 +135,7 @@ ${extraHead}
 ${memeComment}  </head>
 
   <body>
-${bodyExtra}    <div id="root"></div>
+    <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module" defer></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
@@ -180,10 +152,7 @@ Deno.serve(async (req) => {
     const path = url.searchParams.get('path') || '/';
     
     // Pick route-specific or default meta
-    let meta = routeMeta[path] || defaultMeta;
-    let extraHead = '';
-    let bodyExtra = '';
-    let metaPrefix: string | null = routeMeta[path] ? path.replace(/^\//, '') : null;
+    const meta = routeMeta[path] || defaultMeta;
 
     // Initialize Supabase client
     const supabase = createClient(
@@ -191,208 +160,10 @@ Deno.serve(async (req) => {
       Deno.env.get('SUPABASE_ANON_KEY') ?? ''
     )
 
-    const jsonLd = (obj: unknown) =>
-      `    <script type="application/ld+json">${JSON.stringify(obj)}</script>\n`;
-    const noscript = (html: string) =>
-      `    <noscript><main style="font-family:monospace;padding:2rem;max-width:42rem;">${html}</main></noscript>\n`;
-    const esc = (s: string) =>
-      String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-
-    // Reverb routes: resolve meta + crawlable JSON-LD server-side so crawlers
-    // get real content without executing JavaScript.
-    if (path === '/reverb' || path.startsWith('/reverb/')) {
-      try {
-        if (path === '/reverb') {
-          meta = { ...reverbMetaBase };
-          metaPrefix = 'reverb';
-          const { data: chars } = await supabase
-            .from('reverb_characters')
-            .select('id,name,role,discipline,overview,specialties,image_file')
-            .order('sort_order', { ascending: true });
-          const roster = chars ?? [];
-          extraHead += jsonLd({
-            '@context': 'https://schema.org',
-            '@graph': [
-              {
-                '@type': 'CreativeWorkSeries',
-                '@id': `${SITE}/reverb#franchise`,
-                name: 'Reverb',
-                alternateName: 'Reverb Collective',
-                url: `${SITE}/reverb`,
-                description: reverbMetaBase.description,
-                genre: ['Science Fiction', 'Cyberpunk', 'Multimedia'],
-                author: { '@type': 'Person', name: 'Romer Garcia', url: SITE },
-                character: roster.map((c: any) => ({
-                  '@type': 'Person',
-                  name: c.name,
-                  jobTitle: c.discipline || c.role,
-                  url: `${SITE}/reverb/${c.id}`,
-                })),
-              },
-              {
-                '@type': 'ItemList',
-                name: 'Reverb Collective members',
-                itemListElement: roster.map((c: any, i: number) => ({
-                  '@type': 'ListItem',
-                  position: i + 1,
-                  name: c.name,
-                  description: c.discipline || c.role,
-                  url: `${SITE}/reverb/${c.id}`,
-                })),
-              },
-            ],
-          });
-          bodyExtra = noscript(
-            `<h1>Reverb Collective</h1><p>${esc(reverbMetaBase.description)}</p><ul>` +
-            roster.map((c: any) =>
-              `<li><a href="${SITE}/reverb/${esc(c.id)}"><strong>${esc(c.name)}</strong></a> — ${esc(c.discipline || c.role)}. ${esc((c.overview || []).join(' '))}</li>`
-            ).join('') + `</ul>`
-          );
-        } else if (path === '/reverb/transmissions') {
-          meta = { ...transmissionsMetaBase };
-          const { data: rows } = await supabase
-            .from('reverb_transmissions')
-            .select('slug,title,subtitle,excerpt,category,published_at')
-            .eq('status', 'published')
-            .order('published_at', { ascending: false })
-            .limit(50);
-          const items = rows ?? [];
-          extraHead += jsonLd({
-            '@context': 'https://schema.org',
-            '@type': 'CollectionPage',
-            name: 'Reverb // Transmissions',
-            description: transmissionsMetaBase.description,
-            url: `${SITE}/reverb/transmissions`,
-            isPartOf: { '@type': 'WebSite', url: SITE, name: 'Romer Garcia' },
-            mainEntity: {
-              '@type': 'ItemList',
-              itemListElement: items.map((t: any, i: number) => ({
-                '@type': 'ListItem',
-                position: i + 1,
-                name: t.title,
-                url: `${SITE}/reverb/transmissions/${t.slug}`,
-              })),
-            },
-          });
-          bodyExtra = noscript(
-            `<h1>Reverb // Transmissions</h1><p>${esc(transmissionsMetaBase.description)}</p><ul>` +
-            items.map((t: any) =>
-              `<li><a href="${SITE}/reverb/transmissions/${esc(t.slug)}"><strong>${esc(t.title)}</strong></a>${t.subtitle ? ` — ${esc(t.subtitle)}` : ''}${t.excerpt ? `<p>${esc(t.excerpt)}</p>` : ''}</li>`
-            ).join('') + `</ul>`
-          );
-        } else if (path.startsWith('/reverb/transmissions/')) {
-          const slug = path.split('/').pop() || '';
-          const { data: t } = await supabase
-            .from('reverb_transmissions')
-            .select('slug,title,subtitle,excerpt,body,category,cover_image_url,published_at,transmission_number')
-            .eq('slug', slug)
-            .eq('status', 'published')
-            .maybeSingle();
-          if (t) {
-            const desc = t.excerpt || t.subtitle || reverbMetaBase.description;
-            meta = {
-              ...reverbMetaBase,
-              title: `${t.title} | Reverb // Transmissions`,
-              description: desc,
-              keywords: `Reverb, Paradoxxia, ${t.category}, ${t.title}, transmission`,
-              ogTitle: `${t.title} | Reverb // Transmissions`,
-              ogDescription: desc,
-              ogUrl: `${SITE}/reverb/transmissions/${t.slug}`,
-              twitterTitle: `${t.title} | Reverb // Transmissions`,
-              twitterDescription: desc,
-            };
-            extraHead += jsonLd({
-              '@context': 'https://schema.org',
-              '@type': 'Article',
-              headline: t.title,
-              alternativeHeadline: t.subtitle || undefined,
-              description: desc,
-              articleSection: t.category,
-              datePublished: t.published_at || undefined,
-              author: { '@type': 'Person', name: 'Romer Garcia', url: SITE },
-              isPartOf: { '@type': 'CreativeWorkSeries', name: 'Reverb', url: `${SITE}/reverb` },
-              mainEntityOfPage: `${SITE}/reverb/transmissions/${t.slug}`,
-            });
-            const plain = String(t.body || '').replace(/[#*_`>\[\]]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 1200);
-            bodyExtra = noscript(
-              `<h1>${esc(t.title)}</h1>${t.subtitle ? `<h2>${esc(t.subtitle)}</h2>` : ''}<p>${esc(desc)}</p><p>${esc(plain)}</p>`
-            );
-          } else {
-            meta = { ...transmissionsMetaBase, ogUrl: `${SITE}${path}` };
-          }
-        } else {
-          const id = path.split('/')[2] || '';
-          const { data: c } = await supabase
-            .from('reverb_characters')
-            .select('id,name,role,discipline,overview,specialties,identity,sign_off')
-            .eq('id', id)
-            .maybeSingle();
-          if (c) {
-            const desc = (c.overview || []).join(' ') || `${c.name} — ${c.discipline || c.role}, Reverb Collective.`;
-            meta = {
-              ...reverbMetaBase,
-              title: `${c.name} | Reverb Collective`,
-              description: desc.slice(0, 300),
-              keywords: `${c.name}, Reverb Collective, Paradoxxia, ${c.discipline || c.role}, ${(c.specialties || []).join(', ')}`,
-              ogTitle: `${c.name} | Reverb Collective`,
-              ogDescription: desc.slice(0, 200),
-              ogUrl: `${SITE}/reverb/${c.id}`,
-              twitterTitle: `${c.name} | Reverb Collective`,
-              twitterDescription: desc.slice(0, 200),
-            };
-            const realName = (c.identity || []).find((r: any) => String(r.label).toLowerCase() === 'real name')?.value;
-            extraHead += jsonLd({
-              '@context': 'https://schema.org',
-              '@graph': [
-                {
-                  '@type': 'ProfilePage',
-                  '@id': `${SITE}/reverb/${c.id}`,
-                  url: `${SITE}/reverb/${c.id}`,
-                  name: `${c.name} | Reverb Collective`,
-                  description: desc,
-                  mainEntity: { '@id': `${SITE}/reverb/${c.id}#person` },
-                  isPartOf: { '@type': 'WebSite', url: SITE, name: 'Romer Garcia' },
-                },
-                {
-                  '@type': 'Person',
-                  '@id': `${SITE}/reverb/${c.id}#person`,
-                  name: c.name,
-                  ...(realName && String(realName).toLowerCase() !== 'unknown' && realName !== c.name
-                    ? { alternateName: realName } : {}),
-                  jobTitle: c.discipline || c.role,
-                  description: desc,
-                  url: `${SITE}/reverb/${c.id}`,
-                  ...(c.specialties?.length ? { knowsAbout: c.specialties } : {}),
-                  memberOf: { '@type': 'Organization', name: 'Reverb Collective', url: `${SITE}/reverb` },
-                },
-                {
-                  '@type': 'BreadcrumbList',
-                  itemListElement: [
-                    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
-                    { '@type': 'ListItem', position: 2, name: 'Reverb', item: `${SITE}/reverb` },
-                    { '@type': 'ListItem', position: 3, name: c.name, item: `${SITE}/reverb/${c.id}` },
-                  ],
-                },
-              ],
-            });
-            bodyExtra = noscript(
-              `<h1>${esc(c.name)}</h1><p><strong>${esc(c.discipline || c.role)}</strong></p><p>${esc(desc)}</p>` +
-              (c.specialties?.length ? `<p>Specialties: ${esc(c.specialties.join(', '))}</p>` : '') +
-              `<p><a href="${SITE}/reverb">Reverb Collective</a></p>`
-            );
-          } else {
-            meta = { ...reverbMetaBase, ogUrl: `${SITE}${path}` };
-          }
-        }
-      } catch (e) {
-        console.error('Error building Reverb meta:', e);
-      }
-    }
-
     // Try to fetch dynamic meta from metadata table
-    if (metaPrefix) {
+    if (routeMeta[path]) {
       try {
-        const prefix = metaPrefix;
+        const prefix = path.replace(/^\//, '');
         const { data } = await supabase
           .from('metadata')
           .select('meta_key,meta_value')
@@ -418,11 +189,6 @@ Deno.serve(async (req) => {
       } catch (e) {
         console.error('Error fetching route meta:', e);
       }
-    }
-
-    // Reverb canonicals always live on romergarcia.com, regardless of table overrides
-    if (path === '/reverb' || path.startsWith('/reverb/')) {
-      meta.ogUrl = `${SITE}${path}`;
     }
 
     // Get the active meme for the homepage
@@ -501,7 +267,7 @@ Deno.serve(async (req) => {
       }
     }
 
-    const html = buildHTML(meta, memeComment, iconLinksFor(path), extraHead, bodyExtra);
+    const html = buildHTML(meta, memeComment, iconLinksFor(path));
 
     return new Response(html, {
       headers: { ...corsHeaders, 'Content-Type': 'text/html' },

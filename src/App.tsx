@@ -1,6 +1,4 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
@@ -10,7 +8,6 @@ import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import { RouteAnalytics } from "./components/GoogleAnalytics";
 import { applyTheme, getThemeOverride } from "./lib/theme";
-import NotFound from "./pages/NotFound";
 
 // Lazy-load heavy routes so initial paint is fast
 const Index = lazy(() => import("./pages/Index"));
@@ -21,6 +18,31 @@ const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
 const Story = lazy(() => import("./pages/Story"));
 const Reverb = lazy(() => import("./pages/Reverb"));
 const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Toasts are never needed for first paint — load them once the page is idle.
+const Toaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
+const Sonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
+
+const DeferredToasters = () => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const idle = (window as unknown as { requestIdleCallback?: (cb: () => void) => number }).requestIdleCallback;
+    if (idle) {
+      idle(() => setReady(true));
+    } else {
+      const t = window.setTimeout(() => setReady(true), 1500);
+      return () => window.clearTimeout(t);
+    }
+  }, []);
+  if (!ready) return null;
+  return (
+    <Suspense fallback={null}>
+      <Toaster />
+      <Sonner />
+    </Suspense>
+  );
+};
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -141,8 +163,7 @@ const App = () => {
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          <Toaster />
-          <Sonner />
+          <DeferredToasters />
           <BrowserRouter>
             <ThemeColor />
             <RouteAnalytics />

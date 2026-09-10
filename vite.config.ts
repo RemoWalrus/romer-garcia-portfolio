@@ -32,13 +32,16 @@ export default defineConfig(({ mode }) => ({
     // Split long-lived vendor code so app updates don't bust the whole cache
     rollupOptions: {
       output: {
-        manualChunks: {
-          // "react/jsx-runtime" must live with React: otherwise Rollup parks it in
-          // the motion chunk and every page ends up downloading Framer Motion.
-          react: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"],
-          motion: ["framer-motion"],
-          supabase: ["@supabase/supabase-js"],
-          query: ["@tanstack/react-query"],
+        manualChunks: (id: string) => {
+          // Vite's dynamic-import preload helper must sit with React, otherwise it
+          // lands in the Supabase chunk and drags it into the initial load.
+          if (id.includes("vite/preload-helper")) return "react";
+          if (/node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//.test(id))
+            return "react";
+          if (id.includes("node_modules/framer-motion")) return "motion";
+          if (id.includes("node_modules/@supabase")) return "supabase";
+          if (id.includes("node_modules/@tanstack/react-query")) return "query";
+          return undefined;
         },
       },
     },

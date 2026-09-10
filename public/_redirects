@@ -2,6 +2,10 @@
 # Proxy storage/image masking requests to Supabase Edge Functions
 /api/*  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat  200
 
+# Reverb routes — server-rendered meta + crawlable content via serve-index
+/reverb  /api/serve-index?path=/reverb  200!
+/reverb/*  /api/serve-index?path=/reverb/:splat  200!
+
 # Keep Lovable-hosted assets out of the SPA fallback
 /__l5e/*  /__l5e/:splat  200
 

@@ -143,12 +143,6 @@ const ReverbTransmission = () => {
               <h1 className="mt-1 max-w-[28ch] font-reverb text-3xl font-black italic uppercase leading-[0.92] tracking-normal text-reverb-wordmark md:text-4xl lg:text-5xl">
                 {t.title}
               </h1>
-
-              {t.subtitle && (
-                <p className="mt-1 max-w-[52ch] font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                  {t.subtitle}
-                </p>
-              )}
             </div>
 
             {t.publishedAt && (

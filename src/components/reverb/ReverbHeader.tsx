@@ -113,7 +113,9 @@ const ReverbHeader = ({
     >
       <div className="mx-auto flex w-full max-w-[1500px] items-center justify-between px-5 py-4 md:px-8">
         <Link to="/reverb" className="min-w-0 leading-none pr-4">
-          <ReverbWordmark />
+          <ReverbWordmark
+            style={accent ? { color: accent } : undefined}
+          />
           <span className="mt-1 block max-w-[13rem] font-roc text-[8px] uppercase tracking-[0.12em] text-muted-foreground md:max-w-none md:text-[9px] md:tracking-[0.2em]">
             People / Ideas / Music / Change
           </span>

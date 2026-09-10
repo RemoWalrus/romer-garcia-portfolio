@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "tmp_anon_upload_optimized_assets" ON storage.objects;

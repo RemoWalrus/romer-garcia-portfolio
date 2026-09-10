@@ -10,11 +10,11 @@ import { rosterSchema } from "@/lib/reverbSchema";
 import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
 
 
-const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
+const FALLBACK_TITLE = "Reverb | Multimedia Franchise";
 const FALLBACK_DESC =
-  "Reverb is a multimedia franchise set in the Paradoxxia universe — a prequel following five outsiders who turn sound into resistance.";
+  "Reverb is a multimedia franchise following five outsiders who turn sound into resistance.";
 const FALLBACK_SOCIAL_DESC =
-  "People / Ideas / Music / Change. Meet the crew of Reverb, a prequel chapter of the Paradoxxia universe.";
+  "People / Ideas / Music / Change. Meet the crew of Reverb."
 
 const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
@@ -82,11 +82,11 @@ const Reverb = () => {
     title: FALLBACK_TITLE,
     description: FALLBACK_DESC,
     keywords:
-      "Reverb, Reverb Collective, Paradoxxia universe, multimedia franchise, prequel, Romer Garcia",
-    ogTitle: "Reverb | Paradoxxia Universe",
+      "Reverb, Reverb Collective, multimedia franchise, Romer Garcia",
+    ogTitle: "Reverb | Multimedia Franchise",
     ogDescription: FALLBACK_SOCIAL_DESC,
     ogUrl: "https://romer-garcia-portfolio.lovable.app/reverb",
-    twitterTitle: "Reverb | Paradoxxia Universe",
+    twitterTitle: "Reverb | Multimedia Franchise",
     twitterDescription: FALLBACK_SOCIAL_DESC,
   });
 
@@ -118,7 +118,7 @@ const Reverb = () => {
 
       {/* Hero: diagonal character panels (columns on desktop, rows on mobile) */}
       <section className="dark relative h-[100svh] min-h-[560px] w-full pt-16 md:pt-20 bg-black text-white">
-        <h1 className="sr-only">Reverb — a multimedia franchise in the Paradoxxia universe</h1>
+        <h1 className="sr-only">Reverb — a multimedia franchise</h1>
 
         <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
           {characters.map((c, i) => {
@@ -268,30 +268,6 @@ const Reverb = () => {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Universe blurb */}
-      <section className="max-w-4xl mx-auto px-5 py-20 md:py-28 text-center">
-        <h2 className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-4xl md:text-6xl mb-6">The Universe</h2>
-        <p className="font-roc text-sm md:text-base leading-relaxed text-muted-foreground">
-          Long before an android woke up alone in the Cyber Boondocks, five outsiders were already
-          fighting the silence. Reverb is the prequel chapter of the Paradoxxia universe — a story
-          about people, ideas, music and change, told through sound, image and motion.
-        </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/paradoxxia"
-            className="reverb-button"
-          >
-            Enter Paradoxxia
-          </Link>
-          <Link
-            to="/story"
-            className="reverb-button"
-          >
-            Play the Story
-          </Link>
-        </div>
       </section>
 
       <JoinCollectiveSection />

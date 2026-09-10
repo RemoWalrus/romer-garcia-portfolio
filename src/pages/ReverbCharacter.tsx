@@ -22,8 +22,8 @@ const ReverbCharacter = () => {
   const role = character?.role ?? "";
   const meta = usePageMetaFromData(`reverb.${id?.toLowerCase() ?? ""}`, metadata, {
     title: `${name} | Reverb Collective Character Sheet`,
-    description: `${name} — ${role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`,
-    keywords: `${name}, Reverb Collective, Paradoxxia universe, character profile`,
+    description: `${name} — ${role}. Character profile from Reverb, a multimedia franchise.`,
+    keywords: `${name}, Reverb Collective, character profile`,
     ogTitle: `${name} | Reverb`,
     ogDescription: `${name} — ${role}.`,
     ogUrl: `https://romer-garcia-portfolio.lovable.app/reverb/${id?.toLowerCase() ?? ""}`,

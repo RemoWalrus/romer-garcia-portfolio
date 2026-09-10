@@ -40,7 +40,7 @@ export function characterSchema(c: ReverbCharacter) {
       "@type": "CreativeWork",
       name: "Reverb",
       description:
-        "Multimedia franchise set in the Paradoxxia universe, a prequel to Paradoxxia.",
+        "Multimedia franchise following five outsiders who turn sound into resistance.",
       url: reverbUrl(),
     },
   };
@@ -82,7 +82,7 @@ export function rosterSchema(characters: ReverbCharacter[]) {
         alternateName: "Reverb Collective",
         url: reverbUrl(),
         description:
-          "Reverb is a multimedia franchise set in the Paradoxxia universe — a prequel following five outsiders who turn sound into resistance.",
+          "Reverb is a multimedia franchise following five outsiders who turn sound into resistance.",
         genre: ["Science Fiction", "Cyberpunk", "Multimedia"],
         author: { "@type": "Person", name: "Romer Garcia", url: SITE },
         character: characters.map((c) => ({

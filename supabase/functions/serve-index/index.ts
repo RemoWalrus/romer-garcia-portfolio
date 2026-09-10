@@ -420,6 +420,11 @@ Deno.serve(async (req) => {
       }
     }
 
+    // Reverb canonicals always live on romergarcia.com, regardless of table overrides
+    if (path === '/reverb' || path.startsWith('/reverb/')) {
+      meta.ogUrl = `${SITE}${path}`;
+    }
+
     // Get the active meme for the homepage
     let memeComment = '';
     if (path === '/') {

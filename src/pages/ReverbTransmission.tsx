@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Download } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
@@ -75,6 +76,7 @@ const ReverbTransmission = () => {
   const canonical = `${SITE}/reverb/transmissions/${t.slug}`;
   const ogImage = t.coverImage?.startsWith("http") ? t.coverImage : undefined;
   const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(t.mediaUrl ?? "");
+  const hasCoverOverlay = Boolean(t.coverImage && !isVideo);
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -97,6 +99,38 @@ const ReverbTransmission = () => {
 
       <main className="mx-auto w-full max-w-[1500px] px-5 pt-24 pb-16 md:px-8 md:pt-28 md:pb-24">
         <article className={t.isAnomaly ? "reverb-anomaly" : undefined}>
+          {hasCoverOverlay && (
+            <div className="relative">
+              <img
+                src={t.coverImage}
+                alt={t.title}
+                loading="eager"
+                decoding="async"
+                className="w-full border border-border object-cover"
+              />
+              <a
+                href={t.coverImage}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Download ${t.title} image`}
+                onClick={() =>
+                  trackEvent("Reverb Transmissions", "transmission_image_download", t.slug)
+                }
+                className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center border border-border bg-background/70 text-foreground backdrop-blur-md transition-colors hover:bg-background/90"
+              >
+                <Download className="h-4 w-4" />
+              </a>
+            </div>
+          )}
+
+          <div
+            className={
+              hasCoverOverlay
+                ? "relative z-10 mt-6 md:-mt-[34%] md:mx-6 md:border md:border-border md:bg-background/80 md:p-8 md:backdrop-blur-md"
+                : undefined
+            }
+          >
           <p
             className="font-roc text-[10px] uppercase tracking-[0.3em]"
             style={{ color: accent }}
@@ -130,16 +164,6 @@ const ReverbTransmission = () => {
             )}
             {t.publishedAt && <> // {formatTransmissionDate(t.publishedAt, t.isAnomaly)}</>}
           </p>
-
-          {t.coverImage && !isVideo && (
-            <img
-              src={t.coverImage}
-              alt={t.title}
-              loading="eager"
-              decoding="async"
-              className="mt-8 w-full border border-border object-cover"
-            />
-          )}
 
           {t.mediaUrl && isVideo && (
             <video
@@ -180,6 +204,7 @@ const ReverbTransmission = () => {
               {t.ctaLabel ?? "Open link →"}
             </a>
           )}
+          </div>
         </article>
 
         <div className="mt-14 flex flex-wrap gap-3 border-t border-border pt-8">

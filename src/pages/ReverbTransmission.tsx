@@ -76,6 +76,7 @@ const ReverbTransmission = () => {
   const canonical = `${SITE}/reverb/transmissions/${t.slug}`;
   const ogImage = t.coverImage?.startsWith("http") ? t.coverImage : undefined;
   const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(t.mediaUrl ?? "");
+  const hasCoverOverlay = Boolean(t.coverImage && !isVideo);
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
@@ -203,6 +204,7 @@ const ReverbTransmission = () => {
               {t.ctaLabel ?? "Open link →"}
             </a>
           )}
+          </div>
         </article>
 
         <div className="mt-14 flex flex-wrap gap-3 border-t border-border pt-8">

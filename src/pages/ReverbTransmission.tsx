@@ -145,7 +145,7 @@ const ReverbTransmission = () => {
               </h1>
 
               {t.subtitle && (
-                <p className="mt-1 max-w-[45ch] text-sm font-normal leading-tight text-muted-foreground md:text-base">
+                <p className="mt-1 max-w-[52ch] font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
                   {t.subtitle}
                 </p>
               )}

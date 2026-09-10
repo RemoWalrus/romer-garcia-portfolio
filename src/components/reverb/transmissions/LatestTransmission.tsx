@@ -16,6 +16,8 @@ const LatestTransmission = () => {
 
   if (loading) return null;
 
+  const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(t?.mediaUrl ?? "");
+
   return (
     <section
       aria-labelledby="reverb-latest-transmission"
@@ -43,7 +45,19 @@ const LatestTransmission = () => {
             }`}
           >
             <div className="relative min-h-[220px] overflow-hidden bg-foreground/[0.06] md:min-h-[340px]">
-              {t.coverImage ? (
+              {isVideo && t.mediaUrl ? (
+                <video
+                  src={t.mediaUrl}
+                  poster={t.coverImage}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={`${t.title} video preview`}
+                  className="absolute inset-0 h-full w-full object-cover grayscale-[0.35] transition-all duration-700 hover:grayscale-0"
+                />
+              ) : t.coverImage ? (
                 <img
                   src={t.coverImage}
                   alt={t.title}

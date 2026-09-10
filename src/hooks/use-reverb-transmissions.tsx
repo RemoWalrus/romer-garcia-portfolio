@@ -26,6 +26,7 @@ export type TransmissionPreview = {
   publishedAt?: string;
   coverImage?: string;
   thumbnail?: string;
+  mediaUrl?: string;
   featured: boolean;
   isAnomaly: boolean;
   isCollectiveOnly: boolean;
@@ -52,9 +53,9 @@ export type ArchiveSlot = {
 
 /** Columns needed for cards — deliberately excludes the long-form `body`. */
 const PREVIEW_COLUMNS =
-  "id,slug,transmission_number,title,subtitle,excerpt,character_slug,category,published_at,cover_image_url,thumbnail_url,featured,is_anomaly,is_collective_only,sort_order";
+  "id,slug,transmission_number,title,subtitle,excerpt,character_slug,category,published_at,cover_image_url,thumbnail_url,media_url,featured,is_anomaly,is_collective_only,sort_order";
 
-const DETAIL_COLUMNS = `${PREVIEW_COLUMNS},body,media_url,external_url,cta_label,cta_url`;
+const DETAIL_COLUMNS = `${PREVIEW_COLUMNS},body,external_url,cta_label,cta_url`;
 
 /**
  * Media may be stored either as a full Supabase URL or as a path inside the
@@ -80,6 +81,7 @@ const mapPreview = (row: any): TransmissionPreview => ({
   publishedAt: row.published_at ?? undefined,
   coverImage: transmissionMedia(row.cover_image_url),
   thumbnail: transmissionMedia(row.thumbnail_url ?? row.cover_image_url),
+  mediaUrl: transmissionMedia(row.media_url),
   featured: !!row.featured,
   isAnomaly: !!row.is_anomaly,
   isCollectiveOnly: !!row.is_collective_only,

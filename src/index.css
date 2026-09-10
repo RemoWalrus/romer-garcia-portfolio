@@ -137,7 +137,7 @@
   }
 
   .reverb-section-title {
-    @apply font-reverb text-5xl font-black italic uppercase leading-[0.88] text-reverb-wordmark sm:text-6xl md:text-8xl;
+    @apply font-reverb text-4xl font-black italic uppercase leading-[0.62] text-reverb-wordmark sm:text-5xl md:text-6xl;
   }
 
   .reverb-character-button {

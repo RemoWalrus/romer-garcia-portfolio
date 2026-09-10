@@ -296,14 +296,14 @@ const Reverb = () => {
         <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.16] dark:to-background/[0.22]" />
 
-        <div className="mx-auto flex min-h-[320px] w-full max-w-[1500px] items-center px-5 py-12 md:min-h-[380px] md:px-8 md:py-16">
+        <div className="mx-auto flex min-h-[320px] w-full max-w-[1500px] items-center px-5 py-10 md:min-h-[380px] md:px-8 md:py-14">
           <div className="max-w-3xl">
-            <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-reverb-wordmark">
+            <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
               {metaValue(metadata, "reverb.logbook.label", "Reverb // Logbook")}
             </p>
             <h2
               id="reverb-frequency-title"
-              className="reverb-section-title mt-5 max-w-4xl"
+              className="reverb-section-title mt-2 max-w-4xl"
             >
               {metaValue(metadata, "reverb.logbook.title_line1", "Different Steps.")}
               <br className="hidden md:block" />{" "}

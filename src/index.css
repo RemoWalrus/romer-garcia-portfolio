@@ -171,7 +171,39 @@
   .dark .reverb-character-cta:hover {
     color: hsl(var(--background));
   }
+
+  /*
+   * Anomalies (is_anomaly = true): something is quietly wrong with the record.
+   * Restrained on purpose — a slow drift on the metadata line and a slightly
+   * off record label. No flashing, no glitch clichés.
+   */
+  .reverb-anomaly p:first-of-type {
+    animation: reverb-anomaly-drift 9s ease-in-out infinite;
+    letter-spacing: 0.3em;
+  }
+
+  .reverb-anomaly h1,
+  .reverb-anomaly h3 {
+    text-shadow: 0.6px 0 0 hsl(var(--reverb-wordmark) / 0.28);
+  }
 }
+
+@keyframes reverb-anomaly-drift {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.68;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reverb-anomaly p:first-of-type {
+    animation: none;
+  }
+}
+
 
 .glass-card {
   @apply backdrop-blur-lg bg-white/5 border border-white/10;

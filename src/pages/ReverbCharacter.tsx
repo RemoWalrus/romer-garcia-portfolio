@@ -10,6 +10,7 @@ import ReverbHeader, { ReverbWordmark } from "@/components/reverb/ReverbHeader";
 import { useReverbUnlocked } from "@/lib/reverbLock";
 import { characterSchema } from "@/lib/reverbSchema";
 import CharacterGallery from "@/components/reverb/CharacterGallery";
+import CharacterTransmissions from "@/components/reverb/transmissions/CharacterTransmissions";
 
 const ReverbCharacter = () => {
   const { id } = useParams<{ id: string }>();
@@ -345,6 +346,18 @@ const ReverbCharacter = () => {
                         />
                       )}
                     </section>
+
+                    {/* Transmissions — published archive entries for this character */}
+                    {!isLocked && (
+                      <section className="md:col-span-2">
+                        <CharacterTransmissions
+                          characterSlug={character.baseId ?? character.id}
+                          characterName={character.name}
+                          accent={accent}
+                        />
+                      </section>
+                    )}
+
 
                     {character.id === "spark" && (
                       <section className="md:col-span-2">

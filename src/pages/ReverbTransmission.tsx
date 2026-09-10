@@ -130,7 +130,7 @@ const ReverbTransmission = () => {
             {t.publishedAt && <> // {formatTransmissionDate(t.publishedAt, t.isAnomaly)}</>}
           </p>
 
-          {t.coverImage && (
+          {t.coverImage && !isVideo && (
             <img
               src={t.coverImage}
               alt={t.title}
@@ -140,7 +140,19 @@ const ReverbTransmission = () => {
             />
           )}
 
-          {t.mediaUrl && (
+          {t.mediaUrl && isVideo && (
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster={t.coverImage}
+              src={t.mediaUrl}
+              className="mt-8 w-full border border-border bg-black"
+              aria-label={`${t.title} video`}
+            />
+          )}
+
+          {t.mediaUrl && !isVideo && (
             <audio
               controls
               preload="none"

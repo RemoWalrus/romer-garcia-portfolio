@@ -216,17 +216,17 @@ const Reverb = () => {
                     <span className="block h-8 max-w-[20ch] overflow-hidden font-roc text-[10px] xl:text-[11px] leading-4 tracking-[0.16em] uppercase text-white/75 mt-2">
                       {c.role}
                     </span>
-                    {(!isMobile || isActive) && (
-                      <p className="mt-2 max-w-[28ch] font-roc text-[10px] leading-[1.45] tracking-[0.08em] uppercase text-white/75 md:min-h-[4.35em] md:max-w-[22ch] xl:text-[11px]">
-                        {c.caption}
-                      </p>
-                    )}
                     <span
                       className={`${isActive ? "inline-block" : "invisible xl:inline-block"} reverb-button reverb-character-button mt-4`}
                       style={{ "--character-accent": c.accent } as React.CSSProperties}
                     >
                       View Profile
                     </span>
+                    {(!isMobile || isActive) && (
+                      <p className="mt-3 max-w-[28ch] font-roc text-[10px] leading-[1.45] tracking-[0.08em] uppercase text-white/75 md:min-h-[4.35em] md:max-w-[22ch] xl:text-[11px]">
+                        {c.caption}
+                      </p>
+                    )}
                   </div>
                 )}
               </Link>

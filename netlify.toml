@@ -31,6 +31,19 @@
   status = 200
   force = true
 
+# Reverb routes — server-rendered meta + crawlable content via serve-index
+[[redirects]]
+  from = "/reverb"
+  to = "/api/serve-index?path=/reverb"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/reverb/*"
+  to = "/api/serve-index?path=/reverb/:splat"
+  status = 200
+  force = true
+
 # Keep Lovable-hosted assets out of the SPA fallback
 [[redirects]]
   from = "/__l5e/*"

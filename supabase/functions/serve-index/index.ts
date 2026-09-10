@@ -46,6 +46,33 @@ const routeMeta: Record<string, {
   },
 };
 
+const SITE = 'https://romergarcia.com';
+const REVERB_OG = 'https://romergarcia.com/paradoxxia-og.jpg';
+
+const reverbMetaBase = {
+  title: 'Reverb Collective | Paradoxxia Universe Prequel',
+  description: 'Reverb is a multimedia franchise set in the Paradoxxia universe — a prequel following five outsiders who turn sound into resistance. Meet the Collective: Reverb, Spark, Harmonix, Eduq, and Wida.',
+  keywords: 'Reverb Collective, Paradoxxia, Reverb, Spark, Harmonix, Eduq, Wida, cyberpunk multimedia franchise, sci-fi characters, Romer Garcia',
+  ogTitle: 'Reverb Collective | Paradoxxia Universe Prequel',
+  ogDescription: 'A multimedia franchise set in the Paradoxxia universe — five outsiders who turn sound into resistance.',
+  ogUrl: `${SITE}/reverb`,
+  ogImage: REVERB_OG,
+  twitterTitle: 'Reverb Collective | Paradoxxia Universe Prequel',
+  twitterDescription: 'A multimedia franchise set in the Paradoxxia universe — five outsiders who turn sound into resistance.',
+  twitterImage: REVERB_OG,
+};
+
+const transmissionsMetaBase = {
+  ...reverbMetaBase,
+  title: 'Reverb // Transmissions | Archive from the Paradoxxia Universe',
+  description: 'Transmissions from the Reverb universe — new artwork, character lore, recovered files, short stories, and archive fragments from the Collective.',
+  ogTitle: 'Reverb // Transmissions',
+  ogDescription: 'New artwork, lore, and recovered files entering the Reverb universe.',
+  ogUrl: `${SITE}/reverb/transmissions`,
+  twitterTitle: 'Reverb // Transmissions',
+  twitterDescription: 'New artwork, lore, and recovered files entering the Reverb universe.',
+};
+
 const defaultMeta = {
   title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
   description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',

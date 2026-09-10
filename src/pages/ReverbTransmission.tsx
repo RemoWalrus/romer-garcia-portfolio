@@ -74,6 +74,7 @@ const ReverbTransmission = () => {
     t.excerpt ?? `Transmission ${formatTransmissionNumber(t.number)} from the Reverb archive.`;
   const canonical = `${SITE}/reverb/transmissions/${t.slug}`;
   const ogImage = t.coverImage?.startsWith("http") ? t.coverImage : undefined;
+  const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(t.mediaUrl ?? "");
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">

@@ -90,7 +90,7 @@ const ReverbCharacter = () => {
 
 
   return (
-    <div className="min-h-screen lg:h-[100dvh] lg:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
+    <div className="min-h-screen xl:h-[100dvh] xl:overflow-hidden flex flex-col bg-background text-foreground overflow-x-hidden transition-colors">
       <Helmet>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
@@ -192,7 +192,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute -right-[14%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[-14%] md:w-[58%] md:h-[100%] lg:right-[-30%] lg:top-0 lg:bottom-auto lg:h-full lg:w-[40%] lg:items-start min-[1100px]:right-[-28%] min-[1100px]:w-[60%] min-[1100px]:h-[104%] xl:right-[-56%] xl:top-[-2.5%] xl:h-[105.5%] xl:w-[110%]">
+                <div className="absolute -right-[14%] top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-[-14%] md:w-[58%] md:h-[100%] xl:right-[-56%] xl:top-[-2.5%] xl:bottom-auto xl:h-[105.5%] xl:w-[110%] xl:items-start">
                   <div className="relative h-full">
                     <img
                       src={character.figure ?? character.image}
@@ -200,7 +200,7 @@ const ReverbCharacter = () => {
                       loading="eager"
                       {...{ fetchpriority: "high" }}
                       decoding="async"
-                      className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                      className="h-full w-auto max-w-none object-contain object-right md:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                       style={
                         locked
                           ? { filter: "grayscale(100%) brightness(0.5) contrast(1.15) blur(4px)", opacity: 1 }
@@ -220,7 +220,7 @@ const ReverbCharacter = () => {
 
               {/* RIGHT: light data panels */}
               <div
-                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 lg:overflow-y-auto lg:pl-[18%] lg:pr-7 lg:py-6 lg:[clip-path:polygon(8%_0%,100%_0%,100%_100%,0%_100%)] xl:pl-[24%] xl:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
+                className="relative z-10 h-full overflow-hidden bg-[#ececef] p-5 text-[#111] [clip-path:none] md:p-6 xl:overflow-y-auto xl:pl-[24%] xl:pr-7 xl:py-6 xl:[clip-path:polygon(11%_0%,100%_0%,100%_100%,0%_100%)]"
               >
 
                 {character.hasProfile ? (

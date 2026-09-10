@@ -16,6 +16,8 @@ const LatestTransmission = () => {
 
   if (loading) return null;
 
+  const isVideo = /\.(mp4|webm|mov)(\?|$)/i.test(t?.mediaUrl ?? "");
+
   return (
     <section
       aria-labelledby="reverb-latest-transmission"

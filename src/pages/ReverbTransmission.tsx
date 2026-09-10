@@ -97,7 +97,7 @@ const ReverbTransmission = () => {
 
       <ReverbHeader sticky accentColor={character?.accent} />
 
-      <main className="mx-auto w-full max-w-[1500px] px-5 pt-24 pb-16 md:px-8 md:pt-28 md:pb-24">
+      <main className="mx-auto w-full max-w-[1500px] px-5 pt-20 pb-16 md:px-8 md:pt-24 md:pb-24">
         <article className={t.isAnomaly ? "reverb-anomaly" : undefined}>
           {hasCoverOverlay && (
             <div className="relative">
@@ -127,7 +127,7 @@ const ReverbTransmission = () => {
           <div
             className={
               hasCoverOverlay
-                ? "relative z-10 mt-6 md:-mt-[34%] md:mx-6 md:border md:border-border md:bg-background/80 md:p-8 md:backdrop-blur-md"
+                ? "relative z-10 mt-4 md:-mt-[38%] md:mx-6 md:border md:border-border md:bg-background/80 md:p-5 md:backdrop-blur-md"
                 : undefined
             }
           >
@@ -138,17 +138,17 @@ const ReverbTransmission = () => {
             Transmission // {number}
           </p>
 
-          <h1 className="mt-4 max-w-[26ch] font-reverb text-4xl font-black italic uppercase leading-[0.9] tracking-normal text-reverb-wordmark md:text-6xl">
+          <h1 className="mt-2 max-w-[28ch] font-reverb text-3xl font-black italic uppercase leading-[0.92] tracking-normal text-reverb-wordmark md:text-4xl lg:text-5xl">
             {t.title}
           </h1>
 
           {t.subtitle && (
-            <p className="mt-3 max-w-[52ch] font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+            <p className="mt-1.5 max-w-[52ch] font-roc text-[11px] uppercase tracking-[0.2em] text-muted-foreground md:mt-2">
               {t.subtitle}
             </p>
           )}
 
-          <p className="mt-6 border-y border-border py-3 font-roc text-[9px] uppercase tracking-[0.28em] text-muted-foreground">
+          <p className="mt-4 border-y border-border py-2.5 font-roc text-[9px] uppercase tracking-[0.28em] text-muted-foreground md:mt-5">
             {t.category}
             {character && (
               <>

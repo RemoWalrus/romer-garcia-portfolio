@@ -163,7 +163,7 @@ export const JoinCollectiveSection = () => {
 
   return (
   <section id="join" className="border-t border-border bg-background transition-colors">
-    <div className="mx-auto w-full max-w-[1500px] px-5 py-14 md:px-8 md:py-20">
+    <div className="mx-auto w-full max-w-[1500px] px-5 py-12 md:px-8 md:py-16">
       <div className="max-w-3xl text-left">
         <h2 className="reverb-section-title">
           Join the Collective

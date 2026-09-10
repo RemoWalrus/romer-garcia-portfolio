@@ -139,12 +139,12 @@ const ReverbCharacter = () => {
               background: `linear-gradient(115deg, #07070a 0%, #0b0b12 34%, ${glow} 120%)`,
             }}
           >
-            <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.5fr)] xl:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full lg:min-h-[520px]">
+            <div className="relative grid grid-cols-1 xl:grid-cols-[minmax(0,0.64fr)_minmax(0,1.5fr)] h-full xl:min-h-[520px]">
               {/* LEFT: identity + figure */}
-              <div className="relative z-40 h-[70svh] min-h-[340px] overflow-visible px-5 pt-7 pb-0 md:px-8 lg:h-full lg:min-h-0 lg:pt-8">
+              <div className="relative z-40 h-[70svh] min-h-[340px] overflow-visible px-5 pt-7 pb-0 md:px-8 xl:h-full xl:min-h-0 xl:pt-8">
 
                 <h1
-                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] lg:z-50 lg:max-w-none lg:text-[clamp(2.1rem,3.2vw,3rem)] xl:z-30 xl:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
+                  className="relative z-30 max-w-[42%] font-reverb italic uppercase leading-[0.82] text-[clamp(1.75rem,9vw,4rem)] sm:text-[clamp(2rem,7vw,4.5rem)] md:text-[clamp(2rem,5.5vw,3.5rem)] xl:z-30 xl:max-w-none xl:text-[clamp(2.25rem,3.6vw,3.375rem)] tracking-[-0.02em]"
                   style={{ color: accent, textShadow: `0 0 45px ${glow}` }}
                 >
                   {character.name}

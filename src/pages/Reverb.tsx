@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
 import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
+import LatestTransmission from "@/components/reverb/transmissions/LatestTransmission";
 import frequencyCity from "@/assets/reverb-frequency-city.webp";
 
 
@@ -302,6 +303,8 @@ const Reverb = () => {
           </div>
         </div>
       </section>
+
+      <LatestTransmission />
 
       <JoinCollectiveSection />
 

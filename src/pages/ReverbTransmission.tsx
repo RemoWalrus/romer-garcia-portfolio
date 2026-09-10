@@ -21,6 +21,7 @@ const ReverbTransmission = () => {
   const characters = useReverbCharacters();
   const character = characters.find((c) => c.id === t?.characterSlug);
   const accent = character?.accent ?? "hsl(var(--reverb-wordmark))";
+  const coverPosition = useSmartCrop(t?.coverImage);
 
   useEffect(() => {
     if (!t) return;

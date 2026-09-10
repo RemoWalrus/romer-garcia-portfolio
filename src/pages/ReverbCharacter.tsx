@@ -154,7 +154,10 @@ const ReverbCharacter = () => {
                 <div className="relative z-50 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
                 <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[11px] tracking-[0.18em] md:tracking-[0.24em] uppercase text-white/85 leading-[1.8]">
-                  <ReverbWordmark className="text-[inherit] text-white/85" />
+                  <ReverbWordmark
+                    className="text-[inherit]"
+                    style={{ color: accent }}
+                  />
                   <br />
                   Collective
                   <br />
@@ -176,7 +179,10 @@ const ReverbCharacter = () => {
 
                 {/* Reverb mark + word list */}
                 <div className="mt-6 relative z-50 max-w-[42%] lg:mt-8 lg:max-w-none">
-                  <ReverbWordmark className="text-xl md:text-xl lg:text-2xl" />
+                  <ReverbWordmark
+                    className="text-xl md:text-xl lg:text-2xl"
+                    style={{ color: accent }}
+                  />
                   <div className="mt-3 h-px w-8" style={{ backgroundColor: accent }} />
                   <p className="mt-3 font-roc text-[10px] tracking-[0.34em] uppercase text-white/55 leading-[2]">
                     Arts

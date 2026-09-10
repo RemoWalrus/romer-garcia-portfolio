@@ -100,12 +100,14 @@ export const ReverbWordmark = ({
 
 const ReverbHeader = ({
   sticky = false,
+  accentColor,
 }: {
   sticky?: boolean;
+  accentColor?: string;
 }) => {
   const { id } = useParams<{ id: string }>();
   const character = id ? getCharacter(id) : undefined;
-  const accent = character?.accent;
+  const accent = accentColor ?? character?.accent;
 
   return (
     <header

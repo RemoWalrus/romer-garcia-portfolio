@@ -12,25 +12,6 @@
   status = 200
   force = true
 
-# Route-specific SSR for social meta tags — 301 redirect so crawlers follow to serve-index
-[[redirects]]
-  from = "/paradoxxia"
-  to = "/api/serve-index?path=/paradoxxia"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/char-gen"
-  to = "/api/serve-index?path=/char-gen"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/meme"
-  to = "/api/serve-index?path=/meme"
-  status = 200
-  force = true
-
 # Keep Lovable-hosted assets out of the SPA fallback
 [[redirects]]
   from = "/__l5e/*"

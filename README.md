@@ -54,12 +54,19 @@ A single-page portfolio with fixed hero and scrollable content sections:
 
 ## Performance
 
-- Route-level code splitting: every secondary page is `React.lazy` loaded in `src/App.tsx`.
-- Vendor chunk splitting (`build.rollupOptions.output.manualChunks` in `vite.config.ts`): React/router, Framer Motion, Supabase and React Query ship as separate long-lived cacheable chunks, so the app entry chunk dropped from ~645 kB to ~226 kB.
+- Route-level code splitting: every page (including `NotFound`) is `React.lazy` loaded in `src/App.tsx`.
+- Vendor chunk splitting (`build.rollupOptions.output.manualChunks` in `vite.config.ts`, now a function): React/router, Framer Motion, Supabase and React Query ship as separate long-lived cacheable chunks, so the app entry chunk dropped from ~645 kB to ~93 kB.
+- **`react/jsx-runtime` is pinned to the `react` chunk.** Without it Rollup parked the JSX runtime inside the `motion` chunk, so *every* route — even ones with no animation — downloaded Framer Motion (~41 kB gzip) before first paint.
+- **Vite's `vite/preload-helper` is pinned to the `react` chunk** as well; it previously landed in the `supabase` chunk and dragged the whole Supabase SDK into the initial load.
+- The Supabase client and data helpers (`src/integrations/supabase/*`, proxy/data utils) are assigned to the `supabase` chunk so shared code doesn't get hoisted into the entry chunk.
+- `useAnalytics` (`src/hooks/use-analytics.ts`) dynamically imports the Supabase proxy helper and only fetches the GA id on `requestIdleCallback` (1.2 s timeout fallback), so analytics never blocks rendering.
+- Toast providers (`Toaster`, `Sonner`) are lazy-loaded and mounted on idle via `DeferredToasters` in `src/App.tsx`.
+- The Reverb gallery lightbox (`CharacterGallery`) lazy-loads the Radix dialog (~9 kB gzip) only after a thumbnail is clicked.
+- Net effect: initial JS for a cold visit went from ~152 kB gzip (react + motion + supabase + entry) to ~94 kB gzip (react + query + entry).
 - Bundled backgrounds are WebP: `paradoxxia-bg` 1.39 MB → 27 kB, `paradoxxia-carousel-placeholder` 1.81 MB → 124 kB. The unused `circuit-background.png` (1.37 MB) and leftover `*.asset.json` manifests were removed.
 - Google Fonts (Kanit/Caveat, Reverb display only) load non-blocking via `media="print" onload="this.media='all'"` with a `<noscript>` fallback; Typekit stays blocking as the primary UI typeface.
 - Reverb imagery was converted from PNG (~18 MB total) to WebP (~1.1 MB) and thumbnails are served at 320px.
-- Above-the-fold images use `loading="eager"` + `fetchPriority="high"`; the character figure is additionally preloaded via `<link rel="preload" as="image">`.
+- Above-the-fold images use `loading="eager"` plus the lowercase `fetchpriority="high"` attribute (React 18 drops the camelCase form, so the hint was previously never applied to the hero LCP image); the character figure is additionally preloaded via `<link rel="preload" as="image">`.
 - Off-screen imagery uses `loading="lazy"` with `decoding="async"` and explicit dimensions to avoid layout shift.
 - `preconnect` hints for Supabase, Typekit, Google Fonts and GTM live in `index.html`.
 - Heavy animation work is decoupled from React renders via `requestAnimationFrame`, with a Lite Mode fallback on low-end devices.

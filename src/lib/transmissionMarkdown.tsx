@@ -216,3 +216,11 @@ export const TransmissionBody = ({
     <div className="font-roc text-[14px] md:text-[15px]">{blocks}</div>
   );
 };
+
+const headingPlainText = (text: string) =>
+  text
+    .replace(/!\[[^\]]*\]\([^)\s]+\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)\s]+\)/g, "$1")
+    .replace(/[*_`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();

@@ -23,3 +23,5 @@
 - [x] Add unlockable 20-year-old Spark profile (hidden link on Spark page, optimized Supabase image)
 - [x] iPad portrait (md, ~834-1023px): shift character figure further right
 - [x] Homepage load: webp hero images, lite looping video, non-blocking Typekit
+
+- [x] Hide the Reverb Universe reveal and move character blurbs into responsive character panels

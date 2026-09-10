@@ -216,6 +216,11 @@ const Reverb = () => {
                     <span className="block h-8 max-w-[20ch] overflow-hidden font-roc text-[10px] xl:text-[11px] leading-4 tracking-[0.16em] uppercase text-white/75 mt-2">
                       {c.role}
                     </span>
+                    {(!isMobile || isActive) && (
+                      <p className="mt-2 max-w-[28ch] font-roc text-[10px] leading-[1.45] tracking-[0.08em] uppercase text-white/75 md:min-h-[4.35em] md:max-w-[22ch] xl:text-[11px]">
+                        {c.caption}
+                      </p>
+                    )}
                     <span
                       className={`${isActive ? "inline-block" : "invisible xl:inline-block"} reverb-button reverb-character-button mt-4`}
                       style={{ "--character-accent": c.accent } as React.CSSProperties}
@@ -232,20 +237,6 @@ const Reverb = () => {
         <div className="hidden xl:block absolute right-4 top-1/3 text-right font-roc text-[10px] tracking-[0.3em] uppercase text-white/50 leading-loose z-20">
           People<br />Music<br />Places<br />Ideas<br />
           <span className="text-white">Together</span>
-        </div>
-      </section>
-
-      {/* Captions strip */}
-      <section className="border-t border-border bg-background transition-colors">
-        <div className="grid grid-cols-2 md:grid-cols-5">
-          {characters.map((c) => (
-            <p
-              key={c.id}
-              className="font-roc text-[10px] md:text-[11px] uppercase tracking-[0.12em] text-muted-foreground leading-relaxed p-4 border-r border-b border-border"
-            >
-              {c.caption}
-            </p>
-          ))}
         </div>
       </section>
 
@@ -268,30 +259,6 @@ const Reverb = () => {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Universe blurb */}
-      <section className="max-w-4xl mx-auto px-5 py-20 md:py-28 text-center">
-        <h2 className="font-roc font-extrabold italic uppercase text-reverb-wordmark text-4xl md:text-6xl mb-6">The Universe</h2>
-        <p className="font-roc text-sm md:text-base leading-relaxed text-muted-foreground">
-          Long before an android woke up alone in the Cyber Boondocks, five outsiders were already
-          fighting the silence. Reverb is the prequel chapter of the Paradoxxia universe — a story
-          about people, ideas, music and change, told through sound, image and motion.
-        </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/paradoxxia"
-            className="reverb-button"
-          >
-            Enter Paradoxxia
-          </Link>
-          <Link
-            to="/story"
-            className="reverb-button"
-          >
-            Play the Story
-          </Link>
-        </div>
       </section>
 
       <JoinCollectiveSection />

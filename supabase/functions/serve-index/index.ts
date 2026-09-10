@@ -250,7 +250,6 @@ Deno.serve(async (req) => {
           );
         } else if (path === '/reverb/transmissions') {
           meta = { ...transmissionsMetaBase };
-          metaPrefix = 'reverb';
           const { data: rows } = await supabase
             .from('reverb_transmissions')
             .select('slug,title,subtitle,excerpt,category,published_at')

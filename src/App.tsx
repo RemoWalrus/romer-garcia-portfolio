@@ -8,6 +8,7 @@ import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import { RouteAnalytics } from "./components/GoogleAnalytics";
 import { applyTheme, getThemeOverride } from "./lib/theme";
+import ReverbTransmission from "./pages/ReverbTransmission";
 
 // Lazy-load heavy routes so initial paint is fast
 const Index = lazy(() => import("./pages/Index"));
@@ -19,7 +20,6 @@ const Story = lazy(() => import("./pages/Story"));
 const Reverb = lazy(() => import("./pages/Reverb"));
 const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
 const ReverbTransmissions = lazy(() => import("./pages/ReverbTransmissions"));
-const ReverbTransmission = lazy(() => import("./pages/ReverbTransmission"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Toasts are never needed for first paint — load them once the page is idle.

@@ -192,7 +192,7 @@ const ReverbCharacter = () => {
                 </div>
 
                 {/* Figure — tall, shifted right so it overlaps the data sheet */}
-                <div className="absolute right-0 top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none md:right-0 md:w-[58%] md:h-[100%] lg:right-[-40%] lg:top-[-2.5%] lg:bottom-auto lg:h-[92%] lg:w-[92%] lg:items-start xl:right-[-56%] xl:h-[105.5%] xl:w-[110%]">
+                <div className="absolute right-0 top-0 z-40 flex h-[105%] w-[82%] items-start justify-end pointer-events-none sm:right-[-2%] sm:top-[-8%] sm:h-[118%] sm:w-[92%] md:right-0 md:w-[65%] md:h-[108%] md:top-[-6%] lg:right-[-40%] lg:top-[-2.5%] lg:bottom-auto lg:h-[92%] lg:w-[92%] lg:items-start xl:right-[-56%] xl:h-[105.5%] xl:w-[110%]">
                   <div className="relative h-full">
                     <img
                       src={character.figure ?? character.image}
@@ -200,7 +200,7 @@ const ReverbCharacter = () => {
                       loading="eager"
                       {...{ fetchpriority: "high" }}
                       decoding="async"
-                      className="h-full w-auto max-w-none object-contain object-right md:object-right-top lg:max-w-[36vw] lg:object-right-bottom xl:max-w-none xl:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
+                      className="h-full w-auto max-w-none object-contain object-right sm:object-right-top md:object-right-top lg:max-w-[36vw] lg:object-right-bottom xl:max-w-none xl:object-right-top drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
                       style={
                         locked
                           ? { filter: "grayscale(100%) brightness(0.5) contrast(1.15) blur(4px)", opacity: 1 }

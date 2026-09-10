@@ -272,10 +272,9 @@ export const CHARACTERS: ReverbCharacter[] = [
     tagline: ["Different times.", "Same people."],
     discipline: "Time Traveler // Connector",
     identity: [
-      { label: "Real Name", value: "Wida" },
+      { label: "Real Name", value: "Withaya “Wida”" },
       { label: "Age", value: "19" },
-      { label: "Origin", value: "Alternative Timeline" },
-      { label: "Timeline", value: "Alternate" },
+      { label: "Origin", value: "Bangkok, Thailand" },
       { label: "Role", value: "Temporal Traveler / Connector" },
       { label: "Affiliation", value: "Reverb Collective" },
     ],
@@ -303,8 +302,8 @@ export const CHARACTERS: ReverbCharacter[] = [
       "Ragdoll Charm",
     ],
     overview: [
-      "Wida is from a different time, from a place that doesn’t exist in this timeline.",
-      "An accidental temporal displacement pulls nineteen-year-old Wida from an earlier period of a completely different timeline and deposits her in Reverb's world.",
+      "Wida arrived from somewhere else, pulled out of the world she knew.",
+      "A displacement drops nineteen-year-old Wida into Reverb's world with no way back.",
       "She understands enough about what has happened to know that interfering could be dangerous. Her solution is to remain in the background, observe and leave as little impact as possible.",
       "Then she meets Reverb.",
       "She joins the collective before Eduq arrives, grows particularly close to Spark, and remains through the accident and recovery—slowly discovering that avoiding history is much easier than avoiding attachment.",

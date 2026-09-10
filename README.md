@@ -179,3 +179,37 @@ npm run dev
 ```
 
 Requires Node.js & npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+
+## Reverb // Transmissions
+
+A Supabase-driven content layer. Nothing is hardcoded — every entry is edited in Supabase.
+
+### `reverb_transmissions`
+One row per transmission (artwork, lore, recovered file, anomaly, drop, download).
+
+| Field | Notes |
+| --- | --- |
+| `slug` | URL segment: `/reverb/transmissions/<slug>` |
+| `transmission_number` | Displayed as `// 001` |
+| `title`, `subtitle`, `excerpt` | Card + detail headers |
+| `body` | Safe Markdown subset (headings, lists, quotes, bold/italic, links, images) |
+| `character_slug` | `reverb` / `spark` / `harmonix` / `eduq` / `wida`, or empty for collective-wide |
+| `category` | `archive`, `character`, `anomaly`, `drop`, `download`, … (drives the Type filter) |
+| `status` | `draft` until ready; only `published` is publicly readable |
+| `published_at` | Future dates stay hidden until the timestamp passes |
+| `featured`, `is_anomaly`, `is_collective_only` | Presentation flags |
+| `cover_image_url`, `thumbnail_url`, `media_url` | Storage paths under `images/reverb/transmissions/…` or absolute URLs |
+| `external_url`, `cta_label`, `cta_url` | Optional call to action |
+
+RLS exposes only `status = 'published' AND published_at <= now()`, so drafts and scheduled posts never reach the client.
+
+### `reverb_archive_slots`
+Presentation-only placeholders shown on character archives (`LOCKED` / `CLASSIFIED` / `COMING SOON`) so a page never looks empty. Set `linked_transmission_id` once the real entry is published, or `visible = false` to hide.
+
+### Routes
+- `/reverb/transmissions` — filterable archive (by character and type)
+- `/reverb/transmissions/:slug` — detail page with SEO/OG metadata; unknown slugs render a 404 with `noindex`
+- Latest entry surfaces on `/reverb`; character-specific entries surface on each `/reverb/:id`
+
+### Media
+Uploads go to the existing public `images` bucket under `reverb/transmissions/…` and are served through the `/api/download-file` proxy. There is no admin UI — publishing happens in the Supabase table editor.

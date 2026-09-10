@@ -217,7 +217,11 @@ const Reverb = () => {
                     >
                       {c.name}
                     </span>
-                    <span className="block truncate whitespace-nowrap max-w-[24ch] font-roc text-[10px] xl:text-[11px] leading-none tracking-[0.16em] uppercase text-white/75 mt-2">
+                    <span
+                      className={`block whitespace-nowrap font-roc text-[10px] xl:text-[11px] leading-none tracking-[0.16em] uppercase text-white/75 mt-2 ${
+                        isActive ? "" : "truncate max-w-[24ch]"
+                      }`}
+                    >
                       {c.role}
                     </span>
                     <span

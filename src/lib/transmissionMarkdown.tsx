@@ -159,6 +159,14 @@ export const TransmissionBody = ({
     const heading = line.match(/^(#{1,4})\s+(.*)$/);
     if (heading) {
       flushAll();
+      if (!skippedFirstHeading) {
+        const plain = headingPlainText(heading[2]);
+        if (plain.toLowerCase() === (skipHeading ?? "").toLowerCase()) {
+          skippedFirstHeading = true;
+          continue;
+        }
+        skippedFirstHeading = true;
+      }
       const level = heading[1].length;
       const sizes = [
         "text-2xl md:text-3xl",

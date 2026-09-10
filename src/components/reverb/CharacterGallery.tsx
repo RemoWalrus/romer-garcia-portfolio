@@ -82,6 +82,8 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
         ))}
       </div>
 
+      {openIndex !== null && (
+      <Suspense fallback={null}>
       <Dialog open={active !== null} onOpenChange={() => setOpenIndex(null)}>
         <DialogContent className="max-w-4xl w-[95vw] p-0 bg-black border-white/10">
           {active && (
@@ -147,6 +149,8 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
           )}
         </DialogContent>
       </Dialog>
+      </Suspense>
+      )}
     </>
   );
 };

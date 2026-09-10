@@ -208,8 +208,13 @@ const Reverb = () => {
                   <div className="absolute bottom-0 left-0 pb-5 pt-4 pr-4 pl-[7%] md:pl-[10%] xl:pl-[11%] w-max">
                     <span
                       className={`block whitespace-nowrap font-reverb italic uppercase leading-[0.85] transition-all duration-500 ${
-                        isMobile && isActive ? "text-[28px]" : "text-[26px]"
-                      } sm:text-[30px] lg:text-[clamp(28px,2.1vw,44px)]`}
+                        isMobile ? (isActive ? "text-[34px]" : "text-[26px]") : "text-[26px]"
+                      } sm:text-[30px] ${
+                        isActive
+                          ? "lg:text-[clamp(38px,3.2vw,58px)]"
+                          : "lg:text-[clamp(28px,2.1vw,44px)]"
+                      }`}
+
                       style={{
                         color: isActive ? c.accent : "#ffffff",
                         textShadow: isActive ? `0 0 26px ${c.glow}` : "0 2px 12px rgba(0,0,0,0.6)",

@@ -27,7 +27,7 @@ const LatestTransmission = () => {
         </p>
         <p
           id="reverb-latest-transmission"
-          className="mt-2 font-reverb text-[10px] font-black italic uppercase tracking-[0.28em] text-reverb-wordmark"
+          className="mt-1 font-reverb text-xs font-black italic uppercase tracking-[0.22em] text-reverb-wordmark"
         >
           Latest Transmission
         </p>

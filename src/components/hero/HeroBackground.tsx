@@ -10,7 +10,12 @@ interface HeroBackgroundProps {
 export const HeroBackground = ({ showVideo, triggerNewBackground }: HeroBackgroundProps) => {
   const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  const [videoUrl] = useState<string>(getProxyUrl('graphics', 'staticglitchy.mp4'));
+  const [videoUrl] = useState<string>(() => {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    // Skip video entirely on data-saver or slow connections
+    if (conn?.saveData || conn?.effectiveType === '2g' || conn?.effectiveType === 'slow-2g') return '';
+    return getProxyUrl('graphics', 'staticglitchy-lite.mp4');
+  });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');

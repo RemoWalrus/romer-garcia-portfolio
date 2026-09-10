@@ -81,7 +81,13 @@ const renderInline = (text: string, keyBase: string): ReactNode[] => {
   return nodes;
 };
 
-export const TransmissionBody = ({ body }: { body?: string }) => {
+export const TransmissionBody = ({
+  body,
+  skipHeading,
+}: {
+  body?: string;
+  skipHeading?: string;
+}) => {
   if (!body?.trim()) return null;
 
   const lines = body.replace(/\r\n/g, "\n").split("\n");
@@ -90,6 +96,7 @@ export const TransmissionBody = ({ body }: { body?: string }) => {
   let list: { ordered: boolean; items: string[] } | null = null;
   let quote: string[] = [];
   let key = 0;
+  let skippedFirstHeading = !skipHeading;
 
   const flushParagraph = () => {
     if (!paragraph.length) return;

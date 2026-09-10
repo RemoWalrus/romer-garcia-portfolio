@@ -1,0 +1,1 @@
+CREATE POLICY "tmp_reverb_gallery_upload" ON storage.objects FOR INSERT TO anon WITH CHECK (bucket_id = 'images' AND name LIKE 'reverb/gallery/%');

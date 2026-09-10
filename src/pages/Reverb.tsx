@@ -282,9 +282,7 @@ const Reverb = () => {
           className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.34] grayscale transition-opacity duration-500 dark:opacity-[0.46] dark:grayscale-0"
         />
         <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.14] dark:to-background/[0.18]" />
-        <div className="absolute inset-x-0 top-0 -z-10 h-10 bg-gradient-to-b from-background to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-background to-transparent" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.16] dark:to-background/[0.22]" />
 
         <div className="mx-auto flex min-h-[340px] w-full max-w-[1500px] items-center px-5 pt-6 pb-16 md:min-h-[420px] md:px-8 md:pt-8 md:pb-24">
           <div className="max-w-3xl">

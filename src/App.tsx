@@ -88,7 +88,9 @@ const RoutedFavicon = () => {
     const links: Array<{ rel: string; sizes?: string; href: string; type?: string }> = [
       // .ico first (legacy browsers), PNGs last so modern browsers prefer them
       { rel: 'shortcut icon', sizes: 'any', href: ico, type: 'image/x-icon' },
-      ...(brand === 'reverb' ? [{ rel: 'icon', sizes: '16x16', href: '/favicon-reverb-16.png' }] : []),
+      ...(brand !== 'paradoxxia'
+        ? [{ rel: 'icon', sizes: '16x16', href: brand === 'reverb' ? '/favicon-reverb-16.png' : '/favicon-16.png' }]
+        : []),
       { rel: 'icon', sizes: '32x32', href: small },
       { rel: 'icon', sizes: '192x192', href: medium },
       { rel: 'icon', sizes: '512x512', href: large },
@@ -103,7 +105,7 @@ const RoutedFavicon = () => {
       el.type = cfg.type ?? 'image/png';
       if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
       // cache-bust so browsers that pinned an old icon pick this one up
-      el.href = `${cfg.href}?v=3`;
+      el.href = `${cfg.href}?v=4`;
       document.head.appendChild(el);
     });
   }, [location.pathname]);

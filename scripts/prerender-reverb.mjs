@@ -65,6 +65,27 @@ function head({ title, description, keywords, canonical, image, type = "website"
   return tags.map((t) => `    ${t}`).join("\n");
 }
 
+/** Per-brand icon set, so the static HTML already carries the right favicon. */
+function brandIcons(route) {
+  const brand =
+    route === "/paradoxxia" || route === "/char-gen" || route === "/story"
+      ? "paradoxxia"
+      : route === "/reverb" || route.startsWith("/reverb/")
+        ? "reverb"
+        : null;
+  if (!brand) return null;
+  const extra =
+    brand === "reverb"
+      ? `    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-reverb-16.png" />\n    <link rel="manifest" href="/reverb.webmanifest" />\n`
+      : "";
+  return `    <link rel="shortcut icon" sizes="any" href="/favicon-${brand}.ico" />
+${extra}    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-${brand}.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-${brand}-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-${brand}-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-${brand}.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-${brand}.png" />`;
+}
+
 /** Replaces the shell's head tags with the route's own, and injects noscript content. */
 function writePage(route, headHtml, bodyHtml) {
   let html = shell
@@ -75,6 +96,15 @@ function writePage(route, headHtml, bodyHtml) {
     .replace(/\n\s*<link rel="canonical"[^>]*>/g, "")
     .replace(/\n\s*<meta property="og:[^>]*>/g, "")
     .replace(/\n\s*<meta name="twitter:[^>]*>/g, "");
+
+  const icons = brandIcons(route);
+  if (icons) {
+    html = html
+      .replace(/\n\s*<link rel="shortcut icon"[^>]*>/g, "")
+      .replace(/\n\s*<link rel="icon"[^>]*>/g, "")
+      .replace(/\n\s*<link rel="apple-touch-icon(-precomposed)?"[^>]*>/g, "")
+      .replace("</head>", `${icons}\n  </head>`);
+  }
 
   html = html.replace("</head>", `${headHtml}\n  </head>`);
   html = html.replace(

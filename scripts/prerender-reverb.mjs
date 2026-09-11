@@ -349,4 +349,74 @@ for (const t of transmissions) {
   );
 }
 
+/* ------------------------------- other branded routes -------------------- */
+// /paradoxxia, /char-gen and /meme used to get their social meta from the
+// serve-index edge function via a rewrite. That proxy handed browsers HTML as
+// plain text, so the rewrites are gone; these routes are pre-rendered instead.
+// Values mirror each page's Helmet defaults, with the `metadata` table winning.
+
+const staticRoutes = [
+  {
+    path: "/paradoxxia",
+    prefix: "paradoxxia",
+    title: "Paradoxxia | AI Character Generator & Multimedia Artist",
+    description:
+      "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring an interactive character generator and AI-synthesized music on Spotify and Apple Music.",
+    keywords:
+      "Paradoxxia, パラドクシア, AI multimedia artist, AI character generator, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, AI-synthesized music, cinematic sci-fi",
+    image: `${SITE}/paradoxxia-og.jpg`,
+    body: [
+      "      <h1>Paradoxxia — AI-driven multimedia experience</h1>",
+      "      <p>Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia, with AI-synthesized music on Spotify and Apple Music.</p>",
+      '      <p><a href="/char-gen">Open the Paradoxxia AI character generator</a></p>',
+    ].join("\n"),
+  },
+  {
+    path: "/char-gen",
+    prefix: "chargen",
+    title: "Paradoxxia AI Character Generator | Free Sci-Fi Character Creator",
+    description:
+      "Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats. Free interactive web tool by Romer Garcia.",
+    keywords:
+      "AI character generator, Paradoxxia, sci-fi character creator, AI portrait generator, free character creator",
+    image: `${SITE}/paradoxxia-og.jpg`,
+    body: [
+      "      <h1>Paradoxxia AI Character Generator</h1>",
+      "      <p>Create cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories and stats.</p>",
+      '      <p><a href="/paradoxxia">Back to Paradoxxia</a></p>',
+    ].join("\n"),
+  },
+  {
+    path: "/meme",
+    prefix: "meme",
+    title: "Romer Garcia | Dev Memes & Coding Wisdom 🚀💻",
+    description:
+      "Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.",
+    keywords:
+      "developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes, developer life",
+    body: [
+      "      <h1>Dev memes and coding wisdom</h1>",
+      "      <p>Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.</p>",
+    ].join("\n"),
+  },
+];
+
+for (const r of staticRoutes) {
+  const url = `${SITE}${r.path}`;
+  writePage(
+    r.path,
+    head({
+      title: m(`${r.prefix}.og_title`, m(`${r.prefix}.title`, r.title)),
+      description: m(
+        `${r.prefix}.og_description`,
+        m(`${r.prefix}.description`, r.description),
+      ),
+      keywords: m(`${r.prefix}.keywords`, r.keywords),
+      canonical: m(`${r.prefix}.og_url`, url),
+      image: m(`${r.prefix}.og_image`, r.image),
+    }),
+    r.body,
+  );
+}
+
 console.log("[prerender] done");

@@ -105,10 +105,8 @@ const ReverbCharacter = () => {
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
         {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
-        <link
-          rel="canonical"
-          href={`https://romer-garcia-portfolio.lovable.app/reverb/${character.id}`}
-        />
+        <link rel="canonical" href={`https://romergarcia.com/reverb/${character.id}`} />
+        <meta name="twitter:url" content={`https://romergarcia.com/reverb/${character.id}`} />
 
         <link
           rel="preload"

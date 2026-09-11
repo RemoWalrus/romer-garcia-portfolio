@@ -62,7 +62,9 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
             type="button"
             onClick={() => setOpenIndex(idx)}
             title={item.caption}
-            aria-label={item.caption || `${characterName} gallery image ${idx + 1}`}
+            aria-label={
+              item.altText || item.caption || `${characterName} gallery image ${idx + 1}`
+            }
             className="w-14 h-14 sm:w-16 sm:h-16 overflow-hidden border border-black/15 bg-black/5 hover:border-black/60 transition-colors"
           >
             {item.mediaType === "video" ? (
@@ -70,7 +72,11 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
             ) : (
               <img
                 src={item.thumbSrc}
-                alt={item.caption || `${characterName} — Reverb gallery image ${idx + 1}`}
+                alt={
+                  item.altText ||
+                  item.caption ||
+                  `${characterName} — Reverb gallery image ${idx + 1}`
+                }
                 className="w-full h-full object-cover"
                 width={64}
                 height={64}
@@ -108,7 +114,7 @@ export const CharacterGallery = ({ characterId, characterName }: Props) => {
               ) : (
                 <img
                   src={active.src}
-                  alt={active.caption || `${characterName} — Reverb gallery image`}
+                  alt={active.altText || active.caption || `${characterName} — Reverb gallery image`}
                   className="w-full max-h-[85vh] object-contain"
                   draggable={false}
                 />

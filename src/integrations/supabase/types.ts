@@ -490,6 +490,7 @@ export type Database = {
       }
       reverb_gallery: {
         Row: {
+          alt_text: string | null
           caption: string | null
           character_ids: string[]
           created_at: string
@@ -500,6 +501,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          alt_text?: string | null
           caption?: string | null
           character_ids?: string[]
           created_at?: string
@@ -510,6 +512,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          alt_text?: string | null
           caption?: string | null
           character_ids?: string[]
           created_at?: string

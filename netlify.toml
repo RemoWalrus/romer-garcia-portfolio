@@ -5,19 +5,11 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Reverb is a client-rendered route. Serve the built app document directly;
-# proxying HTML through Supabase makes browsers receive it as text/plain.
-[[redirects]]
-  from = "/reverb"
-  to = "/index.html"
-  status = 200
-  force = true
+# Reverb routes are pre-rendered at build time (scripts/prerender-reverb.mjs)
+# into dist/reverb/**/index.html, so crawlers get real meta tags and JSON-LD in
+# the raw HTML. Those files are served directly — no forced rewrite here, or it
+# would shadow them. Unknown /reverb/* paths fall through to the SPA fallback.
 
-[[redirects]]
-  from = "/reverb/*"
-  to = "/index.html"
-  status = 200
-  force = true
 
 # Proxy Supabase Edge Functions through our domain
 [[redirects]]

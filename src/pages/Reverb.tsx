@@ -87,7 +87,7 @@ const Reverb = () => {
       "Reverb, Reverb Collective, Paradoxxia universe, multimedia franchise, prequel, Romer Garcia",
     ogTitle: "Reverb | Paradoxxia Universe",
     ogDescription: FALLBACK_SOCIAL_DESC,
-    ogUrl: "https://romer-garcia-portfolio.lovable.app/reverb",
+    ogUrl: "https://romergarcia.com/reverb",
     twitterTitle: "Reverb | Paradoxxia Universe",
     twitterDescription: FALLBACK_SOCIAL_DESC,
   });
@@ -107,7 +107,7 @@ const Reverb = () => {
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
         {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
-        <link rel="canonical" href="https://romer-garcia-portfolio.lovable.app/reverb" />
+        <link rel="canonical" href="https://romergarcia.com/reverb" />
         {characters.length > 0 && (
           <script type="application/ld+json">
             {JSON.stringify(rosterSchema(characters))}

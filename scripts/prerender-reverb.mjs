@@ -417,6 +417,21 @@ const staticRoutes = [
     ].join("\n"),
   },
   {
+    path: "/story",
+    prefix: "story",
+    title: "Paradoxxia Story | Roleplay an Encounter with Paradoxxia",
+    description:
+      "Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia — the android from Romer Garcia's dystopian sci-fi universe.",
+    keywords:
+      "Paradoxxia story, AI roleplay, interactive sci-fi story, Cyber Boondocks, AI character chat, Romer Garcia",
+    image: `${SITE}/paradoxxia-og.jpg`,
+    body: [
+      "      <h1>Paradoxxia Story — roleplay an encounter</h1>",
+      "      <p>Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia, the android from Romer Garcia's dystopian sci-fi universe.</p>",
+      '      <p><a href="/paradoxxia">Back to Paradoxxia</a></p>',
+    ].join("\n"),
+  },
+  {
     path: "/meme",
     prefix: "meme",
     title: "Romer Garcia | Dev Memes & Coding Wisdom 🚀💻",

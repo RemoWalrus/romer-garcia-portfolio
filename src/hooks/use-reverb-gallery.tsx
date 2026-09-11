@@ -7,6 +7,7 @@ export type ReverbGalleryItem = {
   src: string;
   thumbSrc: string;
   caption?: string;
+  altText?: string;
   mediaType: "image" | "video";
   characterIds: string[];
 };
@@ -25,7 +26,7 @@ export const useReverbGallery = (characterId?: string) => {
     const load = async () => {
       let query = supabase
         .from("reverb_gallery")
-        .select("id,image_file,caption,character_ids,media_type,sort_order")
+        .select("id,image_file,caption,alt_text,character_ids,media_type,sort_order")
         .order("sort_order", { ascending: true });
 
       if (characterId) query = query.contains("character_ids", [characterId]);
@@ -42,6 +43,7 @@ export const useReverbGallery = (characterId?: string) => {
             row.image_file.replace(/([^/]+)$/, "thumb-$1"),
           ),
           caption: row.caption ?? undefined,
+          altText: row.alt_text ?? undefined,
           mediaType: (row.media_type as "image" | "video") ?? "image",
           characterIds: row.character_ids ?? [],
         })),

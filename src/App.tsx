@@ -79,7 +79,15 @@ const RoutedFavicon = () => {
     const large = brand ? `/favicon-${brand}-512.png` : '/favicon-512.png';
     const apple = brand ? `/apple-touch-icon-${brand}.png` : '/apple-touch-icon.png';
 
+    const ico = brand === 'reverb'
+      ? '/favicon-reverb.ico'
+      : brand === 'paradoxxia'
+        ? '/favicon-paradoxxia.ico'
+        : '/favicon.ico';
+
     const links: Array<{ rel: string; sizes?: string; href: string; type?: string }> = [
+      // .ico first (legacy browsers), PNGs last so modern browsers prefer them
+      { rel: 'shortcut icon', sizes: 'any', href: ico, type: 'image/x-icon' },
       ...(brand === 'reverb' ? [{ rel: 'icon', sizes: '16x16', href: '/favicon-reverb-16.png' }] : []),
       { rel: 'icon', sizes: '32x32', href: small },
       { rel: 'icon', sizes: '192x192', href: medium },
@@ -94,7 +102,8 @@ const RoutedFavicon = () => {
       el.rel = cfg.rel;
       el.type = cfg.type ?? 'image/png';
       if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
-      el.href = cfg.href;
+      // cache-bust so browsers that pinned an old icon pick this one up
+      el.href = `${cfg.href}?v=3`;
       document.head.appendChild(el);
     });
   }, [location.pathname]);

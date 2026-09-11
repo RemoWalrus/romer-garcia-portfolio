@@ -76,14 +76,14 @@ function brandIcons(route) {
   if (!brand) return null;
   const extra =
     brand === "reverb"
-      ? `    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-reverb-16.png" />\n    <link rel="manifest" href="/reverb.webmanifest" />\n`
+      ? `    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-reverb-16.png?v=5" />\n    <link rel="manifest" href="/reverb.webmanifest" />\n`
       : "";
-  return `    <link rel="shortcut icon" sizes="any" href="/favicon-${brand}.ico" />
-${extra}    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-${brand}.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-${brand}-192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-${brand}-512.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-${brand}.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-${brand}.png" />`;
+  return `    <link rel="shortcut icon" sizes="any" href="/favicon-${brand}.ico?v=5" />
+${extra}    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-${brand}.png?v=5" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-${brand}-192.png?v=5" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-${brand}-512.png?v=5" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-${brand}.png?v=5" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-${brand}.png?v=5" />`;
 }
 
 /** Replaces the shell's head tags with the route's own, and injects noscript content. */

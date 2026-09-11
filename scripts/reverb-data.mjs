@@ -6,7 +6,7 @@ const ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4aWd0YnhxZ2JkY2ZwbW5yenZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkwNzQyNjUsImV4cCI6MjA1NDY1MDI2NX0.N9TKpkYmeitE3kthByFOnmR0gKBvBrMshEXez6D5IU8";
 
 export const SITE = "https://romergarcia.com";
-export const STORAGE_PROXY = `${SITE}/api/proxy-storage?bucket=images&file=`;
+export const STORAGE_PROXY = `${SITE}/api/download-file?bucket=images&file=`;
 
 async function rest(path) {
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {

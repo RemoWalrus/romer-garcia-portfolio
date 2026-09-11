@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { trackEvent } from "@/components/GoogleAnalytics";
+import { useSmartCrop } from "@/hooks/use-smart-crop";
 import {
   TransmissionPreview,
   displayTransmissionNumber,
@@ -19,6 +20,7 @@ const TransmissionCard = ({
   origin?: string;
 }) => {
   const accent = accentColor ?? "hsl(var(--reverb-wordmark))";
+  const thumbPosition = useSmartCrop(t.thumbnail);
 
   return (
     <Link
@@ -37,6 +39,7 @@ const TransmissionCard = ({
             alt={t.title}
             loading="lazy"
             decoding="async"
+            style={{ objectPosition: thumbPosition }}
             className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
           />
         ) : (

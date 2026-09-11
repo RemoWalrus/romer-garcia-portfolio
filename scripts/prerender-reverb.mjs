@@ -175,7 +175,7 @@ for (const c of visible) {
   const url = `${SITE}/reverb/${c.id}`;
   const overview = (c.overview ?? []).join(" ");
   const description =
-    metadata[`reverb.${c.id}.description`] ??
+    metadata[`reverb.${c.id}.description`] ||
     overview ||
     `${c.name} — ${c.discipline ?? c.role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`;
   const locked = c.is_locked || c.has_profile === false;

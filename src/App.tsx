@@ -105,7 +105,7 @@ const RoutedFavicon = () => {
       el.type = cfg.type ?? 'image/png';
       if (cfg.sizes) el.setAttribute('sizes', cfg.sizes);
       // cache-bust so browsers that pinned an old icon pick this one up
-      el.href = `${cfg.href}?v=4`;
+      el.href = `${cfg.href}?v=5`;
       document.head.appendChild(el);
     });
   }, [location.pathname]);

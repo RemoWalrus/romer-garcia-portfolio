@@ -14,6 +14,7 @@ import { transmissionPath } from "./TransmissionCard";
  */
 const LatestTransmission = () => {
   const { transmission: t, loading } = useLatestTransmission();
+  const coverPosition = useSmartCrop(t?.coverImage);
 
   if (loading) return null;
 
@@ -64,6 +65,7 @@ const LatestTransmission = () => {
                   alt={t.title}
                   loading="lazy"
                   decoding="async"
+                  style={{ objectPosition: coverPosition }}
                   className="absolute inset-0 h-full w-full object-cover grayscale-[0.35] transition-all duration-700 hover:grayscale-0"
                 />
               ) : (

@@ -5,6 +5,7 @@ import {
   formatTransmissionDate,
   useLatestTransmission,
 } from "@/hooks/use-reverb-transmissions";
+import { useSmartCrop } from "@/hooks/use-smart-crop";
 import { transmissionPath } from "./TransmissionCard";
 
 /**

@@ -254,8 +254,11 @@ for (const c of visible) {
             url,
             name: `${c.name} | Reverb Collective`,
             description,
+            inLanguage: "en",
+            primaryImageOfPage: imageUrl(c.figure_file ?? c.image_file),
             mainEntity: { "@id": `${url}#person` },
-            isPartOf: { "@type": "WebSite", url: SITE, name: "Romer Garcia" },
+            about: { "@id": `${url}#person` },
+            isPartOf: { "@id": `${SITE}/reverb#franchise` },
           },
           {
             "@type": "Person",
@@ -265,6 +268,7 @@ for (const c of visible) {
             description,
             image: imageUrl(c.figure_file ?? c.image_file),
             url,
+            ...(c.origin ? { homeLocation: { "@type": "Place", name: c.origin } } : {}),
             ...(c.specialties?.length ? { knowsAbout: c.specialties } : {}),
             ...(c.quote ? { subjectOf: { "@type": "Quotation", text: c.quote } } : {}),
             memberOf: {
@@ -276,6 +280,7 @@ for (const c of visible) {
           },
           {
             "@type": "CreativeWork",
+            "@id": `${url}#sheet`,
             name: `${c.name} — Reverb character sheet`,
             about: { "@id": `${url}#person` },
             url,

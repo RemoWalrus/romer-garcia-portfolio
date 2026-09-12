@@ -194,6 +194,17 @@ const rosterJsonLd = {
       image: imageUrl(c.image_file),
       memberOf: { "@id": `${SITE}/reverb#collective` },
     })),
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE}/reverb#faq`,
+      isPartOf: { "@id": `${SITE}/reverb` },
+      about: { "@id": `${SITE}/reverb#franchise` },
+      mainEntity: REVERB_FAQ.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    },
     breadcrumbs([
       ["Home", SITE],
       ["Reverb", `${SITE}/reverb`],
@@ -230,6 +241,13 @@ writePage(
       m("reverb.logbook.title_line2", "Same Frequency."),
     )}</h2>`,
     `      <p>${esc(m("reverb.logbook.body", ""))}</p>`,
+    `      <h2>Frequently Asked</h2>`,
+    "      <dl>",
+    ...REVERB_FAQ.flatMap((item) => [
+      `        <dt>${esc(item.q)}</dt>`,
+      `        <dd>${esc(item.a)}</dd>`,
+    ]),
+    "      </dl>",
   ].join("\n"),
 );
 

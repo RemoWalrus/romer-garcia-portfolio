@@ -149,17 +149,6 @@ const rosterJsonLd = {
       })),
     },
     {
-      "@type": "ItemList",
-      name: "Reverb Collective members",
-      itemListElement: indexable.map((c, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: c.name,
-        description: c.discipline ?? c.role,
-        url: `${SITE}/reverb/${c.id}`,
-      })),
-    },
-    {
       "@type": "WebSite",
       url: SITE,
       name: "Romer Garcia",

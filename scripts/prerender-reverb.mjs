@@ -95,7 +95,11 @@ function writePage(route, headHtml, bodyHtml) {
     .replace(/\n\s*<meta name="keywords"[^>]*>/g, "")
     .replace(/\n\s*<link rel="canonical"[^>]*>/g, "")
     .replace(/\n\s*<meta property="og:[^>]*>/g, "")
-    .replace(/\n\s*<meta name="twitter:[^>]*>/g, "");
+    .replace(/\n\s*<meta name="twitter:[^>]*>/g, "")
+    // drop the shell's site-wide JSON-LD (Romer Garcia Person/WebSite) so each
+    // route's rich result is about that route — Reverb for /reverb, Paradoxxia
+    // for /paradoxxia — not the homepage entity
+    .replace(/\n\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/g, "");
 
   const icons = brandIcons(route);
   if (icons) {
@@ -373,6 +377,29 @@ for (const t of transmissions) {
 // plain text, so the rewrites are gone; these routes are pre-rendered instead.
 // Values mirror each page's Helmet defaults, with the `metadata` table winning.
 
+const PARADOXXIA_CREATOR = {
+  "@type": "Person",
+  name: "Romer Garcia",
+  url: SITE,
+  jobTitle: "Design Lead & AI-Driven Multimedia Strategist",
+};
+const PARADOXXIA_SAME_AS = [
+  "https://open.spotify.com/artist/11NJVIZgdYbPyz9igDKTBr",
+  "https://music.apple.com/us/artist/paradoxxia/1803632666",
+];
+const paradoxxiaMusicGroup = {
+  "@type": "MusicGroup",
+  "@id": `${SITE}/paradoxxia#artist`,
+  name: "Paradoxxia",
+  alternateName: "パラドクシア",
+  description:
+    "Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia, blending cinematic sci-fi storytelling with AI-generated electronic music.",
+  url: `${SITE}/paradoxxia`,
+  sameAs: PARADOXXIA_SAME_AS,
+  founder: PARADOXXIA_CREATOR,
+  genre: ["Electronic", "AI-Generated", "Cinematic", "Sci-Fi Soundtrack"],
+};
+
 const staticRoutes = [
   {
     path: "/paradoxxia",
@@ -383,6 +410,23 @@ const staticRoutes = [
     keywords:
       "Paradoxxia, パラドクシア, AI multimedia artist, AI character generator, Paradoxxia Spotify, Paradoxxia Apple Music, romergarcia, AI-synthesized music, cinematic sci-fi",
     image: `${SITE}/paradoxxia-og.jpg`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@graph": [
+        paradoxxiaMusicGroup,
+        {
+          "@type": "WebPage",
+          "@id": `${SITE}/paradoxxia`,
+          url: `${SITE}/paradoxxia`,
+          name: "Paradoxxia | AI Multimedia Artist & Music",
+          description:
+            "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator.",
+          isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          author: PARADOXXIA_CREATOR,
+          about: { "@id": `${SITE}/paradoxxia#artist` },
+        },
+      ],
+    },
     body: [
       "      <h1>Paradoxxia — AI-driven multimedia experience</h1>",
       "      <p>Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia, with AI-synthesized music on Spotify and Apple Music.</p>",
@@ -398,6 +442,31 @@ const staticRoutes = [
     keywords:
       "AI character generator, Paradoxxia, sci-fi character creator, AI portrait generator, free character creator",
     image: `${SITE}/paradoxxia-og.jpg`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          name: "Paradoxxia AI Character Generator",
+          applicationCategory: "MultimediaApplication",
+          operatingSystem: "Web",
+          url: `${SITE}/char-gen`,
+          description:
+            "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats.",
+          featureList: [
+            "Visual Synthesis",
+            "AI Lore Generation",
+            "Photo Reference Upload",
+            "Character Stats Generation",
+          ],
+          author: PARADOXXIA_CREATOR,
+          creator: PARADOXXIA_CREATOR,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          associatedMedia: { "@id": `${SITE}/paradoxxia#artist` },
+        },
+        paradoxxiaMusicGroup,
+      ],
+    },
     body: [
       "      <h1>Paradoxxia AI Character Generator</h1>",
       "      <p>Create cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories and stats.</p>",
@@ -413,6 +482,23 @@ const staticRoutes = [
     keywords:
       "Paradoxxia story, AI roleplay, interactive sci-fi story, Cyber Boondocks, AI character chat, Romer Garcia",
     image: `${SITE}/paradoxxia-og.jpg`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": `${SITE}/story`,
+          url: `${SITE}/story`,
+          name: "Paradoxxia Story | Roleplay an Encounter with Paradoxxia",
+          description:
+            "Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia — the android from Romer Garcia's dystopian sci-fi universe.",
+          isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          author: PARADOXXIA_CREATOR,
+          about: { "@id": `${SITE}/paradoxxia#artist` },
+        },
+        paradoxxiaMusicGroup,
+      ],
+    },
     body: [
       "      <h1>Paradoxxia Story — roleplay an encounter</h1>",
       "      <p>Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia, the android from Romer Garcia's dystopian sci-fi universe.</p>",
@@ -447,6 +533,7 @@ for (const r of staticRoutes) {
       keywords: m(`${r.prefix}.keywords`, r.keywords),
       canonical: m(`${r.prefix}.og_url`, url),
       image: m(`${r.prefix}.og_image`, r.image),
+      jsonLd: r.jsonLd,
     }),
     r.body,
   );

@@ -170,6 +170,10 @@ const rosterJsonLd = {
       url: SITE,
       name: "Romer Garcia",
     },
+    breadcrumbs([
+      ["Home", SITE],
+      ["Reverb", `${SITE}/reverb`],
+    ]),
   ],
 };
 

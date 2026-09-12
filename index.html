@@ -66,6 +66,55 @@
     <!-- Display fonts are self-hosted in /fonts and declared in src/index.css -->
     <link rel="preload" href="/fonts/kanit-900-italic.woff2" as="font" type="font/woff2" crossorigin />
 
+    <link rel="canonical" href="https://romergarcia.com/" />
+
+    <!-- Structured data in the static HTML so crawlers read it without running JS -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://romergarcia.com/#website",
+            "url": "https://romergarcia.com/",
+            "name": "Romer Garcia Portfolio",
+            "description": "Portfolio of Romer Garcia — Design Lead, AI-Driven Multimedia Strategist, and Digital Media Leader.",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://romergarcia.com/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://romergarcia.com/#person",
+            "name": "Romer Garcia",
+            "url": "https://romergarcia.com/",
+            "jobTitle": "Design Lead & AI-Driven Multimedia Strategist",
+            "description": "Strategic Thinker, Design Innovator, and Digital Media Leader with a proven track record of leading high-impact digital campaigns and brand transformations.",
+            "image": "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=profile&file=RomerSelfPortrait.jpg",
+            "alumniOf": { "@type": "Organization", "name": "United States Army" },
+            "knowsAbout": [
+              "AI-Assisted Design",
+              "Multimedia Strategy",
+              "Digital Media Production",
+              "Brand Transformation",
+              "Creative Direction",
+              "UI/UX Design",
+              "Motion Graphics",
+              "Visual Storytelling",
+              "Generative AI"
+            ]
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://romergarcia.com/#profilepage",
+            "url": "https://romergarcia.com/",
+            "name": "Romer Garcia | Strategic Thinker | Design Innovator | Digital Media Leader",
+            "isPartOf": { "@id": "https://romergarcia.com/#website" },
+            "mainEntity": { "@id": "https://romergarcia.com/#person" }
+          }
+        ]
+      }
+    </script>
+
 
   </head>
 

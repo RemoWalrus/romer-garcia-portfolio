@@ -312,10 +312,9 @@ writePage(
       url: `${SITE}/reverb/transmissions`,
       isPartOf: { "@id": `${SITE}/reverb#franchise` },
       hasPart: transmissions.map((t) => ({
-        "@type": "Article",
-        headline: t.title,
+        "@type": "WebPage",
+        name: t.title,
         url: `${SITE}/reverb/transmissions/${t.slug}`,
-        datePublished: t.published_at,
       })),
     },
   }),

@@ -336,7 +336,8 @@ const Reverb = () => {
 
       <LatestTransmission />
 
-      <ReverbFAQ />
+      {/* FAQ hidden temporarily */}
+      {false && <ReverbFAQ />}
 
       <JoinCollectiveSection />
 

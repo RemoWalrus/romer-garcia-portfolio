@@ -28,6 +28,30 @@ export default defineConfig(({ mode }) => ({
     },
     dedupe: ["react", "react-dom", "react/jsx-runtime"],
   },
+  optimizeDeps: {
+    // Pre-bundle the shared runtime in one pass at server startup. Without an
+    // explicit entry crawl, visiting a lazy route can trigger a second optimize
+    // pass that removes chunk URLs still held by an open preview tab.
+    entries: ["index.html", "src/**/*.{ts,tsx}"],
+    include: [
+      "react",
+      "react-dom/client",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "react-router-dom",
+      "react-helmet-async",
+      "@tanstack/react-query",
+      "framer-motion",
+      "lucide-react",
+      "next-themes",
+      "sonner",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-label",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-tooltip",
+    ],
+  },
   build: {
     // Split long-lived vendor code so app updates don't bust the whole cache
     rollupOptions: {

@@ -524,8 +524,11 @@ const staticRoutes = [
           name: "Paradoxxia | AI Multimedia Artist & Music",
           description:
             "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator.",
+          inLanguage: "en",
+          primaryImageOfPage: `${SITE}/paradoxxia-og.jpg`,
           isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
           author: PARADOXXIA_CREATOR,
+          mainEntity: { "@id": `${SITE}/paradoxxia#artist` },
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },
         breadcrumbs([

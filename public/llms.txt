@@ -1,0 +1,46 @@
+# romergarcia.com
+
+> The portfolio and creative-universe site of Romer Garcia, a Design Lead and AI-driven multimedia strategist. It hosts his design portfolio plus two connected original fiction projects: Paradoxxia and Reverb.
+
+- Site owner: Romer Garcia — Design Lead & AI-Driven Multimedia Strategist.
+- The site is a single-page React application. Every route listed below is also served as pre-rendered HTML containing the page's text, metadata and schema.org JSON-LD, so no JavaScript execution is required to read it.
+- Canonical host: https://romergarcia.com
+
+## Portfolio
+
+- [Home / portfolio](https://romergarcia.com/): Romer Garcia's design portfolio — selected projects, background, image gallery and contact form.
+- [Contact](https://romergarcia.com/contact): contact form.
+
+## Reverb / the Paradoxxiaverse
+
+Reverb is an original character-driven narrative franchise set in the Paradoxxia universe (the "Paradoxxiaverse"), created and written by Romer Garcia. It is a prequel chapter following outsiders who turn sound into resistance. The premise: the crew never shared a headquarters, only a frequency — different cities, different decades, "different steps, same frequency."
+
+The franchise has six character sheets: five public members of the Reverb Collective plus one hidden variant. Story content is released as serialized "transmissions" — dated archive entries containing artwork, recovered documents, lore, locations, audio and anomalies. Parts of the archive and some character sheets are locked and unlock over time.
+
+- [Reverb overview](https://romergarcia.com/reverb): franchise premise, the Collective roster, and an FAQ.
+- [Reverb (character)](https://romergarcia.com/reverb/reverb): Urban Operative and founder of the Collective.
+- [Spark](https://romergarcia.com/reverb/spark): demolitions, close-quarters, runner.
+- [Harmonix](https://romergarcia.com/reverb/harmonix): strategy and tactical technology.
+- [Eduq](https://romergarcia.com/reverb/eduq): hacking and experimental technology.
+- [Wida](https://romergarcia.com/reverb/wida): temporal traveler and connector.
+- A sixth character sheet, a post-incident variant of Spark, is hidden and unlocks later.
+
+## Transmissions
+
+- [Transmission archive](https://romergarcia.com/reverb/transmissions): all published transmissions.
+- [Wida — Record Mismatch](https://romergarcia.com/reverb/transmissions/wida-record-mismatch)
+- [Spark — Before the Fall](https://romergarcia.com/reverb/transmissions/spark-before-the-fall)
+- [The Collective](https://romergarcia.com/reverb/transmissions/the-collective)
+
+## Paradoxxia
+
+Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia: a dystopian sci-fi setting ("the Cyber Boondocks") paired with AI-generated cinematic electronic music, released on Spotify and Apple Music.
+
+- [Paradoxxia](https://romergarcia.com/paradoxxia): the artist and universe hub.
+- [AI Character Generator](https://romergarcia.com/char-gen): free web tool that generates a character in the Paradoxxia universe with a portrait, backstory and stats.
+- [Story mode](https://romergarcia.com/story): interactive AI-driven roleplay of an encounter with Paradoxxia.
+
+## Optional
+
+- [Dev memes](https://romergarcia.com/meme): rotating developer memes and coding trivia.
+- [Sitemap](https://romergarcia.com/sitemap.xml)

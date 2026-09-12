@@ -489,9 +489,18 @@ const paradoxxiaMusicGroup = {
   description:
     "Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia, blending cinematic sci-fi storytelling with AI-generated electronic music.",
   url: `${SITE}/paradoxxia`,
+  mainEntityOfPage: { "@id": `${SITE}/paradoxxia` },
+  image: `${SITE}/paradoxxia-og.jpg`,
+  logo: `${SITE}/paradoxxia-og.jpg`,
   sameAs: PARADOXXIA_SAME_AS,
   founder: PARADOXXIA_CREATOR,
+  foundingLocation: { "@type": "Place", name: "The Cyber Boondocks" },
   genre: ["Electronic", "AI-Generated", "Cinematic", "Sci-Fi Soundtrack"],
+  subjectOf: {
+    "@type": "CreativeWorkSeries",
+    name: "Reverb",
+    url: `${SITE}/reverb`,
+  },
 };
 
 const staticRoutes = [

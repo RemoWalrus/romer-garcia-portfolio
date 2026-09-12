@@ -470,6 +470,10 @@ const staticRoutes = [
           author: PARADOXXIA_CREATOR,
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },
+        breadcrumbs([
+          ["Home", SITE],
+          ["Paradoxxia", `${SITE}/paradoxxia`],
+        ]),
       ],
     },
     body: [
@@ -510,6 +514,11 @@ const staticRoutes = [
           associatedMedia: { "@id": `${SITE}/paradoxxia#artist` },
         },
         paradoxxiaMusicGroup,
+        breadcrumbs([
+          ["Home", SITE],
+          ["Paradoxxia", `${SITE}/paradoxxia`],
+          ["Character Generator", `${SITE}/char-gen`],
+        ]),
       ],
     },
     body: [
@@ -542,6 +551,11 @@ const staticRoutes = [
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },
         paradoxxiaMusicGroup,
+        breadcrumbs([
+          ["Home", SITE],
+          ["Paradoxxia", `${SITE}/paradoxxia`],
+          ["Story", `${SITE}/story`],
+        ]),
       ],
     },
     body: [

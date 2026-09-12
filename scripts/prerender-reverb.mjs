@@ -359,14 +359,26 @@ writePage(
       "@graph": [
         {
           "@type": "CollectionPage",
+          "@id": `${SITE}/reverb/transmissions`,
           name: "Reverb // Transmissions",
           url: `${SITE}/reverb/transmissions`,
+          description:
+            "The Reverb transmission archive: artwork, recovered documents, character lore and anomalies from the Paradoxxia universe.",
+          inLanguage: "en",
           isPartOf: { "@id": `${SITE}/reverb#franchise` },
+          about: { "@id": `${SITE}/reverb#franchise` },
           hasPart: transmissions.map((t) => ({
             "@type": "WebPage",
             name: t.title,
             url: `${SITE}/reverb/transmissions/${t.slug}`,
           })),
+        },
+        {
+          "@type": "CreativeWorkSeries",
+          "@id": `${SITE}/reverb#franchise`,
+          name: "Reverb",
+          url: `${SITE}/reverb`,
+          description: REVERB_DESC,
         },
         breadcrumbs([
           ["Home", SITE],

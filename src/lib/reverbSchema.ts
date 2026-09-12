@@ -93,17 +93,6 @@ export function rosterSchema(characters: ReverbCharacter[]) {
           image: c.image,
         })),
       },
-      {
-        "@type": "ItemList",
-        name: "Reverb Collective members",
-        itemListElement: characters.map((c, i) => ({
-          "@type": "ListItem",
-          position: i + 1,
-          name: c.name,
-          description: c.discipline ?? c.role,
-          url: reverbUrl(`/${c.id}`),
-        })),
-      },
     ],
   };
 }

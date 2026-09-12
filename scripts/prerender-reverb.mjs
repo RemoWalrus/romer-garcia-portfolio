@@ -149,17 +149,6 @@ const rosterJsonLd = {
       })),
     },
     {
-      "@type": "ItemList",
-      name: "Reverb Collective members",
-      itemListElement: indexable.map((c, i) => ({
-        "@type": "ListItem",
-        position: i + 1,
-        name: c.name,
-        description: c.discipline ?? c.role,
-        url: `${SITE}/reverb/${c.id}`,
-      })),
-    },
-    {
       "@type": "WebSite",
       url: SITE,
       name: "Romer Garcia",
@@ -323,10 +312,9 @@ writePage(
       url: `${SITE}/reverb/transmissions`,
       isPartOf: { "@id": `${SITE}/reverb#franchise` },
       hasPart: transmissions.map((t) => ({
-        "@type": "Article",
-        headline: t.title,
+        "@type": "WebPage",
+        name: t.title,
         url: `${SITE}/reverb/transmissions/${t.slug}`,
-        datePublished: t.published_at,
       })),
     },
   }),

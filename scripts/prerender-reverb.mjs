@@ -328,15 +328,24 @@ writePage(
     canonical: `${SITE}/reverb/transmissions`,
     jsonLd: {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: "Reverb // Transmissions",
-      url: `${SITE}/reverb/transmissions`,
-      isPartOf: { "@id": `${SITE}/reverb#franchise` },
-      hasPart: transmissions.map((t) => ({
-        "@type": "WebPage",
-        name: t.title,
-        url: `${SITE}/reverb/transmissions/${t.slug}`,
-      })),
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          name: "Reverb // Transmissions",
+          url: `${SITE}/reverb/transmissions`,
+          isPartOf: { "@id": `${SITE}/reverb#franchise` },
+          hasPart: transmissions.map((t) => ({
+            "@type": "WebPage",
+            name: t.title,
+            url: `${SITE}/reverb/transmissions/${t.slug}`,
+          })),
+        },
+        breadcrumbs([
+          ["Home", SITE],
+          ["Reverb", `${SITE}/reverb`],
+          ["Transmissions", `${SITE}/reverb/transmissions`],
+        ]),
+      ],
     },
   }),
   [

@@ -621,7 +621,10 @@ const staticRoutes = [
           name: "Paradoxxia Story | Roleplay an Encounter with Paradoxxia",
           description:
             "Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia — the android from Romer Garcia's dystopian sci-fi universe.",
+          inLanguage: "en",
+          primaryImageOfPage: `${SITE}/paradoxxia-og.jpg`,
           isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          mainEntity: { "@id": `${SITE}/paradoxxia#artist` },
           author: PARADOXXIA_CREATOR,
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },

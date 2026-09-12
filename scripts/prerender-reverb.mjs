@@ -17,6 +17,7 @@ import {
   fetchTransmissions,
   imageUrl,
 } from "./reverb-data.mjs";
+import { REVERB_FAQ } from "./reverb-faq.mjs";
 
 const DIST = resolve("dist");
 const shellPath = resolve(DIST, "index.html");

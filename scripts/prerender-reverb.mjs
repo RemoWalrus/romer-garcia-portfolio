@@ -556,11 +556,25 @@ const staticRoutes = [
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebPage",
+          "@id": `${SITE}/char-gen`,
+          url: `${SITE}/char-gen`,
+          name: "Paradoxxia AI Character Generator",
+          description:
+            "Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats.",
+          inLanguage: "en",
+          isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          mainEntity: { "@id": `${SITE}/char-gen#app` },
+          about: { "@id": `${SITE}/char-gen#app` },
+        },
+        {
           "@type": "SoftwareApplication",
+          "@id": `${SITE}/char-gen#app`,
           name: "Paradoxxia AI Character Generator",
           applicationCategory: "MultimediaApplication",
           operatingSystem: "Web",
           url: `${SITE}/char-gen`,
+          image: `${SITE}/paradoxxia-og.jpg`,
           description:
             "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats.",
           featureList: [
@@ -572,7 +586,7 @@ const staticRoutes = [
           author: PARADOXXIA_CREATOR,
           creator: PARADOXXIA_CREATOR,
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          associatedMedia: { "@id": `${SITE}/paradoxxia#artist` },
+          isPartOf: { "@id": `${SITE}/paradoxxia#artist` },
         },
         paradoxxiaMusicGroup,
         breadcrumbs([

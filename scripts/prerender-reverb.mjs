@@ -122,6 +122,19 @@ function writePage(route, headHtml, bodyHtml) {
   console.log(`[prerender] ${route}`);
 }
 
+/** Breadcrumbs are one of the few rich-result types this content is eligible for. */
+function breadcrumbs(trail) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map(([name, item], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item,
+    })),
+  };
+}
+
 const visible = characters.filter((c) => !c.is_hidden);
 const indexable = visible.filter((c) => !c.is_locked && c.has_profile !== false);
 

@@ -7,10 +7,12 @@ import { SITE, fetchCharacters, fetchTransmissions } from "./reverb-data.mjs";
 
 const entries = [
   { path: "/", changefreq: "weekly", priority: "1.0" },
-  { path: "/paradoxxia", changefreq: "monthly", priority: "0.7" },
-  { path: "/meme", changefreq: "daily", priority: "0.5" },
-  { path: "/contact", changefreq: "monthly", priority: "0.6" },
+  { path: "/paradoxxia", changefreq: "weekly", priority: "0.9" },
   { path: "/reverb", changefreq: "weekly", priority: "0.8" },
+  { path: "/char-gen", changefreq: "weekly", priority: "0.8" },
+  { path: "/story", changefreq: "weekly", priority: "0.8" },
+  { path: "/meme", changefreq: "monthly", priority: "0.5" },
+  { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/reverb/transmissions", changefreq: "weekly", priority: "0.7" },
 ];
 

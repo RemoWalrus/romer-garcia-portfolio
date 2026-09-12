@@ -9,6 +9,8 @@ import ReverbHeader from "@/components/reverb/ReverbHeader";
 import { rosterSchema } from "@/lib/reverbSchema";
 import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
 import LatestTransmission from "@/components/reverb/transmissions/LatestTransmission";
+import ReverbFAQ from "@/components/reverb/ReverbFAQ";
+import { REVERB_FAQ } from "../../scripts/reverb-faq.mjs";
 import frequencyCity from "@/assets/reverb-frequency-city.webp";
 
 
@@ -113,6 +115,18 @@ const Reverb = () => {
             {JSON.stringify(rosterSchema(characters))}
           </script>
         )}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "@id": "https://romergarcia.com/reverb#faq",
+            mainEntity: REVERB_FAQ.map((item) => ({
+              "@type": "Question",
+              name: item.q,
+              acceptedAnswer: { "@type": "Answer", text: item.a },
+            })),
+          })}
+        </script>
       </Helmet>
 
 
@@ -321,6 +335,8 @@ const Reverb = () => {
       </section>
 
       <LatestTransmission />
+
+      <ReverbFAQ />
 
       <JoinCollectiveSection />
 

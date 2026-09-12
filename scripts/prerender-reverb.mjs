@@ -435,6 +435,15 @@ for (const t of transmissions) {
               logo: { "@type": "ImageObject", url: `${SITE}/favicon-512.png` },
             },
             isPartOf: { "@id": `${SITE}/reverb#franchise` },
+            about: { "@id": `${SITE}/reverb#franchise` },
+            articleSection: "Reverb // Transmissions",
+          },
+          {
+            "@type": "CreativeWorkSeries",
+            "@id": `${SITE}/reverb#franchise`,
+            name: "Reverb",
+            url: `${SITE}/reverb`,
+            description: REVERB_DESC,
           },
           breadcrumbs([
             ["Home", SITE],

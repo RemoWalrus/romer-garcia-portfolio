@@ -144,32 +144,55 @@ const rosterJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "WebPage",
+      "@id": `${SITE}/reverb`,
+      url: `${SITE}/reverb`,
+      name: "Reverb | Paradoxxia Universe Multimedia Franchise",
+      description: REVERB_DESC,
+      inLanguage: "en",
+      primaryImageOfPage: imageUrl(visible[0]?.image_file),
+      mainEntity: { "@id": `${SITE}/reverb#franchise` },
+      about: { "@id": `${SITE}/reverb#franchise` },
+      isPartOf: { "@type": "WebSite", url: SITE, name: "Romer Garcia" },
+    },
+    {
       "@type": "CreativeWorkSeries",
       "@id": `${SITE}/reverb#franchise`,
       name: "Reverb",
       alternateName: "Reverb Collective",
       url: `${SITE}/reverb`,
       description: REVERB_DESC,
+      image: indexable.map((c) => imageUrl(c.image_file)).filter(Boolean),
       genre: ["Science Fiction", "Cyberpunk", "Multimedia"],
+      inLanguage: "en",
       author: { "@type": "Person", name: "Romer Garcia", url: SITE },
+      creator: { "@type": "Person", name: "Romer Garcia", url: SITE },
+      publisher: { "@id": `${SITE}/reverb#collective` },
       isPartOf: {
         "@type": "CreativeWorkSeries",
         name: "Paradoxxia",
         url: `${SITE}/paradoxxia`,
       },
-      character: indexable.map((c) => ({
-        "@type": "Person",
-        name: c.name,
-        jobTitle: c.discipline ?? c.role,
-        url: `${SITE}/reverb/${c.id}`,
-        image: imageUrl(c.image_file),
-      })),
+      character: indexable.map((c) => ({ "@id": `${SITE}/reverb/${c.id}#person` })),
     },
     {
-      "@type": "WebSite",
-      url: SITE,
-      name: "Romer Garcia",
+      "@type": "Organization",
+      "@id": `${SITE}/reverb#collective`,
+      name: "Reverb Collective",
+      url: `${SITE}/reverb`,
+      description: "The Reverb Collective — the ensemble at the centre of the Reverb franchise.",
+      founder: { "@type": "Person", name: "Romer Garcia", url: SITE },
+      member: indexable.map((c) => ({ "@id": `${SITE}/reverb/${c.id}#person` })),
     },
+    ...indexable.map((c) => ({
+      "@type": "Person",
+      "@id": `${SITE}/reverb/${c.id}#person`,
+      name: c.name,
+      jobTitle: c.discipline ?? c.role,
+      url: `${SITE}/reverb/${c.id}`,
+      image: imageUrl(c.image_file),
+      memberOf: { "@id": `${SITE}/reverb#collective` },
+    })),
     breadcrumbs([
       ["Home", SITE],
       ["Reverb", `${SITE}/reverb`],
@@ -231,8 +254,11 @@ for (const c of visible) {
             url,
             name: `${c.name} | Reverb Collective`,
             description,
+            inLanguage: "en",
+            primaryImageOfPage: imageUrl(c.figure_file ?? c.image_file),
             mainEntity: { "@id": `${url}#person` },
-            isPartOf: { "@type": "WebSite", url: SITE, name: "Romer Garcia" },
+            about: { "@id": `${url}#person` },
+            isPartOf: { "@id": `${SITE}/reverb#franchise` },
           },
           {
             "@type": "Person",
@@ -242,6 +268,7 @@ for (const c of visible) {
             description,
             image: imageUrl(c.figure_file ?? c.image_file),
             url,
+            ...(c.origin ? { homeLocation: { "@type": "Place", name: c.origin } } : {}),
             ...(c.specialties?.length ? { knowsAbout: c.specialties } : {}),
             ...(c.quote ? { subjectOf: { "@type": "Quotation", text: c.quote } } : {}),
             memberOf: {
@@ -253,6 +280,7 @@ for (const c of visible) {
           },
           {
             "@type": "CreativeWork",
+            "@id": `${url}#sheet`,
             name: `${c.name} — Reverb character sheet`,
             about: { "@id": `${url}#person` },
             url,
@@ -331,14 +359,26 @@ writePage(
       "@graph": [
         {
           "@type": "CollectionPage",
+          "@id": `${SITE}/reverb/transmissions`,
           name: "Reverb // Transmissions",
           url: `${SITE}/reverb/transmissions`,
+          description:
+            "The Reverb transmission archive: artwork, recovered documents, character lore and anomalies from the Paradoxxia universe.",
+          inLanguage: "en",
           isPartOf: { "@id": `${SITE}/reverb#franchise` },
+          about: { "@id": `${SITE}/reverb#franchise` },
           hasPart: transmissions.map((t) => ({
             "@type": "WebPage",
             name: t.title,
             url: `${SITE}/reverb/transmissions/${t.slug}`,
           })),
+        },
+        {
+          "@type": "CreativeWorkSeries",
+          "@id": `${SITE}/reverb#franchise`,
+          name: "Reverb",
+          url: `${SITE}/reverb`,
+          description: REVERB_DESC,
         },
         breadcrumbs([
           ["Home", SITE],
@@ -395,6 +435,15 @@ for (const t of transmissions) {
               logo: { "@type": "ImageObject", url: `${SITE}/favicon-512.png` },
             },
             isPartOf: { "@id": `${SITE}/reverb#franchise` },
+            about: { "@id": `${SITE}/reverb#franchise` },
+            articleSection: "Reverb // Transmissions",
+          },
+          {
+            "@type": "CreativeWorkSeries",
+            "@id": `${SITE}/reverb#franchise`,
+            name: "Reverb",
+            url: `${SITE}/reverb`,
+            description: REVERB_DESC,
           },
           breadcrumbs([
             ["Home", SITE],
@@ -440,9 +489,18 @@ const paradoxxiaMusicGroup = {
   description:
     "Paradoxxia is an AI-synthesized multimedia artist and character entity created by Romer Garcia, blending cinematic sci-fi storytelling with AI-generated electronic music.",
   url: `${SITE}/paradoxxia`,
+  mainEntityOfPage: { "@id": `${SITE}/paradoxxia` },
+  image: `${SITE}/paradoxxia-og.jpg`,
+  logo: `${SITE}/paradoxxia-og.jpg`,
   sameAs: PARADOXXIA_SAME_AS,
   founder: PARADOXXIA_CREATOR,
+  foundingLocation: { "@type": "Place", name: "The Cyber Boondocks" },
   genre: ["Electronic", "AI-Generated", "Cinematic", "Sci-Fi Soundtrack"],
+  subjectOf: {
+    "@type": "CreativeWorkSeries",
+    name: "Reverb",
+    url: `${SITE}/reverb`,
+  },
 };
 
 const staticRoutes = [
@@ -466,8 +524,11 @@ const staticRoutes = [
           name: "Paradoxxia | AI Multimedia Artist & Music",
           description:
             "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator.",
+          inLanguage: "en",
+          primaryImageOfPage: `${SITE}/paradoxxia-og.jpg`,
           isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
           author: PARADOXXIA_CREATOR,
+          mainEntity: { "@id": `${SITE}/paradoxxia#artist` },
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },
         breadcrumbs([
@@ -495,11 +556,25 @@ const staticRoutes = [
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebPage",
+          "@id": `${SITE}/char-gen`,
+          url: `${SITE}/char-gen`,
+          name: "Paradoxxia AI Character Generator",
+          description:
+            "Create unique cinematic characters in the Paradoxxia sci-fi universe with AI-generated portraits, backstories, and stats.",
+          inLanguage: "en",
+          isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          mainEntity: { "@id": `${SITE}/char-gen#app` },
+          about: { "@id": `${SITE}/char-gen#app` },
+        },
+        {
           "@type": "SoftwareApplication",
+          "@id": `${SITE}/char-gen#app`,
           name: "Paradoxxia AI Character Generator",
           applicationCategory: "MultimediaApplication",
           operatingSystem: "Web",
           url: `${SITE}/char-gen`,
+          image: `${SITE}/paradoxxia-og.jpg`,
           description:
             "An interactive AI character generator set in the Paradoxxia sci-fi universe. Create unique characters with cinematic portraits, backstories, and stats.",
           featureList: [
@@ -511,7 +586,7 @@ const staticRoutes = [
           author: PARADOXXIA_CREATOR,
           creator: PARADOXXIA_CREATOR,
           offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          associatedMedia: { "@id": `${SITE}/paradoxxia#artist` },
+          isPartOf: { "@id": `${SITE}/paradoxxia#artist` },
         },
         paradoxxiaMusicGroup,
         breadcrumbs([
@@ -546,7 +621,10 @@ const staticRoutes = [
           name: "Paradoxxia Story | Roleplay an Encounter with Paradoxxia",
           description:
             "Step into the Cyber Boondocks and roleplay a live, AI-driven encounter with Paradoxxia — the android from Romer Garcia's dystopian sci-fi universe.",
+          inLanguage: "en",
+          primaryImageOfPage: `${SITE}/paradoxxia-og.jpg`,
           isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          mainEntity: { "@id": `${SITE}/paradoxxia#artist` },
           author: PARADOXXIA_CREATOR,
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },

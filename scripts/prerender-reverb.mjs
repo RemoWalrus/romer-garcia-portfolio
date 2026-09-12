@@ -122,6 +122,19 @@ function writePage(route, headHtml, bodyHtml) {
   console.log(`[prerender] ${route}`);
 }
 
+/** Breadcrumbs are one of the few rich-result types this content is eligible for. */
+function breadcrumbs(trail) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: trail.map(([name, item], i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name,
+      item,
+    })),
+  };
+}
+
 const visible = characters.filter((c) => !c.is_hidden);
 const indexable = visible.filter((c) => !c.is_locked && c.has_profile !== false);
 
@@ -157,6 +170,10 @@ const rosterJsonLd = {
       url: SITE,
       name: "Romer Garcia",
     },
+    breadcrumbs([
+      ["Home", SITE],
+      ["Reverb", `${SITE}/reverb`],
+    ]),
   ],
 };
 
@@ -311,15 +328,24 @@ writePage(
     canonical: `${SITE}/reverb/transmissions`,
     jsonLd: {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      name: "Reverb // Transmissions",
-      url: `${SITE}/reverb/transmissions`,
-      isPartOf: { "@id": `${SITE}/reverb#franchise` },
-      hasPart: transmissions.map((t) => ({
-        "@type": "WebPage",
-        name: t.title,
-        url: `${SITE}/reverb/transmissions/${t.slug}`,
-      })),
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          name: "Reverb // Transmissions",
+          url: `${SITE}/reverb/transmissions`,
+          isPartOf: { "@id": `${SITE}/reverb#franchise` },
+          hasPart: transmissions.map((t) => ({
+            "@type": "WebPage",
+            name: t.title,
+            url: `${SITE}/reverb/transmissions/${t.slug}`,
+          })),
+        },
+        breadcrumbs([
+          ["Home", SITE],
+          ["Reverb", `${SITE}/reverb`],
+          ["Transmissions", `${SITE}/reverb/transmissions`],
+        ]),
+      ],
     },
   }),
   [
@@ -348,16 +374,35 @@ for (const t of transmissions) {
       type: "article",
       jsonLd: {
         "@context": "https://schema.org",
-        "@type": "Article",
-        headline: t.title,
-        alternativeHeadline: t.subtitle ?? undefined,
-        description,
-        image: t.cover_image_url ?? undefined,
-        url,
-        datePublished: t.published_at,
-        dateModified: t.updated_at ?? t.published_at,
-        author: { "@type": "Person", name: "Romer Garcia", url: SITE },
-        isPartOf: { "@id": `${SITE}/reverb#franchise` },
+        "@graph": [
+          {
+            "@type": "Article",
+            "@id": `${url}#article`,
+            mainEntityOfPage: { "@type": "WebPage", "@id": url },
+            headline: t.title.slice(0, 110),
+            alternativeHeadline: t.subtitle ?? undefined,
+            description,
+            image: t.cover_image_url ? [t.cover_image_url] : undefined,
+            url,
+            datePublished: t.published_at,
+            dateModified: t.updated_at ?? t.published_at,
+            inLanguage: "en",
+            author: { "@type": "Person", name: "Romer Garcia", url: SITE },
+            publisher: {
+              "@type": "Organization",
+              name: "Romer Garcia",
+              url: SITE,
+              logo: { "@type": "ImageObject", url: `${SITE}/favicon-512.png` },
+            },
+            isPartOf: { "@id": `${SITE}/reverb#franchise` },
+          },
+          breadcrumbs([
+            ["Home", SITE],
+            ["Reverb", `${SITE}/reverb`],
+            ["Transmissions", `${SITE}/reverb/transmissions`],
+            [t.title, url],
+          ]),
+        ],
       },
     }),
     [
@@ -425,6 +470,10 @@ const staticRoutes = [
           author: PARADOXXIA_CREATOR,
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },
+        breadcrumbs([
+          ["Home", SITE],
+          ["Paradoxxia", `${SITE}/paradoxxia`],
+        ]),
       ],
     },
     body: [
@@ -465,6 +514,11 @@ const staticRoutes = [
           associatedMedia: { "@id": `${SITE}/paradoxxia#artist` },
         },
         paradoxxiaMusicGroup,
+        breadcrumbs([
+          ["Home", SITE],
+          ["Paradoxxia", `${SITE}/paradoxxia`],
+          ["Character Generator", `${SITE}/char-gen`],
+        ]),
       ],
     },
     body: [
@@ -497,6 +551,11 @@ const staticRoutes = [
           about: { "@id": `${SITE}/paradoxxia#artist` },
         },
         paradoxxiaMusicGroup,
+        breadcrumbs([
+          ["Home", SITE],
+          ["Paradoxxia", `${SITE}/paradoxxia`],
+          ["Story", `${SITE}/story`],
+        ]),
       ],
     },
     body: [

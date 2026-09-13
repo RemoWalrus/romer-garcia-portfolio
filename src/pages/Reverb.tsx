@@ -10,9 +10,11 @@ import { rosterSchema } from "@/lib/reverbSchema";
 import { JoinCollectiveSection } from "@/components/reverb/JoinCollective";
 import LatestTransmission from "@/components/reverb/transmissions/LatestTransmission";
 import ReverbFAQ from "@/components/reverb/ReverbFAQ";
-import { REVERB_FAQ } from "../../scripts/reverb-faq.mjs";
+import { useReverbFaq } from "@/hooks/use-reverb-faq";
 import frequencyCity from "@/assets/reverb-frequency-city.webp";
 
+/** Flip to true to show the FAQ section (sits under Join the Collective). */
+const SHOW_FAQ = false;
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
 const FALLBACK_DESC =
@@ -340,7 +342,7 @@ const Reverb = () => {
 
       {/* FAQ sits under Join the Collective. Hidden for now; flip to true to show.
           Copy is editable in the Supabase `reverb_faq` table. */}
-      {SHOW_FAQ && <ReverbFAQ />
+      {SHOW_FAQ && <ReverbFAQ />}
 
       <footer className="border-t border-border py-8 font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
         <div className="mx-auto w-full max-w-[1500px] px-5 text-center md:px-8">

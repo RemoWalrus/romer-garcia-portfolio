@@ -218,6 +218,23 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 - **Video / audio**: set `media_url` to the bucket path (e.g. `reverb/transmissions/wida-transmission.mp4`). Video plays inline on the detail page and as a muted looping preview in the Latest Transmission block, using `cover_image_url` as the poster.
 - **Streaming**: video/audio is served through the `stream-media` edge function (`getStreamUrl` / `transmissionStream`), which supports HTTP Range requests so Safari and iOS can seek and play.
 
+### Gallery media
+`reverb_gallery` holds each image/video once (`image_file`, `caption`, `alt_text`, `character_ids`, `media_type`, `sort_order`). Tag a group shot with several character ids and it appears on every one of those profiles without duplication. Thumbnails follow the `thumb-<filename>` convention in the same bucket folder.
+
+## Reverb // FAQ (`reverb_faq`)
+
+The FAQ block is Supabase-editable — no code change or redeploy needed for copy.
+
+| Field | Notes |
+| --- | --- |
+| `question`, `answer` | Keep answers short and self-contained so answer engines can quote them |
+| `sort_order` | Display order (ascending) |
+| `visible` | `false` hides a single entry |
+
+- Rendered by `src/components/reverb/ReverbFAQ.tsx` via `useReverbFaq()`; `scripts/reverb-faq.mjs` remains the bundled fallback used before the fetch resolves.
+- The same rows drive the `FAQPage` JSON-LD on `/reverb` and the pre-rendered HTML (`fetchFaq()` in `scripts/reverb-data.mjs`), so visible copy and structured data can never drift.
+- **Placement**: the section sits directly under **Join the Collective** on `/reverb`. It is hidden for now — set `SHOW_FAQ = true` in `src/pages/Reverb.tsx` to reveal it.
+
 ## Reverb Copy Editable in Supabase
 
 Section copy is read from the shared `metadata` table with the shipped text as fallback — edit the row, refresh, done.
@@ -241,6 +258,7 @@ Other Reverb content sources:
 | `reverb_gallery` | Shared images tagged to one or more characters via `character_ids` |
 | `reverb_transmissions` | Transmission entries |
 | `reverb_archive_slots` | Locked/classified archive placeholders |
+| `reverb_faq` | FAQ questions/answers (visible block + FAQPage JSON-LD) |
 | `collective_subscribers` | Join the Collective signups (email, source page, referrer, UTM, status) |
 
 ## Hosting Note

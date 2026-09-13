@@ -120,7 +120,7 @@ const Reverb = () => {
             "@context": "https://schema.org",
             "@type": "FAQPage",
             "@id": "https://romergarcia.com/reverb#faq",
-            mainEntity: REVERB_FAQ.map((item) => ({
+            mainEntity: faq.map((item) => ({
               "@type": "Question",
               name: item.q,
               acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -336,10 +336,11 @@ const Reverb = () => {
 
       <LatestTransmission />
 
-      {/* FAQ hidden temporarily */}
-      {false && <ReverbFAQ />}
-
       <JoinCollectiveSection />
+
+      {/* FAQ sits under Join the Collective. Hidden for now; flip to true to show.
+          Copy is editable in the Supabase `reverb_faq` table. */}
+      {SHOW_FAQ && <ReverbFAQ />
 
       <footer className="border-t border-border py-8 font-roc text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
         <div className="mx-auto w-full max-w-[1500px] px-5 text-center md:px-8">

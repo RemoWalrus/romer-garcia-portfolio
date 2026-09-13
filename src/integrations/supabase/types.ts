@@ -488,6 +488,36 @@ export type Database = {
         }
         Relationships: []
       }
+      reverb_faq: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          question: string
+          sort_order: number
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          question: string
+          sort_order?: number
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          question?: string
+          sort_order?: number
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
       reverb_gallery: {
         Row: {
           alt_text: string | null

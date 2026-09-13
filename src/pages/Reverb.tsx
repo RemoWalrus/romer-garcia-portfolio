@@ -14,7 +14,7 @@ import { useReverbFaq } from "@/hooks/use-reverb-faq";
 import frequencyCity from "@/assets/reverb-frequency-city.webp";
 
 /** Flip to true to show the FAQ section (sits under Join the Collective). */
-const SHOW_FAQ = false;
+const SHOW_FAQ = true;
 
 const FALLBACK_TITLE = "Reverb | Paradoxxia Universe Multimedia Franchise";
 const FALLBACK_DESC =

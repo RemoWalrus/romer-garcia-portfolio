@@ -13,6 +13,7 @@ import {
   SITE,
   esc,
   fetchCharacters,
+  fetchFaq,
   fetchMetadata,
   fetchTransmissions,
   imageUrl,
@@ -27,10 +28,11 @@ if (!existsSync(shellPath)) {
 }
 const shell = readFileSync(shellPath, "utf8");
 
-const [characters, transmissions, metadata] = await Promise.all([
+const [characters, transmissions, metadata, faq] = await Promise.all([
   fetchCharacters(),
   fetchTransmissions(),
   fetchMetadata(),
+  fetchFaq(REVERB_FAQ),
 ]);
 
 const m = (key, fallback) => metadata[key] ?? fallback;
@@ -199,7 +201,7 @@ const rosterJsonLd = {
       "@id": `${SITE}/reverb#faq`,
       isPartOf: { "@id": `${SITE}/reverb` },
       about: { "@id": `${SITE}/reverb#franchise` },
-      mainEntity: REVERB_FAQ.map((item) => ({
+      mainEntity: faq.map((item) => ({
         "@type": "Question",
         name: item.q,
         acceptedAnswer: { "@type": "Answer", text: item.a },
@@ -243,7 +245,7 @@ writePage(
     `      <p>${esc(m("reverb.logbook.body", ""))}</p>`,
     `      <h2>Frequently Asked</h2>`,
     "      <dl>",
-    ...REVERB_FAQ.flatMap((item) => [
+    ...faq.flatMap((item) => [
       `        <dt>${esc(item.q)}</dt>`,
       `        <dd>${esc(item.a)}</dd>`,
     ]),

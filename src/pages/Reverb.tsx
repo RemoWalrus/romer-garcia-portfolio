@@ -26,6 +26,7 @@ const Reverb = () => {
   const [active, setActive] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const allCharacters = useReverbCharacters();
+  const faq = useReverbFaq();
   const characters = allCharacters.filter((c) => !c.hidden);
   const [autoActive, setAutoActive] = useState<string | null>(null);
   const ids = characters.map((c) => c.id).join(",");

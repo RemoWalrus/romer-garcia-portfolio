@@ -58,3 +58,20 @@ export const esc = (s = "") =>
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+
+/**
+ * Reverb FAQ rows, editable in the Supabase `reverb_faq` table.
+ * Falls back to the bundled list so a build never loses the Q&A block.
+ */
+export async function fetchFaq(fallback = []) {
+  try {
+    const rows = await rest(
+      "reverb_faq?select=question,answer&visible=eq.true&order=sort_order.asc",
+    );
+    if (!rows.length) return fallback;
+    return rows.map((r) => ({ q: r.question, a: r.answer }));
+  } catch (e) {
+    console.warn("[reverb-data] faq unavailable:", e.message);
+    return fallback;
+  }
+}

@@ -1,5 +1,8 @@
 import { useReverbFaq } from "@/hooks/use-reverb-faq";
-import faqBgAsset from "@/assets/reverb-faq-bg.jpg.asset.json";
+
+/** Neon corridor backdrop, served from the public `images` bucket. */
+const FAQ_BG_URL =
+  "https://xxigtbxqgbdcfpmnrzvp.supabase.co/storage/v1/object/public/images/reverb/faq-bg.webp";
 
 /**
  * Visible, quotable Q&A block for the Reverb landing page.

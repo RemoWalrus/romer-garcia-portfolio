@@ -149,14 +149,18 @@ const rosterJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "WebPage",
+      // ProfilePage (mainEntity = the Collective organisation) so Google's
+      // Profile Page rich result resolves on this route.
+      "@type": ["ProfilePage", "WebPage"],
       "@id": `${SITE}/reverb`,
       url: `${SITE}/reverb`,
       name: "Reverb | Paradoxxia Universe Multimedia Franchise",
       description: REVERB_DESC,
       inLanguage: "en",
+      dateCreated: PROFILE_CREATED,
+      dateModified: PROFILE_MODIFIED,
       primaryImageOfPage: imageUrl(visible[0]?.image_file),
-      mainEntity: { "@id": `${SITE}/reverb#franchise` },
+      mainEntity: { "@id": `${SITE}/reverb#collective` },
       about: { "@id": `${SITE}/reverb#franchise` },
       isPartOf: { "@type": "WebSite", url: SITE, name: "Romer Garcia" },
     },

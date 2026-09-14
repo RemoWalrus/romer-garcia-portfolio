@@ -26,7 +26,7 @@ const ReverbFAQ = () => {
         aria-hidden
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.34] grayscale transition-opacity duration-500 dark:opacity-[0.46] dark:grayscale-0"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.28] transition-opacity duration-500 dark:opacity-[0.40]"
       />
       <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.16] dark:to-background/[0.22]" />

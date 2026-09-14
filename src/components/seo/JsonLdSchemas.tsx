@@ -28,6 +28,7 @@ export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaPr
     'https://www.linkedin.com/in/romer-garcia/',
     'https://www.youtube.com/@romergarcia',
     'https://www.instagram.com/remowalrus/',
+    'https://www.dvidshub.net/portfolio/1674800/romer-garcia',
   ];
 
   const sameAs = Array.from(

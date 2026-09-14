@@ -227,7 +227,7 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 
 **Access** — email-only gate. The visitor types the address they joined with and the `is_collective_member(_email)` Supabase function (SECURITY DEFINER) confirms it against `collective_subscribers` without exposing that table. The verified address is remembered in `localStorage` (`reverb-collective-email`) and re-checked on each visit, so removing a subscriber removes their access. Logic in `src/lib/collectiveAccess.ts`.
 
-**Adding files** — upload the file (Lovable Assets CDN via `lovable-assets create`, or any public URL) and add a row:
+**Adding files** — everything lives in Supabase. Upload the file to Storage → `images` bucket, folder `reverb/downloads/`, copy its public URL, then add a row to `reverb_downloads`:
 
 | Field | Notes |
 | --- | --- |

@@ -24,13 +24,24 @@ interface PersonSchemaProps {
 }
 
 export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaProps) => {
-  const sameAs = [
-    socialLinks.linkedin_url,
-    socialLinks.facebook_url,
-    socialLinks.twitter_url,
-    socialLinks.instagram_url,
-    socialLinks.youtube_url,
-  ].filter(Boolean);
+  const PROFILE_URLS = [
+    'https://www.linkedin.com/in/romer-garcia/',
+    'https://www.youtube.com/@romergarcia',
+    'https://www.instagram.com/remowalrus/',
+  ];
+
+  const sameAs = Array.from(
+    new Set(
+      [
+        ...PROFILE_URLS,
+        socialLinks.linkedin_url,
+        socialLinks.facebook_url,
+        socialLinks.twitter_url,
+        socialLinks.instagram_url,
+        socialLinks.youtube_url,
+      ].filter(Boolean) as string[]
+    )
+  );
 
   const personSchema = {
     "@context": "https://schema.org",

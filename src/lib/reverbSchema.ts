@@ -49,7 +49,7 @@ export function characterSchema(c: ReverbCharacter) {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "ProfilePage",
+        "@type": ["ProfilePage", "WebPage"],
         "@id": url,
         url,
         name: `${c.name} | Reverb Collective`,

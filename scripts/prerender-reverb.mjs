@@ -140,6 +140,10 @@ function breadcrumbs(trail) {
   };
 }
 
+// Profile Page rich results want creation/modification dates on the page node.
+const PROFILE_CREATED = "2026-08-01T00:00:00Z";
+const PROFILE_MODIFIED = new Date().toISOString();
+
 const visible = characters.filter((c) => !c.is_hidden);
 const indexable = visible.filter((c) => !c.is_locked && c.has_profile !== false);
 
@@ -149,14 +153,18 @@ const rosterJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "WebPage",
+      // ProfilePage (mainEntity = the Collective organisation) so Google's
+      // Profile Page rich result resolves on this route.
+      "@type": ["ProfilePage", "WebPage"],
       "@id": `${SITE}/reverb`,
       url: `${SITE}/reverb`,
       name: "Reverb | Paradoxxia Universe Multimedia Franchise",
       description: REVERB_DESC,
       inLanguage: "en",
+      dateCreated: PROFILE_CREATED,
+      dateModified: PROFILE_MODIFIED,
       primaryImageOfPage: imageUrl(visible[0]?.image_file),
-      mainEntity: { "@id": `${SITE}/reverb#franchise` },
+      mainEntity: { "@id": `${SITE}/reverb#collective` },
       about: { "@id": `${SITE}/reverb#franchise` },
       isPartOf: { "@type": "WebSite", url: SITE, name: "Romer Garcia" },
     },
@@ -186,6 +194,8 @@ const rosterJsonLd = {
       name: "Reverb Collective",
       url: `${SITE}/reverb`,
       description: "The Reverb Collective — the ensemble at the centre of the Reverb franchise.",
+      image: indexable.map((c) => imageUrl(c.image_file)).filter(Boolean),
+      mainEntityOfPage: { "@id": `${SITE}/reverb` },
       founder: { "@type": "Person", name: "Romer Garcia", url: SITE },
       member: indexable.map((c) => ({ "@id": `${SITE}/reverb/${c.id}#person` })),
     },
@@ -272,12 +282,14 @@ for (const c of visible) {
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "ProfilePage",
+            "@type": ["ProfilePage", "WebPage"],
             "@id": url,
             url,
             name: `${c.name} | Reverb Collective`,
             description,
             inLanguage: "en",
+            dateCreated: PROFILE_CREATED,
+            dateModified: PROFILE_MODIFIED,
             primaryImageOfPage: imageUrl(c.figure_file ?? c.image_file),
             mainEntity: { "@id": `${url}#person` },
             about: { "@id": `${url}#person` },
@@ -615,10 +627,12 @@ const staticRoutes = [
       "@graph": [
         paradoxxiaMusicGroup,
         {
-          "@type": "WebPage",
+          "@type": ["ProfilePage", "WebPage"],
           "@id": `${SITE}/paradoxxia`,
           url: `${SITE}/paradoxxia`,
           name: "Paradoxxia | AI Multimedia Artist & Music",
+          dateCreated: PROFILE_CREATED,
+          dateModified: PROFILE_MODIFIED,
           description:
             "Explore Paradoxxia, an AI-driven multimedia experience by Romer Garcia. Featuring AI-synthesized music on Spotify and Apple Music and an interactive character generator.",
           inLanguage: "en",

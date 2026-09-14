@@ -71,7 +71,7 @@ export const ParadoxxiaLandingSchema = () => {
 
   const webPageSchema = {
     "@context": "https://schema.org",
-    "@type": "WebPage",
+    "@type": ["ProfilePage", "WebPage"],
     "name": pageName,
     "url": url,
     "description": pageDescription,
@@ -81,6 +81,11 @@ export const ParadoxxiaLandingSchema = () => {
       "url": "https://romergarcia.com"
     },
     "author": romerGarciaCreator,
+    "mainEntity": {
+      "@type": "MusicGroup",
+      "name": name,
+      "sameAs": sameAs
+    },
     "about": {
       "@type": "MusicGroup",
       "name": name,

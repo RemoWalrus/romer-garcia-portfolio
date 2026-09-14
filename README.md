@@ -227,7 +227,15 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 
 **Access** — email-only gate. The visitor types the address they joined with and the `is_collective_member(_email)` Supabase function (SECURITY DEFINER) confirms it against `collective_subscribers` without exposing that table. The verified address is remembered in `localStorage` (`reverb-collective-email`) and re-checked on each visit, so removing a subscriber removes their access. Logic in `src/lib/collectiveAccess.ts`.
 
-**Adding files** — everything lives in Supabase. Upload the file to Storage → `images` bucket, folder `reverb/downloads/`, copy its public URL, then add a row to `reverb_downloads`:
+**Adding files** — everything lives in Supabase. Upload the file to Storage → `reverb-downloads` bucket (private; workspace policy blocks public buckets), then add a row to `reverb_downloads`. Because the bucket is private, URLs go through the `proxy-storage` edge function, which redirects to a short-lived signed URL:
+
+```
+https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/proxy-storage?bucket=reverb-downloads&file=<filename>
+```
+
+An RLS policy on `storage.objects` allows read access for `bucket_id = 'reverb-downloads'`, which is what lets that function sign the URL. Optimize before uploading: posters as progressive JPEG (quality ~82), previews as WebP (~700 px wide, quality ~74), wallpapers as JPEG at their target resolution with a WebP preview.
+
+Row fields:
 
 | Field | Notes |
 | --- | --- |

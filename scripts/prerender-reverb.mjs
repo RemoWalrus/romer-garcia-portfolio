@@ -747,6 +747,26 @@ const staticRoutes = [
       "Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.",
     keywords:
       "developer memes, coding humor, programming jokes, tech tips, coding trivia, Romer Garcia, software engineering memes, developer life",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": `${SITE}/meme`,
+          url: `${SITE}/meme`,
+          name: "Romer Garcia | Dev Memes & Coding Wisdom",
+          description:
+            "Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.",
+          inLanguage: "en",
+          isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          author: { "@type": "Person", name: "Romer Garcia", url: SITE },
+        },
+        breadcrumbs([
+          ["Home", SITE],
+          ["Dev Memes", `${SITE}/meme`],
+        ]),
+      ],
+    },
     body: [
       "      <h1>Dev memes and coding wisdom</h1>",
       "      <p>Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.</p>",

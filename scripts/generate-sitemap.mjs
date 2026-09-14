@@ -14,6 +14,7 @@ const entries = [
   { path: "/meme", changefreq: "monthly", priority: "0.5" },
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/reverb/transmissions", changefreq: "weekly", priority: "0.7" },
+  { path: "/reverb/downloads", changefreq: "monthly", priority: "0.6" },
 ];
 
 const characters = await fetchCharacters();

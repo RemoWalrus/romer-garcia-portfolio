@@ -38,6 +38,18 @@ export async function fetchTransmissions() {
   }
 }
 
+/** Visible Collective vault downloads, in display order. */
+export async function fetchDownloads() {
+  try {
+    return await rest(
+      "reverb_downloads?select=title,description,category,file_url,preview_url,size_label,sort_order&visible=eq.true&order=sort_order.asc",
+    );
+  } catch (e) {
+    console.warn("[reverb-data] downloads unavailable:", e.message);
+    return [];
+  }
+}
+
 /** Editable head metadata rows (`reverb.*`, `reverb.<id>.*`, ...). */
 export async function fetchMetadata() {
   try {

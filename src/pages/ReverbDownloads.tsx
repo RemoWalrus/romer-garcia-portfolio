@@ -286,12 +286,12 @@ const ReverbDownloads = () => {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors">
       <Helmet>
-        <title>Downloads | Reverb Collective</title>
+        <title>Free Downloads — Wallpapers &amp; Posters | Reverb</title>
         <meta
           name="description"
-          content="Members-only posters and wallpapers from the Reverb archive, plus the waiting list for printed posters."
+          content="Free Reverb wallpapers and posters for Collective members — desktop and phone backgrounds plus printable artwork, with a waiting list for printed posters."
         />
-        <meta name="robots" content="noindex, follow" />
+        <meta name="robots" content="index, follow" />
         <link rel="canonical" href={CANONICAL} />
       </Helmet>
 

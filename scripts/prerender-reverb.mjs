@@ -13,6 +13,7 @@ import {
   SITE,
   esc,
   fetchCharacters,
+  fetchDownloads,
   fetchFaq,
   fetchMetadata,
   fetchTransmissions,
@@ -28,11 +29,12 @@ if (!existsSync(shellPath)) {
 }
 const shell = readFileSync(shellPath, "utf8");
 
-const [characters, transmissions, metadata, faq] = await Promise.all([
+const [characters, transmissions, metadata, faq, downloads] = await Promise.all([
   fetchCharacters(),
   fetchTransmissions(),
   fetchMetadata(),
   fetchFaq(REVERB_FAQ),
+  fetchDownloads(),
 ]);
 
 const m = (key, fallback) => metadata[key] ?? fallback;
@@ -483,6 +485,80 @@ for (const t of transmissions) {
     ]
       .filter(Boolean)
       .join("\n"),
+  );
+}
+
+/* --------------------------------------------------- /reverb/downloads */
+
+{
+  const url = `${SITE}/reverb/downloads`;
+  const description = m(
+    "reverb.downloads.description",
+    "Free Reverb wallpapers and posters for Collective members — desktop and phone backgrounds plus printable artwork, with a waiting list for printed posters.",
+  );
+  const categories = [...new Set(downloads.map((d) => d.category))];
+  writePage(
+    "/reverb/downloads",
+    head({
+      title: m("reverb.downloads.title", "Free Downloads — Wallpapers & Posters | Reverb"),
+      description,
+      keywords: m(
+        "reverb.downloads.keywords",
+        "Reverb downloads, Reverb wallpapers, Reverb posters, Paradoxxia universe, free desktop wallpaper, phone wallpaper",
+      ),
+      canonical: url,
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": url,
+            name: "Reverb Downloads — Wallpapers & Posters",
+            url,
+            description,
+            inLanguage: "en",
+            isPartOf: { "@id": `${SITE}/reverb#franchise` },
+            about: { "@id": `${SITE}/reverb#franchise` },
+            hasPart: downloads.map((d) => ({
+              "@type": "WebPage",
+              name: d.title,
+              url,
+            })),
+          },
+          {
+            "@type": "CreativeWorkSeries",
+            "@id": `${SITE}/reverb#franchise`,
+            name: "Reverb",
+            url: `${SITE}/reverb`,
+            description: REVERB_DESC,
+          },
+          breadcrumbs([
+            ["Home", SITE],
+            ["Reverb", `${SITE}/reverb`],
+            ["Downloads", url],
+          ]),
+        ],
+      },
+    }),
+    [
+      "      <h1>Reverb Downloads — Wallpapers &amp; Posters</h1>",
+      `      <p>${esc(description)}</p>`,
+      "      <p>The vault is free for members of the Collective. Sign in with the email you joined with to download.</p>",
+      ...categories.flatMap((cat) => [
+        `      <h2>${esc(cat)}</h2>`,
+        "      <ul>",
+        ...downloads
+          .filter((d) => d.category === cat)
+          .map(
+            (d) =>
+              `        <li>${esc(d.title)}${d.size_label ? ` (${esc(d.size_label)})` : ""}${
+                d.description ? ` — ${esc(d.description)}` : ""
+              }</li>`,
+          ),
+        "      </ul>",
+      ]),
+      '      <p><a href="/reverb">Back to the Reverb Collective</a></p>',
+    ].join("\n"),
   );
 }
 

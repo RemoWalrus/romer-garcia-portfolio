@@ -140,6 +140,10 @@ function breadcrumbs(trail) {
   };
 }
 
+// Profile Page rich results want creation/modification dates on the page node.
+const PROFILE_CREATED = "2026-08-01T00:00:00Z";
+const PROFILE_MODIFIED = new Date().toISOString();
+
 const visible = characters.filter((c) => !c.is_hidden);
 const indexable = visible.filter((c) => !c.is_locked && c.has_profile !== false);
 

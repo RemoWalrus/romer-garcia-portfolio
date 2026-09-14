@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Lock, LockOpen, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { applyTheme, isDarkNow, setThemeOverride } from "@/lib/theme";
 import { setUnlocked, useReverbUnlocked } from "@/lib/reverbLock";
 import { JoinCollectiveCta } from "@/components/reverb/JoinCollective";
@@ -19,15 +20,16 @@ const ReverbLockToggle = () => {
   if (!isEditMode) return null;
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="outline"
+      size="icon"
       onClick={() => setUnlocked(!unlocked)}
       aria-label={unlocked ? "Lock unlockable profiles" : "Unlock hidden profiles"}
       title={unlocked ? "Unlockables: unlocked" : "Unlockables: locked"}
-      className="reverb-icon-button"
+      className="fixed bottom-[68px] right-4 z-50 bg-background/80 backdrop-blur-sm border-border"
     >
-      {unlocked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
-    </button>
+      {unlocked ? <LockOpen className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
+    </Button>
   );
 };
 
@@ -51,14 +53,15 @@ const ReverbThemeToggle = () => {
   if (!isEditMode) return null;
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="outline"
+      size="icon"
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="reverb-icon-button"
+      className="fixed bottom-4 right-4 z-50 bg-background/80 backdrop-blur-sm border-border"
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-    </button>
+      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+    </Button>
   );
 };
 

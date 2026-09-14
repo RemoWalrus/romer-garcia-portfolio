@@ -7,8 +7,9 @@
 # Proxy storage/image masking requests to Supabase Edge Functions
 /api/*  https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/:splat  200
 
-# Keep Lovable-hosted assets out of the SPA fallback
-/__l5e/*  /__l5e/:splat  200
+# Lovable-hosted assets (posters, wallpapers) live on the Lovable CDN, not in the
+# Netlify build output — proxy them so they don't hit the SPA fallback.
+/__l5e/*  https://romer-garcia-portfolio.lovable.app/__l5e/:splat  200!
 
 # Handle client-side routing - redirect all non-file requests to index.html
 /*    /index.html   200

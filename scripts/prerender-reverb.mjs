@@ -121,7 +121,10 @@ function writePage(route, headHtml, bodyHtml) {
     `<div id="root"></div>\n    <noscript>\n${bodyHtml}\n    </noscript>`,
   );
 
-  const out = resolve(DIST, `${route.replace(/^\//, "")}/index.html`);
+  // Write `<route>.html`, not `<route>/index.html`: a directory index makes
+  // Netlify 301 /reverb -> /reverb/, which mismatches the canonical and the
+  // sitemap and makes Search Console report "Page with redirect".
+  const out = resolve(DIST, `${route.replace(/^\//, "")}.html`);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
   console.log(`[prerender] ${route}`);

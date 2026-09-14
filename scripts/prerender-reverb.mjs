@@ -13,6 +13,7 @@ import {
   SITE,
   esc,
   fetchCharacters,
+  fetchDownloads,
   fetchFaq,
   fetchMetadata,
   fetchTransmissions,
@@ -28,11 +29,12 @@ if (!existsSync(shellPath)) {
 }
 const shell = readFileSync(shellPath, "utf8");
 
-const [characters, transmissions, metadata, faq] = await Promise.all([
+const [characters, transmissions, metadata, faq, downloads] = await Promise.all([
   fetchCharacters(),
   fetchTransmissions(),
   fetchMetadata(),
   fetchFaq(REVERB_FAQ),
+  fetchDownloads(),
 ]);
 
 const m = (key, fallback) => metadata[key] ?? fallback;

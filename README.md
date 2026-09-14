@@ -238,7 +238,7 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 | `size_label` | e.g. `2560 × 1440` |
 | `sort_order`, `visible` | Display order / hide a single item |
 
-**Print on demand** — not live. The "Want it printed?" button on each poster scrolls to the print form and writes to `reverb_print_waitlist` (email, `download_id`, `poster_title`, optional note). Visitors can only insert; reading is service-role only. Swap this section for a real shop link or checkout when fulfilment is chosen.
+**Print on demand** — not live. The "Want it printed?" button on each poster scrolls to the print form and writes to `reverb_print_waitlist` (email, `download_id`, `poster_title`, optional note). Read the list in the Supabase dashboard (Table Editor → `reverb_print_waitlist`); visitors can only add to it, never read it. Swap this section for a real shop link or checkout when fulfilment is chosen.
 
 The page is `noindex, follow` and excluded from the sitemap/pre-render, since it is gated.
 

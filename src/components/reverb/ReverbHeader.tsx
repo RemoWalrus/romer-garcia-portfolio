@@ -20,15 +20,16 @@ const ReverbLockToggle = () => {
   if (!isEditMode) return null;
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="outline"
+      size="icon"
       onClick={() => setUnlocked(!unlocked)}
       aria-label={unlocked ? "Lock unlockable profiles" : "Unlock hidden profiles"}
       title={unlocked ? "Unlockables: unlocked" : "Unlockables: locked"}
-      className="reverb-icon-button"
+      className="fixed bottom-[68px] right-4 z-50 bg-background/80 backdrop-blur-sm border-border"
     >
-      {unlocked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
-    </button>
+      {unlocked ? <LockOpen className="h-5 w-5" /> : <Lock className="h-5 w-5" />}
+    </Button>
   );
 };
 

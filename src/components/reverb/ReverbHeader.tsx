@@ -53,14 +53,15 @@ const ReverbThemeToggle = () => {
   if (!isEditMode) return null;
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="outline"
+      size="icon"
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="reverb-icon-button"
+      className="fixed bottom-4 right-4 z-50 bg-background/80 backdrop-blur-sm border-border"
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-    </button>
+      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+    </Button>
   );
 };
 

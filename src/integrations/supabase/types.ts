@@ -488,6 +488,48 @@ export type Database = {
         }
         Relationships: []
       }
+      reverb_downloads: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          file_url: string
+          id: string
+          preview_url: string | null
+          size_label: string | null
+          sort_order: number
+          title: string
+          updated_at: string
+          visible: boolean
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          file_url: string
+          id?: string
+          preview_url?: string | null
+          size_label?: string | null
+          sort_order?: number
+          title: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          file_url?: string
+          id?: string
+          preview_url?: string | null
+          size_label?: string | null
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
       reverb_faq: {
         Row: {
           answer: string
@@ -553,6 +595,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      reverb_print_waitlist: {
+        Row: {
+          created_at: string
+          download_id: string | null
+          email: string
+          id: string
+          note: string | null
+          poster_title: string | null
+        }
+        Insert: {
+          created_at?: string
+          download_id?: string | null
+          email: string
+          id?: string
+          note?: string | null
+          poster_title?: string | null
+        }
+        Update: {
+          created_at?: string
+          download_id?: string | null
+          email?: string
+          id?: string
+          note?: string | null
+          poster_title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reverb_print_waitlist_download_id_fkey"
+            columns: ["download_id"]
+            isOneToOne: false
+            referencedRelation: "reverb_downloads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       reverb_transmissions: {
         Row: {
@@ -732,6 +809,7 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      is_collective_member: { Args: { _email: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

@@ -21,7 +21,7 @@ const ReverbFAQ = () => {
       className="reverb-noise relative isolate overflow-hidden border-t border-border bg-background py-10 transition-colors md:py-14"
     >
       <img
-        src={faqBgAsset.url}
+        src={FAQ_BG_URL}
         alt=""
         aria-hidden
         loading="lazy"

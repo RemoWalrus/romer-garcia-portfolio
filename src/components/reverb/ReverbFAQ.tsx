@@ -1,4 +1,5 @@
 import { useReverbFaq } from "@/hooks/use-reverb-faq";
+import faqBgAsset from "@/assets/reverb-faq-bg.jpg.asset.json";
 
 /**
  * Visible, quotable Q&A block for the Reverb landing page.
@@ -14,8 +15,19 @@ const ReverbFAQ = () => {
   return (
     <section
       aria-labelledby="reverb-faq-title"
-      className="reverb-noise border-t border-border bg-background py-10 transition-colors md:py-14"
+      className="reverb-noise relative isolate overflow-hidden border-t border-border bg-background py-10 transition-colors md:py-14"
     >
+      <img
+        src={faqBgAsset.url}
+        alt=""
+        aria-hidden
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.34] grayscale transition-opacity duration-500 dark:opacity-[0.46] dark:grayscale-0"
+      />
+      <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.16] dark:to-background/[0.22]" />
+
       <div className="mx-auto w-full max-w-[1500px] px-5 md:px-8">
         <p className="font-roc text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
           Reverb // Questions

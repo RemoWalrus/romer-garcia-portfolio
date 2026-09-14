@@ -194,6 +194,15 @@ export const JoinCollectiveSection = () => {
           )}
         </p>
         <JoinCollectiveForm className="mt-8 text-left" />
+        <p className="mt-6 font-roc text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+          Already in?{" "}
+          <Link
+            to="/reverb/downloads"
+            className="underline underline-offset-4 transition-colors hover:text-foreground"
+          >
+            Get your posters and wallpapers
+          </Link>
+        </p>
       </div>
     </div>
   </section>

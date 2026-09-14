@@ -280,6 +280,8 @@ Other Reverb content sources:
 | `reverb_transmissions` | Transmission entries |
 | `reverb_archive_slots` | Locked/classified archive placeholders |
 | `reverb_faq` | FAQ questions/answers (visible block + FAQPage JSON-LD) |
+| `reverb_downloads` | Members-only posters/wallpapers |
+| `reverb_print_waitlist` | Interest list for printed posters |
 | `collective_subscribers` | Join the Collective signups (email, source page, referrer, UTM, status) |
 
 ## Hosting Note

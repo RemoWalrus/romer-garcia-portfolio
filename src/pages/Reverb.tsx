@@ -197,9 +197,9 @@ const Reverb = () => {
                   decoding="async"
                   className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ease-out ${
                     isActive
-                      ? "scale-[1.14] saturate-100"
-                      : "saturate-[0.72] contrast-[1.1] brightness-[0.75]"
-                  } ${dimmed ? "brightness-[0.48] saturate-[0.55]" : "brightness-100"}`}
+                      ? "grayscale-0 scale-[1.14]"
+                      : "grayscale contrast-[1.1] brightness-[0.75]"
+                  } ${dimmed ? "brightness-[0.48]" : "brightness-100"}`}
                 />
 
                 {/* Accent + readability gradients */}
@@ -308,7 +308,7 @@ const Reverb = () => {
           alt="Futuristic city skyline carrying the Reverb signal"
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.32] saturate-[0.72] transition-opacity duration-500 dark:opacity-[0.42] dark:saturate-[0.85]"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-[0.34] grayscale transition-opacity duration-500 dark:opacity-[0.46] dark:grayscale-0"
         />
         <div className="absolute inset-0 -z-10 bg-background/65 dark:bg-background/55" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-transparent to-background/[0.16] dark:to-background/[0.22]" />

@@ -227,7 +227,7 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 
 **Access** — email-only gate. The visitor types the address they joined with and the `is_collective_member(_email)` Supabase function (SECURITY DEFINER) confirms it against `collective_subscribers` without exposing that table. The verified address is remembered in `localStorage` (`reverb-collective-email`) and re-checked on each visit, so removing a subscriber removes their access. Logic in `src/lib/collectiveAccess.ts`.
 
-**Adding files** — upload the file (Lovable Assets CDN via `lovable-assets create`, or any public URL) and add a row:
+**Adding files** — everything lives in Supabase. Upload the file to Storage → `images` bucket, folder `reverb/downloads/`, copy its public URL, then add a row to `reverb_downloads`:
 
 | Field | Notes |
 | --- | --- |
@@ -238,7 +238,7 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 | `size_label` | e.g. `2560 × 1440` |
 | `sort_order`, `visible` | Display order / hide a single item |
 
-**Print on demand** — not live. The "Want it printed?" button on each poster scrolls to the print form and writes to `reverb_print_waitlist` (email, `download_id`, `poster_title`, optional note). Visitors can only insert; reading is service-role only. Swap this section for a real shop link or checkout when fulfilment is chosen.
+**Print on demand** — not live. The "Want it printed?" button on each poster scrolls to the print form and writes to `reverb_print_waitlist` (email, `download_id`, `poster_title`, optional note). Read the list in the Supabase dashboard (Table Editor → `reverb_print_waitlist`); visitors can only add to it, never read it. Swap this section for a real shop link or checkout when fulfilment is chosen.
 
 The page is `noindex, follow` and excluded from the sitemap/pre-render, since it is gated.
 

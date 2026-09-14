@@ -18,11 +18,13 @@
   status = 200
   force = true
 
-# Keep Lovable-hosted assets out of the SPA fallback
+# Lovable-hosted assets (posters, wallpapers) are not part of the Netlify build
+# output, so proxy them to the Lovable CDN instead of falling through to the SPA.
 [[redirects]]
   from = "/__l5e/*"
-  to = "/__l5e/:splat"
+  to = "https://romer-garcia-portfolio.lovable.app/__l5e/:splat"
   status = 200
+  force = true
 
 # SPA fallback
 [[redirects]]

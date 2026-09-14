@@ -221,6 +221,27 @@ Uploads go to the existing public `images` bucket under `reverb/transmissions/�
 ### Gallery media
 `reverb_gallery` holds each image/video once (`image_file`, `caption`, `alt_text`, `character_ids`, `media_type`, `sort_order`). Tag a group shot with several character ids and it appears on every one of those profiles without duplication. Thumbnails follow the `thumb-<filename>` convention in the same bucket folder.
 
+## Reverb // Downloads (`reverb_downloads`, `reverb_print_waitlist`)
+
+`/reverb/downloads` is a members-only vault of posters and wallpapers, plus a waiting list for printed posters.
+
+**Access** — email-only gate. The visitor types the address they joined with and the `is_collective_member(_email)` Supabase function (SECURITY DEFINER) confirms it against `collective_subscribers` without exposing that table. The verified address is remembered in `localStorage` (`reverb-collective-email`) and re-checked on each visit, so removing a subscriber removes their access. Logic in `src/lib/collectiveAccess.ts`.
+
+**Adding files** — upload the file (Lovable Assets CDN via `lovable-assets create`, or any public URL) and add a row:
+
+| Field | Notes |
+| --- | --- |
+| `title`, `description` | Description doubles as the image alt text |
+| `category` | `poster`, `wallpaper-desktop`, `wallpaper-mobile` (free-form; new values need a label in `GROUPS` in `src/pages/ReverbDownloads.tsx`) |
+| `file_url` | The file that downloads |
+| `preview_url` | Lighter web preview; falls back to `file_url` |
+| `size_label` | e.g. `2560 × 1440` |
+| `sort_order`, `visible` | Display order / hide a single item |
+
+**Print on demand** — not live. The "Want it printed?" button on each poster scrolls to the print form and writes to `reverb_print_waitlist` (email, `download_id`, `poster_title`, optional note). Visitors can only insert; reading is service-role only. Swap this section for a real shop link or checkout when fulfilment is chosen.
+
+The page is `noindex, follow` and excluded from the sitemap/pre-render, since it is gated.
+
 ## Reverb // FAQ (`reverb_faq`)
 
 The FAQ block is Supabase-editable — no code change or redeploy needed for copy.

@@ -1,19 +1,18 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.48.1'
+import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors'
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-}
+// Temporary token for this one-off upload. This function is deleted immediately after use.
+const UPLOAD_TOKEN = 'eduq-figure-replace-2026-09-15';
 
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
     const url = new URL(req.url);
     const token = url.searchParams.get('token');
-    if (token !== Deno.env.get('UPLOAD_TOKEN')) {
+    if (token !== UPLOAD_TOKEN) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

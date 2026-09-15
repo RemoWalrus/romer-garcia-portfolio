@@ -116,10 +116,15 @@ function writePage(route, headHtml, bodyHtml) {
   }
 
   html = html.replace("</head>", `${headHtml}\n  </head>`);
-  html = html.replace(
-    '<div id="root"></div>',
-    `<div id="root"></div>\n    <noscript>\n${bodyHtml}\n    </noscript>`,
-  );
+  // The shell's root div may contain the homepage's visually hidden H1; replace
+  // the whole element so each route ships only its own crawlable text.
+  const rootRe = /<div id="root">[\s\S]*?<\/div>/;
+  const rootReplacement = `<div id="root"></div>\n    <noscript>\n${bodyHtml}\n    </noscript>`;
+  if (rootRe.test(html)) {
+    html = html.replace(rootRe, rootReplacement);
+  } else {
+    throw new Error(`[prerender] root div not found in shell for ${route}`);
+  }
 
   // Write `<route>.html`, not `<route>/index.html`: a directory index makes
   // Netlify 301 /reverb -> /reverb/, which mismatches the canonical and the

@@ -122,7 +122,7 @@ const LinkInBio = () => {
           Design Lead &amp; AI-Driven Multimedia Strategist
         </p>
 
-        <nav aria-label="Social profiles" className="mt-4">
+        <nav aria-label="Social profiles" className="mt-3">
           <ul className="flex items-center gap-3">
             {circles.map(({ url, label, Icon }) =>
               url ? (

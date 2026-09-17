@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { getProxyUrl } from '@/utils/supabaseProxy';
 import { getTrafficSource, trackLinkClick } from '@/lib/linkTracking';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 interface Socials {
   facebook_url: string;
@@ -148,6 +149,7 @@ const LinkInBio = () => {
 
   return (
     <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-12 overflow-hidden">
+      <ThemeToggle />
       <Helmet>
         <title>Romer Garcia — All Links</title>
         <meta

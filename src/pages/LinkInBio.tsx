@@ -191,7 +191,7 @@ const LinkInBio = () => {
           decoding="async"
           className="w-full h-full object-cover object-top opacity-[0.35] dark:opacity-[0.6]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/55 from-[0%] via-[45%] to-background from-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[0%] via-background/55 via-[45%] to-background" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center">

@@ -182,16 +182,13 @@ const LinkInBio = () => {
         <script type="application/ld+json">{JSON.stringify(LINKS_JSON_LD)}</script>
       </Helmet>
 
-      {/* Camera-lens background — most visible at the top, fading to solid */}
+      {/* Camera-lens background — full image width at the top, fading to a soft gray */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <img
-          src={LENS_BG}
-          alt=""
-          loading="eager"
-          decoding="async"
-          className="w-full h-full object-cover object-top opacity-[0.35] dark:opacity-[0.6]"
+        <div
+          className="absolute inset-x-0 top-0 aspect-[1920/1786] md:aspect-auto md:h-full bg-no-repeat bg-top bg-[length:100%_auto] md:bg-cover md:bg-center opacity-[0.55] dark:opacity-[0.75] saturate-[1.25] [mask-image:linear-gradient(to_bottom,black_35%,transparent_95%)]"
+          style={{ backgroundImage: `url(${LENS_BG})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[0%] via-background/55 via-[45%] to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[0%] via-background/35 via-[45%] to-neutral-200 dark:to-background" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center">

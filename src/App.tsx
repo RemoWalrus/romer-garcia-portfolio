@@ -21,6 +21,7 @@ const Reverb = lazy(() => import("./pages/Reverb"));
 const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
 const ReverbTransmissions = lazy(() => import("./pages/ReverbTransmissions"));
 const ReverbDownloads = lazy(() => import("./pages/ReverbDownloads"));
+const LinkInBio = lazy(() => import("./pages/LinkInBio"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Toasts are never needed for first paint — load them once the page is idle.

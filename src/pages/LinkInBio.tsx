@@ -148,7 +148,7 @@ const LinkInBio = () => {
               <li key={href}>
                 <a
                   href={href}
-                  className="block w-full bg-secondary border border-border px-5 py-4 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
+                  className="block w-full bg-secondary border border-border px-5 py-3.5 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
                 >
                   <span className="block font-roc text-lg font-black tracking-[0.08em] uppercase">
                     {label}

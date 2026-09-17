@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { getProxyUrl } from '@/utils/supabaseProxy';
+import { getTrafficSource, trackLinkClick } from '@/lib/linkTracking';
 
 interface Socials {
   facebook_url: string;

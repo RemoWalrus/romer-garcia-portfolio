@@ -68,7 +68,7 @@ const LinkInBio = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-14 overflow-hidden">
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-12 overflow-hidden">
       <Helmet>
         <title>Romer Garcia — All Links</title>
         <meta

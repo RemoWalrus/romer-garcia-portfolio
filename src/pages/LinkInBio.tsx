@@ -114,9 +114,9 @@ const LinkInBio = () => {
           width={112}
           height={112}
         />
-        <h1 className="mt-5 font-roc text-3xl tracking-tighter lowercase">
-          <span className="font-medium">romer</span>
-          <span className="font-thin text-muted-foreground">garcia</span>
+        <h1 className="mt-5 font-roc text-4xl font-black tracking-tighter lowercase">
+          <span className="text-foreground">romer</span>
+          <span className="font-medium text-muted-foreground">garcia</span>
         </h1>
         <p className="mt-2 text-sm text-muted-foreground text-center">
           Design Lead &amp; AI-Driven Multimedia Strategist
@@ -150,10 +150,7 @@ const LinkInBio = () => {
                   href={href}
                   className="block w-full bg-secondary border border-border px-5 py-4 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
                 >
-                  <span
-                    className="block text-base font-bold tracking-[0.12em] uppercase"
-                    style={{ fontFamily: '"ab-karuta-bold", sans-serif' }}
-                  >
+                  <span className="block font-roc text-lg font-black tracking-[0.08em] uppercase">
                     {label}
                   </span>
                   <span className="mt-1 block text-xs text-muted-foreground">{blurb}</span>

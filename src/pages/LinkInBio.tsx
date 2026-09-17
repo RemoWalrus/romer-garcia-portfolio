@@ -101,7 +101,7 @@ const LinkInBio = () => {
           alt=""
           loading="eager"
           decoding="async"
-          className="w-full h-full object-cover opacity-[0.12] dark:opacity-[0.3]"
+          className="w-full h-full object-cover opacity-[0.2] dark:opacity-[0.45]"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
       </div>
@@ -114,15 +114,15 @@ const LinkInBio = () => {
           width={112}
           height={112}
         />
-        <h1 className="mt-5 font-roc text-4xl font-black tracking-tighter lowercase">
+        <h1 className="mt-5 font-roc text-5xl font-medium tracking-tighter lowercase">
           <span className="text-foreground">romer</span>
-          <span className="font-medium text-muted-foreground">garcia</span>
+          <span className="font-thin text-muted-foreground">garcia</span>
         </h1>
         <p className="mt-2 text-sm text-muted-foreground text-center">
           Design Lead &amp; AI-Driven Multimedia Strategist
         </p>
 
-        <nav aria-label="Social profiles" className="mt-6">
+        <nav aria-label="Social profiles" className="mt-4">
           <ul className="flex items-center gap-3">
             {circles.map(({ url, label, Icon }) =>
               url ? (
@@ -142,7 +142,7 @@ const LinkInBio = () => {
           </ul>
         </nav>
 
-        <main className="mt-8 w-full max-w-sm">
+        <main className="mt-5 w-full max-w-sm">
           <ul className="flex flex-col gap-3">
             {LINKS.map(({ label, href, blurb }) => (
               <li key={href}>

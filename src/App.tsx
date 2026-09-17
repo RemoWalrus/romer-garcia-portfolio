@@ -21,6 +21,7 @@ const Reverb = lazy(() => import("./pages/Reverb"));
 const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
 const ReverbTransmissions = lazy(() => import("./pages/ReverbTransmissions"));
 const ReverbDownloads = lazy(() => import("./pages/ReverbDownloads"));
+const LinkInBio = lazy(() => import("./pages/LinkInBio"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Toasts are never needed for first paint — load them once the page is idle.
@@ -194,6 +195,7 @@ const App = () => {
                 <Route path="/reverb" element={<Reverb />} />
                 <Route path="/reverb/transmissions" element={<ReverbTransmissions />} />
                 <Route path="/reverb/downloads" element={<ReverbDownloads />} />
+                <Route path="/links" element={<LinkInBio />} />
                 <Route path="/reverb/transmissions/:slug" element={<ReverbTransmission />} />
                 <Route path="/reverb/:id" element={<ReverbCharacter />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

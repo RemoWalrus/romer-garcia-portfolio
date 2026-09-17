@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { getProxyUrl } from '@/utils/supabaseProxy';
+import { getTrafficSource, trackLinkClick } from '@/lib/linkTracking';
 
 interface Socials {
   facebook_url: string;
@@ -89,6 +90,30 @@ const LINKS_JSON_LD = {
 
 const LinkInBio = () => {
   const [socials, setSocials] = useState<Socials>(FALLBACK_SOCIALS);
+
+  // Record where this visit came from (IG, TikTok, …) once GA is ready.
+  useEffect(() => {
+    let tries = 0;
+    const timer = window.setInterval(() => {
+      tries += 1;
+      if (window.gtag) {
+        const { source, medium, campaign, referrer } = getTrafficSource();
+        window.gtag('event', 'link_in_bio_view', {
+          event_category: 'link_in_bio',
+          event_label: source,
+          traffic_source: source,
+          traffic_medium: medium,
+          traffic_campaign: campaign,
+          page_referrer: referrer,
+        });
+        window.clearInterval(timer);
+      } else if (tries > 20) {
+        window.clearInterval(timer);
+      }
+    }, 500);
+    return () => window.clearInterval(timer);
+  }, []);
+
 
   // Socials stay editable from the Supabase dashboard (sections.social).
   useEffect(() => {
@@ -193,6 +218,7 @@ const LinkInBio = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    onClick={() => trackLinkClick(label, url, 'social')}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
                   >
                     <Icon className="w-[18px] h-[18px]" aria-hidden="true" />
@@ -209,6 +235,7 @@ const LinkInBio = () => {
               <li key={href}>
                 <a
                   href={href}
+                  onClick={() => trackLinkClick(label, href, 'destination')}
                   className="block w-full bg-secondary border border-border px-5 py-3.5 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
                 >
                   <span className="block font-roc text-lg font-black tracking-[0.08em] uppercase">

@@ -131,7 +131,7 @@ const RoutedCursor = () => {
 
   const useNeonCursor = location.pathname === '/char-gen' || location.pathname === '/paradoxxia' || location.pathname === '/story';
   const useBlackCursor = location.pathname === '/paradoxxia' && isYellowPhase;
-  const noTrail = location.pathname === '/story' || location.pathname.startsWith('/reverb');
+  const noTrail = location.pathname === '/story' || location.pathname.startsWith('/reverb') || location.pathname === '/links';
 
   return (
     <CustomCursor

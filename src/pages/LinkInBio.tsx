@@ -92,6 +92,13 @@ const LinkInBio = () => {
         />
         <meta name="twitter:image" content="https://romergarcia.com/og-image.png" />
         <meta name="robots" content="index, follow" />
+        <meta
+          name="keywords"
+          content="Romer Garcia, links, link in bio, portfolio, Reverb, Paradoxxia, AI character generator, dev memes, social profiles"
+        />
+        <meta property="og:image:alt" content="Romer Garcia" />
+        <meta property="og:site_name" content="Romer Garcia" />
+        <script type="application/ld+json">{JSON.stringify(LINKS_JSON_LD)}</script>
       </Helmet>
 
       {/* Camera-lens background from the portfolio hero, kept subtle */}

@@ -90,6 +90,30 @@ const LINKS_JSON_LD = {
 const LinkInBio = () => {
   const [socials, setSocials] = useState<Socials>(FALLBACK_SOCIALS);
 
+  // Record where this visit came from (IG, TikTok, …) once GA is ready.
+  useEffect(() => {
+    let tries = 0;
+    const timer = window.setInterval(() => {
+      tries += 1;
+      if (window.gtag) {
+        const { source, medium, campaign, referrer } = getTrafficSource();
+        window.gtag('event', 'link_in_bio_view', {
+          event_category: 'link_in_bio',
+          event_label: source,
+          traffic_source: source,
+          traffic_medium: medium,
+          traffic_campaign: campaign,
+          page_referrer: referrer,
+        });
+        window.clearInterval(timer);
+      } else if (tries > 20) {
+        window.clearInterval(timer);
+      }
+    }, 500);
+    return () => window.clearInterval(timer);
+  }, []);
+
+
   // Socials stay editable from the Supabase dashboard (sections.social).
   useEffect(() => {
     const projectId = import.meta.env.VITE_SUPABASE_PROJECT_ID;

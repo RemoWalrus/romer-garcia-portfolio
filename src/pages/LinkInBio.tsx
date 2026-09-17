@@ -114,7 +114,7 @@ const LinkInBio = () => {
           width={112}
           height={112}
         />
-        <h1 className="mt-5 font-roc text-5xl font-medium tracking-tighter lowercase">
+        <h1 className="mt-4 font-roc text-[55px] leading-none font-medium tracking-tighter lowercase">
           <span className="text-foreground">romer</span>
           <span className="font-thin text-muted-foreground">garcia</span>
         </h1>

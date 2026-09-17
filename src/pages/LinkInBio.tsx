@@ -68,7 +68,7 @@ const LinkInBio = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-14 overflow-hidden">
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-12 overflow-hidden">
       <Helmet>
         <title>Romer Garcia — All Links</title>
         <meta
@@ -114,7 +114,7 @@ const LinkInBio = () => {
           width={112}
           height={112}
         />
-        <h1 className="mt-5 font-roc text-5xl font-medium tracking-tighter lowercase">
+        <h1 className="mt-4 font-roc text-[55px] leading-none font-medium tracking-tighter lowercase">
           <span className="text-foreground">romer</span>
           <span className="font-thin text-muted-foreground">garcia</span>
         </h1>
@@ -122,7 +122,7 @@ const LinkInBio = () => {
           Design Lead &amp; AI-Driven Multimedia Strategist
         </p>
 
-        <nav aria-label="Social profiles" className="mt-4">
+        <nav aria-label="Social profiles" className="mt-3">
           <ul className="flex items-center gap-3">
             {circles.map(({ url, label, Icon }) =>
               url ? (
@@ -142,13 +142,13 @@ const LinkInBio = () => {
           </ul>
         </nav>
 
-        <main className="mt-5 w-full max-w-sm">
-          <ul className="flex flex-col gap-3">
+        <main className="mt-4 w-full max-w-sm">
+          <ul className="flex flex-col gap-2.5">
             {LINKS.map(({ label, href, blurb }) => (
               <li key={href}>
                 <a
                   href={href}
-                  className="block w-full bg-secondary border border-border px-5 py-4 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
+                  className="block w-full bg-secondary border border-border px-5 py-3.5 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
                 >
                   <span className="block font-roc text-lg font-black tracking-[0.08em] uppercase">
                     {label}
@@ -160,7 +160,7 @@ const LinkInBio = () => {
           </ul>
         </main>
 
-        <p className="mt-10 text-xs text-muted-foreground">
+        <p className="mt-8 text-xs text-muted-foreground">
           © {new Date().getFullYear()} Romer Garcia
         </p>
       </div>

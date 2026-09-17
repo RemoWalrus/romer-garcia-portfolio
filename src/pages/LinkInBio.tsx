@@ -142,8 +142,8 @@ const LinkInBio = () => {
           </ul>
         </nav>
 
-        <main className="mt-5 w-full max-w-sm">
-          <ul className="flex flex-col gap-3">
+        <main className="mt-4 w-full max-w-sm">
+          <ul className="flex flex-col gap-2.5">
             {LINKS.map(({ label, href, blurb }) => (
               <li key={href}>
                 <a

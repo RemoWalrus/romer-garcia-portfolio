@@ -182,16 +182,16 @@ const LinkInBio = () => {
         <script type="application/ld+json">{JSON.stringify(LINKS_JSON_LD)}</script>
       </Helmet>
 
-      {/* Camera-lens background from the portfolio hero, kept subtle */}
+      {/* Camera-lens background — most visible at the top, fading to solid */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <img
           src={LENS_BG}
           alt=""
           loading="eager"
           decoding="async"
-          className="w-full h-full object-cover opacity-[0.2] dark:opacity-[0.45]"
+          className="w-full h-full object-cover object-top opacity-[0.35] dark:opacity-[0.6]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/55 from-[0%] via-[45%] to-background from-transparent" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center">

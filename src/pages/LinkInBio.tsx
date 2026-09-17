@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
+import { getProxyUrl } from '@/utils/supabaseProxy';
 
 interface Socials {
   facebook_url: string;
@@ -19,6 +20,10 @@ const FALLBACK_SOCIALS: Socials = {
   instagram_url: 'https://www.instagram.com/remowalrus/',
   youtube_url: 'https://www.youtube.com/@romergarcia',
 };
+
+// Same camera-lens artwork as the portfolio hero section.
+const LENS_BG = getProxyUrl('images', 'romergarciacover.webp');
+const PROFILE_PHOTO = getProxyUrl('profile', 'RomerSelfPortrait.jpg');
 
 const LINKS = [
   { label: 'Portfolio', href: '/', blurb: 'Selected work & case studies' },
@@ -63,7 +68,7 @@ const LinkInBio = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-14">
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center justify-center px-6 py-14 overflow-hidden">
       <Helmet>
         <title>Romer Garcia — All Links</title>
         <meta
@@ -89,57 +94,79 @@ const LinkInBio = () => {
         <meta name="robots" content="index, follow" />
       </Helmet>
 
-      <img
-        src="/favicon-512.png"
-        alt="Romer Garcia — RG monogram"
-        className="w-20 h-20 rounded-full border border-border"
-        width={80}
-        height={80}
-      />
-      <h1 className="mt-5 text-2xl font-bold tracking-[0.08em] lowercase">romergarcia</h1>
-      <p className="mt-2 text-sm text-muted-foreground text-center">
-        Design Lead &amp; AI-Driven Multimedia Strategist
-      </p>
+      {/* Camera-lens background from the portfolio hero, kept subtle */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <img
+          src={LENS_BG}
+          alt=""
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover opacity-[0.12] dark:opacity-[0.3]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/60" />
+      </div>
 
-      <nav aria-label="Social profiles" className="mt-6">
-        <ul className="flex items-center gap-3">
-          {circles.map(({ url, label, Icon }) =>
-            url ? (
-              <li key={label}>
+      <div className="relative z-10 flex flex-col items-center">
+        <img
+          src={PROFILE_PHOTO}
+          alt="Romer Garcia"
+          className="w-28 h-28 rounded-full object-cover border border-border"
+          width={112}
+          height={112}
+        />
+        <h1 className="mt-5 font-roc text-3xl tracking-tighter lowercase">
+          <span className="font-medium">romer</span>
+          <span className="font-thin text-muted-foreground">garcia</span>
+        </h1>
+        <p className="mt-2 text-sm text-muted-foreground text-center">
+          Design Lead &amp; AI-Driven Multimedia Strategist
+        </p>
+
+        <nav aria-label="Social profiles" className="mt-6">
+          <ul className="flex items-center gap-3">
+            {circles.map(({ url, label, Icon }) =>
+              url ? (
+                <li key={label}>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+                  >
+                    <Icon className="w-[18px] h-[18px]" aria-hidden="true" />
+                  </a>
+                </li>
+              ) : null,
+            )}
+          </ul>
+        </nav>
+
+        <main className="mt-8 w-full max-w-sm">
+          <ul className="flex flex-col gap-3">
+            {LINKS.map(({ label, href, blurb }) => (
+              <li key={href}>
                 <a
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
+                  href={href}
+                  className="block w-full bg-secondary border border-border px-5 py-4 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
                 >
-                  <Icon className="w-[18px] h-[18px]" aria-hidden="true" />
+                  <span
+                    className="block text-base font-bold tracking-[0.12em] uppercase"
+                    style={{ fontFamily: '"ab-karuta-bold", sans-serif' }}
+                  >
+                    {label}
+                  </span>
+                  <span className="mt-1 block text-xs text-muted-foreground">{blurb}</span>
                 </a>
               </li>
-            ) : null,
-          )}
-        </ul>
-      </nav>
+            ))}
+          </ul>
+        </main>
 
-      <main className="mt-8 w-full max-w-sm">
-        <ul className="flex flex-col gap-3">
-          {LINKS.map(({ label, href, blurb }) => (
-            <li key={href}>
-              <a
-                href={href}
-                className="block w-full border border-border px-5 py-4 text-center transition-colors hover:bg-foreground hover:text-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
-              >
-                <span className="block text-sm font-bold uppercase tracking-[0.18em]">{label}</span>
-                <span className="mt-1 block text-xs text-muted-foreground">{blurb}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </main>
-
-      <p className="mt-10 text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Romer Garcia
-      </p>
+        <p className="mt-10 text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Romer Garcia
+        </p>
+      </div>
     </div>
   );
 };

@@ -218,6 +218,7 @@ const LinkInBio = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
+                    onClick={() => trackLinkClick(label, url, 'social')}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:text-foreground hover:border-foreground"
                   >
                     <Icon className="w-[18px] h-[18px]" aria-hidden="true" />

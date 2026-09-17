@@ -33,6 +33,60 @@ const LINKS = [
   { label: 'Dev Memes', href: '/meme', blurb: 'A new one every refresh' },
 ];
 
+const SITE = 'https://romergarcia.com';
+
+// Mirrors the pre-rendered structured data in scripts/prerender-reverb.mjs.
+const LINKS_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfilePage',
+      '@id': `${SITE}/links`,
+      url: `${SITE}/links`,
+      name: 'Romer Garcia — All Links',
+      description:
+        'Every Romer Garcia destination in one place — portfolio, Reverb, Paradoxxia, the AI character generator and dev memes, plus social profiles.',
+      inLanguage: 'en',
+      isPartOf: { '@type': 'WebSite', name: 'Romer Garcia Portfolio', url: SITE },
+      mainEntity: {
+        '@type': 'Person',
+        '@id': `${SITE}#person`,
+        name: 'Romer Garcia',
+        url: SITE,
+        jobTitle: 'Design Lead & AI-Driven Multimedia Strategist',
+        image: PROFILE_PHOTO,
+        sameAs: [
+          'https://www.linkedin.com/in/romer-garcia/',
+          'https://www.youtube.com/@romergarcia',
+          'https://www.instagram.com/remowalrus/',
+          'https://www.dvidshub.net/portfolio/1674800/romer-garcia',
+        ],
+      },
+      about: { '@id': `${SITE}#person` },
+    },
+    {
+      '@type': 'ItemList',
+      '@id': `${SITE}/links#destinations`,
+      name: 'Romer Garcia destinations',
+      numberOfItems: LINKS.length,
+      itemListElement: LINKS.map((l, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: l.label,
+        url: l.href === '/' ? SITE : `${SITE}${l.href}`,
+        description: l.blurb,
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+        { '@type': 'ListItem', position: 2, name: 'Links', item: `${SITE}/links` },
+      ],
+    },
+  ],
+};
+
 const LinkInBio = () => {
   const [socials, setSocials] = useState<Socials>(FALLBACK_SOCIALS);
 
@@ -92,6 +146,13 @@ const LinkInBio = () => {
         />
         <meta name="twitter:image" content="https://romergarcia.com/og-image.png" />
         <meta name="robots" content="index, follow" />
+        <meta
+          name="keywords"
+          content="Romer Garcia, links, link in bio, portfolio, Reverb, Paradoxxia, AI character generator, dev memes, social profiles"
+        />
+        <meta property="og:image:alt" content="Romer Garcia" />
+        <meta property="og:site_name" content="Romer Garcia" />
+        <script type="application/ld+json">{JSON.stringify(LINKS_JSON_LD)}</script>
       </Helmet>
 
       {/* Camera-lens background from the portfolio hero, kept subtle */}

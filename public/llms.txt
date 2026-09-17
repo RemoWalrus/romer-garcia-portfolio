@@ -18,6 +18,7 @@ Reverb is an original character-driven narrative franchise set in the Paradoxxia
 The franchise has six character sheets: five public members of the Reverb Collective plus one hidden variant. Story content is released as serialized "transmissions" — dated archive entries containing artwork, recovered documents, lore, locations, audio and anomalies. Parts of the archive and some character sheets are locked and unlock over time.
 
 - [Reverb overview](https://romergarcia.com/reverb): franchise premise, the Collective roster, and an FAQ.
+- [Reverb downloads](https://romergarcia.com/reverb/downloads): free wallpapers and printable posters for Collective members.
 - [Reverb (character)](https://romergarcia.com/reverb/reverb): Urban Operative and founder of the Collective.
 - [Spark](https://romergarcia.com/reverb/spark): demolitions, close-quarters, runner.
 - [Harmonix](https://romergarcia.com/reverb/harmonix): strategy and tactical technology.
@@ -42,5 +43,6 @@ Paradoxxia is an AI-synthesized multimedia artist and character entity created b
 
 ## Optional
 
+- [All links](https://romergarcia.com/links): link-in-bio hub listing every Romer Garcia destination and social profile.
 - [Dev memes](https://romergarcia.com/meme): rotating developer memes and coding trivia.
 - [Sitemap](https://romergarcia.com/sitemap.xml)

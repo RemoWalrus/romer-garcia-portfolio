@@ -814,12 +814,20 @@ const staticRoutes = [
           description:
             "Every Romer Garcia destination in one place — portfolio, Reverb, Paradoxxia, the AI character generator and dev memes, plus social profiles.",
           inLanguage: "en",
+          dateCreated: PROFILE_CREATED,
+          dateModified: PROFILE_MODIFIED,
           isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          primaryImageOfPage: `${SITE}/og-image.png`,
           mainEntity: {
             "@type": "Person",
+            "@id": `${SITE}#person`,
             name: "Romer Garcia",
             url: SITE,
+            image:
+              "https://xxigtbxqgbdcfpmnrzvp.supabase.co/functions/v1/download-file?bucket=profile&file=RomerSelfPortrait.jpg",
             jobTitle: "Design Lead & AI-Driven Multimedia Strategist",
+            description:
+              "Design Lead and AI-driven multimedia strategist; creator of the Reverb franchise and the AI-synthesized artist Paradoxxia.",
             sameAs: [
               "https://www.linkedin.com/in/romer-garcia/",
               "https://www.youtube.com/@romergarcia",
@@ -827,8 +835,44 @@ const staticRoutes = [
               "https://www.dvidshub.net/portfolio/1674800/romer-garcia",
             ],
           },
-          about: { "@type": "Person", name: "Romer Garcia", url: SITE },
-          author: { "@type": "Person", name: "Romer Garcia", url: SITE },
+          about: { "@id": `${SITE}#person` },
+          author: { "@id": `${SITE}#person` },
+          mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE}/links` },
+          significantLink: [
+            SITE,
+            `${SITE}/reverb`,
+            `${SITE}/paradoxxia`,
+            `${SITE}/char-gen`,
+            `${SITE}/meme`,
+          ],
+        },
+        {
+          "@type": "ItemList",
+          "@id": `${SITE}/links#destinations`,
+          name: "Romer Garcia destinations",
+          itemListOrder: "https://schema.org/ItemListOrderAscending",
+          numberOfItems: 5,
+          itemListElement: [
+            ["Portfolio", SITE, "Selected work and case studies"],
+            ["Reverb", `${SITE}/reverb`, "Multimedia franchise — meet the Collective"],
+            [
+              "Paradoxxia",
+              `${SITE}/paradoxxia`,
+              "AI-synthesized music and multimedia artist",
+            ],
+            [
+              "Character Generator",
+              `${SITE}/char-gen`,
+              "Create cinematic sci-fi characters with AI",
+            ],
+            ["Dev Memes", `${SITE}/meme`, "A new developer meme every refresh"],
+          ].map(([name, url, description], i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name,
+            url,
+            description,
+          })),
         },
         breadcrumbs([
           ["Home", SITE],

@@ -188,7 +188,7 @@ const LinkInBio = () => {
           className="absolute inset-x-0 top-0 aspect-[1920/1786] md:aspect-auto md:h-full bg-no-repeat bg-top bg-[length:100%_auto] md:bg-cover md:bg-center opacity-[0.3] dark:opacity-[0.75] saturate-[1.25] brightness-[1.25] dark:brightness-100 [mask-image:linear-gradient(to_bottom,black_35%,transparent_95%)]"
           style={{ backgroundImage: `url(${LENS_BG})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-100/60 from-[0%] via-background/40 via-[45%] to-neutral-200 dark:from-transparent dark:via-background/35 dark:to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-100/60 from-[0%] via-neutral-200/40 via-[45%] to-neutral-200 dark:from-transparent dark:via-background/35 dark:to-background" />
       </div>
 
       <div className="relative z-10 flex flex-col items-center">

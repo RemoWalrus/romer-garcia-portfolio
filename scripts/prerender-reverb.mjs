@@ -794,6 +794,61 @@ const staticRoutes = [
       "      <p>Random developer memes, coding tips, and tech trivia curated by Romer Garcia. Refresh for a new one every time.</p>",
     ].join("\n"),
   },
+  {
+    path: "/links",
+    prefix: "links",
+    title: "Romer Garcia — All Links",
+    description:
+      "Every Romer Garcia destination in one place — portfolio, Reverb, Paradoxxia, the Paradoxxia AI character generator and dev memes, plus social profiles.",
+    keywords:
+      "Romer Garcia, links, link in bio, portfolio, Reverb, Paradoxxia, AI character generator, dev memes, social profiles",
+    image: `${SITE}/og-image.png`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ProfilePage",
+          "@id": `${SITE}/links`,
+          url: `${SITE}/links`,
+          name: "Romer Garcia — All Links",
+          description:
+            "Every Romer Garcia destination in one place — portfolio, Reverb, Paradoxxia, the AI character generator and dev memes, plus social profiles.",
+          inLanguage: "en",
+          isPartOf: { "@type": "WebSite", name: "Romer Garcia Portfolio", url: SITE },
+          mainEntity: {
+            "@type": "Person",
+            name: "Romer Garcia",
+            url: SITE,
+            jobTitle: "Design Lead & AI-Driven Multimedia Strategist",
+            sameAs: [
+              "https://www.linkedin.com/in/romer-garcia/",
+              "https://www.youtube.com/@romergarcia",
+              "https://www.instagram.com/remowalrus/",
+              "https://www.dvidshub.net/portfolio/1674800/romer-garcia",
+            ],
+          },
+          about: { "@type": "Person", name: "Romer Garcia", url: SITE },
+          author: { "@type": "Person", name: "Romer Garcia", url: SITE },
+        },
+        breadcrumbs([
+          ["Home", SITE],
+          ["Links", `${SITE}/links`],
+        ]),
+      ],
+    },
+    body: [
+      "      <h1>romergarcia</h1>",
+      "      <p>Romer Garcia — Design Lead &amp; AI-Driven Multimedia Strategist. Every destination in one place:</p>",
+      "      <ul>",
+      '        <li><a href="/">Portfolio</a> — selected work &amp; case studies</li>',
+      '        <li><a href="/reverb">Reverb</a> — multimedia franchise, meet the Collective</li>',
+      '        <li><a href="/paradoxxia">Paradoxxia</a> — AI-synthesized music &amp; multimedia artist</li>',
+      '        <li><a href="/char-gen">Character Generator</a> — create cinematic sci-fi characters with AI</li>',
+      '        <li><a href="/meme">Dev Memes</a> — a new one every refresh</li>',
+      "      </ul>",
+      '      <p>Social: <a href="https://www.linkedin.com/in/romer-garcia/">LinkedIn</a>, <a href="https://www.instagram.com/remowalrus/">Instagram</a>, <a href="https://www.youtube.com/@romergarcia">YouTube</a></p>',
+    ].join("\n"),
+  },
 ];
 
 for (const r of staticRoutes) {

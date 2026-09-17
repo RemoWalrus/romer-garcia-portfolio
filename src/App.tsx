@@ -195,6 +195,7 @@ const App = () => {
                 <Route path="/reverb" element={<Reverb />} />
                 <Route path="/reverb/transmissions" element={<ReverbTransmissions />} />
                 <Route path="/reverb/downloads" element={<ReverbDownloads />} />
+                <Route path="/links" element={<LinkInBio />} />
                 <Route path="/reverb/transmissions/:slug" element={<ReverbTransmission />} />
                 <Route path="/reverb/:id" element={<ReverbCharacter />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

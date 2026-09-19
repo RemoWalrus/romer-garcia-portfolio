@@ -26,8 +26,8 @@ const IndexInner = () => {
 
   const meta = usePageMetaFromData(undefined, metadata, {
     title: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
-    description: 'Romer Garcia is a Design Lead and AI-driven multimedia strategist with a U.S. Army background. Browse his portfolio of digital campaigns, brand identity systems, AI-powered creative tools, and multimedia projects that blend strategy with visual storytelling.',
-    keywords: 'Romer Garcia, Design Lead, Multimedia Designer, AI Design, Digital Media, Brand Transformation, U.S. Army Veteran, Creative Strategy, Digital Campaigns, Generative AI',
+    description: 'New York multimedia designer and AI-driven design lead behind high-impact digital campaigns, brand transformations, and the Reverb and Paradoxxia franchises.',
+    keywords: 'Romer Garcia, Multimedia Designer, AI Designer, Multimedia Designer New York, Design Lead, AI Design, Digital Media, Brand Transformation, Creative Strategy, Digital Campaigns, Generative AI',
     ogTitle: 'Romer Garcia | Design Lead & AI-Driven Multimedia Strategist',
     ogDescription: 'Design Lead & AI-driven multimedia strategist. Browse his portfolio of digital campaigns, AI-powered tools, and brand identity projects.',
     ogUrl: 'https://romergarcia.com',

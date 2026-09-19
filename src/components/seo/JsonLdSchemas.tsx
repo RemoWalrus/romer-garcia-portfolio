@@ -51,13 +51,21 @@ export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaPr
     "url": "https://romergarcia.com",
     "image": getProxyUrl('profile', 'RomerSelfPortrait.jpg'),
     "jobTitle": "Design Lead & AI-Driven Multimedia Strategist",
-    "description": "Strategic Thinker, Design Innovator, and Digital Media Leader with a proven track record of leading high-impact digital campaigns and brand transformations.",
+    "description": "Multimedia designer and AI-driven design lead based in New York, with a proven track record of leading high-impact digital campaigns and brand transformations.",
+    "homeLocation": { "@type": "City", "name": "New York, NY" },
+    "workLocation": { "@type": "City", "name": "New York, NY" },
+    "areaServed": [
+      { "@type": "City", "name": "New York" },
+      { "@type": "Country", "name": "United States" }
+    ],
     "alumniOf": {
       "@type": "Organization",
       "name": "United States Army"
     },
     "knowsAbout": [
       "AI-Assisted Design",
+      "AI Design",
+      "Multimedia Design",
       "Multimedia Strategy",
       "Digital Media Production",
       "Brand Transformation",
@@ -99,7 +107,7 @@ export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaPr
         "name": "What does Romer Garcia specialize in?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Romer Garcia is a Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design, multimedia strategy, digital media production, and brand transformation. He has a proven track record leading high-impact digital campaigns."
+          "text": "Romer Garcia is a New York-based Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design, multimedia design, digital media production, and brand transformation. He has a proven track record leading high-impact digital campaigns."
         }
       },
       {

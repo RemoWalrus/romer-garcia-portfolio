@@ -107,7 +107,7 @@ export const PersonSchema = ({ projects = [], socialLinks = {} }: PersonSchemaPr
         "name": "What does Romer Garcia specialize in?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Romer Garcia is a Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design, multimedia strategy, digital media production, and brand transformation. He has a proven track record leading high-impact digital campaigns."
+          "text": "Romer Garcia is a New York-based Design Lead and AI-Driven Multimedia Strategist specializing in AI-assisted design, multimedia design, digital media production, and brand transformation. He has a proven track record leading high-impact digital campaigns."
         }
       },
       {

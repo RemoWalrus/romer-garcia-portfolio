@@ -1,8 +1,8 @@
 # romergarcia.com
 
-> The portfolio and creative-universe site of Romer Garcia, a multimedia designer and AI-driven design lead based in New York, NY. It hosts his design portfolio plus two connected original fiction projects: Paradoxxia and Reverb.
+> The portfolio and creative-universe site of Romer Garcia, a multimedia designer and AI-driven design lead based in the Washington DC metropolitan area. It hosts his design portfolio plus two connected original fiction projects: Paradoxxia and Reverb.
 
-- Site owner: Romer Garcia — Design Lead & AI-Driven Multimedia Strategist, based in New York, NY. Available for multimedia design, AI-assisted design, creative direction and brand transformation work.
+- Site owner: Romer Garcia — Design Lead & AI-Driven Multimedia Strategist, based in the Washington DC metropolitan area. Available for multimedia design, AI-assisted design, creative direction and brand transformation work.
 - The site is a single-page React application. Every route listed below is also served as pre-rendered HTML containing the page's text, metadata and schema.org JSON-LD, so no JavaScript execution is required to read it.
 - Canonical host: https://romergarcia.com
 

@@ -30,3 +30,4 @@
 - [x] Refine Reverb section spacing, Logbook label, transmission noise, and theme-aware title color
 - [x] Members-only /reverb/downloads page (posters, wallpapers, print waiting list)
 - [x] Add mobile device-tilt parallax to the /links camera-lens background
+- [x] Add a one-time chromatic glitch to the /links romergarcia wordmark

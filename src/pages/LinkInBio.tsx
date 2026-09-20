@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { getProxyUrl } from '@/utils/supabaseProxy';
 import { getTrafficSource, trackLinkClick } from '@/lib/linkTracking';
@@ -37,6 +38,65 @@ const LINKS = [
 ];
 
 const SITE = 'https://romergarcia.com';
+
+const WordmarkText = () => (
+  <>
+    <span className="text-foreground">romer</span>
+    <span className="font-thin text-muted-foreground">garcia</span>
+  </>
+);
+
+const GlitchWordmark = () => {
+  const reduceMotion = useReducedMotion();
+  const shouldAnimate = !reduceMotion;
+  const wordmarkClass =
+    'font-roc text-[55px] leading-none font-medium tracking-tighter lowercase whitespace-nowrap';
+
+  return (
+    <div className="relative mt-4" aria-label="Romer Garcia">
+      {shouldAnimate && (
+        <>
+          <motion.span
+            aria-hidden="true"
+            className={`${wordmarkClass} absolute inset-0 pointer-events-none text-red-500 mix-blend-screen`}
+            initial={{ x: 18, y: -3, opacity: 0.8 }}
+            animate={{ x: [18, -7, 4, -1, 0], y: [-3, 2, -1, 0, 0], opacity: [0.8, 0.62, 0.38, 0.16, 0] }}
+            transition={{ duration: 0.68, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.72, 1] }}
+          >
+            <WordmarkText />
+          </motion.span>
+          <motion.span
+            aria-hidden="true"
+            className={`${wordmarkClass} absolute inset-0 pointer-events-none text-cyan-400 mix-blend-screen`}
+            initial={{ x: -16, y: 3, opacity: 0.75 }}
+            animate={{ x: [-16, 7, -3, 1, 0], y: [3, -2, 1, 0, 0], opacity: [0.75, 0.56, 0.34, 0.14, 0] }}
+            transition={{ duration: 0.68, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.72, 1] }}
+          >
+            <WordmarkText />
+          </motion.span>
+          <motion.span
+            aria-hidden="true"
+            className={`${wordmarkClass} absolute inset-0 pointer-events-none text-foreground mix-blend-difference`}
+            initial={{ x: 12, opacity: 0.65, clipPath: 'inset(34% 0 42% 0)' }}
+            animate={{ x: [12, -8, 4, 0], opacity: [0.65, 0.4, 0.18, 0] }}
+            transition={{ duration: 0.52, ease: 'easeOut', times: [0, 0.35, 0.7, 1] }}
+          >
+            <WordmarkText />
+          </motion.span>
+        </>
+      )}
+
+      <motion.h1
+        className={`${wordmarkClass} relative z-10`}
+        initial={shouldAnimate ? { scale: 1.06, skewX: -2, opacity: 0.9 } : false}
+        animate={{ scale: 1, skewX: 0, opacity: 1 }}
+        transition={{ duration: 0.62, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        <WordmarkText />
+      </motion.h1>
+    </div>
+  );
+};
 
 // Mirrors the pre-rendered structured data in scripts/prerender-reverb.mjs.
 const LINKS_JSON_LD = {
@@ -193,10 +253,7 @@ const LinkInBio = () => {
           width={112}
           height={112}
         />
-        <h1 className="mt-4 font-roc text-[55px] leading-none font-medium tracking-tighter lowercase">
-          <span className="text-foreground">romer</span>
-          <span className="font-thin text-muted-foreground">garcia</span>
-        </h1>
+        <GlitchWordmark />
         <p className="mt-2 text-sm text-muted-foreground text-center">
           Design Lead &amp; AI-Driven Multimedia Strategist
         </p>

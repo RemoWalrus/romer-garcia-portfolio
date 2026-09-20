@@ -378,7 +378,7 @@ for (const c of visible) {
         metadata[`reverb.${c.id}.keywords`] ??
         `${c.name}, Reverb Collective, Paradoxxia universe, character profile`,
       canonical: url,
-      image: metadata[`reverb.${c.id}.og_image`] ?? imageUrl(c.image_file),
+      image: imageUrl(c.figure_file ?? c.image_file),
       type: "profile",
       robots: locked ? "noindex, follow" : null,
       jsonLd,

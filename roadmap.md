@@ -31,3 +31,5 @@
 - [x] Members-only /reverb/downloads page (posters, wallpapers, print waiting list)
 - [x] Add mobile device-tilt parallax to the /links camera-lens background
 - [x] Add a one-time chromatic glitch to the /links romergarcia wordmark
+
+- [x] Use each Reverb character page main figure as its Open Graph and social share image.

@@ -21,15 +21,18 @@ const ReverbCharacter = () => {
 
   const name = character?.name ?? "Reverb";
   const role = character?.role ?? "";
+  const socialImage = character?.figure ?? character?.image;
   const meta = usePageMetaFromData(`reverb.${id?.toLowerCase() ?? ""}`, metadata, {
     title: `${name} | Reverb Collective Character Sheet`,
     description: `${name} — ${role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`,
     keywords: `${name}, Reverb Collective, Paradoxxia universe, character profile`,
     ogTitle: `${name} | Reverb`,
     ogDescription: `${name} — ${role}.`,
-    ogUrl: `https://romer-garcia-portfolio.lovable.app/reverb/${id?.toLowerCase() ?? ""}`,
+    ogUrl: `https://romergarcia.com/reverb/${id?.toLowerCase() ?? ""}`,
+    ogImage: socialImage,
     twitterTitle: `${name} | Reverb`,
     twitterDescription: `${name} — ${role}.`,
+    twitterImage: socialImage,
   });
 
   const isLocked = Boolean(character?.locked) && !unlocked;
@@ -100,11 +103,11 @@ const ReverbCharacter = () => {
         <meta property="og:description" content={meta.ogDescription} />
         <meta property="og:type" content="profile" />
         {meta.ogUrl && <meta property="og:url" content={meta.ogUrl} />}
-        {meta.ogImage && <meta property="og:image" content={meta.ogImage} />}
+        {socialImage && <meta property="og:image" content={socialImage} />}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={meta.twitterTitle} />
         <meta name="twitter:description" content={meta.twitterDescription} />
-        {meta.twitterImage && <meta name="twitter:image" content={meta.twitterImage} />}
+        {socialImage && <meta name="twitter:image" content={socialImage} />}
         <link rel="canonical" href={`https://romergarcia.com/reverb/${character.id}`} />
         <meta name="twitter:url" content={`https://romergarcia.com/reverb/${character.id}`} />
 

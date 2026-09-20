@@ -29,3 +29,4 @@
 - [x] Restore the cityscape background and standardize new Reverb sections with bold, left-aligned titles
 - [x] Refine Reverb section spacing, Logbook label, transmission noise, and theme-aware title color
 - [x] Members-only /reverb/downloads page (posters, wallpapers, print waiting list)
+- [x] Add mobile device-tilt parallax to the /links camera-lens background

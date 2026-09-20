@@ -39,10 +39,10 @@ const LINKS = [
 
 const SITE = 'https://romergarcia.com';
 
-const WordmarkText = () => (
+const WordmarkText = ({ inheritColor = false }: { inheritColor?: boolean }) => (
   <>
-    <span className="text-foreground">romer</span>
-    <span className="font-thin text-muted-foreground">garcia</span>
+    <span className={inheritColor ? undefined : 'text-foreground'}>romer</span>
+    <span className={`font-thin ${inheritColor ? '' : 'text-muted-foreground'}`}>garcia</span>
   </>
 );
 
@@ -63,7 +63,7 @@ const GlitchWordmark = () => {
             animate={{ x: [18, -7, 4, -1, 0], y: [-3, 2, -1, 0, 0], opacity: [0.8, 0.62, 0.38, 0.16, 0] }}
             transition={{ duration: 0.68, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.72, 1] }}
           >
-            <WordmarkText />
+            <WordmarkText inheritColor />
           </motion.span>
           <motion.span
             aria-hidden="true"
@@ -72,7 +72,7 @@ const GlitchWordmark = () => {
             animate={{ x: [-16, 7, -3, 1, 0], y: [3, -2, 1, 0, 0], opacity: [0.75, 0.56, 0.34, 0.14, 0] }}
             transition={{ duration: 0.68, ease: [0.25, 0.1, 0.25, 1], times: [0, 0.2, 0.45, 0.72, 1] }}
           >
-            <WordmarkText />
+            <WordmarkText inheritColor />
           </motion.span>
           <motion.span
             aria-hidden="true"
@@ -81,7 +81,7 @@ const GlitchWordmark = () => {
             animate={{ x: [12, -8, 4, 0], opacity: [0.65, 0.4, 0.18, 0] }}
             transition={{ duration: 0.52, ease: 'easeOut', times: [0, 0.35, 0.7, 1] }}
           >
-            <WordmarkText />
+            <WordmarkText inheritColor />
           </motion.span>
         </>
       )}

@@ -21,7 +21,9 @@ const ReverbCharacter = () => {
 
   const name = character?.name ?? "Reverb";
   const role = character?.role ?? "";
-  const socialImage = character?.figure ?? character?.image;
+  const socialImage = character
+    ? new URL(character.figure ?? character.image, "https://romergarcia.com").toString()
+    : undefined;
   const meta = usePageMetaFromData(`reverb.${id?.toLowerCase() ?? ""}`, metadata, {
     title: `${name} | Reverb Collective Character Sheet`,
     description: `${name} — ${role}. Character profile from Reverb, a multimedia franchise set in the Paradoxxia universe.`,

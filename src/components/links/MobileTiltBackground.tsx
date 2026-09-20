@@ -8,7 +8,7 @@ interface MobileTiltBackgroundProps {
 
 type PermissionState = 'automatic' | 'required' | 'denied';
 
-interface PermissionedDeviceOrientationEvent extends DeviceOrientationEvent {
+interface PermissionedDeviceOrientationEventConstructor {
   requestPermission?: () => Promise<'granted' | 'denied'>;
 }
 
@@ -29,7 +29,7 @@ export const MobileTiltBackground = ({ imageUrl }: MobileTiltBackgroundProps) =>
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!isMobile || reduceMotion || typeof DeviceOrientationEvent === 'undefined') return;
 
-    const orientationEvent = DeviceOrientationEvent as unknown as PermissionedDeviceOrientationEvent;
+    const orientationEvent = DeviceOrientationEvent as unknown as PermissionedDeviceOrientationEventConstructor;
     if (typeof orientationEvent.requestPermission === 'function') {
       setPermission('required');
       return;
@@ -75,7 +75,7 @@ export const MobileTiltBackground = ({ imageUrl }: MobileTiltBackgroundProps) =>
   }, [listening]);
 
   const enableMotion = async () => {
-    const orientationEvent = DeviceOrientationEvent as unknown as PermissionedDeviceOrientationEvent;
+    const orientationEvent = DeviceOrientationEvent as unknown as PermissionedDeviceOrientationEventConstructor;
     try {
       const result = await orientationEvent.requestPermission?.();
       if (result === 'granted') {

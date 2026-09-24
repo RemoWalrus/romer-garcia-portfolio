@@ -58,9 +58,11 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
           <img 
             src={logoUrl} 
             alt="Romer Garcia Logo" 
-            className={`transition-all duration-300 ${
-              scrolled ? 'h-8 md:h-10' : 'h-10 md:h-12'
-            } w-auto object-contain`}
+             className={`w-auto object-contain transition-all duration-300 ${
+               scrolled
+                 ? 'h-8 brightness-0 dark:invert md:h-10'
+                 : 'h-10 brightness-0 invert md:h-12'
+             }`}
             style={{ maxHeight: 'none' }}
           />
         </button>

@@ -1,6 +1,6 @@
 
 import { Menu, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { getProxyUrl } from "@/utils/supabaseProxy";
 import { Facebook, Twitter, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { useSection } from '@/hooks/use-home-data';
@@ -23,29 +23,7 @@ export const Navigation = ({ scrolled, scrollToSection, scrollToTop }: Navigatio
     youtube_url: socialSection?.youtube_url || '',
   };
 
-  const [isDark, setIsDark] = useState(() => 
-    document.documentElement.classList.contains('dark') || 
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  );
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      setIsDark(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e: MediaQueryListEvent) => setIsDark(e.matches);
-    mediaQuery.addEventListener('change', handleChange);
-
-    return () => {
-      observer.disconnect();
-      mediaQuery.removeEventListener('change', handleChange);
-    };
-  }, []);
-
-  const logoFile = scrolled && !isDark ? 'romergarcialogoinv.svg' : 'romergarcialogo.svg';
-  const logoUrl = getProxyUrl('graphics', logoFile);
+  const logoUrl = getProxyUrl('graphics', 'romergarcialogo.svg');
 
   const SocialIcon = ({ url, icon: Icon, label }: { url: string; icon: typeof Facebook; label: string }) => {
     if (!url) return null;

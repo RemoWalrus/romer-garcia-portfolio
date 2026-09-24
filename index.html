@@ -17,7 +17,9 @@
       // Apply theme before first paint (fixes iOS auto dark/light not applying)
       (function () {
         try {
-          var override = localStorage.getItem('theme-override');
+          var isPreview = window.self !== window.top;
+          var override = isPreview ? localStorage.getItem('theme-override') : null;
+          if (!isPreview) localStorage.removeItem('theme-override');
           var dark = override
             ? override === 'dark'
             : window.matchMedia('(prefers-color-scheme: dark)').matches;

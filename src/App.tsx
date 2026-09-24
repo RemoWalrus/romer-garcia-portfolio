@@ -147,7 +147,15 @@ const App = () => {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const updateTheme = (e: MediaQueryListEvent | MediaQueryList) => {
-      const override = getThemeOverride();
+      const isPreview = window.self !== window.top;
+      const override = isPreview ? getThemeOverride() : null;
+      if (!isPreview) {
+        try {
+          localStorage.removeItem('theme-override');
+        } catch {
+          /* storage unavailable */
+        }
+      }
       applyTheme(override ? override === 'dark' : e.matches);
     };
     updateTheme(mediaQuery);

@@ -33,3 +33,4 @@
 - [x] Add a one-time chromatic glitch to the /links romergarcia wordmark
 
 - [x] Use each Reverb character page main figure as its Open Graph and social share image.
+- [x] Replace the navbar artwork with one theme-aware logo and remove theme-based file swapping.

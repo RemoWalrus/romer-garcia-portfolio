@@ -158,8 +158,6 @@ const ReverbCharacter = () => {
                 <div className="relative z-50 mt-4 h-[3px] w-12" style={{ backgroundColor: accent }} />
 
                 <p className="relative z-50 mt-4 max-w-[15ch] font-roc text-[11px] tracking-[0.18em] md:tracking-[0.24em] uppercase text-white/85 leading-[1.8]">
-                  Collective
-                  <br />
                   {`// ${(character.title ?? character.role).split("//").pop()?.trim()}`}
                 </p>
 

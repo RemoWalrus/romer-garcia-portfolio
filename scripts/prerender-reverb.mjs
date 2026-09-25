@@ -127,7 +127,13 @@ function writePage(route, headHtml, bodyHtml) {
       .replace("</head>", `${icons}\n  </head>`);
   }
 
-  if (route === "/reverb" || route.startsWith("/reverb/")) {
+  if (
+    route === "/reverb" ||
+    route.startsWith("/reverb/") ||
+    route === "/paradoxxia" ||
+    route === "/char-gen" ||
+    route === "/story"
+  ) {
     html = html.replace(
       /<!-- Adobe Fonts \(Typekit\)[\s\S]*?<\/script>/,
       REVERB_TYPEKIT_SCRIPT,

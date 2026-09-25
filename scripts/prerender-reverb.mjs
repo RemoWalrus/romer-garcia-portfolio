@@ -127,6 +127,13 @@ function writePage(route, headHtml, bodyHtml) {
       .replace("</head>", `${icons}\n  </head>`);
   }
 
+  if (route === "/reverb" || route.startsWith("/reverb/")) {
+    html = html.replace(
+      /<!-- Adobe Fonts \(Typekit\)[\s\S]*?<\/script>/,
+      REVERB_TYPEKIT_SCRIPT,
+    );
+  }
+
   html = html.replace("</head>", `${headHtml}\n  </head>`);
   // The shell's root div may contain the homepage's visually hidden H1; replace
   // the whole element so each route ships only its own crawlable text.

@@ -50,7 +50,7 @@ const GlitchWordmark = () => {
   const reduceMotion = useReducedMotion();
   const shouldAnimate = !reduceMotion;
   const wordmarkClass =
-    'font-roc text-[55px] leading-none font-medium tracking-tighter lowercase whitespace-nowrap';
+    'font-roc text-[55px] leading-none font-medium tracking-tighter lowercase whitespace-nowrap [font-feature-settings:"calt"]';
 
   return (
     <div className="relative mt-4" aria-label="Romer Garcia">

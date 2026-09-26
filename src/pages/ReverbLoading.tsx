@@ -40,16 +40,16 @@ const ReverbLoading = () => {
       const distY = (pointerY - centerY) / centerY;
       const distance = Math.sqrt(distX * distX + distY * distY);
 
-      // Font weight variation: 200-900 based on horizontal mouse position
-      const weight = Math.max(200, Math.min(900, 400 + distX * 400));
+      // Font weight variation: 700-900 based on horizontal mouse position (defaults to 800 at center)
+      const weight = Math.max(700, Math.min(900, 800 + distX * 100));
       setFontWeight(Math.round(weight));
 
-      // Letter spacing variation: based on distance from center
-      const spacing = Math.max(-4, Math.min(12, -2 + distance * 8));
+      // Letter spacing variation: based on distance from center (tighter than before)
+      const spacing = Math.max(-2, Math.min(4, -0.5 + distance * 3));
       setLetterSpacing(Math.round(spacing * 100) / 100);
 
       // Subtle font size variation
-      const size = Math.max(140, Math.min(280, 200 + distY * 80));
+      const size = Math.max(160, Math.min(240, 200 + distY * 40));
       setFontSize(Math.round(size));
 
       // Calculate individual distance for each letter

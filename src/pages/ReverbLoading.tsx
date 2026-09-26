@@ -97,12 +97,12 @@ const ReverbLoading = () => {
           let marginStyle: React.CSSProperties = {};
 
           if (index === 1) {
-            // Reversed E: scaleX(-1), skew, and subtle rotation, and scale
-            transform = `scaleX(-1) skewX(10deg) rotate(-2deg) scale(${proximityScale})`;
-            marginStyle = { marginLeft: "0.14em", marginRight: "0.04em" };
+            // Reversed E: scaleX(-1), skew, no rotation, and scale
+            transform = `scaleX(-1) skewX(10deg) scale(${proximityScale})`;
+            marginStyle = { marginLeft: "0.12em", marginRight: "0.02em" };
           } else if (index === 2) {
-            // V: tight negative margin from ReverbHeader
-            marginStyle = { marginLeft: "-0.27em" };
+            // V: very tight negative margin
+            marginStyle = { marginLeft: "-0.35em" };
           }
 
           return (

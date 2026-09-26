@@ -101,8 +101,11 @@ const ReverbLoading = () => {
             transform = `scaleX(-1) skewX(10deg) scale(${proximityScale})`;
             marginStyle = { marginLeft: "0.12em", marginRight: "0.02em" };
           } else if (index === 2) {
-            // V: very tight negative margin
-            marginStyle = { marginLeft: "-0.35em" };
+            // V: moderately tight spacing from E
+            marginStyle = { marginLeft: "-0.28em" };
+          } else if (index > 2) {
+            // Other letters: slight tightening
+            marginStyle = { marginLeft: "-0.05em" };
           }
 
           return (

@@ -131,8 +131,8 @@ const ReverbLoading = () => {
                 ...marginStyle,
                 transform,
                 fontWeight: letterFontWeight,
-                fontVariationSettings: `'wdth' ${letterFontWidth}`,
-                willChange: "transform, font-weight, font-variation-settings",
+                fontStretch: `${letterFontWidth}%`,
+                willChange: "transform, font-weight, font-stretch",
                 transformOrigin: "center",
               }}
               aria-hidden="true"

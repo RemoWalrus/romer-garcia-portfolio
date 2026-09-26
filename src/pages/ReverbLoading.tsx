@@ -92,13 +92,13 @@ const ReverbLoading = () => {
           // Normalize distance (0-500px) to a scale factor
           const proximityScale = Math.max(0.8, Math.min(1.2, 1 - letterDist / 600));
 
-          // Exact transforms from ReverbHeader
-          let transformClass = "";
+          // Build transforms for each letter
+          let transform = `scale(${proximityScale})`;
           let marginStyle: React.CSSProperties = {};
 
           if (index === 1) {
-            // Reversed E: scaleX(-100) and skew
-            transformClass = "-scale-x-100 -skew-x-[4deg]";
+            // Reversed E: scaleX(-1) and skew combined with scale
+            transform = `scaleX(-1) skewX(-4deg) scale(${proximityScale})`;
             marginStyle = { marginLeft: "0.14em", marginRight: "0.04em" };
           } else if (index === 2) {
             // V: tight negative margin from ReverbHeader
@@ -111,10 +111,10 @@ const ReverbLoading = () => {
               ref={(el) => {
                 letterRefs.current[index] = el;
               }}
-              className={`inline-block ${transformClass}`}
+              className="inline-block"
               style={{
                 ...marginStyle,
-                transform: `scale(${proximityScale})`,
+                transform,
                 willChange: "transform",
                 transformOrigin: "center",
               }}

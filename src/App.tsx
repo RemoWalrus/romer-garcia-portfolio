@@ -18,6 +18,7 @@ const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
 const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
 const Story = lazy(() => import("./pages/Story"));
 const Reverb = lazy(() => import("./pages/Reverb"));
+const ReverbLoading = lazy(() => import("./pages/ReverbLoading"));
 const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
 const ReverbTransmissions = lazy(() => import("./pages/ReverbTransmissions"));
 const ReverbDownloads = lazy(() => import("./pages/ReverbDownloads"));
@@ -202,6 +203,7 @@ const App = () => {
                 <Route path="/paradoxxia" element={<Paradoxxia />} />
                 <Route path="/story" element={<Story />} />
                 <Route path="/reverb" element={<Reverb />} />
+                <Route path="/reverb/loading" element={<ReverbLoading />} />
                 <Route path="/reverb/transmissions" element={<ReverbTransmissions />} />
                 <Route path="/reverb/downloads" element={<ReverbDownloads />} />
                 <Route path="/links" element={<LinkInBio />} />

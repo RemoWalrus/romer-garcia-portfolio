@@ -97,8 +97,8 @@ const ReverbLoading = () => {
             // Reversed E: flip horizontally and skew
             baseTransform = `scaleX(-1) skewX(-4deg) translateX(${letterSpacing * 0.14}px) translateX(-0.08em)`;
           } else if (index === 2) {
-            // V: very tight spacing with the reversed E
-            baseTransform = `translateX(${-letterSpacing * 0.75}px) translateX(-0.15em)`;
+            // V: extremely tight spacing with the reversed E (1/3 of previous distance)
+            baseTransform = `translateX(${-letterSpacing * 2.25}px) translateX(-0.45em)`;
           } else if (index > 2) {
             // Other letters: tighter overall spacing
             baseTransform = `translateX(${-letterSpacing * 0.15}px) translateX(-0.04em)`;

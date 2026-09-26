@@ -18,7 +18,14 @@ const ReverbLoading = () => {
   const [letterSpacing, setLetterSpacing] = useState(0);
   const [fontSize, setFontSize] = useState(200);
   const [randomImage, setRandomImage] = useState("");
-  const [letterDistances, setLetterDistances] = useState<number[]>([0, 0, 0, 0, 0, 0]);
+  const [letterDistances, setLetterDistances] = useState<Array<{ dx: number; dy: number; distance: number }>>([
+    { dx: 0, dy: 0, distance: 0 },
+    { dx: 0, dy: 0, distance: 0 },
+    { dx: 0, dy: 0, distance: 0 },
+    { dx: 0, dy: 0, distance: 0 },
+    { dx: 0, dy: 0, distance: 0 },
+    { dx: 0, dy: 0, distance: 0 },
+  ]);
 
   useEffect(() => {
     // Set a random gallery image
@@ -54,13 +61,14 @@ const ReverbLoading = () => {
 
       // Calculate individual distance for each letter
       const distances = letterRefs.current.map((letterEl) => {
-        if (!letterEl) return 0;
+        if (!letterEl) return { dx: 0, dy: 0, distance: 0 };
         const letterRect = letterEl.getBoundingClientRect();
         const letterCenterX = letterRect.left - rect.left + letterRect.width / 2;
         const letterCenterY = letterRect.top - rect.top + letterRect.height / 2;
         const dx = pointerX - letterCenterX;
         const dy = pointerY - letterCenterY;
-        return Math.sqrt(dx * dx + dy * dy);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        return { dx, dy, distance };
       });
       setLetterDistances(distances);
     };
@@ -88,9 +96,19 @@ const ReverbLoading = () => {
       >
         {word.map((letter, index) => {
           // Calculate individual letter reactivity based on pointer distance
-          const letterDist = letterDistances[index] || 0;
-          // Normalize distance (0-500px) to a scale factor
-          const proximityScale = Math.max(0.8, Math.min(1.2, 1 - letterDist / 600));
+          const letterData = letterDistances[index] || { dx: 0, dy: 0, distance: 0 };
+          const { dx, dy, distance } = letterData;
+
+          // Normalize distance (0-600px) to a scale factor
+          const proximityScale = Math.max(0.8, Math.min(1.2, 1 - distance / 600));
+
+          // Per-letter font-weight: horizontal axis (distX) controls weight
+          // Map from -containerWidth/2 to +containerWidth/2 → 200-900 weight
+          const letterFontWeight = Math.max(200, Math.min(900, 550 + (dx / (containerRef.current?.clientWidth || 500)) * 350));
+
+          // Per-letter font-width: vertical axis (distY) controls width
+          // Map from -containerHeight/2 to +containerHeight/2 → 75-125 percentage
+          const letterFontWidth = Math.max(75, Math.min(125, 100 + (dy / (containerRef.current?.clientHeight || 500)) * 25));
 
           // Build transforms for each letter
           let transform = `scale(${proximityScale})`;
@@ -118,7 +136,9 @@ const ReverbLoading = () => {
               style={{
                 ...marginStyle,
                 transform,
-                willChange: "transform",
+                fontWeight: letterFontWeight,
+                fontVariationSettings: `'wdth' ${letterFontWidth}`,
+                willChange: "transform, font-weight, font-variation-settings",
                 transformOrigin: "center",
               }}
               aria-hidden="true"

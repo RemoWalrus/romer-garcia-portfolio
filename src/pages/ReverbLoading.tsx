@@ -75,7 +75,7 @@ const ReverbLoading = () => {
     return (
       <span
         ref={wordmarkRef}
-        className="inline-flex gap-0 font-roc font-black italic uppercase tracking-normal transition-all duration-75"
+        className="inline-flex gap-0 font-roc font-extrabold italic uppercase tracking-normal transition-all duration-75"
         style={{
           fontSize: `${fontSize}px`,
           fontWeight: fontWeight,
@@ -92,22 +92,18 @@ const ReverbLoading = () => {
           // Normalize distance (0-500px) to a scale factor
           const proximityScale = Math.max(0.8, Math.min(1.2, 1 - letterDist / 600));
 
-          let baseTransform = "none";
-          if (index === 1) {
-            // Reversed E: flip horizontally and skew
-            baseTransform = `scaleX(-1) skewX(-4deg) translateX(${letterSpacing * 0.14}px) translateX(-0.08em)`;
-          } else if (index === 2) {
-            // V: extremely tight spacing with the reversed E (1/3 of previous distance)
-            baseTransform = `translateX(${-letterSpacing * 2.25}px) translateX(-0.45em)`;
-          } else if (index > 2) {
-            // Other letters: tighter overall spacing
-            baseTransform = `translateX(${-letterSpacing * 0.15}px) translateX(-0.04em)`;
-          }
+          // Exact transforms from ReverbHeader
+          let transformClass = "";
+          let marginStyle: React.CSSProperties = {};
 
-          const transform =
-            baseTransform !== "none"
-              ? `${baseTransform} scale(${proximityScale})`
-              : `scale(${proximityScale})`;
+          if (index === 1) {
+            // Reversed E: scaleX(-100) and skew
+            transformClass = "-scale-x-100 -skew-x-[4deg]";
+            marginStyle = { marginLeft: "0.14em", marginRight: "0.04em" };
+          } else if (index === 2) {
+            // V: tight negative margin from ReverbHeader
+            marginStyle = { marginLeft: "-0.27em" };
+          }
 
           return (
             <span
@@ -115,9 +111,10 @@ const ReverbLoading = () => {
               ref={(el) => {
                 letterRefs.current[index] = el;
               }}
-              className="inline-block"
+              className={`inline-block ${transformClass}`}
               style={{
-                transform,
+                ...marginStyle,
+                transform: `scale(${proximityScale})`,
                 willChange: "transform",
                 transformOrigin: "center",
               }}

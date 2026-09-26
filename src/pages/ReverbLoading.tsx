@@ -13,10 +13,12 @@ const GALLERY_IMAGES = [
 const ReverbLoading = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wordmarkRef = useRef<HTMLSpanElement>(null);
+  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [fontWeight, setFontWeight] = useState(800);
   const [letterSpacing, setLetterSpacing] = useState(0);
   const [fontSize, setFontSize] = useState(200);
   const [randomImage, setRandomImage] = useState("");
+  const [letterDistances, setLetterDistances] = useState<number[]>([0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     // Set a random gallery image
@@ -31,9 +33,11 @@ const ReverbLoading = () => {
       const rect = containerRef.current.getBoundingClientRect();
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
+      const pointerX = e.clientX - rect.left;
+      const pointerY = e.clientY - rect.top;
 
-      const distX = (e.clientX - rect.left - centerX) / centerX;
-      const distY = (e.clientY - rect.top - centerY) / centerY;
+      const distX = (pointerX - centerX) / centerX;
+      const distY = (pointerY - centerY) / centerY;
       const distance = Math.sqrt(distX * distX + distY * distY);
 
       // Font weight variation: 200-900 based on horizontal mouse position
@@ -47,6 +51,18 @@ const ReverbLoading = () => {
       // Subtle font size variation
       const size = Math.max(140, Math.min(280, 200 + distY * 80));
       setFontSize(Math.round(size));
+
+      // Calculate individual distance for each letter
+      const distances = letterRefs.current.map((letterEl) => {
+        if (!letterEl) return 0;
+        const letterRect = letterEl.getBoundingClientRect();
+        const letterCenterX = letterRect.left - rect.left + letterRect.width / 2;
+        const letterCenterY = letterRect.top - rect.top + letterRect.height / 2;
+        const dx = pointerX - letterCenterX;
+        const dy = pointerY - letterCenterY;
+        return Math.sqrt(dx * dx + dy * dy);
+      });
+      setLetterDistances(distances);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -70,24 +86,44 @@ const ReverbLoading = () => {
         }}
         aria-label="Reverb"
       >
-        {word.map((letter, index) => (
-          <span
-            key={`${letter}-${index}`}
-            className="inline-block"
-            style={{
-              transform:
-                index === 1
-                  ? `scaleX(-1) skewX(-4deg) translateX(${letterSpacing * 0.14}px)`
-                  : index === 2
-                    ? `translateX(${-letterSpacing * 0.27}px)`
-                    : "none",
-              willChange: "transform",
-            }}
-            aria-hidden="true"
-          >
-            {letter}
-          </span>
-        ))}
+        {word.map((letter, index) => {
+          // Calculate individual letter reactivity based on pointer distance
+          const letterDist = letterDistances[index] || 0;
+          // Normalize distance (0-500px) to a scale factor
+          const proximityScale = Math.max(0.8, Math.min(1.2, 1 - letterDist / 600));
+
+          let baseTransform = "none";
+          if (index === 1) {
+            // Reversed E: flip horizontally and skew
+            baseTransform = `scaleX(-1) skewX(-4deg) translateX(${letterSpacing * 0.14}px)`;
+          } else if (index === 2) {
+            // V: tight negative margin with the reversed E
+            baseTransform = `translateX(${-letterSpacing * 0.45}px)`;
+          }
+
+          const transform =
+            baseTransform !== "none"
+              ? `${baseTransform} scale(${proximityScale})`
+              : `scale(${proximityScale})`;
+
+          return (
+            <span
+              key={`${letter}-${index}`}
+              ref={(el) => {
+                letterRefs.current[index] = el;
+              }}
+              className="inline-block"
+              style={{
+                transform,
+                willChange: "transform",
+                transformOrigin: "center",
+              }}
+              aria-hidden="true"
+            >
+              {letter}
+            </span>
+          );
+        })}
       </span>
     );
   };

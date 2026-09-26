@@ -16,7 +16,6 @@ const ReverbLoading = () => {
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [fontWeight, setFontWeight] = useState(800);
   const [letterSpacing, setLetterSpacing] = useState(0);
-  const [fontSize, setFontSize] = useState(200);
   const [randomImage, setRandomImage] = useState("");
   const [letterDistances, setLetterDistances] = useState<Array<{ dx: number; dy: number; distance: number }>>([
     { dx: 0, dy: 0, distance: 0 },
@@ -55,10 +54,6 @@ const ReverbLoading = () => {
       const spacing = Math.max(-2, Math.min(4, -0.5 + distance * 3));
       setLetterSpacing(Math.round(spacing * 100) / 100);
 
-      // Subtle font size variation
-      const size = Math.max(160, Math.min(240, 200 + distY * 40));
-      setFontSize(Math.round(size));
-
       // Calculate individual distance for each letter
       const distances = letterRefs.current.map((letterEl) => {
         if (!letterEl) return { dx: 0, dy: 0, distance: 0 };
@@ -83,9 +78,8 @@ const ReverbLoading = () => {
     return (
       <span
         ref={wordmarkRef}
-        className="inline-flex gap-0 font-roc font-extrabold italic uppercase tracking-normal transition-all duration-75"
+        className="inline-flex gap-0 font-roc font-extrabold italic uppercase tracking-normal transition-all duration-75 text-[200px]"
         style={{
-          fontSize: `${fontSize}px`,
           fontWeight: fontWeight,
           letterSpacing: `${letterSpacing}px`,
           color: "var(--reverb-wordmark)",

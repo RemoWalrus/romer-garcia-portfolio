@@ -72,7 +72,6 @@ const fragmentShader = /* glsl */ `
     float relief = (1.0 - depth) - 0.38;
     vec2 shiftedUv = clamp(safeUv + uMotion * relief * 0.021, 0.004, 0.996);
     gl_FragColor = texture2D(uImage, shiftedUv);
-    #include <tonemapping_fragment>
     #include <colorspace_fragment>
   }
 `;
@@ -136,6 +135,7 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
           vertexShader={vertexShader}
           fragmentShader={fragmentShader}
           side={THREE.DoubleSide}
+          toneMapped={false}
         />
       </mesh>
     </group>

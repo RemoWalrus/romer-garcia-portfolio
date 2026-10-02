@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import { Move3D } from 'lucide-react';
 import * as THREE from 'three';
 import { Button } from '@/components/ui/button';
-import { getProxyUrl } from '@/utils/supabaseProxy';
 
 type MotionPermission = 'automatic' | 'required' | 'denied';
 
@@ -16,7 +15,9 @@ interface PermissionedOrientationEvent {
 const IMAGE_ASPECT = 1752 / 1920;
 const PORTRAIT_URL = '/dualshadow.jpg';
 const DEPTH_URL = '/dualshadow-depth.webp';
-const LOGO_URL = getProxyUrl('graphics', 'romergarcialogo.svg');
+// Fixed light variant — the themed SVG resolves to dark fills on phones in
+// light mode, but this scene is always dark.
+const LOGO_URL = '/romergarcialogo-light.svg';
 
 const vertexShader = /* glsl */ `
   uniform sampler2D uDepth;

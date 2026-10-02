@@ -225,11 +225,25 @@ const DepthEffect = () => {
         </Suspense>
       </Canvas>
 
-      <img
-        src={LOGO_URL}
-        alt="Romer Garcia"
-        className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[80vw] max-w-[960px] -translate-x-1/2 -translate-y-1/2"
-      />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[80vw] max-w-[960px] -translate-x-1/2 -translate-y-1/2">
+        <img
+          src={LOGO_URL}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-auto w-full translate-x-[2px] opacity-45 mix-blend-screen brightness-0 saturate-[8] [filter:invert(16%)_sepia(98%)_saturate(5967%)_hue-rotate(357deg)_brightness(104%)_contrast(119%)]"
+        />
+        <img
+          src={LOGO_URL}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-auto w-full -translate-x-[2px] opacity-40 mix-blend-screen brightness-0 saturate-[8] [filter:invert(88%)_sepia(94%)_saturate(3263%)_hue-rotate(105deg)_brightness(106%)_contrast(104%)]"
+        />
+        <img
+          src={LOGO_URL}
+          alt="Romer Garcia"
+          className="relative h-auto w-full [filter:drop-shadow(0_5px_9px_rgb(0_0_0_/_0.28))]"
+        />
+      </div>
 
       {permission === 'required' && (
         <Button

@@ -13,7 +13,7 @@ interface PermissionedOrientationEvent {
 }
 
 const IMAGE_ASPECT = 1752 / 1920;
-const PORTRAIT_URL = '/dualshadow.webp';
+const PORTRAIT_URL = '/dualshadow.jpg';
 const DEPTH_URL = '/dualshadow-depth.webp';
 
 const vertexShader = /* glsl */ `

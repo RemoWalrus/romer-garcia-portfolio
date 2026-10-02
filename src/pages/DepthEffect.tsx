@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import { Move3D } from 'lucide-react';
 import * as THREE from 'three';
 import { Button } from '@/components/ui/button';
-import { getProxyUrl } from '@/utils/supabaseProxy';
 
 type MotionPermission = 'automatic' | 'required' | 'denied';
 

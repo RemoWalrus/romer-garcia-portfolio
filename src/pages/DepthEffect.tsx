@@ -18,12 +18,26 @@ const DEPTH_URL = '/dualshadow-depth.webp';
 
 const vertexShader = /* glsl */ `
   uniform sampler2D uDepth;
+  uniform vec2 uDepthTexel;
   uniform float uStrength;
   varying vec2 vUv;
 
+  float smoothDepth(vec2 uv) {
+    vec2 radius = uDepthTexel * 5.0;
+    return texture2D(uDepth, uv).r * 0.28
+      + texture2D(uDepth, uv + vec2(radius.x, 0.0)).r * 0.12
+      + texture2D(uDepth, uv - vec2(radius.x, 0.0)).r * 0.12
+      + texture2D(uDepth, uv + vec2(0.0, radius.y)).r * 0.12
+      + texture2D(uDepth, uv - vec2(0.0, radius.y)).r * 0.12
+      + texture2D(uDepth, uv + radius).r * 0.06
+      + texture2D(uDepth, uv - radius).r * 0.06
+      + texture2D(uDepth, uv + vec2(radius.x, -radius.y)).r * 0.06
+      + texture2D(uDepth, uv + vec2(-radius.x, radius.y)).r * 0.06;
+  }
+
   void main() {
     vUv = uv;
-    float depth = texture2D(uDepth, uv).r;
+    float depth = smoothDepth(uv);
     vec3 displaced = position;
     displaced.z += (1.0 - depth) * uStrength;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
@@ -33,14 +47,33 @@ const vertexShader = /* glsl */ `
 const fragmentShader = /* glsl */ `
   uniform sampler2D uImage;
   uniform sampler2D uDepth;
+  uniform vec2 uDepthTexel;
   uniform vec2 uMotion;
   varying vec2 vUv;
 
+  float smoothDepth(vec2 uv) {
+    vec2 radius = uDepthTexel * 5.0;
+    return texture2D(uDepth, uv).r * 0.28
+      + texture2D(uDepth, uv + vec2(radius.x, 0.0)).r * 0.12
+      + texture2D(uDepth, uv - vec2(radius.x, 0.0)).r * 0.12
+      + texture2D(uDepth, uv + vec2(0.0, radius.y)).r * 0.12
+      + texture2D(uDepth, uv - vec2(0.0, radius.y)).r * 0.12
+      + texture2D(uDepth, uv + radius).r * 0.06
+      + texture2D(uDepth, uv - radius).r * 0.06
+      + texture2D(uDepth, uv + vec2(radius.x, -radius.y)).r * 0.06
+      + texture2D(uDepth, uv + vec2(-radius.x, radius.y)).r * 0.06;
+  }
+
   void main() {
-    float depth = texture2D(uDepth, vUv).r;
+    // Keep a small hidden border around the source so parallax never samples
+    // the outermost texels and stretches them into jagged edge artifacts.
+    vec2 safeUv = mix(vec2(0.035), vec2(0.965), vUv);
+    float depth = smoothDepth(safeUv);
     float relief = (1.0 - depth) - 0.38;
-    vec2 shiftedUv = clamp(vUv + uMotion * relief * 0.032, 0.002, 0.998);
+    vec2 shiftedUv = clamp(safeUv + uMotion * relief * 0.021, 0.004, 0.996);
     gl_FragColor = texture2D(uImage, shiftedUv);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
   }
 `;
 
@@ -53,7 +86,7 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
 
   const scale = useMemo<[number, number, number]>(() => {
     const viewportAspect = viewport.width / viewport.height;
-    const overscan = 1.1;
+    const overscan = 1.16;
     return viewportAspect > IMAGE_ASPECT
       ? [viewport.width * overscan, (viewport.width / IMAGE_ASPECT) * overscan, 1]
       : [viewport.height * IMAGE_ASPECT * overscan, viewport.height * overscan, 1];
@@ -63,16 +96,20 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
     () => ({
       uImage: { value: image },
       uDepth: { value: depth },
+      uDepthTexel: { value: new THREE.Vector2(1 / 700, 1 / 767) },
       uMotion: { value: new THREE.Vector2() },
-      uStrength: { value: 0.42 },
+      uStrength: { value: 0.34 },
     }),
     [depth, image],
   );
 
   useEffect(() => {
     image.colorSpace = THREE.SRGBColorSpace;
+    image.anisotropy = 8;
     image.needsUpdate = true;
     depth.colorSpace = THREE.NoColorSpace;
+    depth.minFilter = THREE.LinearFilter;
+    depth.magFilter = THREE.LinearFilter;
     depth.needsUpdate = true;
   }, [depth, image]);
 

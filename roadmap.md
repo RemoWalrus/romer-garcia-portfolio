@@ -34,3 +34,4 @@
 
 - [x] Use each Reverb character page main figure as its Open Graph and social share image.
 - [x] Replace the navbar artwork with one theme-aware logo and remove theme-based file swapping.
+- [x] Add /3deffect with depth-map cursor parallax and mobile device-tilt motion.

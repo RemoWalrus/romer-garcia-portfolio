@@ -5,8 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import { Move3D } from 'lucide-react';
 import * as THREE from 'three';
 import { Button } from '@/components/ui/button';
-import portraitAsset from '@/assets/dualshadow.jpg.asset.json';
-import depthAsset from '@/assets/dualshadow-depth.jpg.asset.json';
 
 type MotionPermission = 'automatic' | 'required' | 'denied';
 
@@ -15,6 +13,8 @@ interface PermissionedOrientationEvent {
 }
 
 const IMAGE_ASPECT = 1752 / 1920;
+const PORTRAIT_URL = '/dualshadow.jpg';
+const DEPTH_URL = '/dualshadow_depth.jpg';
 
 const vertexShader = /* glsl */ `
   uniform sampler2D uDepth;
@@ -48,7 +48,7 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
   const groupRef = useRef<THREE.Group>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const current = useRef({ x: 0, y: 0 });
-  const [image, depth] = useTexture([portraitAsset.url, depthAsset.url]);
+  const [image, depth] = useTexture([PORTRAIT_URL, DEPTH_URL]);
   const { viewport } = useThree();
 
   const scale = useMemo<[number, number, number]>(() => {

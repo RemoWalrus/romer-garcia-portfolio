@@ -1,0 +1,206 @@
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { useTexture } from '@react-three/drei';
+import { Helmet } from 'react-helmet-async';
+import { Move3D } from 'lucide-react';
+import * as THREE from 'three';
+import { Button } from '@/components/ui/button';
+
+type MotionPermission = 'automatic' | 'required' | 'denied';
+
+interface PermissionedOrientationEvent {
+  requestPermission?: () => Promise<'granted' | 'denied'>;
+}
+
+const IMAGE_ASPECT = 1752 / 1920;
+const PORTRAIT_URL = '/dualshadow.jpg';
+const DEPTH_URL = '/dualshadow_depth.jpg';
+
+const vertexShader = /* glsl */ `
+  uniform sampler2D uDepth;
+  uniform float uStrength;
+  varying vec2 vUv;
+
+  void main() {
+    vUv = uv;
+    float depth = texture2D(uDepth, uv).r;
+    vec3 displaced = position;
+    displaced.z += (1.0 - depth) * uStrength;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(displaced, 1.0);
+  }
+`;
+
+const fragmentShader = /* glsl */ `
+  uniform sampler2D uImage;
+  uniform sampler2D uDepth;
+  uniform vec2 uMotion;
+  varying vec2 vUv;
+
+  void main() {
+    float depth = texture2D(uDepth, vUv).r;
+    float relief = (1.0 - depth) - 0.38;
+    vec2 shiftedUv = clamp(vUv + uMotion * relief * 0.032, 0.002, 0.998);
+    gl_FragColor = texture2D(uImage, shiftedUv);
+  }
+`;
+
+const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number; y: number }> }) => {
+  const groupRef = useRef<THREE.Group>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const current = useRef({ x: 0, y: 0 });
+  const [image, depth] = useTexture([PORTRAIT_URL, DEPTH_URL]);
+  const { viewport } = useThree();
+
+  const scale = useMemo<[number, number, number]>(() => {
+    const viewportAspect = viewport.width / viewport.height;
+    const overscan = 1.1;
+    return viewportAspect > IMAGE_ASPECT
+      ? [viewport.width * overscan, (viewport.width / IMAGE_ASPECT) * overscan, 1]
+      : [viewport.height * IMAGE_ASPECT * overscan, viewport.height * overscan, 1];
+  }, [viewport.height, viewport.width]);
+
+  const uniforms = useMemo(
+    () => ({
+      uImage: { value: image },
+      uDepth: { value: depth },
+      uMotion: { value: new THREE.Vector2() },
+      uStrength: { value: 0.42 },
+    }),
+    [depth, image],
+  );
+
+  useEffect(() => {
+    image.colorSpace = THREE.SRGBColorSpace;
+    image.needsUpdate = true;
+    depth.colorSpace = THREE.NoColorSpace;
+    depth.needsUpdate = true;
+  }, [depth, image]);
+
+  useFrame((_, rawDelta) => {
+    const dt = Math.min(rawDelta, 0.05);
+    const smoothing = 1 - Math.exp(-7 * dt);
+    current.current.x += (motion.current.x - current.current.x) * smoothing;
+    current.current.y += (motion.current.y - current.current.y) * smoothing;
+
+    if (groupRef.current) {
+      groupRef.current.rotation.y = current.current.x * 0.065;
+      groupRef.current.rotation.x = -current.current.y * 0.05;
+    }
+    materialRef.current?.uniforms.uMotion.value.set(current.current.x, current.current.y);
+  });
+
+  return (
+    <group ref={groupRef}>
+      <mesh scale={scale}>
+        <planeGeometry args={[1, 1, 160, 160]} />
+        <shaderMaterial
+          ref={materialRef}
+          uniforms={uniforms}
+          vertexShader={vertexShader}
+          fragmentShader={fragmentShader}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+    </group>
+  );
+};
+
+const DepthEffect = () => {
+  const motion = useRef({ x: 0, y: 0 });
+  const baseline = useRef<{ beta: number; gamma: number }>();
+  const [listening, setListening] = useState(false);
+  const [permission, setPermission] = useState<MotionPermission>('automatic');
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return;
+      motion.current = {
+        x: (event.clientX / window.innerWidth - 0.5) * 2,
+        y: (event.clientY / window.innerHeight - 0.5) * 2,
+      };
+    };
+    const onPointerLeave = () => {
+      motion.current = { x: 0, y: 0 };
+    };
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    document.documentElement.addEventListener('mouseleave', onPointerLeave);
+
+    const isMobile = window.matchMedia('(max-width: 767px), (pointer: coarse)').matches;
+    if (isMobile && typeof DeviceOrientationEvent !== 'undefined') {
+      const orientation = DeviceOrientationEvent as unknown as PermissionedOrientationEvent;
+      if (typeof orientation.requestPermission === 'function') setPermission('required');
+      else setListening(true);
+    }
+
+    return () => {
+      window.removeEventListener('pointermove', onPointerMove);
+      document.documentElement.removeEventListener('mouseleave', onPointerLeave);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!listening) return;
+    const onOrientation = (event: DeviceOrientationEvent) => {
+      if (event.beta === null || event.gamma === null) return;
+      if (!baseline.current) baseline.current = { beta: event.beta, gamma: event.gamma };
+      const x = THREE.MathUtils.clamp((event.gamma - baseline.current.gamma) / 24, -1, 1);
+      const y = THREE.MathUtils.clamp((event.beta - baseline.current.beta) / 28, -1, 1);
+      motion.current = { x, y };
+    };
+    window.addEventListener('deviceorientation', onOrientation, { passive: true });
+    return () => window.removeEventListener('deviceorientation', onOrientation);
+  }, [listening]);
+
+  const enableMotion = async () => {
+    const orientation = DeviceOrientationEvent as unknown as PermissionedOrientationEvent;
+    try {
+      const result = await orientation.requestPermission?.();
+      if (result === 'granted') {
+        setPermission('automatic');
+        setListening(true);
+      } else setPermission('denied');
+    } catch {
+      setPermission('denied');
+    }
+  };
+
+  return (
+    <main className="fixed inset-0 overflow-hidden bg-background">
+      <Helmet>
+        <title>Dual Shadows — Interactive 3D Portrait | Romer Garcia</title>
+        <meta name="description" content="An interactive depth-mapped portrait by Romer Garcia, responding to cursor movement and mobile device tilt." />
+        <link rel="canonical" href="https://romergarcia.com/3deffect" />
+        <meta property="og:title" content="Dual Shadows — Interactive 3D Portrait" />
+        <meta property="og:description" content="Explore an interactive depth-mapped portrait that responds to movement." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://romergarcia.com/3deffect" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
+
+      <Canvas orthographic camera={{ position: [0, 0, 5], zoom: 100 }} dpr={[1, 2]} gl={{ antialias: true }}>
+        <Suspense fallback={null}>
+          <DepthPortrait motion={motion} />
+        </Suspense>
+      </Canvas>
+
+      {permission === 'required' && (
+        <Button
+          type="button"
+          variant="outline"
+          size="icon"
+          onClick={enableMotion}
+          className="fixed bottom-4 left-4 z-20 border-border bg-background/80 backdrop-blur-sm md:hidden"
+          aria-label="Enable device motion"
+          title="Enable device motion"
+        >
+          <Move3D className="h-5 w-5" />
+        </Button>
+      )}
+    </main>
+  );
+};
+
+export default DepthEffect;

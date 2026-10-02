@@ -15,6 +15,7 @@ interface PermissionedOrientationEvent {
 const IMAGE_ASPECT = 1752 / 1920;
 const PORTRAIT_URL = '/dualshadow.jpg';
 const DEPTH_URL = '/dualshadow-depth.webp';
+const BLURRED_BACKDROP_URL = '/dualshadow-blurred.webp';
 // Fixed light variant — the themed SVG resolves to dark fills on phones in
 // light mode, but this scene is always dark.
 const LOGO_URL = '/romergarcialogo-light.svg';
@@ -226,11 +227,11 @@ const DepthEffect = () => {
 
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <img
-          src={PORTRAIT_URL}
+          src={BLURRED_BACKDROP_URL}
           alt=""
-          className="h-full w-full scale-125 object-cover object-center opacity-80 blur-3xl saturate-125"
+          className="h-full w-full scale-110 object-cover object-center opacity-85"
         />
-        <div className="absolute inset-0 bg-background/20 backdrop-blur-md" />
+        <div className="absolute inset-0 bg-background/20" />
       </div>
 
       <Canvas className="relative z-[1]" orthographic camera={{ position: [0, 0, 5], zoom: 100 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>

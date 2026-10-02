@@ -37,10 +37,15 @@ const fragmentShader = /* glsl */ `
   varying vec2 vUv;
 
   void main() {
-    float depth = texture2D(uDepth, vUv).r;
+    // Keep a small hidden border around the source so parallax never samples
+    // the outermost texels and stretches them into jagged edge artifacts.
+    vec2 safeUv = mix(vec2(0.035), vec2(0.965), vUv);
+    float depth = texture2D(uDepth, safeUv).r;
     float relief = (1.0 - depth) - 0.38;
-    vec2 shiftedUv = clamp(vUv + uMotion * relief * 0.032, 0.002, 0.998);
+    vec2 shiftedUv = clamp(safeUv + uMotion * relief * 0.028, 0.004, 0.996);
     gl_FragColor = texture2D(uImage, shiftedUv);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
   }
 `;
 
@@ -53,7 +58,7 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
 
   const scale = useMemo<[number, number, number]>(() => {
     const viewportAspect = viewport.width / viewport.height;
-    const overscan = 1.1;
+    const overscan = 1.16;
     return viewportAspect > IMAGE_ASPECT
       ? [viewport.width * overscan, (viewport.width / IMAGE_ASPECT) * overscan, 1]
       : [viewport.height * IMAGE_ASPECT * overscan, viewport.height * overscan, 1];
@@ -71,8 +76,11 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
 
   useEffect(() => {
     image.colorSpace = THREE.SRGBColorSpace;
+    image.anisotropy = 8;
     image.needsUpdate = true;
     depth.colorSpace = THREE.NoColorSpace;
+    depth.minFilter = THREE.LinearFilter;
+    depth.magFilter = THREE.LinearFilter;
     depth.needsUpdate = true;
   }, [depth, image]);
 

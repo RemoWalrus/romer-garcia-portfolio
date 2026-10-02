@@ -241,7 +241,7 @@ const DepthEffect = () => {
         <img
           src={LOGO_URL}
           alt="Romer Garcia"
-          className="relative h-auto w-full [filter:drop-shadow(0_5px_9px_rgb(0_0_0_/_0.28))]"
+          className="relative h-auto w-full [filter:drop-shadow(0_3px_5px_rgb(0_0_0_/_0.16))]"
         />
       </div>
 

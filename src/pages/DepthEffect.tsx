@@ -80,12 +80,25 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number; y: number }> }) => {
+const DepthPortrait = ({
+  motion,
+  invalidateRef,
+}: {
+  motion: React.MutableRefObject<{ x: number; y: number }>;
+  invalidateRef: React.MutableRefObject<(() => void) | null>;
+}) => {
   const groupRef = useRef<THREE.Group>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const current = useRef({ x: 0, y: 0 });
   const [image, depth] = useTexture([PORTRAIT_URL, DEPTH_URL]);
-  const { size, viewport } = useThree();
+  const { invalidate, size, viewport } = useThree();
+
+  useEffect(() => {
+    invalidateRef.current = invalidate;
+    return () => {
+      invalidateRef.current = null;
+    };
+  }, [invalidate, invalidateRef]);
 
   const scale = useMemo<[number, number, number]>(() => {
     if (size.width >= 768) {
@@ -131,12 +144,16 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
       groupRef.current.rotation.x = -current.current.y * 0.05;
     }
     materialRef.current?.uniforms.uMotion.value.set(current.current.x, current.current.y);
+
+    const remainingX = Math.abs(motion.current.x - current.current.x);
+    const remainingY = Math.abs(motion.current.y - current.current.y);
+    if (remainingX > 0.001 || remainingY > 0.001) invalidate();
   });
 
   return (
     <group ref={groupRef}>
       <mesh scale={scale}>
-        <planeGeometry args={[1, 1, 160, 160]} />
+        <planeGeometry args={[1, 1, 128, 128]} />
         <shaderMaterial
           ref={materialRef}
           uniforms={uniforms}
@@ -152,6 +169,7 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
 
 const DepthEffect = () => {
   const motion = useRef({ x: 0, y: 0 });
+  const invalidateRef = useRef<(() => void) | null>(null);
   const baseline = useRef<{ beta: number; gamma: number }>();
   const [listening, setListening] = useState(false);
   const [permission, setPermission] = useState<MotionPermission>('automatic');
@@ -166,9 +184,11 @@ const DepthEffect = () => {
         x: (event.clientX / window.innerWidth - 0.5) * 2,
         y: (event.clientY / window.innerHeight - 0.5) * 2,
       };
+      invalidateRef.current?.();
     };
     const onPointerLeave = () => {
       motion.current = { x: 0, y: 0 };
+      invalidateRef.current?.();
     };
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     document.documentElement.addEventListener('mouseleave', onPointerLeave);
@@ -194,6 +214,7 @@ const DepthEffect = () => {
       const x = THREE.MathUtils.clamp((event.gamma - baseline.current.gamma) / 24, -1, 1);
       const y = THREE.MathUtils.clamp((event.beta - baseline.current.beta) / 28, -1, 1);
       motion.current = { x, y };
+      invalidateRef.current?.();
     };
     window.addEventListener('deviceorientation', onOrientation, { passive: true });
     return () => window.removeEventListener('deviceorientation', onOrientation);
@@ -234,9 +255,9 @@ const DepthEffect = () => {
         <div className="absolute inset-0 bg-background/20" />
       </div>
 
-      <Canvas className="relative z-[1]" orthographic camera={{ position: [0, 0, 5], zoom: 100 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
+      <Canvas className="relative z-[1]" orthographic camera={{ position: [0, 0, 5], zoom: 100 }} dpr={[1, 1.5]} frameloop="demand" gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}>
         <Suspense fallback={null}>
-          <DepthPortrait motion={motion} />
+          <DepthPortrait motion={motion} invalidateRef={invalidateRef} />
         </Suspense>
       </Canvas>
 

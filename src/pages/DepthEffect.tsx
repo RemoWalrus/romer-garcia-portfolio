@@ -84,15 +84,19 @@ const DepthPortrait = ({ motion }: { motion: React.MutableRefObject<{ x: number;
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const current = useRef({ x: 0, y: 0 });
   const [image, depth] = useTexture([PORTRAIT_URL, DEPTH_URL]);
-  const { viewport } = useThree();
+  const { size, viewport } = useThree();
 
   const scale = useMemo<[number, number, number]>(() => {
+    if (size.width >= 768) {
+      return [viewport.height * IMAGE_ASPECT, viewport.height, 1];
+    }
+
     const viewportAspect = viewport.width / viewport.height;
     const overscan = 1.16;
     return viewportAspect > IMAGE_ASPECT
       ? [viewport.width * overscan, (viewport.width / IMAGE_ASPECT) * overscan, 1]
       : [viewport.height * IMAGE_ASPECT * overscan, viewport.height * overscan, 1];
-  }, [viewport.height, viewport.width]);
+  }, [size.width, viewport.height, viewport.width]);
 
   const uniforms = useMemo(
     () => ({
@@ -220,7 +224,16 @@ const DepthEffect = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <Canvas orthographic camera={{ position: [0, 0, 5], zoom: 100 }} dpr={[1, 2]} gl={{ antialias: true }}>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <img
+          src={PORTRAIT_URL}
+          alt=""
+          className="h-full w-full scale-125 object-cover object-center opacity-80 blur-3xl saturate-125"
+        />
+        <div className="absolute inset-0 bg-background/20 backdrop-blur-md" />
+      </div>
+
+      <Canvas className="relative z-[1]" orthographic camera={{ position: [0, 0, 5], zoom: 100 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
         <Suspense fallback={null}>
           <DepthPortrait motion={motion} />
         </Suspense>

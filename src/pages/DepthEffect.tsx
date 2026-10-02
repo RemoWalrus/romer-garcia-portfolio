@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Move3D } from 'lucide-react';
 import * as THREE from 'three';
 import { Button } from '@/components/ui/button';
+import { getProxyUrl } from '@/utils/supabaseProxy';
 
 type MotionPermission = 'automatic' | 'required' | 'denied';
 
@@ -15,6 +16,7 @@ interface PermissionedOrientationEvent {
 const IMAGE_ASPECT = 1752 / 1920;
 const PORTRAIT_URL = '/dualshadow.jpg';
 const DEPTH_URL = '/dualshadow-depth.webp';
+const LOGO_URL = getProxyUrl('graphics', 'romergarcialogo.svg');
 
 const vertexShader = /* glsl */ `
   uniform sampler2D uDepth;
@@ -222,6 +224,12 @@ const DepthEffect = () => {
           <DepthPortrait motion={motion} />
         </Suspense>
       </Canvas>
+
+      <img
+        src={LOGO_URL}
+        alt="Romer Garcia"
+        className="pointer-events-none absolute left-1/2 top-1/2 z-10 w-[80vw] max-w-[960px] -translate-x-1/2 -translate-y-1/2"
+      />
 
       {permission === 'required' && (
         <Button

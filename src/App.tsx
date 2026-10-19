@@ -3,33 +3,36 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeColor } from "./components/ThemeColor";
 import { RouteAnalytics } from "./components/GoogleAnalytics";
 import { applyTheme, getThemeOverride } from "./lib/theme";
 import ReverbTransmission from "./pages/ReverbTransmission";
+import { lazyWithRetry } from "./lib/lazyWithRetry";
 
 // Lazy-load heavy routes so initial paint is fast
-const Index = lazy(() => import("./pages/Index"));
-const Meme = lazy(() => import("./pages/Meme"));
-const AICharacterGenerator = lazy(() => import("./pages/AICharacterGenerator"));
-const ContactRedirect = lazy(() => import("./pages/ContactRedirect"));
-const Paradoxxia = lazy(() => import("./pages/Paradoxxia"));
-const Story = lazy(() => import("./pages/Story"));
-const Reverb = lazy(() => import("./pages/Reverb"));
-const ReverbLoading = lazy(() => import("./pages/ReverbLoading"));
-const ReverbCharacter = lazy(() => import("./pages/ReverbCharacter"));
-const ReverbTransmissions = lazy(() => import("./pages/ReverbTransmissions"));
-const ReverbDownloads = lazy(() => import("./pages/ReverbDownloads"));
-const LinkInBio = lazy(() => import("./pages/LinkInBio"));
-const LinkVanity = lazy(() => import("./pages/LinkVanity"));
-const DepthEffect = lazy(() => import("./pages/DepthEffect"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const Index = lazyWithRetry(() => import("./pages/Index"));
+const Meme = lazyWithRetry(() => import("./pages/Meme"));
+const AICharacterGenerator = lazyWithRetry(() => import("./pages/AICharacterGenerator"));
+const ContactRedirect = lazyWithRetry(() => import("./pages/ContactRedirect"));
+const Paradoxxia = lazyWithRetry(() => import("./pages/Paradoxxia"));
+const Story = lazyWithRetry(() => import("./pages/Story"));
+const Reverb = lazyWithRetry(() => import("./pages/Reverb"));
+const ReverbLoading = lazyWithRetry(() => import("./pages/ReverbLoading"));
+const ReverbCharacter = lazyWithRetry(() => import("./pages/ReverbCharacter"));
+const ReverbTransmissions = lazyWithRetry(() => import("./pages/ReverbTransmissions"));
+const ReverbDownloads = lazyWithRetry(() => import("./pages/ReverbDownloads"));
+const LinkInBio = lazyWithRetry(() => import("./pages/LinkInBio"));
+const LinkVanity = lazyWithRetry(() => import("./pages/LinkVanity"));
+const DepthEffect = lazyWithRetry(() => import("./pages/DepthEffect"));
+const NotFound = lazyWithRetry(() => import("./pages/NotFound"));
+
+const Noop = () => null;
 
 // Toasts are never needed for first paint — load them once the page is idle.
-const Toaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
-const Sonner = lazy(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })));
+const Toaster = lazyWithRetry(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })), Noop);
+const Sonner = lazyWithRetry(() => import("@/components/ui/sonner").then((m) => ({ default: m.Toaster })), Noop);
 
 const DeferredToasters = () => {
   const [ready, setReady] = useState(false);

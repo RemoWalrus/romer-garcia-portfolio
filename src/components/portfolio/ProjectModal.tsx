@@ -26,6 +26,24 @@ export const ProjectModal = ({
   const isMobile = useIsMobile();
   const touchStartY = useRef<number>(0);
   const touchEndY = useRef<number>(0);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = async () => {
+    if (!project?.slug) return;
+    const url = `${window.location.origin}${window.location.pathname}#${project.slug}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const input = document.createElement('input');
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const handleSwipeStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;

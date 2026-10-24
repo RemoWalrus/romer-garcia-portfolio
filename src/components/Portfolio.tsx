@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ChromaticTitle } from '@/components/ui/ChromaticTitle';
 import { toProxyUrl, getProxyUrl } from "@/utils/supabaseProxy";
 import { ProjectCard } from './portfolio/ProjectCard';

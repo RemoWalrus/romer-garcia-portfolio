@@ -138,6 +138,22 @@ export const ProjectModal = ({
                   View Project <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
                 </div>
               )}
+
+              {project.slug && (
+                <div
+                  onClick={handleCopyLink}
+                  role="button"
+                  aria-label="Copy link to this project"
+                  className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
+                >
+                  {copied ? 'Link Copied' : 'Copy Link'}
+                  {copied ? (
+                    <Check className="ml-2 w-3 h-3 md:w-4 md:h-4" />
+                  ) : (
+                    <Link2 className="ml-2 w-3 h-3 md:w-4 md:h-4" />
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Mini thumbnail navigator - mobile only */}

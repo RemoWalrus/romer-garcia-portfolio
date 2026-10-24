@@ -9,6 +9,7 @@ interface ProjectCardProps {
     title: string;
     description: string;
     alt_text?: string | null;
+    slug?: string | null;
   };
   onSelect: (project: any) => void;
 }
@@ -16,8 +17,9 @@ interface ProjectCardProps {
 export const ProjectCard = ({ project, onSelect }: ProjectCardProps) => {
   return (
     <article
+      id={project.slug || undefined}
       onClick={() => onSelect(project)}
-      className="group relative cursor-pointer overflow-hidden bg-neutral-900"
+      className="group relative cursor-pointer overflow-hidden bg-neutral-900 scroll-mt-20"
       style={{ aspectRatio: '4/3' }}
       itemScope
       itemType="https://schema.org/CreativeWork"

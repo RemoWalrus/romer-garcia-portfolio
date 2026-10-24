@@ -273,6 +273,7 @@ export type Database = {
           id: number
           image_url: string
           project_url: string | null
+          slug: string | null
           sort_order: number | null
           tech_stack: string[] | null
           title: string
@@ -290,6 +291,7 @@ export type Database = {
           id?: number
           image_url: string
           project_url?: string | null
+          slug?: string | null
           sort_order?: number | null
           tech_stack?: string[] | null
           title: string
@@ -307,6 +309,7 @@ export type Database = {
           id?: number
           image_url?: string
           project_url?: string | null
+          slug?: string | null
           sort_order?: number | null
           tech_stack?: string[] | null
           title?: string

@@ -1,6 +1,6 @@
 
-import { useRef } from 'react';
-import { MoveRight } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { MoveRight, Link2, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { useIsMobile } from '@/hooks/use-mobile';

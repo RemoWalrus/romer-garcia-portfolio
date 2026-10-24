@@ -33,12 +33,40 @@ export const Portfolio = () => {
   const handleProjectSelect = (project: any) => {
     trackEvent('Portfolio', 'Project View', project.title);
     setSelectedProject(project);
+    if (project.slug) {
+      window.history.replaceState(null, '', `#${project.slug}`);
+    }
   };
 
   const handleCloseModal = () => {
     setSelectedProject(null);
     setHeroImageIndex(0);
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
   };
+
+  const openProjectFromHash = useCallback(() => {
+    const slug = window.location.hash.replace(/^#/, '');
+    if (!slug) return;
+    const match = rawProjects.find((p: any) => p.slug === slug);
+    if (!match) return;
+    setSelectedProject((current: any) => {
+      if (current?.slug === slug) return current;
+      trackEvent('Portfolio', 'Project View', match.title);
+      return match;
+    });
+    requestAnimationFrame(() => {
+      document.getElementById(slug)?.scrollIntoView({ block: 'center' });
+    });
+  }, [rawProjects]);
+
+  useEffect(() => {
+    if (rawProjects.length === 0) return;
+    openProjectFromHash();
+    window.addEventListener('hashchange', openProjectFromHash);
+    return () => window.removeEventListener('hashchange', openProjectFromHash);
+  }, [openProjectFromHash, rawProjects.length]);
 
   return (
     <section id="portfolio" aria-label="Featured Work by Romer Garcia" className="relative py-32 bg-fixed bg-center bg-cover bg-no-repeat before:content-[''] before:absolute before:inset-0 before:bg-white/90 dark:before:bg-neutral-950/90 before:backdrop-blur-sm" style={{

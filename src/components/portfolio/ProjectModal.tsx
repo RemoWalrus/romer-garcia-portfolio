@@ -1,6 +1,6 @@
 
-import { useRef, useState } from 'react';
-import { MoveRight, Link2, Check } from 'lucide-react';
+import { useRef } from 'react';
+import { MoveRight } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -26,24 +26,6 @@ export const ProjectModal = ({
   const isMobile = useIsMobile();
   const touchStartY = useRef<number>(0);
   const touchEndY = useRef<number>(0);
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyLink = async () => {
-    if (!project?.slug) return;
-    const url = `${window.location.origin}${window.location.pathname}#${project.slug}`;
-    try {
-      await navigator.clipboard.writeText(url);
-    } catch {
-      const input = document.createElement('input');
-      input.value = url;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand('copy');
-      document.body.removeChild(input);
-    }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const handleSwipeStart = (e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
@@ -136,22 +118,6 @@ export const ProjectModal = ({
                   className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
                 >
                   View Project <MoveRight className="ml-2 w-3 h-3 md:w-4 md:h-4" />
-                </div>
-              )}
-
-              {project.slug && (
-                <div
-                  onClick={handleCopyLink}
-                  role="button"
-                  aria-label="Copy link to this project"
-                  className="inline-flex items-center text-neutral-900 dark:text-white hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer text-xs md:text-sm font-roc font-bold uppercase px-2 md:px-3 py-1 md:py-2 rounded"
-                >
-                  {copied ? 'Link Copied' : 'Copy Link'}
-                  {copied ? (
-                    <Check className="ml-2 w-3 h-3 md:w-4 md:h-4" />
-                  ) : (
-                    <Link2 className="ml-2 w-3 h-3 md:w-4 md:h-4" />
-                  )}
                 </div>
               )}
             </div>
